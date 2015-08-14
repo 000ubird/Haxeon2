@@ -10,13 +10,13 @@
 	<ul>
 		<!-- ログイン時はアカウント名とサービスを表示　-->
 		<?php if($isLogin) { ?>
-		<li><h3>Hello, <img src=<?php echo $iconURL ?> width=35px height=35px> {$userName}</h3>
+		<li><h3>Hello, <img src=<?php echo $iconURL?> width=35px height=35px> {$userName}</h3>
 			<ul>
-				<li><a href=<?phpecho $commonURL?>profile.php?id={$id}>Profile</a></li>
+				<li><a href=<?php echo $commonURL?>profile.php?id={$id}>Profile</a></li>
 				<li><a href="#">Posted Codes</a></li>
 				<li><a href="#">Favorite Codes</a></li>
-				<li><a href=<?phpecho$commonURL?>followlist.php>Followers</a></li>
-				<li><a href=<?phpecho$commonURL?>logout.php>Logout</a></li>
+				<li><a href=<?php echo $commonURL?>followlist.php>Followers</a></li>
+				<li><a href=<?php echo $commonURL?>logout.php>Logout</a></li>
 			</ul>
 		</li>
 		<!-- 未ログイン時はログインとサインアップのリンクを表示　-->
