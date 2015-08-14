@@ -5,22 +5,26 @@
     <title>login</title>
 </head>
 <body>
-<form>
-<fieldset>
-<table>
-    <tbody>
-        <tr>
-            <th>userID</th>
-            <td><input type="text" id="userID" name="userID" value="" /></td>
-        </tr>
-        <tr>
-            <th>password</th>
-            <td><input type="text" id="password" name="password" value="" /></td>
-        </tr>
-    </tbody>
-</table>
-</fieldset>
-    <p class="submit"><input type="submit" name="submit" value="login" /></p>
-</form>
+<?php
+
+echo form_open("login/validation");
+
+echo "<p>userID: ";
+echo form_input("userID");
+echo form_error("userID");
+echo "</p>";
+
+echo "<p>password: ";
+echo form_password("password");
+echo form_error("password");
+echo "</p>";
+
+echo "<p>";
+echo form_submit("signin_submit", "signin");
+echo "</p>";
+
+echo form_close();
+
+?>
 </body>
 </html>
