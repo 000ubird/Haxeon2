@@ -3,23 +3,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Signin extends CI_Controller {
 
-    /**
-     * Index Page for this controller.
-     *
-     * Maps to the following URL
-     * 		http://example.com/signin
-     *	- or -
-     * 		http://example.com/signin/index
-     *	- or -
-     * Since this controller is set as the default controller in
-     * config/routes.php, it's displayed at http://example.com/
-     *
-     * So any other public methods not prefixed with an underscore will
-     * map to /index.php/welcome/<method_name>
-     * @see http://codeigniter.com/user_guide/general/urls.html
-     */
-    public function index()
-    {
+    public function signin_validation(){
+        //フォームバリデーションライブラリを呼び出し
+        $this->load->library("form_validation");
+
+        /**
+         * required : 必要事項
+         * trim : バリデーション実行前に、文字列の最初と最後の空白を自動的に削除
+         * xss_clean : クロスサイトスクリプティングを禁止
+         * md5 : 暗号化処理
+         */
+        $this->form_validation->set_rules("userID", "ユーザID", "required|trim");
+        $this->form_validation->set_rules("email", "メールアドレス", "required|trim|xss_clean");
+        $this->form_validation->set_rules("password", "パスワード", "required|md5|trim");
+
+        $this->form_validation->set_message("required", "%sが入力されていません");
+
+        if($this->form_validation->run()){
+            //正常なとき
+            echo "<h1>success!</h1>";
+        }else{
+            //初回、もしくはエラーがあったとき
+            $this->load->view('signin');
+        }
+    }
+
+    public function index(){
         $this->load->view('signin');
     }
 }
