@@ -1,5 +1,6 @@
-<!-- バリデーションは設定していないので、形だけです。後付する予定 -->
 <!DOCTYPE html>
+
+<link href="../css/convenience.css" type="text/css" rel="stylesheet">
 <html>
 <head>
     <meta charset="utf-8">
@@ -12,19 +13,21 @@
 
     <?php
 
-    echo validation_errors();
-    echo form_open("signin/signin_validation");
+    echo form_open("signin/validation");
 
     echo "<p>userID: ";
     echo form_input("userID");
+    echo form_error("userID");
     echo "</p>";
 
     echo "<p>Email: ";
-    echo form_input("email");
+    echo form_input("email", $this->input->post("email"));
+    echo form_error("email");
     echo "</p>";
 
     echo "<p>password: ";
     echo form_password("password");
+    echo form_error("password");
     echo "</p>";
 
     echo "<p>";
