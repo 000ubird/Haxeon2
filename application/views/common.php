@@ -1,9 +1,9 @@
 <html>
 	
-<link href="../../css/common.css" type="text/css" rel="stylesheet" />
+<link href="../css/common.css" type="text/css" rel="stylesheet" />
 
 <!-- ヘッダー -->
-<div id="header"><h1><a href=""><img src="../../img/haxeon_icon.png" style="width:auto; height:75px;"></a></h1></div>
+<div id="header"><h1><a href=""><img src="../img/haxeon_icon.png" style="width:auto; height:75px;"></a></h1></div>
 
 <!-- タブリスト　-->
 <div class="menu">

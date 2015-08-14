@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Common extends CI_Controller {
 	
 	public function index() {
-		$url['commonURL'] = "http://localhost/haxeon2/index.php/common/index/";
+		$url['commonURL'] = "http://localhost/haxeon2/common/index/";
 		
 		//ログイン時はアイコンURLを取得する
 		if (isset($_COOKIE["PHPSESSID"])){
