@@ -23,21 +23,20 @@ class Signin extends CI_Controller {
 
         if($this->form_validation->run()){
             //正常なとき
+            $data['userID'] = $_POST['userID'];
+            $data['email'] = $_POST['email'];
+            $data['password'] = $_POST['password'];
+
             //データベースにポストする処理へ委譲
-            redirect("signin/postdb");
+           // redirect("signin/postdb");
         }else{
             //初回、もしくはエラーがあったとき
-            $this->load->view('signin');
+            $this->index();
         }
     }
 
     //項目が正しく入力されていたら、データベースに仮登録する
     public function postdb() {
-        if($this->input->post('userID')){
-            echo '<p>$_POST["userID"]</p>';
-        }else{
-            echo '<h1>miss</h1>';
-        }
     }
 
     public function index(){
