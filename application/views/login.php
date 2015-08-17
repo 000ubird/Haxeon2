@@ -5,8 +5,10 @@
     <title>login</title>
 </head>
 <body>
+<h1>セッション情報</h1>
 <?php
 
+print_r($this->session->all_userdata());
 echo form_open("login/validation");
 
 echo validation_errors();
