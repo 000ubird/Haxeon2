@@ -3,23 +3,50 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Login extends CI_Controller {
 
-    /**
-     * Index Page for this controller.
-     *
-     * Maps to the following URL
-     * 		http://example.com/index.php/login
-     *	- or -
-     * 		http://example.com/index.php/login/index
-     *	- or -
-     * Since this controller is set as the default controller in
-     * config/routes.php, it's displayed at http://example.com/
-     *
-     * So any other public methods not prefixed with an underscore will
-     * map to /index.php/welcome/<method_name>
-     * @see http://codeigniter.com/user_guide/general/urls.html
-     */
-    public function index()
-    {
+    public function validation(){
+        //フォームバリデーションライブラリを呼び出し
+        $this->load->library("form_validation");
+
+        $this->form_validation->set_error_delimiters('<div class="error">','</div>');
+
+        /**
+         * required : 必要事項
+         * "|" 区切りで以下のオプションを付けたい
+         * trim : バリデーション実行前に、文字列の最初と最後の空白を自動的に削除
+         * xss_clean : クロスサイトスクリプティングを禁止
+         * md5 : 暗号化処理
+         */
+        $this->form_validation->set_rules("userID", "ユーザID", "callback_validate_credentials");
+        $this->form_validation->set_rules("password", "パスワード", "required");
+
+        $this->form_validation->set_message("required", "");
+
+        if($this->form_validation->run()){
+            //正常な入力のとき
+                $data = array(
+                    'userID' => $_POST['userID'],
+                );
+                $this->session->set_userdata($data);
+
+                redirect("haxeon2");
+        }else{
+            //初回、もしくはエラーがあったとき
+            $this->index();
+        }
+    }
+
+    public function validate_credentials(){
+        $this->load->model("model_users");
+
+        if($this->model_users->can_log_in()){
+            return true;
+        }else{
+            $this->form_validation->set_message("validate_credentials", "IDもしくはパスワードが間違っています");
+            return false;
+        }
+    }
+
+    public function index(){
         $this->load->view('login');
     }
 }
