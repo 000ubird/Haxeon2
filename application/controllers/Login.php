@@ -24,19 +24,24 @@ class Login extends CI_Controller {
         $this->form_validation->set_message("required", "%sが入力されていません");
 
         if($this->form_validation->run()){
-            //正常なとき
-            $data['userID'] = $_POST['userID'];
-            $data['password'] = $_POST['password'];
+            //正常な入力のとき
+            $id = $_POST['userID'];
+            $pass = $_POST['password'];
 
-            $result = $this->checkDB($_POST['userID'], $_POST['password']);
+            $result = $this->checkDB($id, $pass);
 
-            //test
-//            if(!$result){
-//                echo "failed";
-//            }else{
-//                echo "successed";
+            if(!$result){
+                echo "failed";
+            }else{
+                echo "login";
             //TODO セッション登録など、ログインを保持する部分の実装
-//            }
+                $data = array(
+                    'userID' => $id,
+                );
+                $this->session->set_userdata($data);
+
+                redirect("haxeon2");
+            }
 
         }else{
             //初回、もしくはエラーがあったとき
