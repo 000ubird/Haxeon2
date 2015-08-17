@@ -4,6 +4,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Login extends CI_Controller {
 
     public function validation(){
+        $this->load->helper('form');
+
         //フォームバリデーションライブラリを呼び出し
         $this->load->library("form_validation");
 
@@ -27,10 +29,15 @@ class Login extends CI_Controller {
             $data['password'] = $_POST['password'];
 
             $result = $this->checkDB($_POST['userID'], $_POST['password']);
-            echo $result;
 
-            //データベースにポストする処理へ委譲
-            // redirect("signin/postdb");
+            //test
+//            if(!$result){
+//                echo "failed";
+//            }else{
+//                echo "successed";
+            //TODO セッション登録など、ログインを保持する部分の実装
+//            }
+
         }else{
             //初回、もしくはエラーがあったとき
             $this->index();
@@ -38,7 +45,10 @@ class Login extends CI_Controller {
     }
 
     private function checkDB($id, $password){
-//        $this->db->get_where('account', array('userID' => $id, 'userPass' => $password));
+        /**
+         * SELECT * FROM 'account' WHERE 'userID'=$id AND 'userPass'=$password
+         * の結果の数をチェックする
+         */
         $this->db->from('account');
         $this->db->where(array('userID' => $id, 'userPass' => $password));
         return $this->db->count_all_results();
