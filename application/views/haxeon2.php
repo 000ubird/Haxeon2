@@ -11,7 +11,7 @@
     print_r($this->session->all_userdata());
 
     ?>
-<a href="<?php echo base_url()."logout/index" ?>">ログアウト</a>
+<a href="<?php echo base_url()."main/logout" ?>">ログアウト</a>
 </div>
 </body>
 </html>

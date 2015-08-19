@@ -9,7 +9,7 @@
 <?php
 
 print_r($this->session->all_userdata());
-echo form_open("login/validation");
+echo form_open("main/login_validation");
 
 echo validation_errors();
 
