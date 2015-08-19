@@ -22,7 +22,7 @@ echo form_input("projectName");
 echo "</p>";
 
 $data = array(
-    'value' => "signin",
+    'value' => "create",
     'name' => "signin_submit",
 );
 
