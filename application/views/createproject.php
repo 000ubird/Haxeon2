@@ -17,12 +17,8 @@ echo form_open("createproject/validation");
 
 echo validation_errors();
 
-echo "<p>userID: ";
-echo form_input("userID");
-echo "</p>";
-
-echo "<p>password: ";
-echo form_password("password");
+echo "<p>プロジェクト名*: ";
+echo form_input("projectName");
 echo "</p>";
 
 $data = array(

@@ -14,11 +14,11 @@ echo form_open("login/validation");
 
 echo validation_errors();
 
-echo "<p>userID: ";
+echo "<p>userID*: ";
 echo form_input("userID");
 echo "</p>";
 
-echo "<p>password: ";
+echo "<p>password*: ";
 echo form_password("password");
 echo "</p>";
 
