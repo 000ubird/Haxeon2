@@ -23,7 +23,7 @@ echo form_password("password");
 echo "</p>";
 
 $data = array(
-    'value' => "signin",
+    'value' => "login",
     'name' => "signin_submit",
 );
 

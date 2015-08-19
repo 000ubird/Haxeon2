@@ -12,6 +12,7 @@
 	<?php if($this->session->userdata('userID') != "") { ?>
 		ログイン済みです。
 		<a href=<?php echo base_url();?>account>Account</a>
+        <a href=<?php echo base_url();?>logout>Logout</a>
 		<a href=<?php echo "icon_URL"; ?>>icon</a>
 	<?php } else { ?>
 		未ログイン状態です。

@@ -13,14 +13,5 @@
     ?>
 
 </div>
-
-<div class="logout">
-    <a href="<?php echo base_url()."logout/index" ?>">ログアウト</a>
-</div>
-
-<div class="createproject">
-    <a href="<?php echo base_url()."createproject/index" ?>">create</a>
-</div>
-
 </body>
 </html>
