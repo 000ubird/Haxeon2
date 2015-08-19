@@ -5,7 +5,8 @@
     <title>login</title>
 </head>
 <body>
-<h1>セッション情報</h1>
+<h1>ログインページ</h1>
+<h3>セッション情報</h3>
 <?php
 
 print_r($this->session->all_userdata());
