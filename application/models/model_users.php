@@ -38,4 +38,17 @@ class Model_users extends CI_Model{
 			return false;
 		}
 	}
+	
+	//メールアドレスの重複チェック
+	public function is_overlap_mail($mail) {
+		$this->db->where(array('userMail' => $mail));
+		$query = $this->db->get('account');
+		
+		//重複していた場合は真
+		if($query->num_rows() == 1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }
