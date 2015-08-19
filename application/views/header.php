@@ -9,9 +9,10 @@
 	<a href=<?php echo base_url();?>question>Questions</a>
 	<a href=<?php echo base_url();?>ranking>Ranking</a>
 	
-	<?php if($isLogin) { ?>
+	<?php if($this->session->userdata('userID') != "") { ?>
+		ログイン済みです。
 		<a href=<?php echo base_url();?>account>Account</a>
-		<a href=<?php echo $url; ?>>icon</a>
+		<a href=<?php echo "icon_URL"; ?>>icon</a>
 	<?php } else { ?>
 		<a href=<?php echo base_url();?>login>Login</a>
 		<a href=<?php echo base_url();?>signup>Signup</a>
