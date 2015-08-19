@@ -25,4 +25,17 @@ class Model_users extends CI_Model{
 
 		return $icon;
 	}
+	
+	//ユーザIDの重複チェック
+	public function is_overlap_uid($userID) {
+		$this->db->where(array('userID' => $userID));
+		$query = $this->db->get('account');
+		
+		//重複していた場合は真
+		if($query->num_rows() == 1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }
