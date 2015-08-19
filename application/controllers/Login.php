@@ -3,6 +3,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Login extends CI_Controller {
 
+    public function index(){
+		$this->load->view('header');
+        $this->load->view('login');
+		$this->load->view('footer');
+    }
+	
     public function validation(){
         //フォームバリデーションライブラリを呼び出し
         $this->load->library("form_validation");
@@ -44,9 +50,5 @@ class Login extends CI_Controller {
             $this->form_validation->set_message("validate_credentials", "IDもしくはパスワードが間違っています");
             return false;
         }
-    }
-
-    public function index(){
-        $this->load->view('login');
     }
 }
