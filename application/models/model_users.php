@@ -7,15 +7,20 @@ class Model_users extends CI_Model{
         $this->db->where(array('userID' => $this->input->post("userID"), 'userPass' => $this->input->post("password")));
         $query = $this->db->get('account');
 
-        if($query->num_rows() == 1){
-            return true;
-        }else{
-            return false;
-        }
+        return ($query->num_rows() == 1);
     }
 
 	//ユーザIDからアイコンのあるURLを取得
-	public function get_icon_url($userID) {
+    public function is_overlap_uid($userID)
+    {
+        $this->db->where(array('userID' => $userID));
+        $query = $this->db->get('account');
+
+        //重複していた場合は真
+        return ($query->num_rows() == 1);
+    }
+
+    public function get_icon_url($userID){
 		$icon = "";
 
 		$query = $this->db->get_where('account', array('userID' => $userID));
@@ -25,23 +30,23 @@ class Model_users extends CI_Model{
 
 		return $icon;
 	}
+    //ユーザIDの重複チェック
 
-	//ユーザIDの重複チェック
-	public function is_overlap_uid($userID) {
-		$this->db->where(array('userID' => $userID));
-		$query = $this->db->get('account');
+    //プロフィール取得
+    public function getProfile($userID){
 
-		//重複していた場合は真
-		if($query->num_rows() == 1) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+    }
 
     //プロジェクト取得
+    public function getProjects($userID){
+        $this->db->where(array('ownerUserID' => $userID));
+        $query = $this->db->get('project');
+
+        return $query->result();
+    }
 
     //フォロー情報取得
+    public function getFollowInfo($userID){
 
-    //ユーザー情報取得
+    }
 }

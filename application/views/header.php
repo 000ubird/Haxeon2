@@ -13,7 +13,7 @@
 		ログイン済みです。
 		<a href=<?php echo base_url();?>account>Account</a>
         <a href=<?php echo base_url();?>logout>Logout</a>
-        <a href=<?php echo base_url();?>profile><img src=<?php echo "icon_URL"?></a>
+        <a href=<?php echo base_url();?>profile/infomation/<?php echo $this->session->userdata('userID');?>><img src=<?php echo "icon_URL"?></a>
 	<?php } else { ?>
 		未ログイン状態です。
 		<a href=<?php echo base_url();?>login>Login</a>
