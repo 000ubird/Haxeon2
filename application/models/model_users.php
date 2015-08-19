@@ -12,4 +12,16 @@ class Model_users extends CI_Model{
             return false;
         }
     }
+	
+	//ユーザIDからアイコンのあるURLを取得
+	public function get_icon_url($userID) {
+		$icon = "";
+		
+		$query = $this->db->get_where('account', array('userID' => $userID));
+		foreach ($query->result() as $row) {
+			$icon = $row->userIcon;
+		}
+		
+		return $icon;
+	}
 }
