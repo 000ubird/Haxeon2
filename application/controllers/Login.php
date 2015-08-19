@@ -22,11 +22,12 @@ class Login extends CI_Controller {
          * xss_clean : クロスサイトスクリプティングを禁止
          * md5 : 暗号化処理
          */
-        $this->form_validation->set_rules("userID", "ユーザID", "callback_validate_credentials");
+        $this->form_validation->set_rules("userID", "ユーザID", "alpha_numeric|callback_validate_credentials");
         $this->form_validation->set_rules("password", "パスワード", "required");
 
         $this->form_validation->set_message("required", "");
-
+        $this->form_validation->set_message("alpha_numeric", "IDは半角英数字で入力してください。");
+		
         if($this->form_validation->run()){
             //正常な入力のとき
                 $data = array(
