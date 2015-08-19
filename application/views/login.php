@@ -21,8 +21,13 @@ echo "<p>password: ";
 echo form_password("password");
 echo "</p>";
 
+$data = array(
+    'value' => "signin",
+    'name' => "signin_submit",
+);
+
 echo "<p>";
-echo form_submit("signin_submit", "signin");
+echo form_submit($data);
 echo "</p>";
 
 echo form_close();
