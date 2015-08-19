@@ -5,7 +5,8 @@
     <title>login</title>
 </head>
 <body>
-<h1>セッション情報</h1>
+<h1>ログインページ</h1>
+<h3>セッション情報</h3>
 <?php
 
 print_r($this->session->all_userdata());
@@ -13,11 +14,11 @@ echo form_open("login/validation");
 
 echo validation_errors();
 
-echo "<p>userID: ";
+echo "<p>userID*: ";
 echo form_input("userID");
 echo "</p>";
 
-echo "<p>password: ";
+echo "<p>password*: ";
 echo form_password("password");
 echo "</p>";
 

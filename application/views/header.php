@@ -2,13 +2,13 @@
 <link rel="stylesheet" href="../css/header.css" type="text/css" />
 
 <html lang="ja">
-	
+
 <head>
 	<a href=<?php echo base_url();?>>haxeon</a>
-	<a href=<?php echo base_url();?>create>Create Project</a>
+	<a href=<?php echo base_url();?>createproject>Create Project</a>
 	<a href=<?php echo base_url();?>question>Questions</a>
 	<a href=<?php echo base_url();?>ranking>Ranking</a>
-	
+
 	<?php if($this->session->userdata('userID') != "") { ?>
 		ログイン済みです。
 		<a href=<?php echo base_url();?>account>Account</a>
