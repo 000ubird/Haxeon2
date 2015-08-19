@@ -14,6 +14,7 @@
 		<a href=<?php echo base_url();?>account>Account</a>
 		<a href=<?php echo "icon_URL"; ?>>icon</a>
 	<?php } else { ?>
+		未ログイン状態です。
 		<a href=<?php echo base_url();?>login>Login</a>
 		<a href=<?php echo base_url();?>signup>Signup</a>
 	<?php } ?>
