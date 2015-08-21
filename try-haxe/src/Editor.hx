@@ -302,7 +302,7 @@ class Editor {
 
     // auto-fork
 	program.uid = null;
-	var con = new Http("http://localhost/haxeon/userinfo.php");
+	var con = new Http("http://localhost/haxeon2/userinfo/index");
 	con.onError = onError;
 	con.onData = onResult2;
 	con.request(false);
