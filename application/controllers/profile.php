@@ -3,18 +3,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Profile extends CI_Controller {
 
+    //一応おいてあるindex。本体のみ表示する
     public function index() {
+        //$this->load->view('header');
         $this->load->view('profile');
     }
 
-    public function infomation($userID){
-        echo $userID;
-
-        $data = $this->getUserData($userID);
-
-        $this->profile($data);
+    public function information($userID){
+        $this->view($this->getUserData($userID));
     }
-    public function profile($data){
+
+    //プロフィールページを表示する本体
+    public function view($data){
         $this->load->view('header');
         $this->load->view('profile',$data);
         $this->load->view('footer');
@@ -29,8 +29,12 @@ class Profile extends CI_Controller {
     private function getUserData($userID){
         $this->load->model('model_users');
 
+        $data['user'] = $this->model_users->getUserData($userID);
         $data['projects'] = $this->model_users->getProjects($userID);
-        $data['profile'] = $this->model_users->getProfile($userID);
+        $data['follow'] = $this->model_users->getFollowInfo($userID);
+        $data['followed'] = $this->model_users->getFollowedInfo($userID);
+
+        return $data;
     }
 
 }
