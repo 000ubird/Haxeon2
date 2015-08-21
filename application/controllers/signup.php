@@ -26,30 +26,43 @@ class Signup extends CI_Controller {
 		
 		//正しい場合はメールを送信
 		if ($this->form_validation->run()) {
-			//ランダムキーを生成する
+			//認証キーの生成
 			$key = md5(uniqid());
 			
 			//Emailライブラリを読み込む。メールタイプをHTMLに設定（デフォルトはテキストです）
-			$this->load->library("email", array("mailtype"=>"html"));
-			$this->load->model("model_users");
-			$this->email->from("delldell201507@gmail.com", "Haxeon2");//送信元の情報
+			$this->load->library("email", array("mailtype" => "html"));
+			$this->email->from("delldell201507@gmail.com", "Haxeon2");	//送信元の情報
 			$this->email->to($this->input->post("email"));	//送信先の設定
 			$this->email->subject("【Haxeon】アカウントの認証");	//タイトルの設定
 			
 			//メッセージの本文
-			$message = "<p>仮登録が完了しました。</p>";
-			// 各ユーザーにランダムキーをパーマリンクに含むURLを送信する
-			$message .= "<p><a href=' ".base_url(). "resister_user/$key'>こちらをクリックして、会員登録を完了してください。</a></p>";
+			$message = "仮登録が完了しました。";
+			$message .= "<h1><a href=' ".base_url(). "signup/register/$key'>こちら</h1>をクリックして、会員登録を完了してください。</a>";
 			$this->email->message($message);
-			//メール送信
-			if($this->email->send()){
-				echo "Message has been sent.";
-			}else {
-				echo "Coulsn't send the message.";
+			
+			$this->load->model("model_users");
+			
+			//仮登録用データベースへの登録が完了した場合
+			if ($this->model_users->add_tmp_user($key)) {
+				//メール送信
+				if($this->email->send()){
+					echo "登録用メールが送信されました。";
+				}else {
+					echo "登録用メールの送信に失敗しました。お手数ですがやり直して下さい。";
+					$this->index();
+				}
+			} else {
+				$this->index();
 			}
 		} else {
             $this->index();
         }
+	}
+	
+	//メールに記載されたURLの認証
+	public function register($key) {
+		$this->load->model("model_users");
+		$this->model_users->add_user($key);
 	}
 	
 	//既存のユーザIDとの重複チェック
