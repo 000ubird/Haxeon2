@@ -86,36 +86,47 @@ class Model_users extends CI_Model{
 		return $this->db->insert('tmp_account',$data);
 	}
 	
-	//一時登録用テーブルにユーザー情報を追加する
+	//アカウントテーブルにユーザー情報を本登録する
 	public function add_user($key) {
 		$this->db->where('registKey', $key);	//キーからユーザー情報を取得
 		$data = $this->db->get('tmp_account');
 		
-		if ($data) {
+		if ($data->num_rows() > 0) {
 			$row = $data->row();
+			
+			//アカウントが既に有効になっている場合は登録しない
+			if ($this->is_overlap_uid($row->userID)) {
+				return false;
+			}
+			
 			$info = array(
 				'userID' => $row->userID,
 				'userPass' => $row->password,
 				'userName' => $row->userID,
 				'userMail' => $row->userMail
 			);
-			if ($this->db->insert("account", $info)) {
-				echo "アカウントが有効になりました!";
-			}
+			return ($this->db->insert('account', $info));
+		} else {
+			return false;
 		}
 	}
 	
-	//ユーザIDの重複チェック
-	public function is_overlap_uid($userID) {
+	//仮登録テーブルのユーザIDの重複チェック
+	public function is_overlap_tmp_uid($userID) {
 		$this->db->where('userID',$userID);
-		$query1 = $this->db->get('account');
-		
-		//一時登録用のテーブルも確認
-		$this->db->where('userID',$userID);
-		$query2 = $this->db->get('tmp_account');
+		$query = $this->db->get('tmp_account');
 		
 		//重複していた場合は真
-		return ($query1->num_rows() > 0 || $query2->num_rows() > 0);
+		return ($query->num_rows() > 0);
+	}
+	
+	//本登録テーブルのユーザIDの重複チェック
+	public function is_overlap_uid($userID) {
+		$this->db->where('userID',$userID);
+		$query = $this->db->get('account');
+		
+		//重複していた場合は真
+		return ($query->num_rows() > 0);
 	}
 	
 	//メールアドレスの重複チェック

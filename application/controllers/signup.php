@@ -45,8 +45,10 @@ class Signup extends CI_Controller {
 			//仮登録用データベースへの登録が完了した場合
 			if ($this->model_users->add_tmp_user($key)) {
 				//メール送信
-				if($this->email->send()){
+				if ($this->email->send()) {
+					$this->load->view('header');
 					echo "登録用メールが送信されました。";
+					$this->load->view('footer');
 				}else {
 					echo "登録用メールの送信に失敗しました。お手数ですがやり直して下さい。";
 					$this->index();
@@ -59,17 +61,23 @@ class Signup extends CI_Controller {
         }
 	}
 	
-	//メールに記載されたURLの認証
+	//仮登録メールのURLを認証
 	public function register($key) {
 		$this->load->model("model_users");
-		$this->model_users->add_user($key);
+		if ($this->model_users->add_user($key)) {
+			$this->load->view('header');
+			echo "アカウントが有効になりました。";
+		} else {
+			$this->load->view('header');
+			echo "アカウントの認証に失敗しました。";
+		}
 	}
 	
 	//既存のユーザIDとの重複チェック
 	public function username_check($str) {
 		$this->load->model("model_users");
 		
-		if($this->model_users->is_overlap_uid($str)){
+		if($this->model_users->is_overlap_tmp_uid($str) && $this->model_users->is_overlap_uid($str) ){
 			$this->form_validation->set_message('username_check','入力された %s '.$str.' は既に使われております。');
 			return false;
 		}
