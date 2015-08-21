@@ -11,7 +11,7 @@
 
 	<?php if($this->session->userdata('userID') != "") { ?>
 		ログイン済みです。
-		<a href=<?php echo base_url();?>account>Account</a>
+		<a href=<?php echo base_url();?>profile/information/<?php echo $this->session->userdata('userID'); ?>>Account</a>
         <a href=<?php echo base_url();?>logout>Logout</a>
         <a href=<?php echo base_url();?>profile/infomation/<?php echo $this->session->userdata('userID');?>><img src=<?php echo "icon_URL"?></a>
 	<?php } else { ?>
