@@ -32,9 +32,27 @@ class Model_users extends CI_Model{
 	}
     //ユーザIDの重複チェック
 
-    //プロフィール取得
     public function getProfile($userID){
+        $result = array(
+            'userData' => $this->getUserData($userID),
+            'projects' => $this->getUserData($userID),
+            'follow' => $this->getFollowInfo($userID),
+            'followed' => $this->getFollowedInfo($userID)
+        );
+        return $result;
+    }
 
+    //プロフィール取得
+    public function getUserData($userID){
+        $this->db->where(array('userID' => $userID));
+        $query = $this->db->get('account');
+
+        if($query->num_rows() > 0){
+            return $query->result();
+        }else{
+            //とりあえず
+            return 0;
+        }
     }
 
     //プロジェクト取得
@@ -42,11 +60,27 @@ class Model_users extends CI_Model{
         $this->db->where(array('ownerUserID' => $userID));
         $query = $this->db->get('project');
 
-        return $query->result();
+        if($query->num_rows() > 0){
+            return $query->result();
+        }else{
+            //とりあえず
+            return 0;
+        }
     }
 
     //フォロー情報取得
     public function getFollowInfo($userID){
+        $this->db->where(array('userID' => $userID));
+        $query = $this->db->get('follow');
 
+        return $query->result();
+    }
+
+    //フォロワー情報取得
+    public function getFollowedInfo($userID){
+        $this->db->where(array('userFollowingID' => $userID));
+        $query = $this->db->get('follow');
+
+        return $query->result();
     }
 }
