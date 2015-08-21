@@ -14,29 +14,26 @@
     <?php
 
     echo form_open("signup/validation");
-	echo validation_errors();
-    
+	
 	echo "<p>userID: ";
-    echo form_input("userID");
-    //echo form_error("userID");
+    echo form_input("userID", set_value('userID'));
     echo " 【必須】 </p>";
-
+	echo form_error('userID');
+	
     echo "<p>password: ";
-    echo form_password("password");
-    //echo form_error("password");
+    echo form_password("password", set_value('password'));
     echo " 【必須】 </p>";
+	echo form_error('password');
 	
     echo "<p>Email  : ";
-    echo form_input("email", $this->input->post("email"));
-    //echo form_error("email");
-    echo "</p>";
-	
-    echo "<p>";
-    echo form_submit("signin_submit", "送信");
+    echo form_input("email", set_value('email'));
     echo " 【必須】 </p>";
+	echo form_error('email');
+	
+	//送信ボタン
+    echo form_submit("signin_submit", "送信");
 
     echo form_close();
-
     ?>
 
 </div>

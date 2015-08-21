@@ -30,7 +30,6 @@ class Model_users extends CI_Model{
 
 		return $icon;
 	}
-    //ユーザIDの重複チェック
 
     public function getProfile($userID){
         $result = array(
