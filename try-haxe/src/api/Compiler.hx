@@ -365,7 +365,7 @@ class Compiler {
 				var rset2 = cnx.request("SELECT projectID FROM project where projectID = \"" + program.uid + "\";");
 				//重複無しならデータベースに登録
 				if (rset2.length == 0) {
-					cnx.request("INSERT INTO `project`(`projectID`, `projectName` ,`ownerUserID`, `pv`, `url`) VALUES (\""+program.uid+"\", \""+projectName+"\",\""+userID+"\","+0+",\"http://localhost/haxeon/try-haxe/index.html#"+program.uid+"\")");
+					cnx.request("INSERT INTO `project`(`projectID`, `projectName` ,`ownerUserID`, `pv`, `url`) VALUES (\""+program.uid+"\", \""+projectName+"\",\""+userID+"\","+0+",\"http://localhost/haxeon2/try-haxe/index.html#"+program.uid+"\")");
 					html.body.push("<br><H3>データベースにIDを登録しました。</H3>");
 				}
 			}
@@ -375,12 +375,12 @@ class Compiler {
 				for (row in rset) {
 					html.body.push("プロジェクトID : "+row.projectID+" , 所有者 : "+userID+" , プロジェクト名 : "+projectName);
 				}
-				cnx.request("UPDATE project SET projectID = \""+program.uid+"\",modified = \""+Date.now().toString()+"\" , url = \"http://localhost/haxeon/try-haxe/index.html#"+program.uid+"\" WHERE ownerUserID = '" + userID + "' AND projectName = '" + projectName+"';");
+				cnx.request("UPDATE project SET projectID = \""+program.uid+"\",modified = \""+Date.now().toString()+"\" , url = \"http://localhost/haxeon2/try-haxe/index.html#"+program.uid+"\" WHERE ownerUserID = '" + userID + "' AND projectName = '" + projectName+"';");
 			}
-			
+
 			//日付取得
 			//html.body.push(Date.now().toString());	//デバッグ
-			
+
 			cnx.close();
 		}
 
