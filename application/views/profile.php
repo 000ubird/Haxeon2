@@ -16,11 +16,6 @@
         $email = $row->userMail;
     }
 
-    foreach($projects as $row){
-        $pid = $row->projectID;
-        $projectName = $row->projectName;
-    }
-
     ?>
 <!--  単一表示例  -->
     <p><?php echo $uid; ?></p>
@@ -46,9 +41,13 @@
 
         <div class="recently">
 <!--      複数項目ある場合の書き方例      -->
-            <p><?php foreach($projects as $project){
-                    echo '<p>'.$project->projectID.'</p>';
-                }?></p>
+            <?php
+            if($projects != 0) {
+                foreach ($projects as $project) {
+                    echo '<p><a href=' . $project->url . '>' . $project->projectID . '</a></p>';
+                }
+            }
+            ?>
         </div>
 
         <div class="following">
@@ -56,7 +55,5 @@
         </div>
 
     </div>
-
-</div>
 </body>
 </html>
