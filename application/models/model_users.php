@@ -79,7 +79,7 @@ class Model_users extends CI_Model{
 		$data = array(
 			'userID' => $this->input->post('userID'),
 			'password' => $this->input->post('password'),	//暗号化必要?
-			'mail' => $this->input->post('email'),
+			'userMail' => $this->input->post('email'),
 			'registKey'=> $key
 		);
 		
@@ -97,7 +97,7 @@ class Model_users extends CI_Model{
 				'userID' => $row->userID,
 				'userPass' => $row->password,
 				'userName' => $row->userID,
-				'userMail' => $row->mail,
+				'userMail' => $row->userMail
 			);
 			if ($this->db->insert("account", $info)) {
 				echo "アカウントが有効になりました!";
@@ -107,9 +107,12 @@ class Model_users extends CI_Model{
 	
 	//ユーザIDの重複チェック
 	public function is_overlap_uid($userID) {
-		$this->db->where(array('userID' => $userID));
+		$this->db->where('userID',$userID);
 		$query1 = $this->db->get('account');
-		$query2 = $this->db->get('tmp_account');	//一時登録用のテーブルも確認
+		
+		//一時登録用のテーブルも確認
+		$this->db->where('userID',$userID);
+		$query2 = $this->db->get('tmp_account');
 		
 		//重複していた場合は真
 		return ($query1->num_rows() > 0 || $query2->num_rows() > 0);
@@ -117,8 +120,11 @@ class Model_users extends CI_Model{
 	
 	//メールアドレスの重複チェック
 	public function is_overlap_mail($mail) {
-		$this->db->where(array('userMail' => $mail));
+		$this->db->where('userMail',$mail);
 		$query1 = $this->db->get('account');
+		
+		//一時登録用のテーブルも確認
+		$this->db->where('userMail',$mail);
 		$query2 = $this->db->get('tmp_account');
 		
 		//重複していた場合は真

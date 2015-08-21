@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 2015 年 8 朁E21 日 11:43
+-- Generation Time: 2015 年 8 朁E21 日 14:30
 -- サーバのバージョン： 5.6.24
 -- PHP Version: 5.6.8
 
@@ -29,16 +29,9 @@ SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS `tmp_account` (
   `userID` text NOT NULL,
   `password` text NOT NULL,
-  `mail` text NOT NULL,
+  `userMail` text NOT NULL,
   `registKey` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='サインアップ時に一時的にアカウント情報を登録しておくテーブルです。';
-
---
--- テーブルのデータのダンプ `tmp_account`
---
-
-INSERT INTO `tmp_account` (`userID`, `password`, `mail`, `registKey`) VALUES
-('user3', '1234', 'delldell201507@gmail.com', '1a87fdd99ee7d8da100d057d274a706e');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
