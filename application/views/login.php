@@ -7,23 +7,25 @@ echo form_open("login/validation");
 
 echo validation_errors();
 
-echo "<p>userID*: ";
-echo form_input("userID");
-echo "</p>";
+echo '<div class="row">';
+echo '<div class="input-field col s12">';
+echo '<input name="userID" type="text" class="validate">';
+echo '<label for="userID">userID</label>';
+echo '</div>';
+echo '</div>';
 
-echo "<p>password*: ";
-echo form_password("password");
-echo "</p>";
+echo '<div class="row">';
+echo '<div class="input-field col s12">';
+echo '<input name="password" type="text" class="validate">';
+echo '<label for="password">password</label>';
+echo '</div>';
+echo '</div>';
 
-echo "<p>";
-?>
-
-<button class="btn waves-effect waves-light amber accent-4" type="submit" name="action">Login
-    <i class="material-icons">input</i>
-</button>
-
-<?php
-echo "</p>";
+echo '<div class="row">';
+echo '<button class="btn waves-effect waves-light orange darken-4" style="float:right" type="submit" name="action">Login';
+echo '<i class="material-icons">input</i>';
+echo '</button>';
+echo '</div>';
 
 echo form_close();
 
