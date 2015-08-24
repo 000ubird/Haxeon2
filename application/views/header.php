@@ -28,17 +28,17 @@
 
             <!--     PCサイズでの表示       -->
             <ul class="right hide-on-med-and-down">
-                <li><a href="createproject">Create Code</a></li>
+                <li><a href="<?php echo base_url() ?>createproject">Create Code</a></li>
                 <li><a href="">Ranking</a></li>
-                <li><a href="profile/information/<?php echo $this->session->userdata('userID');?>">Profile</a></li>
-                <li><a href="logout">Logout</a></li>
+                <li><a href=<?php echo base_url() ?>"profile/information/<?php echo $this->session->userdata('userID');?>">Profile</a></li>
+                <li><a href="<?php echo base_url() ?>logout">Logout</a></li>
             </ul>
             <!--      スマホサイズでの表示      -->
             <ul class="side-nav" id="mobile-demo">
-                <li><a href="createproject">Create Code</a></li>
+                <li><a href="<?php echo base_url() ?>createproject">Create Code</a></li>
                 <li><a href="">Ranking</a></li>
-                <li><a href="profile/information/<?php echo $this->session->userdata('userID');?>">Profile</a></li>
-                <li><a href="logout">Logout</a></li>
+                <li><a href="<?php echo base_url() ?>profile/information/<?php echo $this->session->userdata('userID');?>">Profile</a></li>
+                <li><a href="<?php echo base_url() ?>logout">Logout</a></li>
             </ul>
         </div>
     </nav>
