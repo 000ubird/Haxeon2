@@ -38,12 +38,16 @@ echo '<div class="row">';
             foreach ($projects as $project) {
 
                 echo '    <div class="col s3">';
-                echo '<a href=' . $project->url . ' />';
+                echo '<a href=' . $project->url . '>';
                 echo '        <div class="card blue-grey lighten-4">';
                 echo '            <div class="card-content">';
-                echo '                <div class="card-title">' . $project->projectName . '</div>';
-                echo '               <p>'. $project->projectID . ', pv:' . $project->pv . '</p>';
+                echo '                <span class="card-title">' . $project->projectName . '</span>';
+                echo '                <p>'. $project->projectID . ', pv:' . $project->pv . '</p>';
                 echo '            </div>';
+                echo '            <div class="card-action">';
+                echo '              <a href="';
+                echo                    base_url().'profile/projectsettings/'. $project->projectID .'"><i class="material-icons">settings</i></a>';
+                echo '             </div>';
                 echo '        </div>';
                 echo '    </div>';
 
