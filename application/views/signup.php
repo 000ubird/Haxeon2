@@ -21,8 +21,8 @@ echo form_error('email');
 
 ?>
 
-<button class="btn waves-effect waves-light amber accent-4" type="submit" name="action">Login
-    <i class="material-icons">input</i>
+<button class="btn waves-effect waves-light amber accent-4" type="submit" name="action">Signup
+    <i class="material-icons">open_in_new</i>
 </button>
 
 <?php
