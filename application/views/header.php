@@ -7,6 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url()?>js/footerFixed.js"></script>
 <script type="text/javascript" src="<?php echo base_url()?>js/materialize.min.js"></script>
 
 <!--  追加したjs。あとで別ファイルにしてsrcで読み込む  -->
