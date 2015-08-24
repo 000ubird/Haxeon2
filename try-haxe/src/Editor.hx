@@ -49,7 +49,7 @@ class Editor {
 	public function new(){
     //追加部分
 	//APIからユーザID情報とプロジェクト名情報を持ってくる
-	var con = new Http("http://localhost/haxeon2/userinfo/index");
+	var con = new Http("http://localhost/haxeon2/haxeonhandler/get_is_login/");
 	con.onError = onError;
 	con.onData = onResult;
 	con.request(false);
@@ -302,7 +302,7 @@ class Editor {
 
     // auto-fork
 	program.uid = null;
-	var con = new Http("http://localhost/haxeon2/userinfo/index");
+	var con = new Http("http://localhost/haxeon2/haxeonhandler/get_is_login/");
 	con.onError = onError;
 	con.onData = onResult2;
 	con.request(false);
@@ -607,7 +607,7 @@ class Editor {
 		//trace(data+"2");	//デバッグ
 		var userDatas = Json.parse(data);
 
-		var con = new Http("http://localhost/haxeon/pv_count_up.php?uid="+program.userID+"&pName="+program.projectName);
+		var con = new Http("http://localhost/haxeon2/haxeonhandler/update_pv/"+program.userID+"/"+program.projectName);
 		con.request(false);
 
 		//フォークチェック!!!!
