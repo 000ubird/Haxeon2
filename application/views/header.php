@@ -23,7 +23,7 @@
 <body>
 <header>
     <nav>
-        <div class="nav-wrapper amber accent-4">
+        <div class="nav-wrapper orange">
             <a href="<?php echo base_url() ?>" class="brand-logo">Haxeon</a>
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
 
