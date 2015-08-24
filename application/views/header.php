@@ -29,6 +29,7 @@
 
             <!--     PCサイズでの表示       -->
             <ul class="right hide-on-med-and-down">
+                <li><a href="<?php echo base_url() ?>signup">Sign up</a></li>
                 <li><a href="<?php echo base_url() ?>createproject">Create Code</a></li>
                 <li><a href="">Ranking</a></li>
                 <li><a href=<?php echo base_url() ?>profile/information/<?php echo $this->session->userdata('userID');?>>Profile</a></li>
@@ -36,6 +37,7 @@
             </ul>
             <!--      スマホサイズでの表示      -->
             <ul class="side-nav" id="mobile-demo">
+                <li><a href="<?php echo base_url() ?>signup">Sign up</a></li>
                 <li><a href="<?php echo base_url() ?>createproject">Create Code</a></li>
                 <li><a href="">Ranking</a></li>
                 <li><a href=<?php echo base_url() ?>profile/information/<?php echo $this->session->userdata('userID');?>>Profile</a></li>
