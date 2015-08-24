@@ -1,10 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>login</title>
-</head>
-<body>
 <h1>ログインページ</h1>
 <h3>セッション情報</h3>
 <?php
@@ -22,17 +15,16 @@ echo "<p>password*: ";
 echo form_password("password");
 echo "</p>";
 
-$data = array(
-    'value' => "login",
-    'name' => "signin_submit",
-);
-
 echo "<p>";
-echo form_submit($data);
+?>
+
+<button class="btn waves-effect waves-light amber accent-4" type="submit" name="action">Login
+    <i class="material-icons">input</i>
+</button>
+
+<?php
 echo "</p>";
 
 echo form_close();
 
 ?>
-</body>
-</html>

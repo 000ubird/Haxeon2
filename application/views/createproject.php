@@ -1,10 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>create</title>
-</head>
-<body>
 <h1>新規プロジェクトページ</h1>
 <!--テスト表示-->
 <h2>セッション情報</h2>
@@ -27,11 +20,15 @@ $data = array(
 );
 
 echo "<p>";
-echo form_submit($data);
+?>
+
+<button class="btn waves-effect waves-light amber accent-4" type="submit" name="action">Create
+    <i class="material-icons">note_add</i>
+</button>
+
+<?php
 echo "</p>";
 
 echo form_close();
 
 ?>
-</body>
-</html>
