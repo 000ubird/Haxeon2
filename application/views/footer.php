@@ -1,3 +1,5 @@
+</div>
+
 <footer class="page-footer orange" id="footer">
     <div class="container">
         <div class="row">
