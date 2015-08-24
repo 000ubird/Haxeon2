@@ -1,49 +1,65 @@
-<h1>セッション情報</h1>
+<!--<h1>セッション情報</h1>-->
+<h2>profile</h2>
 
 <?php
 
-print_r($this->session->all_userdata());
+//print_r($this->session->all_userdata());
 
 foreach($user as $row){
     $uid = $row->userID;
     $email = $row->userMail;
 }
 
-?>
-<!--  単一表示例  -->
-<p><?php echo $uid; ?></p>
-<p><?php echo $email; ?></p>
 
-<div class="profile">
-    <!--   アイコン、ユーザー名、フォロー系、ファボ、プロフィール     -->
-    <div class="icon">
+echo $uid;
+echo $email;
 
-    </div>
+echo '<div class="profile">';
+echo '    <div class="icon">';
 
-    <div class="relation">
-        <!--     コード、フォーク、ファボ、フォロー、URLなど     -->
-    </div>
+echo '    </div>';
 
-    <div class="comment">
+echo '    <div class="relation">';
 
-    </div>
+echo '    </div>';
 
-</div>
+echo '    <div class="comment">';
 
-<div class="contents">
+echo '    </div>';
 
-    <div class="recently">
-        <!--      複数項目ある場合の書き方例      -->
-        <?php
+echo '</div>';
+
+echo '<div class="contents">';
+
+echo '    <div class="recently">';
+echo '<div class="row">';
+        //<!--      複数項目ある場合の書き方例      -->
         if($projects != 0) {
             foreach ($projects as $project) {
-                echo '<p><a href=' . $project->url . '>' . $project->projectID . '</a></p>';
+
+                echo '    <div class="col s3">';
+                echo '<a href=' . $project->url . '>';
+                echo '        <div class="card blue-grey lighten-4">';
+                echo '            <div class="card-content">';
+                echo '                <span class="card-title">' . $project->projectName . '</span>';
+                echo '                <p>'. $project->projectID . ', pv:' . $project->pv . '</p>';
+                echo '            </div>';
+                echo '            <div class="card-action">';
+                echo '              <a href="';
+                echo                    base_url().'profile/projectsettings/'. $project->projectID .'"><i class="material-icons">settings</i></a>';
+                echo '             </div>';
+                echo '        </div>';
+                echo '    </div>';
+
+                //echo '<p><a href=' . $project->url . '>' . $project->projectID . '</a></p>';
             }
         }
-        ?>
-    </div>
+echo '</div>';
+    echo '</div>';
 
-    <div class="following">
+    echo '<div class="following">';
 
-    </div>
-</div>
+    echo '</div>';
+echo '</div>';
+
+?>

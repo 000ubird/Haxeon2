@@ -37,4 +37,14 @@ class Profile extends CI_Controller {
         return $data;
     }
 
+    /**
+     * projectsettings
+     * プロジェクトの所有者のみが変更できる設定を行う
+     * タグ設定やプロジェクトの削除など
+     */
+    public function projectsettings($projectID){
+        $this->load->view('header');
+        $this->load->view('projectsettings', $projectID);
+        $this->load->view('footer');
+    }
 }
