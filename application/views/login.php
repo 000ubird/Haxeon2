@@ -22,7 +22,7 @@ echo '</div>';
 echo '</div>';
 
 echo '<div class="row">';
-echo '<button class="btn waves-effect waves-light orange darken-4" style="float:right" type="submit" name="action">Login';
+echo '<button class="btn waves-effect waves-light orange darken-4" style="float:right" type="submit" name="action">Login ';
 echo '<i class="material-icons">input</i>';
 echo '</button>';
 echo '</div>';
