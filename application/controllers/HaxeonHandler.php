@@ -1,9 +1,14 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Userinfo extends CI_Controller {
-
+//try-haxeからアクセスする
+class HaxeonHandler extends CI_Controller {
+	
 	public function index() {
+		//echo "this is index";
+	}
+
+	public function get_is_login() {
 		if(($this->session->userdata('userID') == null)) {
 			echo '{ "error":"not login"}';
 			exit;
@@ -17,7 +22,6 @@ class Userinfo extends CI_Controller {
 		echo '{"userID":"'.$this->session->userdata('userID').'","projectName":"'.$this->session->userdata('projectName').'"}';
 	}
 	
-	//http://localhost/haxeon2/userinfo/update_pv/Tom0/HelloWorld_tom0
 	public function update_pv($uid, $projectName) {
 		$this->load->model('model_project');
 		$this->model_project->pvCountUp($uid,$projectName);
