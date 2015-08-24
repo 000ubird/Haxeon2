@@ -20,4 +20,12 @@ class Model_project extends CI_Model{
 		//echo $pv;	//デバッグ
 		$this->db->update('project', array('pv'=>$pv ),$array);
 	}
+	
+	public function getProject($beginDate,$endDate,$top,$end,$order) {
+		$this->db->where("modified BETWEEN '$beginDate' AND '$endDate'");
+		$this->db->order_by($order, "desc");
+		$result = $this->db->get('project',$top,$end);
+		return $result->result();
+	}
+	
 }
