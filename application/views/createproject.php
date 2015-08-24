@@ -10,24 +10,18 @@ echo form_open("createproject/validation");
 
 echo validation_errors();
 
-echo "<p>プロジェクト名*: ";
-echo form_input("projectName");
-echo "</p>";
+echo '<div class="row">';
+echo '<div class="input-field col s12">';
+echo '<input name="projectName" type="text">';
+echo '<label for="projectName">projectName</label>';
+echo '</div>';
+echo '</div>';
 
-$data = array(
-    'value' => "create",
-    'name' => "signin_submit",
-);
-
-echo "<p>";
-?>
-
-<button class="btn waves-effect waves-light amber accent-4" type="submit" name="action">Create
-    <i class="material-icons">note_add</i>
-</button>
-
-<?php
-echo "</p>";
+echo '<div class="row">';
+echo '<button class="btn waves-effect waves-light orange darken-4" style="float:right" type="submit" name="action">Create ';
+echo '<i class="material-icons">note_add</i>';
+echo '</button>';
+echo '</div>';
 
 echo form_close();
 

@@ -4,27 +4,35 @@
 
 echo form_open("signup/validation");
 
-echo "<p>userID: ";
-echo form_input("userID", set_value('userID'));
-echo " 【必須】 </p>";
+echo '<div class="row">';
+echo '<div class="input-field col s12">';
+echo '<input name="userID" type="text">';
+echo '<label for="userID">userID</label>';
+echo '</div>';
 echo form_error('userID');
+echo '</div>';
 
-echo "<p>password: ";
-echo form_password("password", set_value('password'));
-echo " 【必須】 </p>";
+echo '<div class="row">';
+echo '<div class="input-field col s12">';
+echo '<input name="password" type="text">';
+echo '<label for="password">password</label>';
+echo '</div>';
 echo form_error('password');
+echo '</div>';
 
-echo "<p>Email  : ";
-echo form_input("email", set_value('email'));
-echo " 【必須】 </p>";
+echo '<div class="row">';
+echo '<div class="input-field col s12">';
+echo '<input name="email" type="text">';
+echo '<label for="email">email</label>';
+echo '</div>';
 echo form_error('email');
+echo '</div>';
 
-?>
+echo '<div class="row">';
+echo '<button class="btn waves-effect waves-light orange darken-4" style="float:right" type="submit" name="action">Signup';
+echo '<i class="material-icons">open_in_new</i>';
+echo '</button>';
+echo '</div>';
 
-<button class="btn waves-effect waves-light amber accent-4" type="submit" name="action">Signup
-    <i class="material-icons">open_in_new</i>
-</button>
-
-<?php
 echo form_close();
 ?>
