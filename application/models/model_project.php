@@ -56,4 +56,12 @@ class Model_project extends CI_Model{
         return $tagname;
     }
 
+    //タグの有無を取得する。あればtrueになる
+    public function isTag($tagname){
+        $array = array('tag' => $tagname);
+        $query = $this->db->get_where('tag', $array);
+
+        return ($query->num_rows() > 0);
+    }
+
 }
