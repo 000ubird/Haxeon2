@@ -30,7 +30,7 @@ class Model_project extends CI_Model{
     }
 
     //プロジェクト設定ページに必要な情報を返す
-    public function getProjectInfo($projectID) {
+    public function getTag($projectID) {
 
     }
 

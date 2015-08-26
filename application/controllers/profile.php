@@ -5,8 +5,9 @@ class Profile extends CI_Controller {
 
     //一応おいてあるindex。本体のみ表示する
     public function index() {
-        //$this->load->view('header');
-        $this->load->view('profile');
+        $this->load->view('header');
+        $this->load->view('haxeon2');
+        $this->load->view('footer');
     }
 
     public function information($userID){
@@ -46,12 +47,13 @@ class Profile extends CI_Controller {
         $this->load->model('model_project');
         //sessionのuserIDとprojectIDの所有者が同じかチェック
         if($this->model_project->isOwner($projectID)) {
+            $data['tags'] = $this->model_project->getTag($projectID);
 
             $this->load->view('header');
             $this->load->view('projectsettings', $projectID);
             $this->load->view('footer');
         }else{
-
+            $this->index();
         }
     }
 }
