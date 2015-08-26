@@ -30,7 +30,7 @@ class Model_project extends CI_Model{
     }
 
     //タグ情報を返す
-    public function getTagID($projectID) {
+    public function getTagIDs($projectID) {
         $ids = array();
 
         $array = array('projectID' => $projectID);
@@ -64,6 +64,22 @@ class Model_project extends CI_Model{
         return ($query->num_rows() > 0);
     }
 
+    //tagテーブルのタグ名からidを取得する
+    public function getTagID($tagname){
+        $this->db->select('id');
+        $array = array('tag' => $tagname);
+        $query = $this->db->get_where('tag', $array);
+
+        $id = 0;
+
+        //ひとまずこれ。idのみなら綺麗にできないのかな
+        foreach($query->result()->id as $i){
+            $id = $i;
+        }
+
+        return $id;
+    }
+
     //タグをtagテーブルに登録する
     //返り値 登録したタグのid
     public function createTag($tagname){
@@ -84,6 +100,11 @@ class Model_project extends CI_Model{
         );
 
         $this->db->insert('tagmap', $array);
+    }
+
+    //tagmapテーブルから削除する
+    public function deleteTagMap(){
+
     }
 
 }

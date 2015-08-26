@@ -8,7 +8,7 @@ class Tag {
 
         $CI->load->model('model_project');
 
-        $ids = $CI->model_project->getTagID($projectID);
+        $ids = $CI->model_project->getTagIDs($projectID);
         $tags = array();
 
         foreach($ids as $id){
