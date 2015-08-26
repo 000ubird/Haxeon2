@@ -14,7 +14,7 @@ echo '</div>';
 
 echo '<div class="row">';
 echo '<div class="input-field col s12">';
-echo '<input name="password" type="text">';
+echo '<input name="password" type="password">';
 echo '<label for="password">password</label>';
 echo '</div>';
 echo form_error('password');
@@ -22,7 +22,7 @@ echo '</div>';
 
 echo '<div class="row">';
 echo '<div class="input-field col s12">';
-echo '<input name="email" type="text">';
+echo '<input name="email" type="email">';
 echo '<label for="email">email</label>';
 echo '</div>';
 echo form_error('email');
