@@ -10,13 +10,6 @@
 <script type="text/javascript" src="<?php echo base_url()?>js/footerFixed.js"></script>
 <script type="text/javascript" src="<?php echo base_url()?>js/materialize.min.js"></script>
 
-<!--  追加したjs。あとで別ファイルにしてsrcで読み込む  -->
-<script type="text/javascript">
-    $(document).ready(function(){
-        $(".button-collapse").sideNav();
-    });
-</script>
-
     <title>haxeon</title>
 </head>
 
