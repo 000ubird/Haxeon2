@@ -16,7 +16,7 @@ echo '</div>';
 
 echo '<div class="row">';
 echo '<div class="input-field col s12">';
-echo '<input name="password" type="text" class="validate">';
+echo '<input name="password" type="password" class="validate">';
 echo '<label for="password">password</label>';
 echo '</div>';
 echo '</div>';
