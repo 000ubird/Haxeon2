@@ -2,20 +2,14 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Ranking extends CI_Controller {
-
-	public function index() {
-		$this->load->view('header');
-		$this->load->view('ranking');
-		$this->load->view('footer');
-	}
 	
-	public function paging($days, $order, $offset) {
+	public function index($days, $order, $offset) {
 		$this->load->model('model_project');
 		$this->load->library('pagination');
 		
-		$config['base_url'] = 'http://localhost/haxeon2/ranking/paging/'.$days.'/'.$order.'/';
+		$config['base_url'] = 'http://localhost/haxeon2/ranking/index/'.$days.'/'.$order.'/';
 		$config['total_rows'] = $this->model_project->getProjectNum();
-		$config['per_page'] = 20;
+		$config['per_page'] = 30;
 		$config['uri_segment'] = 5;
 		
 		//Viewに関する指定
@@ -46,10 +40,6 @@ class Ranking extends CI_Controller {
 		
 		$this->pagination->initialize($config); 
 		
-		$this->load->view('header');
-		$this->load->view('ranking');
-		$this->load->view('footer');
-		
 		$beginDate = date('Y-m-d H:i:s',strtotime('-1 days'));
 		$endDate = date('Y-m-d H:i:s');
 		switch($days) {
@@ -59,7 +49,11 @@ class Ranking extends CI_Controller {
 			default :    $beginDate = date('Y-m-d H:i:s', strtotime('-1 days')); break;
 		}
 		
-		$pro = $this->model_project->getProject($beginDate, $endDate, $config['per_page'], $offset, $order);
-		//print_r($pro);
+		$projects = $this->model_project->getProject($beginDate, $endDate, $config['per_page'], $offset, $order);
+		
+		$data['ranking'] = array('days'=>$days,'order'=>$order,'cur_page'=>$offset,'projects'=>$projects);
+		$this->load->view('header');
+		$this->load->view('ranking',$data);
+		$this->load->view('footer');
 	}
 }
