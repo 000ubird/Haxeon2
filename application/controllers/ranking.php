@@ -3,14 +3,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Ranking extends CI_Controller {
 	
-	public function index($days, $order, $offset) {
+	public function index($days, $order, $num ,$offset) {
 		$this->load->model('model_project');
 		$this->load->library('pagination');
 		
-		$config['base_url'] = 'http://localhost/haxeon2/ranking/index/'.$days.'/'.$order.'/';
+		$config['base_url'] = 'http://localhost/haxeon2/ranking/index/'.$days.'/'.$order.'/'.$num.'/';
 		$config['total_rows'] = $this->model_project->getProjectNum();
-		$config['per_page'] = 30;
-		$config['uri_segment'] = 5;
+		if ($num > 100 ) $num = 100;	//最高数以上の場合は弾く
+		$config['per_page'] = $num;
+		$config['uri_segment'] = 6;
 		
 		//Viewに関する指定
 		$config['full_tag_open'] = '<ul class="pagination">';
@@ -51,7 +52,7 @@ class Ranking extends CI_Controller {
 		
 		$projects = $this->model_project->getProject($beginDate, $endDate, $config['per_page'], $offset, $order);
 		
-		$data['ranking'] = array('days'=>$days,'order'=>$order,'cur_page'=>$offset,'projects'=>$projects);
+		$data['ranking'] = array('days'=>$days,'order'=>$order,'num'=>$num,'cur_page'=>$offset,'projects'=>$projects);
 		$this->load->view('header');
 		$this->load->view('ranking',$data);
 		$this->load->view('footer');
