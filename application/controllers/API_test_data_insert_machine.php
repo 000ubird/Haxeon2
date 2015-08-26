@@ -32,7 +32,7 @@ class API_test_data_insert_machine extends CI_Controller {
 				'projectID' => $this->makeRandStr(5),
 				'projectName' => "HelloWorld_Tom".$i,
 				'ownerUserID' => "Tom".$i,
-				'pv' => 0,
+				'pv' => $i,
 				'fork' => 0,
 				'url' => "http://localhost/haxeon2/try-haxe/index.html#",
 			);
@@ -42,7 +42,7 @@ class API_test_data_insert_machine extends CI_Controller {
 				'projectID' => $this->makeRandStr(5),
 				'projectName' => "HelloWorld_Jack".$i,
 				'ownerUserID' => "Jack".$i,
-				'pv' => 0,
+				'pv' => $i,
 				'fork' => 0,
 				'url' => "http://localhost/haxeon2/try-haxe/index.html#",
 			);

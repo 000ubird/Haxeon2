@@ -20,4 +20,19 @@ class Model_project extends CI_Model{
 		//echo $pv;	//デバッグ
 		$this->db->update('project', array('pv'=>$pv ),$array);
 	}
+	
+	//範囲を指定してプロジェクトを取得
+	public function getProject($beginDate,$endDate,$top,$end,$order) {
+		$this->db->where("modified BETWEEN '$beginDate' AND '$endDate'");
+		$this->db->order_by($order, "desc");
+		$result = $this->db->get('project',$top,$end);
+		return $result->result();
+	}
+	
+	//登録されているプロジェクトの総数を取得
+	public function getProjectNum(){
+		$query = $this->db->query('SELECT * FROM project');
+		return $query->num_rows();
+	}
+	
 }
