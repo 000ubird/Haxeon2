@@ -76,4 +76,14 @@ class Model_project extends CI_Model{
         return $this->db->insert_id();
     }
 
+    //tagmapテーブルに登録する
+    public function createTagMap($projectID, $tagID){
+        $array = array(
+            'projectID' => $projectID,
+            'tagID' => $tagID
+        );
+
+        $this->db->insert('tagmap', $array);
+    }
+
 }
