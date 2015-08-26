@@ -103,8 +103,13 @@ class Model_project extends CI_Model{
     }
 
     //tagmapテーブルから削除する
-    public function deleteTagMap(){
+    public function deleteTagMap($projectID, $tagID){
+        $array = array(
+            'projectID' => $projectID,
+            'tagID' => $tagID
+        );
 
+        $this->db->delete('tagmap', $array);
     }
 
 }
