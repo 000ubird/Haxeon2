@@ -43,8 +43,15 @@ class Profile extends CI_Controller {
      * タグ設定やプロジェクトの削除など
      */
     public function projectsettings($projectID){
-        $this->load->view('header');
-        $this->load->view('projectsettings', $projectID);
-        $this->load->view('footer');
+        $this->load->model('model_project');
+        //sessionのuserIDとprojectIDの所有者が同じかチェック
+        if($this->model_project->isOwner($projectID)) {
+
+            $this->load->view('header');
+            $this->load->view('projectsettings', $projectID);
+            $this->load->view('footer');
+        }else{
+
+        }
     }
 }
