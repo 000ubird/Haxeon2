@@ -24,7 +24,7 @@
             <ul class="right hide-on-med-and-down">
                 <li><a href="<?php echo base_url() ?>signup">Sign up</a></li>
                 <li><a href="<?php echo base_url() ?>createproject">Create Code</a></li>
-                <li><a href="<?php echo base_url() ?>ranking/index/day/pv/0">Ranking</a></li>
+                <li><a href="<?php echo base_url() ?>ranking/index/day/pv/30/0">Ranking</a></li>
                 <li><a href=<?php echo base_url() ?>profile/information/<?php echo $this->session->userdata('userID');?>>Profile</a></li>
                 <li><a href="<?php echo base_url() ?>logout">Logout</a></li>
             </ul>
@@ -32,7 +32,7 @@
             <ul class="side-nav" id="mobile-demo">
                 <li><a href="<?php echo base_url() ?>signup">Sign up</a></li>
                 <li><a href="<?php echo base_url() ?>createproject">Create Code</a></li>
-                <li><a href="<?php echo base_url() ?>ranking/index/day/pv/0">Ranking</a></li>
+                <li><a href="<?php echo base_url() ?>ranking/index/day/pv/30/0">Ranking</a></li>
                 <li><a href=<?php echo base_url() ?>profile/information/<?php echo $this->session->userdata('userID');?>>Profile</a></li>
                 <li><a href="<?php echo base_url() ?>logout">Logout</a></li>
             </ul>
