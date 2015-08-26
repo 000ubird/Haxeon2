@@ -6,7 +6,8 @@ echo $this->pagination->create_links();
 $days = $ranking['days'];
 $order = $ranking['order'];
 $num = $ranking['num'];
-$cur_page = $ranking['cur_page'];
+//$cur_page = $ranking['cur_page'];
+$cur_page = 0;
 $projects = $ranking['projects'];
 echo '<ul id="dropdown2" class="dropdown-content">';
 echo '<li><a href="http://localhost/haxeon2/ranking/index/day/'.$order.'/'.$num.'/'.$cur_page.'/">1日</a></li>';
@@ -25,7 +26,7 @@ echo '<a class="btn dropdown-button" href="#!" data-activates="dropdown3">並び
 echo '<ul id="dropdown4" class="dropdown-content">';
 echo '<li><a href="http://localhost/haxeon2/ranking/index/'.$days.'/pv/15/'.$cur_page.'/">15個</a></li>';
 echo '<li><a href="http://localhost/haxeon2/ranking/index/'.$days.'/fork/30/'.$cur_page.'/">30個</a></li>';
-echo '<li><a href="http://localhost/haxeon2/ranking/index/'.$days.'/fork/30/'.$cur_page.'/">60個</a></li>';
+echo '<li><a href="http://localhost/haxeon2/ranking/index/'.$days.'/fork/60/'.$cur_page.'/">60個</a></li>';
 echo '<li><a href="http://localhost/haxeon2/ranking/index/'.$days.'/pv/100/'.$cur_page.'/">100個</a></li>';
 echo '</ul>';
 echo '<a class="btn dropdown-button" href="#!" data-activates="dropdown4">表示数<i class="mdi-navigation-arrow-drop-down right"></i></a>';

@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Ranking extends CI_Controller {
 	
-	public function index($days, $order, $num ,$offset) {
+	public function index($days = "day", $order = "pv ", $num = 0 ,$offset = 0) {
 		$this->load->model('model_project');
 		$this->load->library('pagination');
 		
