@@ -18,7 +18,7 @@ class Model_project extends CI_Model{
 		//PV数の取得と更新
 		foreach ($query->result() as $row) $pv = $row->pv+1;
 		//echo $pv;	//デバッグ
-		$this->db->update('project', array('pv'=>$pv ),$array);
+		$this->db->update('project', array('pv'=>$pv),$array);
 	}
 
     //プロジェクト所有者とログインユーザが同一ならtrueを返す
@@ -30,13 +30,30 @@ class Model_project extends CI_Model{
     }
 
     //タグ情報を返す
-    public function getTag($projectID) {
+    public function getTagID($projectID) {
+        $ids = array();
+
         $array = array('projectID' => $projectID);
+        //tagmapの情報を取得
         $query = $this->db->get_where('tagmap', $array);
+        foreach($query->result() as $res){
+            array_push($ids, $res->tagID);
+        }
 
-        //queryの結果(タグのid)から、タグテーブルで実際のタグ名を取得する
+        return $ids;
+    }
 
-        return $query->result();
+    //タグを取得する
+    public function getTag($id){
+        $array = array('id' => $id);
+        $query = $this->db->get_where('tag', $array);
+
+        $tagname = "";
+        foreach ($query->result() as $row) {
+            $tagname = $row->tag;
+        }
+
+        return $tagname;
     }
 
 }

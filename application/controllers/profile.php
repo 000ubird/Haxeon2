@@ -21,12 +21,6 @@ class Profile extends CI_Controller {
         $this->load->view('footer');
     }
 
-    /**
-     * 必要な処理
-     * プロフィールの取得
-     * フォロー、フォロワーの取得
-     * 作成したプロジェクトの取得
-     */
     private function getUserData($userID){
         $this->load->model('model_users');
 
@@ -45,9 +39,12 @@ class Profile extends CI_Controller {
      */
     public function projectsettings($projectID){
         $this->load->model('model_project');
+        $this->load->library('tag');
+        
         //sessionのuserIDとprojectIDの所有者が同じかチェック
         if($this->model_project->isOwner($projectID)) {
-            $data['tags'] = $this->model_project->getTag($projectID);
+
+            $data['tags'] = $this->tag->getTag($projectID);
 
             $this->load->view('header');
             $this->load->view('projectsettings', $data);

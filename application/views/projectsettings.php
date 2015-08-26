@@ -3,7 +3,7 @@
 <?php
 echo '<p>タグ</p>';
 foreach ($tags as $tag) {
-    echo '<p>'. $tag->tagID .'</p>';
+    echo '<p>'. $tag .'</p>';
 }
 
 ?>
