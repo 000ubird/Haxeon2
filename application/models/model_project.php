@@ -29,9 +29,14 @@ class Model_project extends CI_Model{
         return ($query->num_rows() > 0);
     }
 
-    //プロジェクト設定ページに必要な情報を返す
+    //タグ情報を返す
     public function getTag($projectID) {
+        $array = array('projectID' => $projectID);
+        $query = $this->db->get_where('tagmap', $array);
 
+        //queryの結果(タグのid)から、タグテーブルで実際のタグ名を取得する
+
+        return $query->result();
     }
 
 }

@@ -50,7 +50,7 @@ class Profile extends CI_Controller {
             $data['tags'] = $this->model_project->getTag($projectID);
 
             $this->load->view('header');
-            $this->load->view('projectsettings', $projectID);
+            $this->load->view('projectsettings', $data);
             $this->load->view('footer');
         }else{
             $this->index();
