@@ -29,6 +29,8 @@ echo '      <li class="comment">'. $comment .'</li>';
 echo '    </ul>';
 
 echo '      <a href="'. base_url() .'follow/accountfollow/'. $uid .'"><button class="follow btn btn-large waves-effect waves-light orange darken-4 z-depth-2 col s2 offset-s10">follow</button></a>';
+echo '      <a href="'. base_url() .'follow/accountunfollow/'. $uid .'"><button class="follow btn btn-large waves-effect waves-light cyan darken-4 z-depth-2 col s2 offset-s10">unfollow</button></a>';
+
 
 echo '</div>';
 
@@ -56,7 +58,7 @@ echo '      <h2>Projects</h2>';
                 echo '             </div>';
                 echo '        </div>';
                 echo '    </div>';
-                
+
             }
         }
 echo '    </div>';
