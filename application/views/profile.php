@@ -28,9 +28,9 @@ echo '      <li class="url">url: <a href='. $url .'>'. $url .'</a></li>';
 echo '      <li class="comment">'. $comment .'</li>';
 echo '    </ul>';
 
-if($isown){
+if($isown || !$this->session->userdata('userID')){
 
-}else {
+}else{
     if ($isfollow) {
         echo '      <a href="' . base_url() . 'follow/accountunfollow/' . $uid . '"><button class="follow btn btn-large waves-effect waves-light cyan darken-4 z-depth-2 col s2 offset-s10">unfollow</button></a>';
 
