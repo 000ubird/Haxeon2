@@ -28,8 +28,12 @@ echo '      <li class="url">url: <a href='. $url .'>'. $url .'</a></li>';
 echo '      <li class="comment">'. $comment .'</li>';
 echo '    </ul>';
 
-echo '      <a href="'. base_url() .'follow/accountfollow/'. $uid .'"><button class="follow btn btn-large waves-effect waves-light orange darken-4 z-depth-2 col s2 offset-s10">follow</button></a>';
-echo '      <a href="'. base_url() .'follow/accountunfollow/'. $uid .'"><button class="follow btn btn-large waves-effect waves-light cyan darken-4 z-depth-2 col s2 offset-s10">unfollow</button></a>';
+if($isfollow){
+    echo '      <a href="'. base_url() .'follow/accountunfollow/'. $uid .'"><button class="follow btn btn-large waves-effect waves-light cyan darken-4 z-depth-2 col s2 offset-s10">unfollow</button></a>';
+
+}else{
+    echo '      <a href="'. base_url() .'follow/accountfollow/'. $uid .'"><button class="follow btn btn-large waves-effect waves-light orange darken-4 z-depth-2 col s2 offset-s10">follow</button></a>';
+}
 
 
 echo '</div>';
