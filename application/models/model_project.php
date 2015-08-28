@@ -125,5 +125,9 @@ class Model_project extends CI_Model{
 		$query = $this->db->query("SELECT * FROM project WHERE modified BETWEEN '$beginDate' AND '$endDate'");
 		return $query->num_rows();
 	}
-
+	
+	//指定したユーザーが所持するプロジェクトを全て削除
+	public function deleteProject($userID){
+		$this->db->delete('project', array('ownerUserID'=>$userID));
+	}
 }

@@ -22,10 +22,11 @@ class Model_users extends CI_Model{
 		return $icon;
 	}
 
+	//プロフィールページの情報を連想配列で取得する
     public function getProfile($userID){
         $result = array(
             'userData' => $this->getUserData($userID),
-            'projects' => $this->getUserData($userID),
+            'projects' => $this->getProjects($userID),
             'follow' => $this->getFollowInfo($userID),
             'followed' => $this->getFollowedInfo($userID)
         );
@@ -140,5 +141,10 @@ class Model_users extends CI_Model{
 		
 		//重複していた場合は真
 		return ($query1->num_rows() > 0 || $query2->num_rows() > 0);
+	}
+	
+	//指定したユーザーを削除
+	public function deleteAccount($userID){
+		$this->db->delete('account', array('userID'=>$userID));
 	}
 }

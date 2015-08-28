@@ -62,4 +62,5 @@ echo '</div>';
     echo '</div>';
 echo '</div>';
 
+echo '<a class="waves-effect waves-light red btn" href="http://localhost/haxeon2/profile/delete"><i class="material-icons left">delete</i>DELETE ACCOUNT</a>';
 ?>
