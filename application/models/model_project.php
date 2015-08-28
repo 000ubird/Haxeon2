@@ -11,8 +11,8 @@ class Model_project extends CI_Model{
     }
 
 	//指定したプロジェクトのPV数を増やす
-	public function pvCountUp($uid, $projectName) {
-		$array = array('projectName' => $projectName, 'ownerUserID' => $uid);
+	public function pvCountUp($projectID) {
+		$array = array('projectID' => $projectID);
 		$query = $this->db->get_where('project', $array);
 
 		//PV数の取得と更新

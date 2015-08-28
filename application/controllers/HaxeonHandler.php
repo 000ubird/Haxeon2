@@ -22,8 +22,8 @@ class HaxeonHandler extends CI_Controller {
 		echo '{"userID":"'.$this->session->userdata('userID').'","projectName":"'.$this->session->userdata('projectName').'"}';
 	}
 	
-	public function update_pv($uid, $projectName) {
+	public function update_pv($projectID) {
 		$this->load->model('model_project');
-		$this->model_project->pvCountUp($uid,$projectName);
+		$this->model_project->pvCountUp($projectID);
 	}
 }
