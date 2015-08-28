@@ -27,6 +27,8 @@ class Profile extends CI_Controller {
         $data['projects'] = $this->model_users->getProjects($userID);
         $data['follow'] = $this->model_users->getFollowInfo($userID);
         $data['followed'] = $this->model_users->getFollowedInfo($userID);
+        $data['isfollow'] = $this->model_users->getIsFollow($userID);
+        $data['isfollowed'] = $this->model_users->getIsFollowed($userID);
 
         return $data;
     }
