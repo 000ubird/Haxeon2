@@ -35,7 +35,13 @@ echo '<div class="profile row">';
 echo '    <div class="icons col s3" style="text-align: center">';
 echo '      <img class="responsive-img" src="'. $icon .'"></img>';
 echo '      <h4>'. $uname. '<small> @'. $uid .'</small></h4>';
-echo '      <a href="'. base_url() .'profile/profilesettings/'. $uid .'"><i class="material-icons">settings</i></a>';
+
+if($isown || !$this->session->userdata('userID')) {
+    echo '<a href="' . base_url() . 'profile/profilesettings/' . $uid . '"><i class="material-icons">settings</i></a>';
+}else{
+    //自分以外のユーザーのときはプロフィール設定をしないため何も表示しない
+}
+
 echo '    </div>';
 
 echo '    <ul class="info col s8 offset-s1">';
