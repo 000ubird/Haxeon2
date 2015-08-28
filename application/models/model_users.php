@@ -149,4 +149,9 @@ class Model_users extends CI_Model{
 		//重複していた場合は真
 		return ($query1->num_rows() > 0 || $query2->num_rows() > 0);
 	}
+
+	//指定したユーザーを削除
+	public function deleteAccount($userID){
+		$this->db->delete('account', array('userID'=>$userID));
+	}
 }

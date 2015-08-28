@@ -57,7 +57,39 @@ class Profile extends CI_Controller {
             $this->index();
         }
     }
-
+	
+	//アカウント削除
+	public function delete() {
+		$this->load->view('header');
+		$this->load->view('delete_account');
+		$this->load->view('footer');
+	}
+	
+	//アカウント削除処理に使用するパスワードのバリデーション
+	public function password_validation() {
+		$this->load->library("form_validation");
+		$this->form_validation->set_error_delimiters('<div class="error">', '</div>');
+		$this->form_validation->set_rules("password", "パスワード", "required|callback_pass_check");
+		$this->form_validation->set_message("required", "%s は必須入力項目です。");
+		
+		//正しい場合はアカウントの削除を実行
+		if ($this->form_validation->run()) {
+			//アカウントとプロジェクトを削除
+			$this->load->model("model_users");
+			$this->model_users->deleteAccount($this->session->userdata('userID'));
+			$this->load->model("model_project");
+			$this->model_project->deleteProject($this->session->userdata('userID'));
+			
+			//セッション情報の削除
+			$this->session->sess_destroy();
+			
+			//アカウント削除処理完了後に遷移するページ
+			$this->index();
+		}else {
+			$this->delete();
+		}
+	}
+	
     public function validation(){
         $this->load->library("form_validation");
         $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
@@ -74,6 +106,18 @@ class Profile extends CI_Controller {
             $this->projectsettings($this->session->userdata('pid'));
         }
     }
+	
+	//パスワードのチェック
+	public function pass_check($str) {
+		$this->form_validation->set_message('pass_check', 'パスワードが間違っています。');
+		
+		//DBからパスワードを取得
+		$this->load->model("model_users");
+		$result = $this->model_users->getUserData($this->session->userdata('userID'));
+		foreach($result as $row) $pass = $row->userPass;
+		
+		return ($pass == $str);
+	}
 
     //タグの重複チェック
     public function tag_check($str) {
