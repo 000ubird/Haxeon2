@@ -3,7 +3,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Profile extends CI_Controller {
 
-    //一応おいてあるindex。本体のみ表示する
     public function index() {
         $this->load->view('header');
         $this->load->view('haxeon2');
