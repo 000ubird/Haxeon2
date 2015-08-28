@@ -83,6 +83,8 @@ class Profile extends CI_Controller {
 			//アカウントとプロジェクトを削除
 			$this->load->model("model_users");
 			$this->model_users->deleteAccount($this->session->userdata('userID'));
+            //tmpアカウントからも削除
+            $this->model_users->deleteTmpAccount($this->session->userdata('userID'));
 			$this->load->model("model_project");
 			$this->model_project->deleteProject($this->session->userdata('userID'));
 
