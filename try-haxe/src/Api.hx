@@ -118,6 +118,8 @@ class Api {
 				  
 				  //追加部分
 				  userID : "",
+				  originUserID : "",
+				  originProjectID : "",
 				  projectName : "",
 				}
 				

@@ -166,7 +166,10 @@ class Editor {
 
 	  //追加部分
 	  userID : "",
+	  originUserID : "",
+	  originProjectID : "",
 	  projectName : "",
+	  
     };
 
     initLibs();
@@ -293,6 +296,9 @@ class Editor {
 	//function onProgram(p:{p:Program, o:Output})
   function onProgram(p:Program)
 	{
+		trace(p.uid);
+		p.originProjectID = p.uid;
+		
 		//trace(p);
 		if (p != null)
 		{
@@ -592,32 +598,36 @@ class Editor {
 	}
 	//接続成功の場合
 	private function onResult(data : String) : Void {
-		//trace(data+"1");	//デバッグ
+		//プロジェクト編集中のユーザー情報を取得
 		var userDatas = Json.parse(data);
-
-		//フォークチェック
-		//if (program.userID != userDatas.userID) trace("ITS FORK !!!!!!!!!!!!");
-
 		program.userID = userDatas.userID;
 		program.projectName = userDatas.projectName;
+		
+		//HTMLファイルにプロジェクト名を出力する
 		new JQuery("p.proName").text(program.projectName);
 	}
-
+	
+	//他人のプロジェクトを読み込んだ際に呼ばれる
 	private function onResult2(data : String) : Void {
-		//trace(data+"2");	//デバッグ
+		//プロジェクト編集中のユーザー情報を取得
 		var userDatas = Json.parse(data);
-
-		var con = new Http("http://localhost/haxeon2/haxeonhandler/update_pv/"+program.userID+"/"+program.projectName);
+		
+		//PV数をカウントアップする
+		var con = new Http("http://localhost/haxeon2/haxeonhandler/update_pv/"+program.originProjectID);
 		con.request(false);
-
-		//フォークチェック!!!!
+		
+		//フォーク元のユーザーIDを保持する
+		program.originUserID = program.userID;
+		
+		//フォークしたプロジェクトであることを記録
 		if (program.userID != userDatas.userID) {
-			//trace("ITS FORK !!!!!!!!!!!!");
-			//フォークしたプロジェクトであることを記録
 			program.projectName = "Forked_from_"+program.projectName;
 		}
-
+		
+		//プログラム所持者のIDを更新する
 		program.userID = userDatas.userID;
+		
+		//HTMLファイルにプロジェクト名を出力する
 		new JQuery("p.proName").text(program.projectName);
 	}
 }

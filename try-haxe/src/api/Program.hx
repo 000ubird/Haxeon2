@@ -9,8 +9,11 @@ typedef Program = {
 //	?modules : Hash<Module>,
 	
 	//追加部分
-	userID : String,
-	projectName : String,
+	userID : String,			//現在編集中のユーザーID
+	originUserID : String,		//フォーク元のユーザーID
+	originProjectID : String,	//新しく生成する前のプロジェクトID
+	projectName : String,		//プロジェクト名:不必要になる予定
+	
 }
 
 typedef Module = {
