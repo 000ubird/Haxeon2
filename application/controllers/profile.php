@@ -3,7 +3,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Profile extends CI_Controller {
 
-    //一応おいてあるindex。本体のみ表示する
     public function index() {
         $this->load->view('header');
         $this->load->view('haxeon2');
@@ -28,6 +27,9 @@ class Profile extends CI_Controller {
         $data['projects'] = $this->model_users->getProjects($userID);
         $data['follow'] = $this->model_users->getFollowInfo($userID);
         $data['followed'] = $this->model_users->getFollowedInfo($userID);
+        $data['isown'] = ($this->session->userdata('userID') == $userID);
+        $data['isfollow'] = $this->model_users->getIsFollow($userID);
+        $data['isfollowed'] = $this->model_users->getIsFollowed($userID);
 
         return $data;
     }
