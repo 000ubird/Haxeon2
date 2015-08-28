@@ -2,7 +2,7 @@
 
 <?php
 
-echo form_open();
+echo form_open('profile/validation_profile');
 
 echo '<div class="row">';
 echo '<div class="input-field col s12">';
@@ -41,7 +41,7 @@ echo '</div>';
 echo '<div class="row">';
 echo '<div class="input-field col s12>';
 echo '<input name="message" type="message">';
-echo '<label for="message">icon</label>';
+echo '<label for="message">message</label>';
 echo '</div>';
 echo form_error('message');
 echo '</div>';
