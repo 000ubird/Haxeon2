@@ -11,6 +11,22 @@ foreach($user as $row){
     $email = $row->userMail;
 }
 
+$project_total = 0;
+$follow_total = 0;
+$followed_total = 0;
+
+foreach($projects as $project) {
+    $project_total++;
+}
+
+foreach($follow as $f){
+    $follow_total++;
+}
+
+foreach($followed as $fd){
+    $followed_total++;
+}
+
 echo '<div class="profile row">';
 
 echo '    <div class="icons col s3" style="text-align: center">';
@@ -19,11 +35,11 @@ echo '      <h4>'. $uname. '<small> @'. $uid .'</small></h4>';
 echo '    </div>';
 
 echo '    <ul class="info col s8 offset-s1">';
-echo '      <li class="codes">codes: </li>';
+echo '      <li class="codes">codes: '. $project_total .'</li>';
 echo '      <li class="forked">forked: </li>';
 echo '      <li class="favorites">favorites: </li>';
-echo '      <li class="following">following: </li>';
-echo '      <li class="followers">followers: </li>';
+echo '      <li class="following">following: '. $follow_total .'</li>';
+echo '      <li class="followers">followers: '. $followed_total .'</li>';
 echo '      <li class="url">url: <a href='. $url .'>'. $url .'</a></li>';
 echo '      <li class="comment">'. $comment .'</li>';
 echo '    </ul>';
