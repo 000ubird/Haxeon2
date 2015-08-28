@@ -229,4 +229,19 @@ class Profile extends CI_Controller {
             return true;
         }
     }
+
+    //プロフィール編集ページを表示
+    public function profilesettings($userID){
+        $this->load->view('header');
+        $this->load->view('profilesettings');
+        $this->load->view('footer');
+    }
+
+    //プロフィール編集時のバリデーション
+    public function validation_profile(){
+        $this->load->library("form_validation");
+        $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
+
+
+    }
 }
