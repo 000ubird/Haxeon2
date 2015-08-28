@@ -15,8 +15,10 @@ $project_total = 0;
 $follow_total = 0;
 $followed_total = 0;
 
-foreach($projects as $project) {
-    $project_total++;
+if(count($projects) > 1){
+    foreach($projects as $project) {
+        $project_total++;
+    }
 }
 
 foreach($follow as $f){
@@ -65,7 +67,7 @@ echo '<div class="recently">';
 echo '    <div class="row">';
 echo '      <h2>Projects</h2>';
         //複数項目ある場合の書き方例
-        if($projects != 0) {
+        if(count($projects) > 1) {
             foreach ($projects as $project) {
 
                 echo '    <div class="col s3">';
