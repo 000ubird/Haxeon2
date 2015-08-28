@@ -1,18 +1,15 @@
-<!--<h1>セッション情報</h1>-->
 <h2>profile</h2>
 
 <?php
 
-//print_r($this->session->all_userdata());
-
 foreach($user as $row){
     $uid = $row->userID;
+    $uname = $row->userName;
+    $icon = $row->userIcon;
+    $profile = $row->profile;
+    $url = $row->url;
     $email = $row->userMail;
 }
-
-
-echo $uid;
-echo $email;
 
 echo '<div class="profile">';
 echo '    <div class="icon">';
@@ -20,6 +17,16 @@ echo '    <div class="icon">';
 echo '    </div>';
 
 echo '    <div class="relation">';
+echo '      <div class="usename">';
+echo '          <p>name: '. $uname .'</p>';
+echo '      </div>';
+
+echo '      <div class="email">';
+echo '          <p>email: '. $email .'</p>';
+echo '      </div>';
+
+echo '      <div>';
+echo '      </div>';
 
 echo '    </div>';
 
