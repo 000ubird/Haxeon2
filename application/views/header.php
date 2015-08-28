@@ -22,19 +22,34 @@
 
             <!--     PCサイズでの表示       -->
             <ul class="right hide-on-med-and-down">
-                <li><a href="<?php echo base_url() ?>signup">Sign up</a></li>
-                <li><a href="<?php echo base_url() ?>createproject">Create Code</a></li>
-                <li><a href="<?php echo base_url() ?>ranking/index/day/pv/30/0">Ranking</a></li>
-                <li><a href=<?php echo base_url() ?>profile/information/<?php echo $this->session->userdata('userID');?>>Profile</a></li>
-                <li><a href="<?php echo base_url() ?>logout">Logout</a></li>
+
+                <?php if($this->session->userdata('userID')) {
+                    echo '<li><a href="'.base_url().'createproject">Create Code</a></li>';
+                    echo '<li><a href="'.base_url().'ranking/index/day/pv/30/0">Ranking</a></li>';
+                    echo '<li><a href="'.base_url().'profile/information/'.$this->session->userdata('userID').'">Profile</a></li>';
+                    echo '<li><a href="'.base_url().'logout">Logout</a></li>';
+                }else{
+                    echo '<li><a href="'.base_url().'signup">Sign up</a></li>';
+                    echo '<li><a href="'.base_url().'login">Login</a></li>';
+                }
+                ?>
+
             </ul>
-            <!--      スマホサイズでの表示      -->
+            
+            <!--      バーに隠れてる表示      -->
             <ul class="side-nav" id="mobile-demo">
-                <li><a href="<?php echo base_url() ?>signup">Sign up</a></li>
-                <li><a href="<?php echo base_url() ?>createproject">Create Code</a></li>
-                <li><a href="<?php echo base_url() ?>ranking/index/day/pv/30/0">Ranking</a></li>
-                <li><a href=<?php echo base_url() ?>profile/information/<?php echo $this->session->userdata('userID');?>>Profile</a></li>
-                <li><a href="<?php echo base_url() ?>logout">Logout</a></li>
+
+                <?php if($this->session->userdata('userID')) {
+                    echo '<li><a href="'.base_url().'createproject">Create Code</a></li>';
+                    echo '<li><a href="'.base_url().'ranking/index/day/pv/30/0">Ranking</a></li>';
+                    echo '<li><a href="'.base_url().'profile/information/'.$this->session->userdata('userID').'">Profile</a></li>';
+                    echo '<li><a href="'.base_url().'logout">Logout</a></li>';
+                }else{
+                    echo '<li><a href="'.base_url().'signup">Sign up</a></li>';
+                    echo '<li><a href="'.base_url().'login">Login</a></li>';
+                }
+                ?>
+
             </ul>
         </div>
     </nav>
