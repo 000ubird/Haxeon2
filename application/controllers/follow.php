@@ -9,19 +9,19 @@ class Follow extends CI_Controller {
     }
 
     //引数に入るフォロー相手のuserIDと、セッションにある自分のIDを使う
-    public function accountFollow($data){
+    public function accountFollow($uid){
         //DBにinsertする
         $this->load->model('model_follow');
-        $this->model_follow->apply($data);
+        $this->model_follow->apply($uid);
 
-        $this->load->view('haxeon2');
+        redirect(base_url().'profile/information/'. $uid .'');
     }
 
-    public function accountUnFollow($data){
+    public function accountUnFollow($uid){
         $this->load->model('model_follow');
-        $this->model_follow->release($data);
+        $this->model_follow->release($uid);
 
-        $this->load->view('haxeon2');
+        redirect(base_url().'profile/information/'. $uid .'');
     }
 
 }
