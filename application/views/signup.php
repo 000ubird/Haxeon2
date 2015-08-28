@@ -2,7 +2,7 @@
 
 <?php
 
-echo form_open("signup/validation");
+echo form_open("profile/validation_signup");
 
 echo '<div class="row">';
 echo '<div class="input-field col s12">';
@@ -29,7 +29,7 @@ echo form_error('email');
 echo '</div>';
 
 echo '<div class="row">';
-echo '<button class="btn waves-effect waves-light orange darken-4" style="float:right" type="submit" name="action">Signup';
+echo '<button class="btn waves-effect waves-light orange darken-4 col s3 offset-s9" type="submit" name="action">Signup';
 echo '<i class="material-icons">open_in_new</i>';
 echo '</button>';
 echo '</div>';

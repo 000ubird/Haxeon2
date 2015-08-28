@@ -29,13 +29,13 @@
                     echo '<li><a href="'.base_url().'profile/information/'.$this->session->userdata('userID').'">Profile</a></li>';
                     echo '<li><a href="'.base_url().'logout">Logout</a></li>';
                 }else{
-                    echo '<li><a href="'.base_url().'signup">Sign up</a></li>';
+                    echo '<li><a href="'.base_url().'profile/signup">Sign up</a></li>';
                     echo '<li><a href="'.base_url().'login">Login</a></li>';
                 }
                 ?>
 
             </ul>
-            
+
             <!--      バーに隠れてる表示      -->
             <ul class="side-nav" id="mobile-demo">
 
@@ -45,7 +45,7 @@
                     echo '<li><a href="'.base_url().'profile/information/'.$this->session->userdata('userID').'">Profile</a></li>';
                     echo '<li><a href="'.base_url().'logout">Logout</a></li>';
                 }else{
-                    echo '<li><a href="'.base_url().'signup">Sign up</a></li>';
+                    echo '<li><a href="'.base_url().'profile/signup">Sign up</a></li>';
                     echo '<li><a href="'.base_url().'login">Login</a></li>';
                 }
                 ?>
