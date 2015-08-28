@@ -67,6 +67,10 @@ foreach($projects as $project) {
 	echo '</div>';
 	$i++;
 }
+echo '</div>';
 
-	echo '</div>';
+if($i==0) {
+	echo "<p>検索に一致するプロジェクトはありません。</p>";
+}
+
 ?>

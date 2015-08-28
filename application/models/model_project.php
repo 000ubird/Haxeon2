@@ -121,8 +121,8 @@ class Model_project extends CI_Model{
 	}
 
 	//登録されているプロジェクトの総数を取得
-	public function getProjectNum(){
-		$query = $this->db->query('SELECT * FROM project');
+	public function getProjectNum($beginDate,$endDate){
+		$query = $this->db->query("SELECT * FROM project WHERE modified BETWEEN '$beginDate' AND '$endDate'");
 		return $query->num_rows();
 	}
 

@@ -8,7 +8,6 @@ class Ranking extends CI_Controller {
 		$this->load->library('pagination');
 		
 		$config['base_url'] = 'http://localhost/haxeon2/ranking/index/'.$days.'/'.$order.'/'.$num.'/';
-		$config['total_rows'] = $this->model_project->getProjectNum();
 		if ($num > 100 ) $num = 100;	//最高数以上の場合は弾く
 		$config['per_page'] = $num;
 		$config['uri_segment'] = 6;
@@ -38,9 +37,7 @@ class Ranking extends CI_Controller {
 		$config['prev_tag_open'] = '<li class="waves-effect"><i class="material-icons">';
 		$config['prev_link'] = '&lt;';
 		$config['prev_tag_close'] = '</i></li>';
-		
-		$this->pagination->initialize($config); 
-		
+			
 		$beginDate = date('Y-m-d H:i:s',strtotime('-1 days'));
 		$endDate = date('Y-m-d H:i:s');
 		switch($days) {
@@ -49,6 +46,9 @@ class Ranking extends CI_Controller {
 			case 'all':  $beginDate = date('Y-m-d H:i:s', strtotime('-365 days')); break;
 			default :    $beginDate = date('Y-m-d H:i:s', strtotime('-1 days')); break;
 		}
+		
+		$config['total_rows'] = $this->model_project->getProjectNum($beginDate,$endDate);
+		$this->pagination->initialize($config); 
 		
 		$projects = $this->model_project->getProject($beginDate, $endDate, $config['per_page'], $offset, $order);
 		
