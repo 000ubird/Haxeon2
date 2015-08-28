@@ -6,40 +6,43 @@ foreach($user as $row){
     $uid = $row->userID;
     $uname = $row->userName;
     $icon = $row->userIcon;
-    $profile = $row->profile;
-    $url = $row->url;
+    $comment = $row->userProfile;
+    $url = $row->userURL;
     $email = $row->userMail;
 }
 
-echo '<div class="profile">';
-echo '    <div class="icon">';
+echo '<div class="profile row">';
 
+echo '    <div class="icons col s3" style="text-align: center">';
+echo '      <img class="responsive-img" src="'. $icon .'"></img>';
+echo '      <h4>'. $uname. '<small> @'. $uid .'</small></h4>';
 echo '    </div>';
 
-echo '    <div class="relation">';
-echo '      <div class="usename">';
-echo '          <p>name: '. $uname .'</p>';
-echo '      </div>';
+//echo '<div>';
+echo '    <ul class="info col s8 offset-s1">';
+//echo '      <li class="email"><i class="material-icons">email</i> '. $email .'</li>';
+echo '      <li class="codes">codes: </li>';
+echo '      <li class="forked">forked: </li>';
+echo '      <li class="favorites">favorites: </li>';
+echo '      <li class="followig">following: </li>';
+echo '      <li class="followes">followers: </li>';
+echo '      <li class="url">url: <a href='. $url .'>'. $url .'</a></li>';
+echo '      <li class="comment">'. $comment .'</li>';
+echo '    </ul>';
 
-echo '      <div class="email">';
-echo '          <p>email: '. $email .'</p>';
-echo '      </div>';
+//echo '</div>';
 
-echo '      <div>';
-echo '      </div>';
-
-echo '    </div>';
-
-echo '    <div class="comment">';
-
-echo '    </div>';
+echo '      <a class="btn-floating btn-large waves-effect waves-light orange darken-4" style="float:right">follow</a>';
 
 echo '</div>';
 
+echo '<hr>';
+
 echo '<div class="contents">';
 
-echo '    <div class="recently">';
-echo '<div class="row">';
+echo '<div class="recently">';
+echo '    <div class="row">';
+echo '      <h2>Projects</h2>';
         //<!--      複数項目ある場合の書き方例      -->
         if($projects != 0) {
             foreach ($projects as $project) {
@@ -61,12 +64,12 @@ echo '<div class="row">';
                 //echo '<p><a href=' . $project->url . '>' . $project->projectID . '</a></p>';
             }
         }
+echo '    </div>';
 echo '</div>';
-    echo '</div>';
 
-    echo '<div class="following">';
+echo '<div class="following">';
 
-    echo '</div>';
+echo '</div>';
 echo '</div>';
 
 ?>
