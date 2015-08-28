@@ -15,6 +15,7 @@ $project_total = 0;
 $follow_total = 0;
 $followed_total = 0;
 
+//プロジェクトは何も作られていない場合がある
 if(count($projects) > 1){
     foreach($projects as $project) {
         $project_total++;
@@ -50,10 +51,9 @@ if($isown || !$this->session->userdata('userID')){
 
 }else{
     if ($isfollow) {
-        echo '      <a href="' . base_url() . 'follow/accountunfollow/' . $uid . '"><button class="follow btn btn-large waves-effect waves-light cyan darken-4 z-depth-2 col s2 offset-s10">unfollow</button></a>';
-
+        echo '<a href="' . base_url() . 'follow/accountunfollow/' . $uid . '"><button class="follow btn btn-large waves-effect waves-light cyan darken-4 z-depth-2 col s2 offset-s10">unfollow</button></a>';
     } else {
-        echo '      <a href="' . base_url() . 'follow/accountfollow/' . $uid . '"><button class="follow btn btn-large waves-effect waves-light orange darken-4 z-depth-2 col s2 offset-s10">follow</button></a>';
+        echo '<a href="' . base_url() . 'follow/accountfollow/' . $uid . '"><button class="follow btn btn-large waves-effect waves-light orange darken-4 z-depth-2 col s2 offset-s10">follow</button></a>';
     }
 }
 
