@@ -35,6 +35,7 @@ echo '<div class="profile row">';
 echo '    <div class="icons col s3" style="text-align: center">';
 echo '      <img class="responsive-img" src="'. $icon .'"></img>';
 echo '      <h4>'. $uname. '<small> @'. $uid .'</small></h4>';
+echo '      <a href="'. base_url() .'profile/profilesettings/'. $uid .'"><i class="material-icons">settings</i></a>';
 echo '    </div>';
 
 echo '    <ul class="info col s8 offset-s1">';
@@ -48,7 +49,7 @@ echo '      <li class="comment">'. $comment .'</li>';
 echo '    </ul>';
 
 if($isown || !$this->session->userdata('userID')){
-
+    //自分自身なので何も表示させない
 }else{
     if ($isfollow) {
         echo '<a href="' . base_url() . 'follow/accountunfollow/' . $uid . '"><button class="follow btn btn-large waves-effect waves-light cyan darken-4 z-depth-2 col s2 offset-s10">unfollow</button></a>';
