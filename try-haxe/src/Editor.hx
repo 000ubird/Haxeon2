@@ -601,6 +601,7 @@ class Editor {
 		//プロジェクト編集中のユーザー情報を取得
 		var userDatas = Json.parse(data);
 		program.userID = userDatas.userID;
+		program.originUserID = userDatas.userID;
 		program.projectName = userDatas.projectName;
 		
 		//HTMLファイルにプロジェクト名を出力する
