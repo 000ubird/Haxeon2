@@ -368,8 +368,15 @@ class Compiler {
 			//プロジェクトが登録されていない場合
 			if (rset.length == 0) {
 				html.body.push("<br><H3>プロジェクトIDなし</H3>");
-				cnx.request("INSERT INTO `project`(`projectID`, `projectName` ,`ownerUserID`, `pv`, `url`) VALUES (\""+program.uid+"\", \""+projectName+"\",\""+userID+"\","+0+",\"http://localhost/haxeon2/try-haxe/index.html#"+program.uid+"\")");
+				cnx.request("INSERT INTO `project`(`projectID`, `projectName` ,`ownerUserID`, `pv`, `fork`, `originUserID`, `url`) VALUES (\""
+				+program.uid+"\", \""+projectName+"\",\""+userID+"\","+0+","+0+", \""+originUserID+"\",\"http://localhost/haxeon2/try-haxe/index.html#"+program.uid+"\")");
+				
 				html.body.push("<br><H3>データベースにIDを登録しました。</H3>");
+				
+				//フォークの場合は元のプロジェクト所持者のフォーク数を1上げる
+			/*	if (userID != originUserID) {
+					var rset2 = cnx.request("SELECT projectID FROM project where projectID = '"+originProjectID+"' AND ownerUserID = '"+originUserID+"';");
+				}*/
 			}
 			//プロジェクトIDを更新
 			else {
@@ -379,10 +386,7 @@ class Compiler {
 				}
 				cnx.request("UPDATE project SET projectID = \""+program.uid+"\",modified = \""+Date.now().toString()+"\" , url = \"http://localhost/haxeon2/try-haxe/index.html#"+program.uid+"\" WHERE ownerUserID = '" + userID + "' AND projectName = '" + projectName+"';");
 			}
-
-			//日付取得
-			//html.body.push(Date.now().toString());	//デバッグ
-
+			
 			cnx.close();
 		}
 
