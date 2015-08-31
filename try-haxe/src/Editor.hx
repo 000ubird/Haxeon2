@@ -32,6 +32,10 @@ class Editor {
 	var compileBtn : JQuery;
   var libs : JQuery;
   var targets : JQuery;
+  
+  //追加部分
+  var isSave : JQuery;
+  
   var mainName : JQuery;
   var dceName : JQuery;
   var stage : JQuery;
@@ -118,6 +122,11 @@ class Editor {
 	compileBtn = new JQuery(".compile-btn");
     libs = new JQuery("#hx-options-form .hx-libs");
     targets = new JQuery("#hx-options-form .hx-targets");
+	
+	//追加部分
+	isSave = new JQuery("#hx-options-form .hx-hx-save");
+	trace(isSave);
+	
     stage = new JQuery(".js-output .js-canvas");
     jsTab = new JQuery("a[href='#js-source']");
     embedTab = new JQuery("a[href='#embed-source']");
@@ -148,6 +157,9 @@ class Editor {
 
     dceName.delegate("input[name='dce']" , "change" , onDce );
     targets.delegate("input[name='target']" , "change" , onTarget );
+	
+	//追加部分
+    isSave.delegate("input[name='save']" , "change" , onSave );
 
 		compileBtn.bind( "click" , compile );
 
@@ -165,6 +177,7 @@ class Editor {
       libs : new Array(),
 
 	  //追加部分
+	  save : "",
 	  userID : "",
 	  originUserID : "",
 	  originProjectID : "",
@@ -234,6 +247,23 @@ class Editor {
     fullscreen();
   }
 
+  //追加部分
+  function onSave(e : JqEvent ) {
+	var cb = new JQuery(e.target);
+	var name = cb.val();
+	switch(name) {
+	  case "SAVE","NOTSAVE" :
+		setSave(name);
+	  default :
+	}
+  }
+  function setSave(save:String) {
+	program.save = save;
+	var radio = new JQuery( 'input[name=\'save\'][value=\'$save\']' );
+	radio.attr( "checked" ,"checked" );
+  }
+  
+  
   function onTarget(e : JqEvent){
     var cb = new JQuery( e.target );
     var name = cb.val();
@@ -316,6 +346,7 @@ class Editor {
 	  haxeSource.setValue(program.main.source);
       setTarget( program.target );
       setDCE(program.dce);
+	  setSave(program.save);
 
       if( program.libs != null ){
         for( lib in libs.find("input.lib") ){
@@ -457,6 +488,8 @@ class Editor {
 		program.main.source = haxeSource.getValue();
 		program.main.name = mainName.val();
     program.dce = new JQuery( 'input[name=\'dce\']:checked' ).val();
+	
+    program.save = new JQuery( 'input[name=\'save\']:checked' ).val();
 
 		var libs = new Array();
     var sel = Type.enumConstructor(program.target);

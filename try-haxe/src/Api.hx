@@ -117,6 +117,7 @@ class Api {
 			      libs : new Array(),
 				  
 				  //追加部分
+				  save : "",
 				  userID : "",
 				  originUserID : "",
 				  originProjectID : "",
