@@ -6,7 +6,7 @@ foreach ($tags as $tag) {
     echo '<p>'. $tag .'</p>';
 }
 
-echo form_open('profile/validation');
+echo form_open('profile/validation_tag');
 
 echo validation_errors();
 

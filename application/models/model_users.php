@@ -154,4 +154,9 @@ class Model_users extends CI_Model{
 	public function deleteAccount($userID){
 		$this->db->delete('account', array('userID'=>$userID));
 	}
+
+    //tmp_accountテーブルの指定したユーザーを削除
+    public function deleteTmpAccount($userID){
+        $this->db->delete('tmp_account', array('userID'=>$userID));
+    }
 }
