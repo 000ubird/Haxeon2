@@ -29,21 +29,24 @@ echo form_error('email');
 echo '</div>';
 
 //アイコン
-echo '<div class="row">';
-echo '<div class="input-field col s12>';
-echo '<input name="icon" type="icon">';
-echo '<label for="icon">icon</label>';
-echo '</div>';
-echo form_error('icon');
-echo '</div>';
+//echo '<div class="row">';
+//echo '<div class="input-field col s12>';
+//echo '<input name="icon" type="icon">';
+//echo '<label for="icon">icon</label>';
+//echo '</div>';
+//echo form_error('icon');
+//echo '</div>';
+//
+//echo '<input id="aaa" type="text>';
+//echo '<label for="aaa">aaa</label>';
 
 //メッセージ文
 echo '<div class="row">';
-echo '<div class="input-field col s12>';
-echo '<input name="message" type="message">';
-echo '<label for="message">message</label>';
+echo '<div class="input-field col s12">';
+echo '<input name="intro" type="text">';
+echo '<label for="intro">message</label>';
 echo '</div>';
-echo form_error('message');
+echo form_error('intro');
 echo '</div>';
 
 echo '<div class="row">';

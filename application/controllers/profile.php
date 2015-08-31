@@ -247,19 +247,29 @@ class Profile extends CI_Controller {
         $this->form_validation->set_rules("userID", "ユーザID", "alpha_numeric|min_length[4]|callback_username_check");
         $this->form_validation->set_rules("password", "パスワード", "alpha_numeric|min_length[4]");
         $this->form_validation->set_rules("email", "メールアドレス", "valid_email|callback_mail_check");
-        $this->form_validation->set_rules("message", "メッセージ", "");
+        $this->form_validation->set_rules("intro", "メッセージ", "max_length[140]");
 
         //エラーメッセージの設定
         $this->form_validation->set_message("alpha_numeric", "%s は半角英数字で入力してください。");
         $this->form_validation->set_message("min_length", "%s は4文字以上で入力してください。");
         $this->form_validation->set_message("valid_email", "有効なメールアドレスを入力してください。");
+        $this->form_validation->set_message("max_length", "%s は140文字以内で入力してください。");
 
-        if ($this->form_validation->run()) {
+        if ($this->form_validation->run()){
+            $this->load->model('model_users');
+
             //メールアドレスが入力されていた場合、そのアドレス宛てに確認メールを発行
 
             //iconのアップロード
 
             //メッセージの更新
+            if($_POST['intro']){
+                $data = array(
+                    'message2' => $_POST['intro']
+                );
+                $this->session->set_userdata($data);
+            }
+            $this->index();
         }else{
             $this->profilesettings($userID);
         }
