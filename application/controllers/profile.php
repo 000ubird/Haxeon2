@@ -232,16 +232,86 @@ class Profile extends CI_Controller {
 
     //プロフィール編集ページを表示
     public function profilesettings($userID){
+        $data['userID'] = $userID;
+        $data['error'] = '';
         $this->load->view('header');
-        $this->load->view('profilesettings');
+        $this->load->view('profilesettings',$data);
         $this->load->view('footer');
     }
 
     //プロフィール編集時のバリデーション
-    public function validation_profile(){
+    public function validation_profile($userID){
         $this->load->library("form_validation");
         $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
 
+        //検証ルールの設定
+        //$this->form_validation->set_rules("userID", "ユーザID", "alpha_numeric|min_length[4]|callback_username_check");
+        $this->form_validation->set_rules("userName", "ユーザー名", "min_length[1]|callback_space_check");
+        $this->form_validation->set_rules("password", "パスワード", "alpha_numeric|min_length[4]");
+        $this->form_validation->set_rules("email", "メールアドレス", "valid_email|callback_mail_check");
+        $this->form_validation->set_rules("profile", "メッセージ", "max_length[140]");
 
+        //エラーメッセージの設定
+        $this->form_validation->set_message("alpha_numeric", "%s は半角英数字で入力してください。");
+        $this->form_validation->set_message("min_length", "%s は4文字以上で入力してください。");
+        $this->form_validation->set_message("valid_email", "有効なメールアドレスを入力してください。");
+        $this->form_validation->set_message("max_length", "%s は140文字以内で入力してください。");
+
+        if ($this->form_validation->run()){
+            $this->load->model('model_users');
+
+            //userNameが入力されていた場合、userIDの使用されているすべてのテーブルを書き換える
+            if($_POST['userName']){
+                //更新
+                $this->model_users->updateUserName($_POST['userName'], $userID);
+            }
+
+            //メールアドレスが入力されていた場合、そのアドレス宛てに確認メールを発行
+            if($_POST['email']){
+
+            }
+
+            //メッセージの更新
+            if($_POST['profile']){
+                $this->model_users->updateUserProfile($_POST['profile'], $userID);
+            }
+            $this->information($userID);
+        }else{
+            $this->profilesettings($userID);
+        }
+    }
+
+    //空白文字があったらfalseになるコールバック
+    public function space_check($str){
+        $pattern = "^[a-zA-Z0-9_-]+$";
+        if(mb_ereg_match($pattern, $str)){
+            return true;
+        }else{
+            if(count($str) == 0) return true;
+            $this->form_validation->set_message('space_check','[a-zA-Z0-9_-]です');
+            return false;
+        }
+    }
+
+    //画像アップロードメソッド
+    public function do_upload($userID){
+        $config['upload_path'] = './img/';
+        $config['allowed_types'] = 'jpg|png';
+        //ファイル名の指定
+        $config['file_name'] = $userID;
+        $config['overwrite'] = TRUE;
+        $config['max_size'] = 2000;
+
+        $this->load->library('upload',$config);
+
+        if(!$this->upload->do_upload()){
+//            $error = array('userID' => $userID, 'error' => $this->upload->display_errors());
+
+            $this->profilesettings($userID);
+        }else{
+//            $data = array('upload_data' => $this->upload->data());
+
+            $this->information($userID);
+        }
     }
 }
