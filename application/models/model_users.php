@@ -160,6 +160,15 @@ class Model_users extends CI_Model{
         $this->db->delete('tmp_account', array('userID'=>$userID));
     }
 
-    //userName,messageの書き換え処理
-    
+    //userName,userProfileの書き換え処理
+    public function updateUserName($userName ,$userID){
+        $this->db->where('userID', $userID);
+        $this->db->update('account', array('userName' => $userName));
+    }
+
+    public function updateUserProfile($profile, $userID){
+        $this->db->where('userID', $userID);
+        $this->db->update('account', array('userProfile' => $profile));
+    }
+
 }
