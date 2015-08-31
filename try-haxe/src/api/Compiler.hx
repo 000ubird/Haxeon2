@@ -374,9 +374,14 @@ class Compiler {
 				html.body.push("<br><H3>データベースにIDを登録しました。</H3>");
 				
 				//フォークの場合は元のプロジェクト所持者のフォーク数を1上げる
-			/*	if (userID != originUserID) {
-					var rset2 = cnx.request("SELECT projectID FROM project where projectID = '"+originProjectID+"' AND ownerUserID = '"+originUserID+"';");
-				}*/
+				if (userID != originUserID) {
+					var fork = 0;
+					var rset2 = cnx.request("SELECT projectID FROM project where projectID = '" + originProjectID + "' AND ownerUserID = '" + originUserID + "';");
+					for (row in rset2) {
+						fork = row.fork+1;
+					}
+					cnx.request("UPDATE project SET fork = "+fork+" WHERE projectID = '" + originProjectID + "' AND ownerUserID = '" + originUserID + "';");
+				}
 			}
 			//プロジェクトIDを更新
 			else {
