@@ -1,8 +1,15 @@
 <h2>プロフィール設定</h2>
 
 <?php
+echo $error;
+//ファイルアップロードフォーム
+echo form_open_multipart('profile/do_upload/'.$userID);
+//アイコン
+echo '<input type="file" name="userfile" size="20" />';
+echo '<input type="submit" value="upload" />';
+echo form_close();
 
-echo form_open('profile/validation_profile/'.$userID.'');
+echo form_open('profile/validation_profile/'.$userID);
 
 echo '<div class="row">';
 echo '<div class="input-field col s12">';
@@ -28,18 +35,6 @@ echo '</div>';
 echo form_error('email');
 echo '</div>';
 
-//アイコン
-//echo '<div class="row">';
-//echo '<div class="input-field col s12>';
-//echo '<input name="icon" type="icon">';
-//echo '<label for="icon">icon</label>';
-//echo '</div>';
-//echo form_error('icon');
-//echo '</div>';
-//
-//echo '<input id="aaa" type="text>';
-//echo '<label for="aaa">aaa</label>';
-
 //メッセージ文
 echo '<div class="row">';
 echo '<div class="input-field col s12">';
@@ -54,7 +49,6 @@ echo '<button class="btn waves-effect waves-light orange darken-4 col s3 offset-
 echo '<i class="material-icons">open_in_new</i>';
 echo '</button>';
 echo '</div>';
-
 
 echo form_close();
 ?>

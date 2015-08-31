@@ -233,6 +233,7 @@ class Profile extends CI_Controller {
     //プロフィール編集ページを表示
     public function profilesettings($userID){
         $data['userID'] = $userID;
+        $data['error'] = '';
         $this->load->view('header');
         $this->load->view('profilesettings',$data);
         $this->load->view('footer');
@@ -259,8 +260,9 @@ class Profile extends CI_Controller {
             $this->load->model('model_users');
 
             //メールアドレスが入力されていた場合、そのアドレス宛てに確認メールを発行
+            if($_POST['email']){
 
-            //iconのアップロード
+            }
 
             //メッセージの更新
             if($_POST['intro']){
@@ -269,9 +271,28 @@ class Profile extends CI_Controller {
                 );
                 $this->session->set_userdata($data);
             }
-            $this->index();
+            $this->information($userID);
         }else{
             $this->profilesettings($userID);
+        }
+    }
+
+    //画像アップロードメソッド
+    public function do_upload($userID){
+        $config['upload_path'] = './img/';
+        $config['allowed_types'] = 'jpg|png';
+        $config['max_size'] = 2000;
+
+        $this->load->library('upload',$config);
+
+        if(!$this->upload->do_upload()){
+//            $error = array('userID' => $userID, 'error' => $this->upload->display_errors());
+
+            $this->profilesettings($userID);
+        }else{
+//            $data = array('upload_data' => $this->upload->data());
+
+            $this->information($userID);
         }
     }
 }
