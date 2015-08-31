@@ -38,10 +38,10 @@ echo '</div>';
 //メッセージ文
 echo '<div class="row">';
 echo '<div class="input-field col s12">';
-echo '<input name="intro" type="text">';
-echo '<label for="intro">message</label>';
+echo '<input name="profile" type="text">';
+echo '<label for="profile">message</label>';
 echo '</div>';
-echo form_error('intro');
+echo form_error('profile');
 echo '</div>';
 
 echo '<div class="row">';

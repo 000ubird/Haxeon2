@@ -51,7 +51,7 @@ echo '      <li class="favorites">favorites: </li>';
 echo '      <li class="following">following: '. $follow_total .'</li>';
 echo '      <li class="followers">followers: '. $followed_total .'</li>';
 echo '      <li class="url">url: <a href='. $url .'>'. $url .'</a></li>';
-echo '      <li class="comment">'. $comment .'</li>';
+echo '      <li class="comment">message: '. $comment .'</li>';
 echo '    </ul>';
 
 if($isown || !$this->session->userdata('userID')){
