@@ -13,10 +13,10 @@ echo form_open('profile/validation_profile/'.$userID);
 
 echo '<div class="row">';
 echo '<div class="input-field col s12">';
-echo '<input name="userID" type="text">';
-echo '<label for="userID">userID</label>';
+echo '<input name="userName" type="text">';
+echo '<label for="userName">userName</label>';
 echo '</div>';
-echo form_error('userID');
+echo form_error('userName');
 echo '</div>';
 
 echo '<div class="row">';

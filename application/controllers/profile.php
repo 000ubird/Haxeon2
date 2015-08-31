@@ -245,7 +245,8 @@ class Profile extends CI_Controller {
         $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
 
         //検証ルールの設定
-        $this->form_validation->set_rules("userID", "ユーザID", "alpha_numeric|min_length[4]|callback_username_check");
+        //$this->form_validation->set_rules("userID", "ユーザID", "alpha_numeric|min_length[4]|callback_username_check");
+        $this->form_validation->set_rules("userName", "ユーザー名", "exact_length");
         $this->form_validation->set_rules("password", "パスワード", "alpha_numeric|min_length[4]");
         $this->form_validation->set_rules("email", "メールアドレス", "valid_email|callback_mail_check");
         $this->form_validation->set_rules("intro", "メッセージ", "max_length[140]");
@@ -258,6 +259,11 @@ class Profile extends CI_Controller {
 
         if ($this->form_validation->run()){
             $this->load->model('model_users');
+
+            //userIDが入力されていた場合、userIDの使用されているすべてのテーブルを書き換える
+            if($_POST['userID']){
+
+            }
 
             //メールアドレスが入力されていた場合、そのアドレス宛てに確認メールを発行
             if($_POST['email']){
@@ -281,6 +287,9 @@ class Profile extends CI_Controller {
     public function do_upload($userID){
         $config['upload_path'] = './img/';
         $config['allowed_types'] = 'jpg|png';
+        //ファイル名の指定
+        $config['file_name'] = $userID;
+        $config['overwrite'] = TRUE;
         $config['max_size'] = 2000;
 
         $this->load->library('upload',$config);

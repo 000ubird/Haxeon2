@@ -159,4 +159,7 @@ class Model_users extends CI_Model{
     public function deleteTmpAccount($userID){
         $this->db->delete('tmp_account', array('userID'=>$userID));
     }
+
+    //userName,messageの書き換え処理
+    
 }
