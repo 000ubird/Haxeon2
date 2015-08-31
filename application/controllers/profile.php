@@ -232,16 +232,36 @@ class Profile extends CI_Controller {
 
     //プロフィール編集ページを表示
     public function profilesettings($userID){
+        $data['userID'] = $userID;
         $this->load->view('header');
-        $this->load->view('profilesettings');
+        $this->load->view('profilesettings',$data);
         $this->load->view('footer');
     }
 
     //プロフィール編集時のバリデーション
-    public function validation_profile(){
+    public function validation_profile($userID){
         $this->load->library("form_validation");
         $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
 
+        //検証ルールの設定
+        $this->form_validation->set_rules("userID", "ユーザID", "alpha_numeric|min_length[4]|callback_username_check");
+        $this->form_validation->set_rules("password", "パスワード", "alpha_numeric|min_length[4]");
+        $this->form_validation->set_rules("email", "メールアドレス", "valid_email|callback_mail_check");
+        $this->form_validation->set_rules("message", "メッセージ", "");
 
+        //エラーメッセージの設定
+        $this->form_validation->set_message("alpha_numeric", "%s は半角英数字で入力してください。");
+        $this->form_validation->set_message("min_length", "%s は4文字以上で入力してください。");
+        $this->form_validation->set_message("valid_email", "有効なメールアドレスを入力してください。");
+
+        if ($this->form_validation->run()) {
+            //メールアドレスが入力されていた場合、そのアドレス宛てに確認メールを発行
+
+            //iconのアップロード
+
+            //メッセージの更新
+        }else{
+            $this->profilesettings($userID);
+        }
     }
 }
