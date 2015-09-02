@@ -245,7 +245,6 @@ class Profile extends CI_Controller {
         $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
 
         //検証ルールの設定
-        //$this->form_validation->set_rules("userID", "ユーザID", "alpha_numeric|min_length[4]|callback_username_check");
         $this->form_validation->set_rules("userName", "ユーザー名", "min_length[1]|callback_space_check");
         $this->form_validation->set_rules("password", "パスワード", "alpha_numeric|min_length[4]");
         $this->form_validation->set_rules("email", "メールアドレス", "valid_email|callback_mail_check");
@@ -308,5 +307,20 @@ class Profile extends CI_Controller {
 
             $this->information($userID);
         }
+    }
+
+    //パスワード変更ページを表示
+    public function change_pass(){
+        $this->load->view('header');
+        $this->load->view('passwordsettings');
+        $this->load->view('footer');
+    }
+
+    public function validation_password(){
+        $this->load->library("form_validation");
+        $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
+
+        //検証ルールの設定
+        $this->form_validation->set_rules("userName", "ユーザー名", "min_length[1]|callback_space_check");
     }
 }
