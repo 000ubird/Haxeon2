@@ -310,19 +310,35 @@ class Profile extends CI_Controller {
     }
 
     //パスワード変更ページを表示
-    public function change_pass(){
+    public function change_pass($userID){
+        $data['userID'] = $userID;
         $this->load->view('header');
-        $this->load->view('passwordsettings');
+        $this->load->view('passwordsettings',$data);
         $this->load->view('footer');
     }
 
-    public function validation_password(){
+    //パスワード変更ページ用のバリデーション
+    public function validation_password($userID){
         $this->load->library("form_validation");
         $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
 
         //検証ルールの設定
-        $this->form_validation->set_rules("current", "現在のパスワード", "alpha_numeric|min_length[4]");
-        $this->form_validation->set_rules("new", "新しいパスワード", "alpha_numeric|min_length[4]");
-        $this->form_validation->set_rules("again", "新しいパスワード(再入力)", "alpha_numeric|min_length[4]");
+        $this->form_validation->set_rules("current", "現在のパスワード", "required|alpha_numeric|min_length[4]");
+        $this->form_validation->set_rules("new", "新しいパスワード", "required|alpha_numeric|min_length[4]");
+        $this->form_validation->set_rules("again", "新しいパスワード(再入力)", "required|alpha_numeric|min_length[4]");
+
+        //エラーメッセージの設定
+        $this->form_validation->set_message("required", "%s を入力してください。");
+        $this->form_validation->set_message("alpha_numeric", "%s は半角英数字で入力してください。");
+        $this->form_validation->set_message("min_length", "%s は4文字以上で入力してください。");
+
+        if($this->form_validation->run()){
+            if($_POST['current'] && $_POST['new'] && $_POST['again']){
+                $this->information($userID);
+            }
+            $this->change_pass($userID);
+        }else{
+            $this->change_pass($userID);
+        }
     }
 }
