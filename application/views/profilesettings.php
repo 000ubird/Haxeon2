@@ -13,7 +13,16 @@
     <?php
     echo form_open_multipart('profile/do_upload/'.$userID);
     //アイコン
-    echo '<input type="file" name="userfile" size="20" />';
+    echo '<form action="#">';
+    echo '<div class="file-field input-field">';
+    echo '<div class="btn">';
+    echo '<span>icon</span>';
+    echo '<input type="file" name="userfile"/>';
+    echo '</div>';
+    echo '<div class="file-path-wrapper">';
+    echo '<input class="file-path validate" type="text" />';
+    echo '</div>';
+    echo '</div>';
     echo '<input type="submit" value="upload" />';
     echo form_close();
 
