@@ -18,13 +18,30 @@ echo '<i class="material-icons">open_in_new</i>';
 echo '</a>';
 echo '</div>';
 
+//modal
 echo '<div id="modal1" class="modal">';
 echo '<div class="modal-content">';
 echo '<h4>modal header</h4>';
+
+//入力フォーム部分
+echo '<div class="row">';
+echo '<div class="input-field col s12">';
+echo '<input name="password" type="password">';
+echo '<label for="password">password</label>';
+echo '</div>';
+echo form_error('password');
+echo '</div>';
+
+echo '<div class="modal-footer">';
+echo '<div class="row">';
+echo '<button class="btn waves-effect waves-light red col s4" value="doChange" onClick="location.href=\'http://localhost/haxeon2/profile/delete\'">do change';
+echo '<i class="material-icons left">delete</i>';
+echo '</button>';
 echo '</div>';
 echo '</div>';
 
-
+echo '</div>';
+echo '</div>';
 
 echo form_close();
 ?>
