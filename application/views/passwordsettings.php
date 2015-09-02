@@ -1,5 +1,6 @@
 <h1>パスワード変更確認</h1>
 
+<?php echo print_r($this->session->all_userdata()); ?>
 <?php echo form_open('profile/validation_password/'.$userID); ?>
 
 <div class="row">
