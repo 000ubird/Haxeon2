@@ -245,7 +245,6 @@ class Profile extends CI_Controller {
         $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
 
         //検証ルールの設定
-        //$this->form_validation->set_rules("userID", "ユーザID", "alpha_numeric|min_length[4]|callback_username_check");
         $this->form_validation->set_rules("userName", "ユーザー名", "min_length[1]|callback_space_check");
         $this->form_validation->set_rules("password", "パスワード", "alpha_numeric|min_length[4]");
         $this->form_validation->set_rules("email", "メールアドレス", "valid_email|callback_mail_check");
@@ -307,6 +306,69 @@ class Profile extends CI_Controller {
 //            $data = array('upload_data' => $this->upload->data());
 
             $this->information($userID);
+        }
+    }
+
+    //パスワード変更ページを表示
+    public function change_pass($userID){
+        $data['userID'] = $userID;
+        $this->load->view('header');
+        $this->load->view('passwordsettings',$data);
+        $this->load->view('footer');
+    }
+
+    //パスワード変更ページ用のバリデーション
+    public function validation_password($userID){
+        $this->load->library("form_validation");
+        $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
+
+        //検証ルールの設定
+        $this->form_validation->set_rules("current", "現在のパスワード", "required|alpha_numeric|min_length[4]|callback_current_check");
+        $this->form_validation->set_rules("new", "新しいパスワード", "required|alpha_numeric|min_length[4]");
+        $this->form_validation->set_rules("again", "新しいパスワード(再入力)", "required|alpha_numeric|min_length[4]|callback_again_check");
+
+        //エラーメッセージの設定
+        $this->form_validation->set_message("required", "%s を入力してください。");
+        $this->form_validation->set_message("alpha_numeric", "%s は半角英数字で入力してください。");
+        $this->form_validation->set_message("min_length", "%s は4文字以上で入力してください。");
+
+        if($this->form_validation->run()){
+            if($_POST['current'] && $_POST['new'] && $_POST['again']){
+                $this->information($userID);
+            }
+            $this->change_pass($userID);
+        }else{
+            $this->change_pass($userID);
+        }
+    }
+
+    //個別にバリデーションルールを作成する
+    //current: データベースのパスワードと照合
+    //new: とくにはないかも
+    //again: newで入力された内容と一致しているかどうか
+    function current_check($str){
+        $userID = $this->input->post('userID');
+        $this->load->model('model_users');
+
+        $array = $this->model_users->getUserData($userID);
+
+        if($array != 0){
+            if($array['password'] == $str){
+                return true;
+            }
+            $this->form_validation->set_message('current_check','パスワードが間違っています');
+            return false;
+        }else{
+            $this->form_validation->set_message('current_check','パスワードが間違っています');
+            return false;
+        }
+    }
+
+    function again_check($str){
+        if($this->input->post['new'] == $str) return true;
+        else{
+            $this->form_validation->set_message('again_check','新しいパスワードと一致しません');
+            return false;
         }
     }
 }
