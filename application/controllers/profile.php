@@ -321,6 +321,8 @@ class Profile extends CI_Controller {
         $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
 
         //検証ルールの設定
-        $this->form_validation->set_rules("userName", "ユーザー名", "min_length[1]|callback_space_check");
+        $this->form_validation->set_rules("current", "現在のパスワード", "alpha_numeric|min_length[4]");
+        $this->form_validation->set_rules("new", "新しいパスワード", "alpha_numeric|min_length[4]");
+        $this->form_validation->set_rules("again", "新しいパスワード(再入力)", "alpha_numeric|min_length[4]");
     }
 }
