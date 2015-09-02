@@ -58,19 +58,19 @@
 <div id="important" class="col s12">
     <?php
     echo '<div class="row">';
-    echo '<button class="btn waves-effect waves-light orange darken-4 col s4 offset-s4" value="パスワードを変更する" onClick="window.open(\'https://www.google.co.jp\')">パスワードを変更する';
+    echo '<button class="btn waves-effect waves-light orange darken-4 col s4 offset-s4" value="パスワードを変更する" onClick="location.href=\''. base_url() .'profile/change_pass\'">パスワードを変更する';
     echo '<i class="material-icons left">open_in_new</i>';
     echo '</button>';
     echo '</div>';
 
     echo '<div class="row">';
-    echo '<button class="btn waves-effect waves-light orange darken-4 col s4 offset-s4" value="メールアドレスを変更する" onClick="window.open(\'https://www.google.co.jp\')">メールアドレスを変更する';
+    echo '<button class="btn waves-effect waves-light orange darken-4 col s4 offset-s4" value="メールアドレスを変更する" onClick="location.href=\'https://www.google.co.jp\'">メールアドレスを変更する';
     echo '<i class="material-icons left">open_in_new</i>';
     echo '</button>';
     echo '</div>';
 
     echo '<div class="row">';
-    echo '<button class="btn waves-effect waves-light red col s4 offset-s4" value="アカウントを削除する" onClick="window.open(\'http://localhost/haxeon2/profile/delete\')">アカウントを削除する';
+    echo '<button class="btn waves-effect waves-light red col s4 offset-s4" value="アカウントを削除する" onClick="location.href=\'http://localhost/haxeon2/profile/delete\'">アカウントを削除する';
     echo '<i class="material-icons left">delete</i>';
     echo '</button>';
     echo '</div>';
