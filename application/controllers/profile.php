@@ -323,8 +323,8 @@ class Profile extends CI_Controller {
         $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
 
         //検証ルールの設定
-        $this->form_validation->set_rules("current", "現在のパスワード", "required|alpha_numeric|min_length[4]|callback_current_check");
-        $this->form_validation->set_rules("new", "新しいパスワード", "required|alpha_numeric|min_length[4]");
+        $this->form_validation->set_rules("current", "現在のパスワード", "required|alpha_numeric|callback_current_check");
+        $this->form_validation->set_rules("new", "新しいパスワード", "required|alpha_numeric|min_length[4]|callback_setnewPass");
         $this->form_validation->set_rules("again", "新しいパスワード(再入力)", "required|alpha_numeric|min_length[4]|callback_again_check");
 
         //エラーメッセージの設定
@@ -334,10 +334,17 @@ class Profile extends CI_Controller {
 
         if($this->form_validation->run()){
             if($_POST['current'] && $_POST['new'] && $_POST['again']){
+                //新しいパスワードでアップデートする
+                $this->load->model('model_users');
+                $this->model_users->updatePassword($_POST['new'], $userID);
+                //unsetする理由は不要なデータになるのでセッションから削除している
+                $this->session->unset_userdata('abcdnewpass');
                 $this->information($userID);
             }
+            $this->session->unset_userdata('abcdnewpass');
             $this->change_pass($userID);
         }else{
+            $this->session->unset_userdata('abcdnewpass');
             $this->change_pass($userID);
         }
     }
@@ -347,28 +354,42 @@ class Profile extends CI_Controller {
     //new: とくにはないかも
     //again: newで入力された内容と一致しているかどうか
     function current_check($str){
-        $userID = $this->input->post('userID');
+        $userID = $this->session->userdata('userID');
         $this->load->model('model_users');
 
         $array = $this->model_users->getUserData($userID);
+        $pass = "";
 
-        if($array != 0){
-            if($array['password'] == $str){
+        foreach($array as $row){
+            $pass = $row->userPass;
+        }
+
+        if(count($array) != 0){
+            if($pass == $str){
                 return true;
             }
             $this->form_validation->set_message('current_check','パスワードが間違っています');
             return false;
         }else{
-            $this->form_validation->set_message('current_check','パスワードが間違っています');
+            $this->form_validation->set_message('current_check','パスワードが間違っています2');
             return false;
         }
     }
 
+    //新しいパスワードの確認のためにセッション登録をするだけのメソッド
+    function setnewPass($str){
+        $this->session->set_userdata(array('abcdnewpass' => $str));
+        return true;
+    }
+
     function again_check($str){
-        if($this->input->post['new'] == $str) return true;
+        $new = $this->session->userdata('abcdnewpass');
+
+        if($new == $str) return true;
         else{
             $this->form_validation->set_message('again_check','新しいパスワードと一致しません');
             return false;
         }
     }
+
 }
