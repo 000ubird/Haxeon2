@@ -171,4 +171,10 @@ class Model_users extends CI_Model{
         $this->db->update('account', array('userProfile' => $profile));
     }
 
+    //パスワードの書き換え
+    public function updatePassword($pass, $userID){
+        $this->db->where('userID', $userID);
+        $this->db->update('account', array('userPass' => $pass));
+    }
+
 }
