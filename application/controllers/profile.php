@@ -266,11 +266,6 @@ class Profile extends CI_Controller {
                 $this->model_users->updateUserName($_POST['userName'], $userID);
             }
 
-            //メールアドレスが入力されていた場合、そのアドレス宛てに確認メールを発行
-            if($_POST['email']){
-
-            }
-
             //メッセージの更新
             if($_POST['profile']){
                 $this->model_users->updateUserProfile($_POST['profile'], $userID);
