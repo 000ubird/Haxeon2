@@ -40,12 +40,7 @@ class Model_users extends CI_Model{
         $this->db->where(array('ownerUserID' => $userID));
         $query = $this->db->get('project');
 
-        if($query->num_rows() > 0){
-            return $query->result();
-        }else{
-            //とりあえず
-            return 0;
-        }
+        return $query->result();
     }
 
     //フォロー情報取得
