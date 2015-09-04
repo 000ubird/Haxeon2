@@ -394,4 +394,17 @@ class Profile extends CI_Controller {
         }
     }
 
+    //メールアドレス設定ページ用のバリデーション
+    public function validation_email($userID){
+        $this->load->library('form_validation');
+        $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
+
+        //検証ルールの設定
+        $this->form_validation->set_rules("new", "メールアドレス", "required|valid_email|callback_mail_check");
+        //エラーメッセージの設定
+        $this->form_validation->set_message("required", "%s を入力してください。");
+        $this->form_validation->set_message("valid_email", "有効なメールアドレスを入力してください。");
+
+    }
+
 }
