@@ -121,12 +121,13 @@ class Model_users extends CI_Model{
 
     //アカウントテーブルのメールアドレス情報を更新する
     public function updateMail($email, $userID){
-
+        $this->db->where('userID', $userID);
+        $this->db->update('account', array('userMail', $email));
     }
 
     //アカウントテーブルのカギを更新する
     public function updateKey($key, $userID){
-
+        
     }
 
 	//仮登録テーブルのユーザIDの重複チェック
