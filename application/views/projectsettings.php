@@ -18,7 +18,7 @@ echo '</div>';
 echo '</div>';
 
 echo '<div class="row">';
-echo '<button class="btn waves-effect waves-light orange darken-4" style="float:right" type="submit" name="action">create Tag ';
+echo '<button class="btn waves-effect waves-light orange darken-4 col s3 offset-s9" type="submit" name="action">create Tag ';
 echo '<i class="material-icons">input</i>';
 echo '</button>';
 echo '</div>';

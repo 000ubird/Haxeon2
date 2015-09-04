@@ -159,4 +159,27 @@ class Model_users extends CI_Model{
     public function deleteTmpAccount($userID){
         $this->db->delete('tmp_account', array('userID'=>$userID));
     }
+
+    //tmp_accountからキーで指定したユーザーを削除
+    public function deleteTmpAccountFromKey($key){
+        $this->db->delete('tmp_account', array('registKey'=>$key));
+    }
+
+    //userName,userProfileの書き換え処理
+    public function updateUserName($userName ,$userID){
+        $this->db->where('userID', $userID);
+        $this->db->update('account', array('userName' => $userName));
+    }
+
+    public function updateUserProfile($profile, $userID){
+        $this->db->where('userID', $userID);
+        $this->db->update('account', array('userProfile' => $profile));
+    }
+
+    //パスワードの書き換え
+    public function updatePassword($pass, $userID){
+        $this->db->where('userID', $userID);
+        $this->db->update('account', array('userPass' => $pass));
+    }
+
 }

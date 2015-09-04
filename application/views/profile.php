@@ -51,7 +51,7 @@ echo '      <li class="favorites">favorites: </li>';
 echo '      <li class="following">following: '. $follow_total .'</li>';
 echo '      <li class="followers">followers: '. $followed_total .'</li>';
 echo '      <li class="url">url: <a href='. $url .'>'. $url .'</a></li>';
-echo '      <li class="comment">'. $comment .'</li>';
+echo '      <li class="comment">message: '. $comment .'</li>';
 echo '    </ul>';
 
 if($isown || !$this->session->userdata('userID')){
@@ -74,7 +74,7 @@ echo '<div class="recently">';
 echo '    <div class="row">';
 echo '      <h2>Projects</h2>';
         //複数項目ある場合の書き方例
-        if(count($projects) > 1) {
+        if(count($projects)-1 > 0) {
             foreach ($projects as $project) {
 
                 echo '    <div class="col s3">';
@@ -101,5 +101,4 @@ echo '<div class="following">';
 echo '</div>';
 echo '</div>';
 
-echo '<a class="waves-effect waves-light red btn" href="http://localhost/haxeon2/profile/delete"><i class="material-icons left">delete</i>DELETE ACCOUNT</a>';
 ?>
