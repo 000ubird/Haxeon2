@@ -119,6 +119,16 @@ class Model_users extends CI_Model{
 		}
 	}
 
+    //アカウントテーブルのメールアドレス情報を更新する
+    public function updateMail($email, $userID){
+
+    }
+
+    //アカウントテーブルのカギを更新する
+    public function updateKey($key, $userID){
+
+    }
+
 	//仮登録テーブルのユーザIDの重複チェック
 	public function is_overlap_tmp_uid($userID) {
 		$this->db->where('userID',$userID);
