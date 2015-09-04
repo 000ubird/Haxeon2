@@ -198,6 +198,8 @@ class Profile extends CI_Controller {
         if ($this->model_users->add_user($key)) {
             $this->load->view('header');
             echo "アカウントが有効になりました。";
+            //仮テーブルから削除
+            $this->model_users->deleteTmpAccountFromKey($key);
         } else {
             $this->load->view('header');
             echo "アカウントの認証に失敗しました。";

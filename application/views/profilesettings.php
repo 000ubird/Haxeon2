@@ -11,21 +11,6 @@
 
 <div id="common" class="col s12">
     <?php
-    echo form_open_multipart('profile/do_upload/'.$userID);
-    //アイコン
-    echo '<form action="#">';
-    echo '<div class="file-field input-field">';
-    echo '<div class="btn">';
-    echo '<span>icon</span>';
-    echo '<input type="file" name="userfile"/>';
-    echo '</div>';
-    echo '<div class="file-path-wrapper">';
-    echo '<input class="file-path validate" type="text" />';
-    echo '</div>';
-    echo '</div>';
-    echo '<input type="submit" value="upload" />';
-    echo form_close();
-
     echo form_open('profile/validation_profile/'.$userID);
 
     echo '<div class="row">';
@@ -52,6 +37,25 @@
     echo '</div>';
 
     echo form_close();
+
+    echo '<br />';
+    echo '<hr />';
+
+    echo form_open_multipart('profile/do_upload/'.$userID);
+    //アイコン
+    echo '<form action="#">';
+    echo '<div class="file-field input-field">';
+    echo '<div class="btn">';
+    echo '<span>icon</span>';
+    echo '<input type="file" name="userfile"/>';
+    echo '</div>';
+    echo '<div class="file-path-wrapper">';
+    echo '<input class="file-path validate" type="text" />';
+    echo '</div>';
+    echo '</div>';
+    echo '<input type="submit" value="upload" />';
+    echo form_close();
+
     ?>
 </div>
 
@@ -59,19 +63,19 @@
     <?php
     echo '<div class="row">';
     echo '<button class="btn waves-effect waves-light orange darken-4 col s4 offset-s4" value="パスワードを変更する" onClick="location.href=\''. base_url() .'profile/change_pass/'. $userID .'\'">パスワードを変更する';
-    echo '<i class="material-icons left">open_in_new</i>';
+    echo '<i class="material-icons left">lock_open</i>';
     echo '</button>';
     echo '</div>';
 
     echo '<div class="row">';
     echo '<button class="btn waves-effect waves-light orange darken-4 col s4 offset-s4" value="メールアドレスを変更する" onClick="location.href=\'https://www.google.co.jp\'">メールアドレスを変更する';
-    echo '<i class="material-icons left">open_in_new</i>';
+    echo '<i class="material-icons left">email</i>';
     echo '</button>';
     echo '</div>';
 
     echo '<div class="row">';
     echo '<button class="btn waves-effect waves-light red col s4 offset-s4" value="アカウントを削除する" onClick="location.href=\'http://localhost/haxeon2/profile/delete\'">アカウントを削除する';
-    echo '<i class="material-icons left">delete</i>';
+    echo '<i class="material-icons left">error_outline</i>';
     echo '</button>';
     echo '</div>';
 
