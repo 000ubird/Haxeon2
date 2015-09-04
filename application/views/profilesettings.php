@@ -68,7 +68,7 @@
     echo '</div>';
 
     echo '<div class="row">';
-    echo '<button class="btn waves-effect waves-light orange darken-4 col s4 offset-s4" value="メールアドレスを変更する" onClick="location.href=\'https://www.google.co.jp\'">メールアドレスを変更する';
+    echo '<button class="btn waves-effect waves-light orange darken-4 col s4 offset-s4" value="メールアドレスを変更する" onClick="location.href=\''. base_url() .'profile/change_email/'. $userID .'\'">メールアドレスを変更する';
     echo '<i class="material-icons left">email</i>';
     echo '</button>';
     echo '</div>';
