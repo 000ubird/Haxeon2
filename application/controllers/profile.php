@@ -425,12 +425,9 @@ class Profile extends CI_Controller {
             $this->email->to($send);	//送信先の設定
             $this->email->subject("【Haxeon】アカウントの認証");	//タイトルの設定
 
-            //ひとまずセッションで新しいアドレスを保存する
-            $this->session->set_userdata(array('email' => $send));
-
             //メッセージの本文
             $message = "メールアドレスの変更が行われました。";
-            $message .= "<h1><a href=' ".base_url(). "profile/email_register/$key/$userID'>こちら</h1>をクリックして、メールアドレスの変更を完了してください。</a>";
+            $message .= "<h1><a href=' ".base_url(). "profile/email_register/$key'>こちら</h1>をクリックして、メールアドレスの変更を完了してください。</a>";
             $this->email->message($message);
 
             $this->load->model("model_users");
@@ -459,15 +456,14 @@ class Profile extends CI_Controller {
     }
 
     //メールアドレス変更メールのURLを認証
-    public function email_register($key, $userID) {
+    public function email_register($key) {
         $this->load->model("model_users");
         //add_userメソッドを変更する
-        if ($this->model_users->updateMail($this->session->userdata['email'], $userID)) {
+        if ($this->model_users->updateMail($key)) {
             $this->load->view('header');
             echo "メールアドレスが変更されました。";
             //仮テーブルから削除
             $this->model_users->deleteTmpAccountFromKey($key);
-            $this->session->unset_userdata('email');
         } else {
             $this->load->view('header');
             echo "メールアドレスの変更に失敗しました。";

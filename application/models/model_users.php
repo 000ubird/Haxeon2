@@ -100,10 +100,10 @@ class Model_users extends CI_Model{
 		$data = $this->db->get('tmp_account');
 
 		if ($data->num_rows() > 0) {
-			$row = $data->row();
+                $row = $data->row();
 
-			//アカウントが既に有効になっている場合は登録しない
-			if ($this->is_overlap_uid($row->userID)) {
+                //アカウントが既に有効になっている場合は登録しない
+                if ($this->is_overlap_uid($row->userID)) {
 				return false;
 			}
 
@@ -144,10 +144,19 @@ class Model_users extends CI_Model{
     }
 
     //アカウントテーブルのメールアドレス情報を更新する
-    public function updateMail($email, $userID){
-        $this->db->where('userID', $userID);
-        if($this->db->update('account', array('userMail' => $email))) return true;
-        else return false;
+    public function updateMail($key){
+        $this->db->where('registKey', $key);	//キーからユーザー情報を取得
+        $data = $this->db->get('tmp_account');
+
+        if ($data->num_rows() > 0) {
+            $row = $data->row();
+
+            $this->db->where('userID', $row->userID);
+            $this->db->update('account', array('userMail' => $row->userMail));
+            return true;
+        } else {
+            return false;
+        }
     }
 
     //アカウントテーブルのカギを更新する
