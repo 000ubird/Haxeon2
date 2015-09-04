@@ -119,15 +119,41 @@ class Model_users extends CI_Model{
 		}
 	}
 
+    //メールアドレス変更時にadd_tmp_userを使うためのメソッド
+    public function add_tmp_email_user($userID, $key, $mail){
+        $data = array(
+            'userID' => $userID,
+            'password' => $this->getPassword($userID),
+            'userMail' => $mail,
+            'registKey' => $key
+        );
+
+        return $this->db->insert('tmp_account',$data);
+    }
+
+    private function getPassword($userID){
+        $this->db->where('userID', $userID);
+        $query = $this->db->get('account');
+
+        $pass = '';
+        foreach($query->result() as $row){
+            $pass = $row->userPass;
+        }
+
+        return $pass;
+    }
+
     //アカウントテーブルのメールアドレス情報を更新する
     public function updateMail($email, $userID){
         $this->db->where('userID', $userID);
-        $this->db->update('account', array('userMail', $email));
+        if($this->db->update('account', array('userMail' => $email))) return true;
+        else return false;
     }
 
     //アカウントテーブルのカギを更新する
     public function updateKey($key, $userID){
-        
+        $this->db->where('userID', $userID);
+        $this->db->update('account', array('MD5' => $key));
     }
 
 	//仮登録テーブルのユーザIDの重複チェック
