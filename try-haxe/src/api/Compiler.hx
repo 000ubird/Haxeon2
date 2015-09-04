@@ -345,8 +345,8 @@ class Compiler {
 		var originUserID = program.originUserID;
 		
 		//デバッグ
-		html.body.push("<br><H3>"+program+"</H3>");
-		html.body.push("<br><H3>" + isFirstClick + "</H3>");
+		html.body.push("<br><H3>" + program + "</H3>");
+		html.body.push("<br><H3>" + program.main.source + "</H3>");
 		
 		//2回目以降のクリック時は更新されたプロジェクトIDを保存
 		if (!isFirstClick) originProjectID = program.uid;
