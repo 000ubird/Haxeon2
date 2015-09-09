@@ -167,7 +167,7 @@ class Editor {
 		cnx = HttpAsyncConnection.urlConnect(apiRoot+"/compiler");
 
     program = {
-      uid : null,
+      uid : Browser.window.location.hash,
       main : {
         name : "Test",
         source : haxeSource.getValue()
@@ -337,7 +337,7 @@ class Editor {
       program = p;
 
     // auto-fork
-	program.uid = null;
+	//program.uid = null;
 	var con = new Http("http://localhost/haxeon2/haxeonhandler/get_is_login/");
 	con.onError = onError;
 	con.onData = onResult2;

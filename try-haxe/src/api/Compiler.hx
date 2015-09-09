@@ -27,6 +27,7 @@ typedef HTMLConf =
 class Compiler {
 	public static var isFirstClick = false;
 	
+	var tmpID : String;
 	var tmpDir : String;
 	var mainFile : String;
 
@@ -45,6 +46,9 @@ class Compiler {
 	public function prepareProgram( program : Program ) {
 		if (program.uid == null) isFirstClick = true;
 		else isFirstClick = false;
+		
+		tmpID = program.uid;
+		program.uid = null;
 		
 		while( program.uid == null ){
 
@@ -345,12 +349,14 @@ class Compiler {
 		var originUserID = program.originUserID;
 		
 		//デバッグ
-		html.body.push("<br><H3>" + program + "</H3>");
-		html.body.push("<br><H3>" + program.main.source + "</H3>");
+		//html.body.push("<br><H3>" + program + "</H3>");
+		//html.body.push("<br><H3>" + program.main.source + "</H3>");
+		
+		html.body.push("<br><H3>" + program.uid + tmpID+"</H3>");
 		
 		//2回目以降のクリック時は更新されたプロジェクトIDを保存
 		if (!isFirstClick) originProjectID = program.uid;
-		
+			
 		//データベース処理追加
 		if (out.exitCode == 0) {
 			var cnx = Mysql.connect( {
@@ -361,17 +367,21 @@ class Compiler {
 				database : "haxeon",
 				socket : null
 			} );
-
+			
 			//プロジェクトが登録されているかを確認
-			var rset = cnx.request("SELECT projectID FROM project where projectID = '"+originProjectID+"' AND ownerUserID = '"+userID+"';");
+			var rset = cnx.request("SELECT projectID FROM project where (projectID = '"+tmpID+"' AND ownerUserID = '"+userID+"') OR (ownerUserID = '"+userID+"' AND url = 'http://localhost/haxeon2/try-haxe/index.html#"+tmpID+"');");
 
 			//プロジェクトが登録されていない場合
 			if (rset.length == 0) {
 				html.body.push("<br><H3>プロジェクトIDなし</H3>");
+				
+				if (program.save == "SAVE") {
 				cnx.request("INSERT INTO `project`(`projectID`, `projectName` ,`ownerUserID`, `pv`, `fork`, `originUserID`, `url`) VALUES (\""
 				+program.uid+"\", \""+projectName+"\",\""+userID+"\","+0+","+0+", \""+originUserID+"\",\"http://localhost/haxeon2/try-haxe/index.html#"+program.uid+"\")");
-				
 				html.body.push("<br><H3>データベースにIDを登録しました。</H3>");
+				} else {
+					html.body.push("<br><H3>データベースにIDを登録ていません！！！！</H3>");
+				}
 				
 				//フォークの場合は元のプロジェクト所持者のフォーク数を1上げる
 				if (userID != originUserID) {
@@ -389,12 +399,16 @@ class Compiler {
 				for (row in rset) {
 					html.body.push("プロジェクトID : "+row.projectID+" , 所有者 : "+userID+" , プロジェクト名 : "+projectName);
 				}
-				cnx.request("UPDATE project SET projectID = \""+program.uid+"\",modified = \""+Date.now().toString()+"\" , url = \"http://localhost/haxeon2/try-haxe/index.html#"+program.uid+"\" WHERE ownerUserID = '" + userID + "' AND projectName = '" + projectName+"';");
+				if (program.save == "SAVE") {
+					cnx.request("UPDATE project SET projectID = \""+program.uid+"\",modified = \""+Date.now().toString()+"\" , url = \"http://localhost/haxeon2/try-haxe/index.html#"+program.uid+"\" WHERE ownerUserID = '" + userID + "' AND projectName = '" + projectName+"';");
+				} else {
+					cnx.request("UPDATE project SET projectID = \""+program.uid+"\",modified = \""+Date.now().toString()+"\" WHERE ownerUserID = '" + userID + "' AND projectName = '" + projectName+"';");
+					html.body.push("<br><H3>データベースにIDを登録ていません！！！！</H3>");
+				}
 			}
-			
 			cnx.close();
 		}
-
+			
 		//追加部分終了
 
 		if (out.exitCode == 0)
