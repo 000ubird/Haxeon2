@@ -40,12 +40,7 @@ class Model_users extends CI_Model{
         $this->db->where(array('ownerUserID' => $userID));
         $query = $this->db->get('project');
 
-        if($query->num_rows() > 0){
-            return $query->result();
-        }else{
-            //とりあえず
-            return 0;
-        }
+        return $query->result();
     }
 
     //フォロー情報取得
@@ -100,10 +95,10 @@ class Model_users extends CI_Model{
 		$data = $this->db->get('tmp_account');
 
 		if ($data->num_rows() > 0) {
-			$row = $data->row();
+                $row = $data->row();
 
-			//アカウントが既に有効になっている場合は登録しない
-			if ($this->is_overlap_uid($row->userID)) {
+                //アカウントが既に有効になっている場合は登録しない
+                if ($this->is_overlap_uid($row->userID)) {
 				return false;
 			}
 
@@ -118,6 +113,52 @@ class Model_users extends CI_Model{
 			return false;
 		}
 	}
+
+    //メールアドレス変更時にadd_tmp_userを使うためのメソッド
+    public function add_tmp_email_user($userID, $key, $mail){
+        $data = array(
+            'userID' => $userID,
+            'password' => $this->getPassword($userID),
+            'userMail' => $mail,
+            'registKey' => $key
+        );
+
+        return $this->db->insert('tmp_account',$data);
+    }
+
+    private function getPassword($userID){
+        $this->db->where('userID', $userID);
+        $query = $this->db->get('account');
+
+        $pass = '';
+        foreach($query->result() as $row){
+            $pass = $row->userPass;
+        }
+
+        return $pass;
+    }
+
+    //アカウントテーブルのメールアドレス情報を更新する
+    public function updateMail($key){
+        $this->db->where('registKey', $key);	//キーからユーザー情報を取得
+        $data = $this->db->get('tmp_account');
+
+        if ($data->num_rows() > 0) {
+            $row = $data->row();
+
+            $this->db->where('userID', $row->userID);
+            $this->db->update('account', array('userMail' => $row->userMail));
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    //アカウントテーブルのカギを更新する
+    public function updateKey($key, $userID){
+        $this->db->where('userID', $userID);
+        $this->db->update('account', array('MD5' => $key));
+    }
 
 	//仮登録テーブルのユーザIDの重複チェック
 	public function is_overlap_tmp_uid($userID) {
