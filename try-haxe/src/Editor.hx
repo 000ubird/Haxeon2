@@ -32,6 +32,10 @@ class Editor {
 	var compileBtn : JQuery;
   var libs : JQuery;
   var targets : JQuery;
+  
+  //追加部分
+  var isSave : JQuery;
+  
   var mainName : JQuery;
   var dceName : JQuery;
   var stage : JQuery;
@@ -118,6 +122,11 @@ class Editor {
 	compileBtn = new JQuery(".compile-btn");
     libs = new JQuery("#hx-options-form .hx-libs");
     targets = new JQuery("#hx-options-form .hx-targets");
+	
+	//追加部分
+	isSave = new JQuery("#hx-options-form .hx-hx-save");
+	trace(isSave);
+	
     stage = new JQuery(".js-output .js-canvas");
     jsTab = new JQuery("a[href='#js-source']");
     embedTab = new JQuery("a[href='#embed-source']");
@@ -148,6 +157,9 @@ class Editor {
 
     dceName.delegate("input[name='dce']" , "change" , onDce );
     targets.delegate("input[name='target']" , "change" , onTarget );
+	
+	//追加部分
+    isSave.delegate("input[name='save']" , "change" , onSave );
 
 		compileBtn.bind( "click" , compile );
 
@@ -155,7 +167,7 @@ class Editor {
 		cnx = HttpAsyncConnection.urlConnect(apiRoot+"/compiler");
 
     program = {
-      uid : null,
+      uid : Browser.window.location.hash,
       main : {
         name : "Test",
         source : haxeSource.getValue()
@@ -165,8 +177,12 @@ class Editor {
       libs : new Array(),
 
 	  //追加部分
+	  save : "",
 	  userID : "",
+	  originUserID : "",
+	  originProjectID : "",
 	  projectName : "",
+	  
     };
 
     initLibs();
@@ -231,6 +247,23 @@ class Editor {
     fullscreen();
   }
 
+  //追加部分
+  function onSave(e : JqEvent ) {
+	var cb = new JQuery(e.target);
+	var name = cb.val();
+	switch(name) {
+	  case "SAVE","NOTSAVE" :
+		setSave(name);
+	  default :
+	}
+  }
+  function setSave(save:String) {
+	program.save = save;
+	var radio = new JQuery( 'input[name=\'save\'][value=\'$save\']' );
+	radio.attr( "checked" ,"checked" );
+  }
+  
+  
   function onTarget(e : JqEvent){
     var cb = new JQuery( e.target );
     var name = cb.val();
@@ -293,6 +326,9 @@ class Editor {
 	//function onProgram(p:{p:Program, o:Output})
   function onProgram(p:Program)
 	{
+		trace(p.uid);
+		p.originProjectID = p.uid;
+		
 		//trace(p);
 		if (p != null)
 		{
@@ -301,7 +337,7 @@ class Editor {
       program = p;
 
     // auto-fork
-	program.uid = null;
+	//program.uid = null;
 	var con = new Http("http://localhost/haxeon2/haxeonhandler/get_is_login/");
 	con.onError = onError;
 	con.onData = onResult2;
@@ -310,6 +346,7 @@ class Editor {
 	  haxeSource.setValue(program.main.source);
       setTarget( program.target );
       setDCE(program.dce);
+	  setSave(program.save);
 
       if( program.libs != null ){
         for( lib in libs.find("input.lib") ){
@@ -451,6 +488,8 @@ class Editor {
 		program.main.source = haxeSource.getValue();
 		program.main.name = mainName.val();
     program.dce = new JQuery( 'input[name=\'dce\']:checked' ).val();
+	
+    program.save = new JQuery( 'input[name=\'save\']:checked' ).val();
 
 		var libs = new Array();
     var sel = Type.enumConstructor(program.target);
@@ -592,32 +631,37 @@ class Editor {
 	}
 	//接続成功の場合
 	private function onResult(data : String) : Void {
-		//trace(data+"1");	//デバッグ
+		//プロジェクト編集中のユーザー情報を取得
 		var userDatas = Json.parse(data);
-
-		//フォークチェック
-		//if (program.userID != userDatas.userID) trace("ITS FORK !!!!!!!!!!!!");
-
 		program.userID = userDatas.userID;
+		program.originUserID = userDatas.userID;
 		program.projectName = userDatas.projectName;
+		
+		//HTMLファイルにプロジェクト名を出力する
 		new JQuery("p.proName").text(program.projectName);
 	}
-
+	
+	//既存のプロジェクトを読み込んだ際に呼ばれる
 	private function onResult2(data : String) : Void {
-		//trace(data+"2");	//デバッグ
+		//プロジェクト編集中のユーザー情報を取得
 		var userDatas = Json.parse(data);
-
-		var con = new Http("http://localhost/haxeon2/haxeonhandler/update_pv/"+program.userID+"/"+program.projectName);
+		
+		//PV数をカウントアップする
+		var con = new Http("http://localhost/haxeon2/haxeonhandler/update_pv/"+program.originProjectID);
 		con.request(false);
-
-		//フォークチェック!!!!
+		
+		//フォーク元のユーザーIDを保持する
+		program.originUserID = program.userID;
+		
+		//フォークしたプロジェクトであることを記録
 		if (program.userID != userDatas.userID) {
-			//trace("ITS FORK !!!!!!!!!!!!");
-			//フォークしたプロジェクトであることを記録
 			program.projectName = "Forked_from_"+program.projectName;
 		}
-
+		
+		//プログラム所持者のIDを更新する
 		program.userID = userDatas.userID;
+		
+		//HTMLファイルにプロジェクト名を出力する
 		new JQuery("p.proName").text(program.projectName);
 	}
 }

@@ -38,9 +38,21 @@
   <link rel="stylesheet" href="lib/CodeMirror-4/addon/dialog/dialog.css">
   <link href="lib/CodeMirror-4/addon/lint/lint.css" type="text/css" rel="stylesheet">
   <link rel="shortcut icon" type="image/x-icon" href="http://www.haxe.org/favicon.ico" />
+  
+	<!--追加部分-->
+	<link type="text/css" rel="stylesheet" href="http://localhost/haxeon2/css/materialize.min.css"  media="screen,projection"/>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="http://localhost/haxeon2/js/footerFixed.js"></script>
+	<script type="text/javascript" src="http://localhost/haxeon2/js/materialize.min.js"></script>
+	<!--追加部分END-->
 </head>
 
 <body data-api=".">
+	<!--
   <nav class="navbar navbar-default" role="navigation">
     <div class="container-fluid">
 		<div class="pull-right">
@@ -48,13 +60,44 @@
 			<a href="http://api.haxe.org/" target="_blank">API documentation</a>
 		</div>
     <!-- 画像を変更 -->
-		<a href="http://localhost/haxeon/try-haxe/index.html" class="logo-link"><strong>TRY</strong> <img src="../img/haxeon_icon.png" alt="Haxe" onerror="this.src='http://www.haxe.org/img/haxe-logo-horizontal-on-dark.png'" height="21" width="107"></a> The Haxe Playground
+<!--		<a href="http://localhost/haxeon/try-haxe/index.html" class="logo-link"><strong>TRY</strong> <img src="../img/haxeon_icon.png" alt="Haxe" onerror="this.src='http://www.haxe.org/img/haxe-logo-horizontal-on-dark.png'" height="21" width="107"></a> The Haxe Playground
       <!-- ヘックションにもどるボタンを追加(臨時) -->
-        <button type="button" class="btn btn-danger btn-large" onClick="location.href='http://localhost/haxeon2'">Haxe ON に戻る</button>
+<!--        <button type="button" class="btn btn-danger btn-large" onClick="location.href='http://localhost/haxeon2'">Haxe ON に戻る</button>
     </div>
   </nav>
+--> 
+    <nav>
+        <div class="nav-wrapper orange">
+            <a href="http://localhost/haxeon2/" class="brand-logo">Haxeon</a>
+            <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+
+            <!--     PCサイズでの表示       -->
+            <ul class="right hide-on-med-and-down">
+				<?php $base_url = "http://localhost/haxeon2/";
+                echo '<li><a href="'.$base_url.'createproject">Create Code</a></li>';
+				echo '<li><a href="'.$base_url.'ranking/index/day/pv/30/0">Ranking</a></li>';
+				//echo '<li><a href="'.$base_url.'profile/information/'.$this->session->userdata('userID').'">Profile</a></li>';
+				echo '<li><a href="'.$base_url.'logout">Logout</a></li>';
+				echo '<li><a href="http://haxe.org/documentation" target="_blank">Read the manual</a></li>';
+				echo '<li><a href="http://api.haxe.org/" target="_blank">API documentation</a></li>';
+				 ?>
+            </ul>
+
+            <!--      バーに隠れてる表示      -->
+            <ul class="side-nav" id="mobile-demo"> <?php
+				echo '<li><a href="'.$base_url.'createproject">Create Code</a></li>';
+				echo '<li><a href="'.$base_url.'ranking/index/day/pv/30/0">Ranking</a></li>';
+				//echo '<li><a href="'.$base_url.'profile/information/'.$this->session->userdata('userID').'">Profile</a></li>';
+				echo '<li><a href="'.$base_url.'logout">Logout</a></li>';
+				echo '<li><a href="http://haxe.org/documentation" target="_blank">Read the manual</a></li>';
+				echo '<li><a href="http://api.haxe.org/" target="_blank">API documentation</a></li>';
+				?>
+            </ul>
+        </div>
+    </nav>
 
   <!-- プロジェクトの情報を表示、編集したい場所 -->
+  </br>
   <div class="infomation">
     <p class="proName"></p>
   </div>
@@ -63,10 +106,11 @@
     <div class="row-fluid">
       <div class="span6">
         <div class="compiler-in">
+			
           <div class="btn-group pull-right">
-
               <a href="#" class="compile-btn btn" data-loading-text="Compiling"><i class="icon-cog"></i> Build + Run</a>
           </div>
+		  
           <ul class="nav nav-tabs">
                 <li class="active"><a href="#hx-source" data-toggle="tab">Source</a></li>
                 <li><a href="#hx-options" data-toggle="tab">Options</a></li>
@@ -108,7 +152,7 @@
               <textarea name="hx-source" class="code haxe-source" rows="15">
 class Test {
     static function main() {
-        trace("Haxe is great!");
+        trace("Haxe is good!");
     }
 }</textarea>
             </div>
@@ -130,6 +174,16 @@ class Test {
                     </div>
 
                   </div>
+				  
+		<!--追加部分-->
+		<div class="control-group hx-save">
+			<label class="control-label" for="libs-checkbox">Save</label>
+			<div class="controls">
+				<label class="radio"><input type="radio" name="save" value="SAVE" checked></input>Yes</label>
+				<label class="radio"><input type="radio" name="save" value="NOTSAVE"></input>No</label>
+			</div>
+		</div>
+		
                   <div class="control-group hx-dce-name">
                     <label class="control-label" for="main-class">DCE <a href="http://haxe.org/manual/cr-dce.html" target="_blank"><i class="icon-question-sign"></i></a></label>
                     <div class="controls">
@@ -234,11 +288,6 @@ class Test {
 	</div>
 
   </div>
-
-<!-- 下に追加 -->
-<div class="center-block" align="center">
-  <button class="btn-primary" style="width: 100%; height: 50px;">fork</button>
-</div>
 
   <!-- JavaScript at the bottom for fast page loading -->
 
