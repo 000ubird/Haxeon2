@@ -641,7 +641,7 @@ class Editor {
 		new JQuery("p.proName").text(program.projectName);
 	}
 	
-	//他人のプロジェクトを読み込んだ際に呼ばれる
+	//既存のプロジェクトを読み込んだ際に呼ばれる
 	private function onResult2(data : String) : Void {
 		//プロジェクト編集中のユーザー情報を取得
 		var userDatas = Json.parse(data);
