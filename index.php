@@ -53,8 +53,11 @@
  *
  * NOTE: If you change these, also change the error_reporting() code below
  */
-	define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
-
+	if ( file_exists('application/config/environment.php') ) {
+	    require_once('application/config/environment.php');
+	} else {
+	    define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
+	}
 /*
  *---------------------------------------------------------------
  * ERROR REPORTING
@@ -65,11 +68,14 @@
  */
 switch (ENVIRONMENT)
 {
+	//’Ç‰Á•”•ª
 	case 'development':
+	case 'windows':
+	case 'linux':
 		error_reporting(-1);
 		ini_set('display_errors', 1);
 	break;
-
+	
 	case 'testing':
 	case 'production':
 		ini_set('display_errors', 0);
