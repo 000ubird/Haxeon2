@@ -73,9 +73,9 @@ class Editor {
 			lineNumbers : true,
 			extraKeys : {
 				"Ctrl-Space" : function (cm:CodeMirror) {autocomplete(cm);},
-        "Ctrl-Enter" : "compile",
-        "F8" : "compile",
-        "F5" : "compile",
+        //"Ctrl-Enter" : "compile",
+        //"F8" : "compile",
+        //"F5" : "compile",
         "F11" : "togglefullscreen"
 			}
         	,
@@ -647,7 +647,7 @@ class Editor {
 		var userDatas = Json.parse(data);
 		
 		//PV数をカウントアップする
-		var con = new Http("http://localhost/haxeon2/haxeonhandler/update_pv/"+program.originProjectID);
+		var con = new Http("http://localhost/haxeon2/haxeonhandler/update_pv/"+program.uid);
 		con.request(false);
 		
 		//フォーク元のユーザーIDを保持する
