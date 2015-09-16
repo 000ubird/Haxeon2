@@ -73,9 +73,9 @@ class Editor {
 			lineNumbers : true,
 			extraKeys : {
 				"Ctrl-Space" : function (cm:CodeMirror) {autocomplete(cm);},
-        "Ctrl-Enter" : "compile",
-        "F8" : "compile",
-        "F5" : "compile",
+        //"Ctrl-Enter" : "compile",
+        //"F8" : "compile",
+        //"F5" : "compile",
         "F11" : "togglefullscreen"
 			}
         	,
