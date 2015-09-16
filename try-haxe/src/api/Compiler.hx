@@ -395,9 +395,9 @@ class Compiler {
 				html.body.push("プロジェクトID : "+row.projectID+" , 所有者 : "+userID+" , プロジェクト名 : "+projectName);
 			}
 			if (program.save == "SAVE") {
-				cnx.request("UPDATE project SET projectID = \""+program.uid+"\",modified = \""+Date.now().toString()+"\" , url = \"http://localhost/haxeon2/try-haxe/index.html#"+program.uid+"\" WHERE ownerUserID = '" + userID + "' AND projectName = '" + projectName+"';");
+				cnx.request("UPDATE project SET projectID = \""+program.uid+"\",modified = \""+Date.now().toString()+"\" , url = \"http://localhost/haxeon2/try-haxe/index.html#"+program.uid+"\" WHERE ownerUserID = '"+userID+"' AND url = 'http://localhost/haxeon2/try-haxe/index.html#"+tmpID+"';");
 			} else {
-				cnx.request("UPDATE project SET projectID = \""+program.uid+"\",modified = \""+Date.now().toString()+"\" WHERE ownerUserID = '" + userID + "' AND projectName = '" + projectName+"';");
+				cnx.request("UPDATE project SET projectID = \""+program.uid+"\",modified = \""+Date.now().toString()+"\" WHERE ownerUserID = '"+userID+"' AND url = 'http://localhost/haxeon2/try-haxe/index.html#"+tmpID+"';");
 				html.body.push("<br><H3>未保存が選択されています。</H3>");
 			}
 		}
