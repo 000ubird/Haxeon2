@@ -647,7 +647,7 @@ class Editor {
 		var userDatas = Json.parse(data);
 		
 		//PV数をカウントアップする
-		var con = new Http("http://localhost/haxeon2/haxeonhandler/update_pv/"+program.originProjectID);
+		var con = new Http("http://localhost/haxeon2/haxeonhandler/update_pv/"+program.uid);
 		con.request(false);
 		
 		//フォーク元のユーザーIDを保持する

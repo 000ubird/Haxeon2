@@ -381,12 +381,11 @@ class Compiler {
 			html.body.push("originpro : "+originProjectID+" ,originuserID : "+originUserID+", currentuser : "+userID);
 			if (userID != originUserID) {
 				var fork = 0;
-				var rset2 = cnx.request("SELECT * FROM project where url = 'http://localhost/haxeon2/try-haxe/index.html#"+originProjectID+"';");
+				var rset2 = cnx.request("SELECT * FROM project where url = 'http://localhost/haxeon2/try-haxe/index.html#"+tmpID+"';");
 				for (row in rset2) {
 					fork = row.fork+1;
 				}
-				
-				cnx.request("UPDATE project SET fork = "+fork+" WHERE projectID = '" + originProjectID + "' AND ownerUserID = '" + originUserID + "';");
+				cnx.request("UPDATE project SET fork = "+fork+" WHERE url = 'http://localhost/haxeon2/try-haxe/index.html#"+tmpID+"' AND ownerUserID = '"+originUserID+"';");
 			}
 		}
 		//プロジェクトIDを更新

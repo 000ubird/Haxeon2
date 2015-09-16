@@ -12,7 +12,7 @@ class Model_project extends CI_Model{
 
 	//指定したプロジェクトのPV数を増やす
 	public function pvCountUp($projectID) {
-		$array = array('projectID' => $projectID);
+		$array = array('url' => "http://localhost/haxeon2/try-haxe/index.html#".$projectID);
 		$query = $this->db->get_where('project', $array);
 
 		//PV数の取得と更新
