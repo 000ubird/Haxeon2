@@ -5,7 +5,7 @@ class Profile extends CI_Controller {
 
     public function index() {
         $this->load->view('header');
-        $this->load->view('haxeon2');
+        $this->load->view('haxeon');
         $this->load->view('footer');
     }
 
@@ -162,7 +162,7 @@ class Profile extends CI_Controller {
 
             //Emailライブラリを読み込む。メールタイプをHTMLに設定（デフォルトはテキストです）
             $this->load->library("email", array("mailtype" => "html"));
-            $this->email->from("delldell201507@gmail.com", "Haxeon2");	//送信元の情報
+            $this->email->from("delldell201507@gmail.com", "Haxeon");	//送信元の情報
             $this->email->to($this->input->post("email"));	//送信先の設定
             $this->email->subject("【Haxeon】アカウントの認証");	//タイトルの設定
 
@@ -421,7 +421,7 @@ class Profile extends CI_Controller {
 
             //Emailライブラリを読み込む。メールタイプをHTMLに設定（デフォルトはテキストです）
             $this->load->library("email", array("mailtype" => "html"));
-            $this->email->from("delldell201507@gmail.com", "Haxeon2");	//送信元の情報
+            $this->email->from("delldell201507@gmail.com", "Haxeon");	//送信元の情報
             $this->email->to($send);	//送信先の設定
             $this->email->subject("【Haxeon】アカウントの認証");	//タイトルの設定
 

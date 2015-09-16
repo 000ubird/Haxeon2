@@ -74,7 +74,7 @@
     echo '</div>';
 
     echo '<div class="row">';
-    echo '<button class="btn waves-effect waves-light red col s4 offset-s4" value="アカウントを削除する" onClick="location.href=\'http://localhost/haxeon2/profile/delete\'">アカウントを削除する';
+    echo '<button class="btn waves-effect waves-light red col s4 offset-s4" value="アカウントを削除する" onClick="location.href=\'http://localhost/haxeon/profile/delete\'">アカウントを削除する';
     echo '<i class="material-icons left">error_outline</i>';
     echo '</button>';
     echo '</div>';

@@ -8,7 +8,7 @@ class Login extends CI_Controller {
         $this->load->view('login');
 		$this->load->view('footer');
     }
-	
+
     public function validation(){
         //フォームバリデーションライブラリを呼び出し
         $this->load->library("form_validation");
@@ -27,7 +27,7 @@ class Login extends CI_Controller {
 
         $this->form_validation->set_message("required", "");
         $this->form_validation->set_message("alpha_numeric", "IDは半角英数字で入力してください。");
-		
+
         if($this->form_validation->run()){
             //正常な入力のとき
                 $data = array(
@@ -35,7 +35,7 @@ class Login extends CI_Controller {
                 );
                 $this->session->set_userdata($data);
 
-                redirect("haxeon2");
+                redirect("haxeon");
         }else{
             //初回、もしくはエラーがあったとき
             $this->index();
@@ -43,7 +43,7 @@ class Login extends CI_Controller {
     }
 
     public function validate_credentials(){
-        $this->load->model("model_users");
+        $this->load->model("Model_users");
 
         if($this->model_users->can_log_in()){
             return true;
