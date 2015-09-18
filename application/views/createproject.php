@@ -15,7 +15,7 @@ echo validation_errors();
 </div>
 </div>
 
-<div class="row">';
+<div class="row">
 <button class="btn waves-effect waves-light orange darken-4" style="float:right" type="submit" name="action">Create<i class="material-icons">note_add</i>
 </button>
 </div>
