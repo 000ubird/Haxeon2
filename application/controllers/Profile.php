@@ -1,5 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+//タグの登録上限数
+define("TAG_LIMIT", 3);
 
 class Profile extends CI_Controller {
 
@@ -73,15 +75,20 @@ class Profile extends CI_Controller {
 
         $this->form_validation->set_message("required", "%s を入力してください");
 
+        $pid = $this->session->userdata('pid');
         //正しい場合は登録処理
         if ($this->form_validation->run()) {
+            $this->load->model("Model_project");
             //タグマップテーブルの登録数についての確認
-            //タグテーブルのチェック
-            //あればidを取得し、mapに登録
+            if($this->Model_project->countTagMap($pid) < TAG_LIMIT){
+                //タグテーブルのチェック
+                //あればidを取得し、mapに登録
+            }
+
             //なければmapに登録、idを取得しmapに登録
             //タグマップテーブルに重複していなければ登録
         }else{
-            $this->projectsettings($this->session->userdata('pid'));
+            $this->projectsettings($pid);
         }
     }
 
