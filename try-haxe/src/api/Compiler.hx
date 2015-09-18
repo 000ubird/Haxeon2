@@ -46,10 +46,10 @@ class Compiler {
 	public function prepareProgram( program : Program ) {
 		if (program.uid == null) isFirstClick = true;
 		else isFirstClick = false;
-		
+
 		tmpID = program.uid;
 		program.uid = null;
-		
+
 		while( program.uid == null ){
 
 			var id = haxe.crypto.Md5.encode( Std.string( Math.random() ) +Std.string( Date.now().getTime() ) );
@@ -347,12 +347,12 @@ class Compiler {
 		var projectName = program.projectName;
 		var originProjectID = program.originProjectID;
 		var originUserID = program.originUserID;
-		
+
 		html.body.push("<br><H3>生成されたID : " + program.uid +"\n 前のID : "+ tmpID+"</H3>");
-		
+
 		//2回目以降のクリック時は更新されたプロジェクトIDを保存
 		if (!isFirstClick) originProjectID = program.uid;
-		
+
 		var cnx = Mysql.connect( {
 			host : "localhost",
 			port : 3306,
@@ -361,14 +361,14 @@ class Compiler {
 			database : "haxeon",
 			socket : null
 		} );
-		
+
 		//プロジェクトが登録されているかを確認
 		var rset = cnx.request("SELECT projectID FROM project where (projectID = '" + tmpID + "' AND ownerUserID = '" + userID + "') OR (ownerUserID = '" + userID + "' AND url = 'http://localhost/haxeon2/try-haxe/index.html#" + tmpID + "');");
-		
+
 		//プロジェクトが登録されていない場合
 		if (rset.length == 0) {
 			html.body.push("<br><H3>プロジェクトIDなし</H3>");
-			
+
 			if (program.save == "SAVE") {
 				cnx.request("INSERT INTO `project`(`projectID`, `projectName` ,`ownerUserID`, `pv`, `fork`, `originUserID`, `url`) VALUES (\""
 				+program.uid+"\", \""+projectName+"\",\""+userID+"\","+0+","+0+", \""+originUserID+"\",\"http://localhost/haxeon2/try-haxe/index.html#"+program.uid+"\")");
@@ -376,7 +376,7 @@ class Compiler {
 			} else {
 				html.body.push("<br><H3>未保存が選択されています。</H3>");
 			}
-			
+
 			//フォークの場合は元のプロジェクト所持者のフォーク数を1上げる
 			html.body.push("originpro : "+originProjectID+" ,originuserID : "+originUserID+", currentuser : "+userID);
 			if (userID != originUserID) {

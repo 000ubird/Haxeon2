@@ -1,11 +1,13 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+//タグの登録上限数
+define("TAG_LIMIT", 3);
 
 class Profile extends CI_Controller {
 
     public function index() {
         $this->load->view('header');
-        $this->load->view('haxeon2');
+        $this->load->view('haxeon');
         $this->load->view('footer');
     }
 
@@ -27,15 +29,15 @@ class Profile extends CI_Controller {
     }
 
     private function getUserData($userID){
-        $this->load->model('model_users');
+        $this->load->model('Model_users');
 
-        $data['user'] = $this->model_users->getUserData($userID);
-        $data['projects'] = $this->model_users->getProjects($userID);
-        $data['follow'] = $this->model_users->getFollowInfo($userID);
-        $data['followed'] = $this->model_users->getFollowedInfo($userID);
+        $data['user'] = $this->Model_users->getUserData($userID);
+        $data['projects'] = $this->Model_users->getProjects($userID);
+        $data['follow'] = $this->Model_users->getFollowInfo($userID);
+        $data['followed'] = $this->Model_users->getFollowedInfo($userID);
         $data['isown'] = ($this->session->userdata('userID') == $userID);
-        $data['isfollow'] = $this->model_users->getIsFollow($userID);
-        $data['isfollowed'] = $this->model_users->getIsFollowed($userID);
+        $data['isfollow'] = $this->Model_users->getIsFollow($userID);
+        $data['isfollowed'] = $this->Model_users->getIsFollowed($userID);
 
         return $data;
     }
@@ -48,11 +50,11 @@ class Profile extends CI_Controller {
     public function projectsettings($projectID){
         $this->session->set_userdata(array('pid' => $projectID));
 
-        $this->load->model('model_project');
+        $this->load->model('Model_project');
         $this->load->library('tag');
 
         //sessionのuserIDとprojectIDの所有者が同じかチェック
-        if($this->model_project->isOwner($projectID)) {
+        if($this->Model_project->isOwner($projectID)) {
 
             $data['tags'] = $this->tag->getTag($projectID);
 
@@ -62,6 +64,82 @@ class Profile extends CI_Controller {
         }else{
             $this->index();
         }
+    }
+
+    public function validation_tag(){
+        $this->load->library("form_validation");
+        $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
+
+        //検証ルールの設定
+        $this->form_validation->set_rules("tag", "タグ", "required|callback_tag_table_check");
+
+        $this->form_validation->set_message("required", "%s を入力してください");
+
+        $pid = $this->session->userdata('pid');
+        //正しい場合は登録処理
+        if ($this->form_validation->run()) {
+            $this->load->model("Model_project");
+            //タグマップテーブルの登録数についての確認
+                //入力を保持
+                $tag = $this->input->post('tag');
+
+                if(!$this->tag_check($tag)){
+                    //タグテーブルに存在しないタグのとき
+                     $this->Model_project->registTag($tag);
+                }
+
+                //idを取得
+                $tagid = $this->Model_project->getTagID($tag);
+                //マップに登録
+                $this->Model_project->registTagMap($pid, $tagid);
+                $this->projectsettings($pid);
+
+        }else{
+            $this->projectsettings($pid);
+        }
+    }
+
+    public function tag_table_check($str){
+        $this->load->model("Model_project");
+        $pid = $this->session->userdata('pid');
+
+        //タグマップテーブルの登録数についての確認
+        if($this->Model_project->countTagMap($pid) == TAG_LIMIT){
+            $this->form_validation->set_message("tag_table_check", 'タグ登録数の上限は'. TAG_LIMIT .'個です');
+            return false;
+        }
+
+        $tagid = $this->Model_project->getTagID($str);
+
+        if($this->Model_project->checkOverlap($pid, $tagid)){
+            $this->form_validation->set_message("tag_table_check", '入力した%sはすでに登録されています');
+            return false;
+        }
+
+        return true;
+    }
+
+    //タグテーブルの重複チェック
+    //あればtrue
+    public function tag_check($tagname) {
+        $this->load->model("Model_project");
+
+        if($this->Model_project->isTag($tagname)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function delete_tagmap($tagname){
+        $this->load->model("Model_project");
+
+        $tagID = $this->Model_project->getTagID($tagname);
+
+        $pid = $this->session->userdata('pid');
+        $this->Model_project->deleteTagMap($pid, $tagID);
+
+        $this->projectsettings($pid);
     }
 
 	//アカウント削除
@@ -78,67 +156,38 @@ class Profile extends CI_Controller {
 		$this->form_validation->set_rules("password", "パスワード", "required|callback_pass_check");
 		$this->form_validation->set_message("required", "%s は必須入力項目です。");
 
+        $uid = $this->session->userdata('userID');
+
 		//正しい場合はアカウントの削除を実行
 		if ($this->form_validation->run()) {
+            //セッション情報の削除
+            $this->session->sess_destroy();
 			//アカウントとプロジェクトを削除
-			$this->load->model("model_users");
-			$this->model_users->deleteAccount($this->session->userdata('userID'));
+			$this->load->model("Model_users");
+			$this->Model_users->deleteAccount($uid);
             //tmpアカウントからも削除
-            $this->model_users->deleteTmpAccount($this->session->userdata('userID'));
-			$this->load->model("model_project");
-			$this->model_project->deleteProject($this->session->userdata('userID'));
-
-			//セッション情報の削除
-			$this->session->sess_destroy();
+            $this->Model_users->deleteTmpAccount($uid);
+			$this->load->model("Model_project");
+			$this->Model_project->deleteProject($uid);
 
 			//アカウント削除処理完了後に遷移するページ
-			$this->index();
+			redirect('');
 		}else {
 			$this->delete();
 		}
 	}
-
-    public function validation_tag(){
-        $this->load->library("form_validation");
-        $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
-
-        //検証ルールの設定
-        $this->form_validation->set_rules("tag", "タグ", "required|callback_tag_check");
-
-        $this->form_validation->set_message("required", "%s を入力してください");
-
-        //正しい場合は登録処理
-        if ($this->form_validation->run()) {
-
-        }else{
-            $this->projectsettings($this->session->userdata('pid'));
-        }
-    }
 
 	//パスワードのチェック
 	public function pass_check($str) {
 		$this->form_validation->set_message('pass_check', 'パスワードが間違っています。');
 
 		//DBからパスワードを取得
-		$this->load->model("model_users");
-		$result = $this->model_users->getUserData($this->session->userdata('userID'));
+		$this->load->model("Model_users");
+		$result = $this->Model_users->getUserData($this->session->userdata('userID'));
 		foreach($result as $row) $pass = $row->userPass;
 
 		return ($pass == $str);
 	}
-
-    //タグの重複チェック
-    public function tag_check($str) {
-        $this->load->model("model_project");
-
-        if($this->model_project->isTag($str)){
-            $this->form_validation->set_message('tag_check','入力された %s '.$str.' は既に使われております。');
-            return false;
-        }
-        else {
-            return true;
-        }
-    }
 
     public function validation_signup() {
         $this->load->library("form_validation");
@@ -162,7 +211,7 @@ class Profile extends CI_Controller {
 
             //Emailライブラリを読み込む。メールタイプをHTMLに設定（デフォルトはテキストです）
             $this->load->library("email", array("mailtype" => "html"));
-            $this->email->from("delldell201507@gmail.com", "Haxeon2");	//送信元の情報
+            $this->email->from("delldell201507@gmail.com", "Haxeon");	//送信元の情報
             $this->email->to($this->input->post("email"));	//送信先の設定
             $this->email->subject("【Haxeon】アカウントの認証");	//タイトルの設定
 
@@ -171,10 +220,10 @@ class Profile extends CI_Controller {
             $message .= "<h1><a href=' ".base_url(). "profile/register/$key'>こちら</h1>をクリックして、会員登録を完了してください。</a>";
             $this->email->message($message);
 
-            $this->load->model("model_users");
+            $this->load->model("Model_users");
 
             //仮登録用データベースへの登録が完了した場合
-            if ($this->model_users->add_tmp_user($key)) {
+            if ($this->Model_users->add_tmp_user($key)) {
                 //メール送信
                 if ($this->email->send()) {
                     $this->load->view('header');
@@ -194,12 +243,12 @@ class Profile extends CI_Controller {
 
     //仮登録メールのURLを認証
     public function register($key) {
-        $this->load->model("model_users");
-        if ($this->model_users->add_user($key)) {
+        $this->load->model("Model_users");
+        if ($this->Model_users->add_user($key)) {
             $this->load->view('header');
             echo "アカウントが有効になりました。";
             //仮テーブルから削除
-            $this->model_users->deleteTmpAccountFromKey($key);
+            $this->Model_users->deleteTmpAccountFromKey($key);
         } else {
             $this->load->view('header');
             echo "アカウントの認証に失敗しました。";
@@ -208,9 +257,9 @@ class Profile extends CI_Controller {
 
     //既存のユーザIDとの重複チェック
     public function username_check($str) {
-        $this->load->model("model_users");
+        $this->load->model("Model_users");
 
-        if($this->model_users->is_overlap_tmp_uid($str) || $this->model_users->is_overlap_uid($str) ){
+        if($this->Model_users->is_overlap_tmp_uid($str) || $this->Model_users->is_overlap_uid($str) ){
             $this->form_validation->set_message('username_check','入力された %s '.$str.' は既に使われております。');
             return false;
         }
@@ -221,9 +270,9 @@ class Profile extends CI_Controller {
 
     //既存のメールアドレスの重複チェック
     public function mail_check($str) {
-        $this->load->model("model_users");
+        $this->load->model("Model_users");
 
-        if($this->model_users->is_overlap_mail($str)){
+        if($this->Model_users->is_overlap_mail($str)){
             $this->form_validation->set_message('mail_check','入力された %s '.$str.' は既に使われております。');
             return false;
         }
@@ -259,17 +308,17 @@ class Profile extends CI_Controller {
         $this->form_validation->set_message("max_length", "%s は140文字以内で入力してください。");
 
         if ($this->form_validation->run()){
-            $this->load->model('model_users');
+            $this->load->model('Model_users');
 
             //userNameが入力されていた場合、userIDの使用されているすべてのテーブルを書き換える
             if($_POST['userName']){
                 //更新
-                $this->model_users->updateUserName($_POST['userName'], $userID);
+                $this->Model_users->updateUserName($_POST['userName'], $userID);
             }
 
             //メッセージの更新
             if($_POST['profile']){
-                $this->model_users->updateUserProfile($_POST['profile'], $userID);
+                $this->Model_users->updateUserProfile($_POST['profile'], $userID);
             }
             $this->information($userID);
         }else{
@@ -337,8 +386,8 @@ class Profile extends CI_Controller {
         if($this->form_validation->run()){
             if($_POST['current'] && $_POST['new'] && $_POST['again']){
                 //新しいパスワードでアップデートする
-                $this->load->model('model_users');
-                $this->model_users->updatePassword($_POST['new'], $userID);
+                $this->load->model('Model_users');
+                $this->Model_users->updatePassword($_POST['new'], $userID);
                 //unsetする理由は不要なデータになるのでセッションから削除している
                 $this->session->unset_userdata('abcdnewpass');
                 $this->information($userID);
@@ -357,9 +406,9 @@ class Profile extends CI_Controller {
     //again: newで入力された内容と一致しているかどうか
     function current_check($str){
         $userID = $this->session->userdata('userID');
-        $this->load->model('model_users');
+        $this->load->model('Model_users');
 
-        $array = $this->model_users->getUserData($userID);
+        $array = $this->Model_users->getUserData($userID);
         $pass = "";
 
         foreach($array as $row){
@@ -421,7 +470,7 @@ class Profile extends CI_Controller {
 
             //Emailライブラリを読み込む。メールタイプをHTMLに設定（デフォルトはテキストです）
             $this->load->library("email", array("mailtype" => "html"));
-            $this->email->from("delldell201507@gmail.com", "Haxeon2");	//送信元の情報
+            $this->email->from("delldell201507@gmail.com", "Haxeon");	//送信元の情報
             $this->email->to($send);	//送信先の設定
             $this->email->subject("【Haxeon】アカウントの認証");	//タイトルの設定
 
@@ -430,12 +479,12 @@ class Profile extends CI_Controller {
             $message .= "<h1><a href=' ".base_url(). "profile/email_register/$key'>こちら</h1>をクリックして、メールアドレスの変更を完了してください。</a>";
             $this->email->message($message);
 
-            $this->load->model("model_users");
+            $this->load->model("Model_users");
 
             //仮登録用データベースへの登録が完了した場合
-            if ($this->model_users->add_tmp_email_user($userID, $key, $send)) {
+            if ($this->Model_users->add_tmp_email_user($userID, $key, $send)) {
                 //アカウントテーブルの鍵を上書き
-                $this->model_users->updateKey($key, $userID);
+                $this->Model_users->updateKey($key, $userID);
 
                 //メール送信
                 if ($this->email->send()) {
@@ -457,13 +506,13 @@ class Profile extends CI_Controller {
 
     //メールアドレス変更メールのURLを認証
     public function email_register($key) {
-        $this->load->model("model_users");
+        $this->load->model("Model_users");
         //add_userメソッドを変更する
-        if ($this->model_users->updateMail($key)) {
+        if ($this->Model_users->updateMail($key)) {
             $this->load->view('header');
             echo "メールアドレスが変更されました。";
             //仮テーブルから削除
-            $this->model_users->deleteTmpAccountFromKey($key);
+            $this->Model_users->deleteTmpAccountFromKey($key);
         } else {
             $this->load->view('header');
             echo "メールアドレスの変更に失敗しました。";

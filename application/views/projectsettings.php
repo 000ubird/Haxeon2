@@ -1,9 +1,9 @@
 <h2>プロジェクト設定</h2>
 
 <?php
-echo '<p>タグ</p>';
+echo '<p>タグ一覧</p>';
 foreach ($tags as $tag) {
-    echo '<p>'. $tag .'</p>';
+    echo '<div class="row">'. $tag .'<a href="'.base_url().'profile/delete_tagmap/'. $tag .'"><i class="material-icons offset-s5">delete</i></a></div>';
 }
 
 echo form_open('profile/validation_tag');
