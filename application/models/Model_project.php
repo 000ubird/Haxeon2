@@ -81,7 +81,7 @@ class Model_project extends CI_Model{
 
     //タグをtagテーブルに登録する
     //返り値 登録したタグのid
-    public function reigstTag($tagname){
+    public function registTag($tagname){
         $array = array(
             'tag' => $tagname
         );

@@ -71,7 +71,7 @@ class Profile extends CI_Controller {
         $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
 
         //検証ルールの設定
-        $this->form_validation->set_rules("tag", "タグ", "required");
+        $this->form_validation->set_rules("tag", "タグ", "required|callback_tag_table_check");
 
         $this->form_validation->set_message("required", "%s を入力してください");
 
@@ -80,30 +80,43 @@ class Profile extends CI_Controller {
         if ($this->form_validation->run()) {
             $this->load->model("Model_project");
             //タグマップテーブルの登録数についての確認
-            if($this->Model_project->countTagMap($pid) < TAG_LIMIT){
                 //入力を保持
                 $tag = $this->input->post('tag');
 
                 if(!$this->tag_check($tag)){
                     //タグテーブルに存在しないタグのとき
-                     $this->Model_project->registTag(tag);
+                     $this->Model_project->registTag($tag);
                 }
 
                 //idを取得
                 $tagid = $this->Model_project->getTagID($tag);
-                //タグマップテーブルの重複チェック
-                if(!$this->Model_project->checkOverlap($pid, $tagid)) {
-                    //マップに登録
-                    $this->Model_project->registTagMap($pid, $tagid);
-                }else{
-                    $this->projectsettings($pid);
-                }
-            }else{
+                //マップに登録
+                $this->Model_project->registTagMap($pid, $tagid);
                 $this->projectsettings($pid);
-            }
+
         }else{
             $this->projectsettings($pid);
         }
+    }
+
+    public function tag_table_check($str){
+        $this->load->model("Model_project");
+        $pid = $this->session->userdata('pid');
+
+        //タグマップテーブルの登録数についての確認
+        if($this->Model_project->countTagMap($pid) == TAG_LIMIT){
+            $this->form_validation->set_message("tag_table_check", 'タグ登録数の上限は'. TAG_LIMIT .'個です');
+            return false;
+        }
+
+        $tagid = $this->Model_project->getTagID($str);
+
+        if($this->Model_project->checkOverlap($pid, $tagid)){
+            $this->form_validation->set_message("tag_table_check", '入力した%sはすでに登録されています');
+            return false;
+        }
+
+        return true;
     }
 
     //タグテーブルの重複チェック
