@@ -12,72 +12,82 @@
 <div id="common" class="col s12">
     <?php
     echo form_open('profile/validation_profile/'.$userID);
-
-    echo '<div class="row">';
-    echo '<div class="input-field col s12">';
-    echo '<input name="userName" type="text">';
-    echo '<label for="userName">userName</label>';
-    echo '</div>';
-    echo form_error('userName');
-    echo '</div>';
-
-    //メッセージ文
-    echo '<div class="row">';
-    echo '<div class="input-field col s12">';
-    echo '<input name="profile" type="text">';
-    echo '<label for="profile">message</label>';
-    echo '</div>';
-    echo form_error('profile');
-    echo '</div>';
-
-    echo '<div class="row">';
-    echo '<button class="btn waves-effect waves-light orange darken-4 col s3 offset-s9" type="submit" name="action">Change';
-    echo '<i class="material-icons">open_in_new</i>';
-    echo '</button>';
-    echo '</div>';
-
-    echo form_close();
-
-    echo '<br />';
-    echo '<hr />';
-
-    echo form_open_multipart('profile/do_upload/'.$userID);
-    //アイコン
-    echo '<form action="#">';
-    echo '<div class="file-field input-field">';
-    echo '<div class="btn">';
-    echo '<span>icon</span>';
-    echo '<input type="file" name="userfile"/>';
-    echo '</div>';
-    echo '<div class="file-path-wrapper">';
-    echo '<input class="file-path validate" type="text" />';
-    echo '</div>';
-    echo '</div>';
-    echo '<input type="submit" value="upload" />';
-    echo form_close();
-
     ?>
+
+    <div class="row">
+    <div class="input-field col s12">
+    <input name="userName" type="text">
+    <label for="userName">userName</label>
+    </div>
+    <?php
+    form_error('userName');
+    ?>
+    </div>
+
+    //メッセージ
+    <div class="row">
+    <div class="input-field col s12">
+    <input name="profile" type="text">
+    <label for="profile">message</label>
+    </div>
+    <?php
+    form_error('profile');
+    ?>
+    </div>
+
+    <div class="row">
+    <button class="btn waves-effect waves-light orange darken-4 col s3 offset-s9" type="submit" name="action">Change
+    <i class="material-icons">open_in_new</i>
+    </button>
+    </div>
+
+    <?php
+    echo form_close();
+    ?>
+
+    <br />
+    <hr />
+
+    <?php
+    echo form_open_multipart('profile/do_upload/'.$userID);
+    ?>
+
+    //アイコン
+    <form action="#">
+    <div class="file-field input-field">
+    <div class="btn">
+    <span>icon</span>
+    <input type="file" name="userfile"/>
+    </div>
+    <div class="file-path-wrapper">
+    <input class="file-path validate" type="text" />
+    </div>
+    </div>
+    <input type="submit" value="upload" />
+
+    <?php
+    form_close();
+    ?>
+
 </div>
 
 <div id="important" class="col s12">
-    <?php
-    echo '<div class="row">';
-    echo '<button class="btn waves-effect waves-light orange darken-4 col s4 offset-s4" value="パスワードを変更する" onClick="location.href=\''. base_url() .'profile/change_pass/'. $userID .'\'">パスワードを変更する';
-    echo '<i class="material-icons left">lock_open</i>';
-    echo '</button>';
-    echo '</div>';
 
-    echo '<div class="row">';
-    echo '<button class="btn waves-effect waves-light orange darken-4 col s4 offset-s4" value="メールアドレスを変更する" onClick="location.href=\''. base_url() .'profile/change_email/'. $userID .'\'">メールアドレスを変更する';
-    echo '<i class="material-icons left">email</i>';
-    echo '</button>';
-    echo '</div>';
+    <div class="row">
+    <button class="btn waves-effect waves-light orange darken-4 col s4 offset-s4" value="パスワードを変更する" onClick="location.href=\''. base_url() .'profile/change_pass/'. $userID .'\'">パスワードを変更する
+    <i class="material-icons left">lock_open</i>
+    </button>
+    </div>
+    <div class="row">
+    <button class="btn waves-effect waves-light orange darken-4 col s4 offset-s4" value="メールアドレスを変更する" onClick="location.href=\''. base_url() .'profile/change_email/'. $userID .'\'">メールアドレスを変更する
+    <i class="material-icons left">email</i>
+    </button>
+    </div>
+    <div class="row">
+    <button class="btn waves-effect waves-light red col s4 offset-s4" value="アカウントを削除する" onClick="location.href=\'http://localhost/haxeon/profile/delete\'">アカウントを削除する
+    <i class="material-icons left">error_outline</i>
+    </button>
+    </div>
 
-    echo '<div class="row">';
-    echo '<button class="btn waves-effect waves-light red col s4 offset-s4" value="アカウントを削除する" onClick="location.href=\'http://localhost/haxeon/profile/delete\'">アカウントを削除する';
-    echo '<i class="material-icons left">error_outline</i>';
-    echo '</button>';
-    echo '</div>';
 
-    ?>
 </div>
