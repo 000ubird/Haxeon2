@@ -1,8 +1,9 @@
 <html>
 
 <head>
-<link type="text/css" rel="stylesheet" href="<?php echo base_url()?>css/materialize.min.css"  media="screen,projection"/>
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link type="text/css" rel="stylesheet" href="<?php echo base_url()?>css/materialize.css"  media="screen,projection"/>
+<link href="http://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
