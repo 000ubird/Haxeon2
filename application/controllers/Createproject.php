@@ -41,9 +41,9 @@ class Createproject extends CI_Controller {
     }
 
     public function validate_credentials(){
-        $this->load->model("model_project");
+        $this->load->model("Model_project");
 
-        if(!($this->model_project->isProjectName())){
+        if(!($this->Model_project->isProjectName())){
             //DBに登録されていなかったとき
             return true;
         }else{

@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Ranking extends CI_Controller {
 
 	public function index($days = "day", $order = "pv ", $num = 0 ,$offset = 0) {
-		$this->load->model('model_project');
+		$this->load->model('Model_project');
 		$this->load->library('pagination');
 
 		$config['base_url'] = 'http://localhost/haxeon/ranking/index/'.$days.'/'.$order.'/'.$num.'/';
@@ -47,10 +47,10 @@ class Ranking extends CI_Controller {
 			default :    $beginDate = date('Y-m-d H:i:s', strtotime('-1 days')); break;
 		}
 
-		$config['total_rows'] = $this->model_project->getProjectNum($beginDate,$endDate);
+		$config['total_rows'] = $this->Model_project->getProjectNum($beginDate,$endDate);
 		$this->pagination->initialize($config);
 
-		$projects = $this->model_project->getProject($beginDate, $endDate, $config['per_page'], $offset, $order);
+		$projects = $this->Model_project->getProject($beginDate, $endDate, $config['per_page'], $offset, $order);
 
 		$data['ranking'] = array('days'=>$days,'order'=>$order,'num'=>$num,'cur_page'=>$offset,'projects'=>$projects);
 		$this->load->view('header');

@@ -27,15 +27,15 @@ class Profile extends CI_Controller {
     }
 
     private function getUserData($userID){
-        $this->load->model('model_users');
+        $this->load->model('Model_users');
 
-        $data['user'] = $this->model_users->getUserData($userID);
-        $data['projects'] = $this->model_users->getProjects($userID);
-        $data['follow'] = $this->model_users->getFollowInfo($userID);
-        $data['followed'] = $this->model_users->getFollowedInfo($userID);
+        $data['user'] = $this->Model_users->getUserData($userID);
+        $data['projects'] = $this->Model_users->getProjects($userID);
+        $data['follow'] = $this->Model_users->getFollowInfo($userID);
+        $data['followed'] = $this->Model_users->getFollowedInfo($userID);
         $data['isown'] = ($this->session->userdata('userID') == $userID);
-        $data['isfollow'] = $this->model_users->getIsFollow($userID);
-        $data['isfollowed'] = $this->model_users->getIsFollowed($userID);
+        $data['isfollow'] = $this->Model_users->getIsFollow($userID);
+        $data['isfollowed'] = $this->Model_users->getIsFollowed($userID);
 
         return $data;
     }
@@ -48,11 +48,11 @@ class Profile extends CI_Controller {
     public function projectsettings($projectID){
         $this->session->set_userdata(array('pid' => $projectID));
 
-        $this->load->model('model_project');
+        $this->load->model('Model_project');
         $this->load->library('tag');
 
         //sessionのuserIDとprojectIDの所有者が同じかチェック
-        if($this->model_project->isOwner($projectID)) {
+        if($this->Model_project->isOwner($projectID)) {
 
             $data['tags'] = $this->tag->getTag($projectID);
 
@@ -81,12 +81,12 @@ class Profile extends CI_Controller {
 		//正しい場合はアカウントの削除を実行
 		if ($this->form_validation->run()) {
 			//アカウントとプロジェクトを削除
-			$this->load->model("model_users");
-			$this->model_users->deleteAccount($this->session->userdata('userID'));
+			$this->load->model("Model_users");
+			$this->Model_users->deleteAccount($this->session->userdata('userID'));
             //tmpアカウントからも削除
-            $this->model_users->deleteTmpAccount($this->session->userdata('userID'));
-			$this->load->model("model_project");
-			$this->model_project->deleteProject($this->session->userdata('userID'));
+            $this->Model_users->deleteTmpAccount($this->session->userdata('userID'));
+			$this->load->model("Model_project");
+			$this->Model_project->deleteProject($this->session->userdata('userID'));
 
 			//セッション情報の削除
 			$this->session->sess_destroy();
@@ -120,8 +120,8 @@ class Profile extends CI_Controller {
 		$this->form_validation->set_message('pass_check', 'パスワードが間違っています。');
 
 		//DBからパスワードを取得
-		$this->load->model("model_users");
-		$result = $this->model_users->getUserData($this->session->userdata('userID'));
+		$this->load->model("Model_users");
+		$result = $this->Model_users->getUserData($this->session->userdata('userID'));
 		foreach($result as $row) $pass = $row->userPass;
 
 		return ($pass == $str);
@@ -129,9 +129,9 @@ class Profile extends CI_Controller {
 
     //タグの重複チェック
     public function tag_check($str) {
-        $this->load->model("model_project");
+        $this->load->model("Model_project");
 
-        if($this->model_project->isTag($str)){
+        if($this->Model_project->isTag($str)){
             $this->form_validation->set_message('tag_check','入力された %s '.$str.' は既に使われております。');
             return false;
         }
@@ -171,10 +171,10 @@ class Profile extends CI_Controller {
             $message .= "<h1><a href=' ".base_url(). "profile/register/$key'>こちら</h1>をクリックして、会員登録を完了してください。</a>";
             $this->email->message($message);
 
-            $this->load->model("model_users");
+            $this->load->model("Model_users");
 
             //仮登録用データベースへの登録が完了した場合
-            if ($this->model_users->add_tmp_user($key)) {
+            if ($this->Model_users->add_tmp_user($key)) {
                 //メール送信
                 if ($this->email->send()) {
                     $this->load->view('header');
@@ -194,12 +194,12 @@ class Profile extends CI_Controller {
 
     //仮登録メールのURLを認証
     public function register($key) {
-        $this->load->model("model_users");
-        if ($this->model_users->add_user($key)) {
+        $this->load->model("Model_users");
+        if ($this->Model_users->add_user($key)) {
             $this->load->view('header');
             echo "アカウントが有効になりました。";
             //仮テーブルから削除
-            $this->model_users->deleteTmpAccountFromKey($key);
+            $this->Model_users->deleteTmpAccountFromKey($key);
         } else {
             $this->load->view('header');
             echo "アカウントの認証に失敗しました。";
@@ -208,9 +208,9 @@ class Profile extends CI_Controller {
 
     //既存のユーザIDとの重複チェック
     public function username_check($str) {
-        $this->load->model("model_users");
+        $this->load->model("Model_users");
 
-        if($this->model_users->is_overlap_tmp_uid($str) || $this->model_users->is_overlap_uid($str) ){
+        if($this->Model_users->is_overlap_tmp_uid($str) || $this->Model_users->is_overlap_uid($str) ){
             $this->form_validation->set_message('username_check','入力された %s '.$str.' は既に使われております。');
             return false;
         }
@@ -221,9 +221,9 @@ class Profile extends CI_Controller {
 
     //既存のメールアドレスの重複チェック
     public function mail_check($str) {
-        $this->load->model("model_users");
+        $this->load->model("Model_users");
 
-        if($this->model_users->is_overlap_mail($str)){
+        if($this->Model_users->is_overlap_mail($str)){
             $this->form_validation->set_message('mail_check','入力された %s '.$str.' は既に使われております。');
             return false;
         }
@@ -259,17 +259,17 @@ class Profile extends CI_Controller {
         $this->form_validation->set_message("max_length", "%s は140文字以内で入力してください。");
 
         if ($this->form_validation->run()){
-            $this->load->model('model_users');
+            $this->load->model('Model_users');
 
             //userNameが入力されていた場合、userIDの使用されているすべてのテーブルを書き換える
             if($_POST['userName']){
                 //更新
-                $this->model_users->updateUserName($_POST['userName'], $userID);
+                $this->Model_users->updateUserName($_POST['userName'], $userID);
             }
 
             //メッセージの更新
             if($_POST['profile']){
-                $this->model_users->updateUserProfile($_POST['profile'], $userID);
+                $this->Model_users->updateUserProfile($_POST['profile'], $userID);
             }
             $this->information($userID);
         }else{
@@ -337,8 +337,8 @@ class Profile extends CI_Controller {
         if($this->form_validation->run()){
             if($_POST['current'] && $_POST['new'] && $_POST['again']){
                 //新しいパスワードでアップデートする
-                $this->load->model('model_users');
-                $this->model_users->updatePassword($_POST['new'], $userID);
+                $this->load->model('Model_users');
+                $this->Model_users->updatePassword($_POST['new'], $userID);
                 //unsetする理由は不要なデータになるのでセッションから削除している
                 $this->session->unset_userdata('abcdnewpass');
                 $this->information($userID);
@@ -357,9 +357,9 @@ class Profile extends CI_Controller {
     //again: newで入力された内容と一致しているかどうか
     function current_check($str){
         $userID = $this->session->userdata('userID');
-        $this->load->model('model_users');
+        $this->load->model('Model_users');
 
-        $array = $this->model_users->getUserData($userID);
+        $array = $this->Model_users->getUserData($userID);
         $pass = "";
 
         foreach($array as $row){
@@ -430,12 +430,12 @@ class Profile extends CI_Controller {
             $message .= "<h1><a href=' ".base_url(). "profile/email_register/$key'>こちら</h1>をクリックして、メールアドレスの変更を完了してください。</a>";
             $this->email->message($message);
 
-            $this->load->model("model_users");
+            $this->load->model("Model_users");
 
             //仮登録用データベースへの登録が完了した場合
-            if ($this->model_users->add_tmp_email_user($userID, $key, $send)) {
+            if ($this->Model_users->add_tmp_email_user($userID, $key, $send)) {
                 //アカウントテーブルの鍵を上書き
-                $this->model_users->updateKey($key, $userID);
+                $this->Model_users->updateKey($key, $userID);
 
                 //メール送信
                 if ($this->email->send()) {
@@ -457,13 +457,13 @@ class Profile extends CI_Controller {
 
     //メールアドレス変更メールのURLを認証
     public function email_register($key) {
-        $this->load->model("model_users");
+        $this->load->model("Model_users");
         //add_userメソッドを変更する
-        if ($this->model_users->updateMail($key)) {
+        if ($this->Model_users->updateMail($key)) {
             $this->load->view('header');
             echo "メールアドレスが変更されました。";
             //仮テーブルから削除
-            $this->model_users->deleteTmpAccountFromKey($key);
+            $this->Model_users->deleteTmpAccountFromKey($key);
         } else {
             $this->load->view('header');
             echo "メールアドレスの変更に失敗しました。";

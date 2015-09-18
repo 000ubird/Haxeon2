@@ -45,7 +45,7 @@ class Login extends CI_Controller {
     public function validate_credentials(){
         $this->load->model("Model_users");
 
-        if($this->model_users->can_log_in()){
+        if($this->Model_users->can_log_in()){
             return true;
         }else{
             $this->form_validation->set_message("validate_credentials", "IDもしくはパスワードが間違っています");
