@@ -69,26 +69,27 @@ class Profile extends CI_Controller {
         $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
 
         //検証ルールの設定
-        $this->form_validation->set_rules("tag", "タグ", "required|callback_tag_check");
+        $this->form_validation->set_rules("tag", "タグ", "required");
 
         $this->form_validation->set_message("required", "%s を入力してください");
 
         //正しい場合は登録処理
         if ($this->form_validation->run()) {
-
+            //タグマップテーブルの登録数についての確認
+            //タグテーブルのチェック
+            //あればidを取得し、mapに登録
+            //なければmapに登録、idを取得しmapに登録
+            //タグマップテーブルに重複していなければ登録
         }else{
             $this->projectsettings($this->session->userdata('pid'));
         }
     }
 
-    //タグの重複チェック
+    //タグテーブルの重複チェック
     public function tag_check($str) {
         $this->load->model("Model_project");
 
         if($this->Model_project->isTag($str)){
-            //タグがあったら、idを取得する
-
-            //$this->form_validation->set_message('tag_check','入力された %s '.$str.' は既に使われております。');
             return false;
         }else{
             return true;
