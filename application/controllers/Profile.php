@@ -81,25 +81,40 @@ class Profile extends CI_Controller {
             $this->load->model("Model_project");
             //タグマップテーブルの登録数についての確認
             if($this->Model_project->countTagMap($pid) < TAG_LIMIT){
-                //タグテーブルのチェック
-                //あればidを取得し、mapに登録
-            }
+                //入力を保持
+                $tag = $this->input->post('tag');
 
-            //なければmapに登録、idを取得しmapに登録
-            //タグマップテーブルに重複していなければ登録
+                if(!$this->tag_check($tag)){
+                    //タグテーブルに存在しないタグのとき
+                     $this->Model_project->registTag(tag);
+                }
+
+                //idを取得
+                $tagid = $this->Model_project->getTagID($tag);
+                //タグマップテーブルの重複チェック
+                if(!$this->Model_project->checkOverlap($pid, $tagid)) {
+                    //マップに登録
+                    $this->Model_project->registTagMap($pid, $tagid);
+                }else{
+                    $this->projectsettings($pid);
+                }
+            }else{
+                $this->projectsettings($pid);
+            }
         }else{
             $this->projectsettings($pid);
         }
     }
 
     //タグテーブルの重複チェック
-    public function tag_check($str) {
+    //あればtrue
+    public function tag_check($tagname) {
         $this->load->model("Model_project");
 
-        if($this->Model_project->isTag($str)){
-            return false;
-        }else{
+        if($this->Model_project->isTag($tagname)){
             return true;
+        }else{
+            return false;
         }
     }
 
