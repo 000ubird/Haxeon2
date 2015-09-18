@@ -64,6 +64,37 @@ class Profile extends CI_Controller {
         }
     }
 
+    public function validation_tag(){
+        $this->load->library("form_validation");
+        $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
+
+        //検証ルールの設定
+        $this->form_validation->set_rules("tag", "タグ", "required|callback_tag_check");
+
+        $this->form_validation->set_message("required", "%s を入力してください");
+
+        //正しい場合は登録処理
+        if ($this->form_validation->run()) {
+
+        }else{
+            $this->projectsettings($this->session->userdata('pid'));
+        }
+    }
+
+    //タグの重複チェック
+    public function tag_check($str) {
+        $this->load->model("Model_project");
+
+        if($this->Model_project->isTag($str)){
+            //タグがあったら、idを取得する
+
+            //$this->form_validation->set_message('tag_check','入力された %s '.$str.' は既に使われております。');
+            return false;
+        }else{
+            return true;
+        }
+    }
+
 	//アカウント削除
 	public function delete() {
 		$this->load->view('header');
@@ -98,23 +129,6 @@ class Profile extends CI_Controller {
 		}
 	}
 
-    public function validation_tag(){
-        $this->load->library("form_validation");
-        $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
-
-        //検証ルールの設定
-        $this->form_validation->set_rules("tag", "タグ", "required|callback_tag_check");
-
-        $this->form_validation->set_message("required", "%s を入力してください");
-
-        //正しい場合は登録処理
-        if ($this->form_validation->run()) {
-
-        }else{
-            $this->projectsettings($this->session->userdata('pid'));
-        }
-    }
-
 	//パスワードのチェック
 	public function pass_check($str) {
 		$this->form_validation->set_message('pass_check', 'パスワードが間違っています。');
@@ -126,19 +140,6 @@ class Profile extends CI_Controller {
 
 		return ($pass == $str);
 	}
-
-    //タグの重複チェック
-    public function tag_check($str) {
-        $this->load->model("Model_project");
-
-        if($this->Model_project->isTag($str)){
-            $this->form_validation->set_message('tag_check','入力された %s '.$str.' は既に使われております。');
-            return false;
-        }
-        else {
-            return true;
-        }
-    }
 
     public function validation_signup() {
         $this->load->library("form_validation");
