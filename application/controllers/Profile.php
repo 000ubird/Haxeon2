@@ -78,21 +78,22 @@ class Profile extends CI_Controller {
 		$this->form_validation->set_rules("password", "パスワード", "required|callback_pass_check");
 		$this->form_validation->set_message("required", "%s は必須入力項目です。");
 
+        $uid = $this->session->userdata('userID');
+
 		//正しい場合はアカウントの削除を実行
 		if ($this->form_validation->run()) {
+            //セッション情報の削除
+            $this->session->sess_destroy();
 			//アカウントとプロジェクトを削除
 			$this->load->model("Model_users");
-			$this->Model_users->deleteAccount($this->session->userdata('userID'));
+			$this->Model_users->deleteAccount($uid);
             //tmpアカウントからも削除
-            $this->Model_users->deleteTmpAccount($this->session->userdata('userID'));
+            $this->Model_users->deleteTmpAccount($uid);
 			$this->load->model("Model_project");
-			$this->Model_project->deleteProject($this->session->userdata('userID'));
-
-			//セッション情報の削除
-			$this->session->sess_destroy();
+			$this->Model_project->deleteProject($uid);
 
 			//アカウント削除処理完了後に遷移するページ
-			$this->index();
+			redirect('');
 		}else {
 			$this->delete();
 		}
