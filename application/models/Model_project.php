@@ -66,34 +66,33 @@ class Model_project extends CI_Model{
 
     //tagテーブルのタグ名からidを取得する
     public function getTagID($tagname){
-        $this->db->select('id');
+//        $this->db->select('id');
         $array = array('tag' => $tagname);
         $query = $this->db->get_where('tag', $array);
 
         $id = 0;
 
         //ひとまずこれ。idのみなら綺麗にできないのかな
-        foreach($query->result()->id as $i){
-            $id = $i;
+        foreach($query->result() as $i){
+            $id = $i->id;
         }
-
         return $id;
     }
 
     //タグをtagテーブルに登録する
     //返り値 登録したタグのid
-    public function createTag($tagname){
+    public function registTag($tagname){
         $array = array(
             'tag' => $tagname
         );
 
         $this->db->insert('tag', $array);
 
-        return $this->db->insert_id();
+        //return $this->db->insert_id();
     }
 
     //tagmapテーブルに登録する
-    public function createTagMap($projectID, $tagID){
+    public function registTagMap($projectID, $tagID){
         $array = array(
             'projectID' => $projectID,
             'tagID' => $tagID
@@ -112,6 +111,29 @@ class Model_project extends CI_Model{
         $this->db->delete('tagmap', $array);
     }
 
+    //tagmapテーブルに登録されている個数を返す
+    public function countTagMap($projectID){
+        $array = array(
+            'projectID' => $projectID
+        );
+
+        $query = $this->db->get_where('tagmap', $array);
+        return $query->num_rows();
+    }
+
+    //tagmapテーブルの重複チェック
+    //重複していたらtrue
+    public function checkOverlap($projectID, $tagID){
+        $array = array(
+            'projectID' => $projectID,
+            'tagID' => $tagID
+        );
+
+        $query = $this->db->get_where('tagmap', $array);
+
+        return ($query->num_rows() > 0);
+    }
+
 	//範囲を指定してプロジェクトを取得
 	public function getProject($beginDate,$endDate,$top,$end,$order) {
 		$this->db->where("modified BETWEEN '$beginDate' AND '$endDate'");
@@ -125,7 +147,7 @@ class Model_project extends CI_Model{
 		$query = $this->db->query("SELECT * FROM project WHERE modified BETWEEN '$beginDate' AND '$endDate'");
 		return $query->num_rows();
 	}
-	
+
 	//指定したユーザーが所持するプロジェクトを全て削除
 	public function deleteProject($userID){
 		$this->db->delete('project', array('ownerUserID'=>$userID));

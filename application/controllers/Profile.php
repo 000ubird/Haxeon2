@@ -1,5 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+//タグの登録上限数
+define("TAG_LIMIT", 3);
 
 class Profile extends CI_Controller {
 
@@ -64,6 +66,82 @@ class Profile extends CI_Controller {
         }
     }
 
+    public function validation_tag(){
+        $this->load->library("form_validation");
+        $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
+
+        //検証ルールの設定
+        $this->form_validation->set_rules("tag", "タグ", "required|callback_tag_table_check");
+
+        $this->form_validation->set_message("required", "%s を入力してください");
+
+        $pid = $this->session->userdata('pid');
+        //正しい場合は登録処理
+        if ($this->form_validation->run()) {
+            $this->load->model("Model_project");
+            //タグマップテーブルの登録数についての確認
+                //入力を保持
+                $tag = $this->input->post('tag');
+
+                if(!$this->tag_check($tag)){
+                    //タグテーブルに存在しないタグのとき
+                     $this->Model_project->registTag($tag);
+                }
+
+                //idを取得
+                $tagid = $this->Model_project->getTagID($tag);
+                //マップに登録
+                $this->Model_project->registTagMap($pid, $tagid);
+                $this->projectsettings($pid);
+
+        }else{
+            $this->projectsettings($pid);
+        }
+    }
+
+    public function tag_table_check($str){
+        $this->load->model("Model_project");
+        $pid = $this->session->userdata('pid');
+
+        //タグマップテーブルの登録数についての確認
+        if($this->Model_project->countTagMap($pid) == TAG_LIMIT){
+            $this->form_validation->set_message("tag_table_check", 'タグ登録数の上限は'. TAG_LIMIT .'個です');
+            return false;
+        }
+
+        $tagid = $this->Model_project->getTagID($str);
+
+        if($this->Model_project->checkOverlap($pid, $tagid)){
+            $this->form_validation->set_message("tag_table_check", '入力した%sはすでに登録されています');
+            return false;
+        }
+
+        return true;
+    }
+
+    //タグテーブルの重複チェック
+    //あればtrue
+    public function tag_check($tagname) {
+        $this->load->model("Model_project");
+
+        if($this->Model_project->isTag($tagname)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function delete_tagmap($tagname){
+        $this->load->model("Model_project");
+
+        $tagID = $this->Model_project->getTagID($tagname);
+
+        $pid = $this->session->userdata('pid');
+        $this->Model_project->deleteTagMap($pid, $tagID);
+
+        $this->projectsettings($pid);
+    }
+
 	//アカウント削除
 	public function delete() {
 		$this->load->view('header');
@@ -98,23 +176,6 @@ class Profile extends CI_Controller {
 		}
 	}
 
-    public function validation_tag(){
-        $this->load->library("form_validation");
-        $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
-
-        //検証ルールの設定
-        $this->form_validation->set_rules("tag", "タグ", "required|callback_tag_check");
-
-        $this->form_validation->set_message("required", "%s を入力してください");
-
-        //正しい場合は登録処理
-        if ($this->form_validation->run()) {
-
-        }else{
-            $this->projectsettings($this->session->userdata('pid'));
-        }
-    }
-
 	//パスワードのチェック
 	public function pass_check($str) {
 		$this->form_validation->set_message('pass_check', 'パスワードが間違っています。');
@@ -126,19 +187,6 @@ class Profile extends CI_Controller {
 
 		return ($pass == $str);
 	}
-
-    //タグの重複チェック
-    public function tag_check($str) {
-        $this->load->model("Model_project");
-
-        if($this->Model_project->isTag($str)){
-            $this->form_validation->set_message('tag_check','入力された %s '.$str.' は既に使われております。');
-            return false;
-        }
-        else {
-            return true;
-        }
-    }
 
     public function validation_signup() {
         $this->load->library("form_validation");
