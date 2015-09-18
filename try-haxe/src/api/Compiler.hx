@@ -347,7 +347,7 @@ class Compiler {
 		var projectName = program.projectName;
 		var originProjectID = program.originProjectID;
 		var originUserID = program.originUserID;
-
+		var url = "http://localhost/haxeon/try-haxe/index.html#";
 		html.body.push("<br><H3>生成されたID : " + program.uid +"\n 前のID : "+ tmpID+"</H3>");
 
 		//2回目以降のクリック時は更新されたプロジェクトIDを保存
@@ -363,15 +363,20 @@ class Compiler {
 		} );
 
 		//プロジェクトが登録されているかを確認
-		var rset = cnx.request("SELECT projectID FROM project where (projectID = '" + tmpID + "' AND ownerUserID = '" + userID + "') OR (ownerUserID = '" + userID + "' AND url = 'http://localhost/haxeon2/try-haxe/index.html#" + tmpID + "');");
+		var rset = cnx.request("SELECT projectID FROM project where (projectID = '" + tmpID + "' AND ownerUserID = '" + userID + "') OR (ownerUserID = '" + userID + "' AND url = '"+url+tmpID+"');");
 
 		//プロジェクトが登録されていない場合
 		if (rset.length == 0) {
 			html.body.push("<br><H3>プロジェクトIDなし</H3>");
 
 			if (program.save == "SAVE") {
+				//プロジェクトテーブルに追加
 				cnx.request("INSERT INTO `project`(`projectID`, `projectName` ,`ownerUserID`, `pv`, `fork`, `originUserID`, `url`) VALUES (\""
-				+program.uid+"\", \""+projectName+"\",\""+userID+"\","+0+","+0+", \""+originUserID+"\",\"http://localhost/haxeon2/try-haxe/index.html#"+program.uid+"\")");
+				+program.uid + "\", \"" + projectName+"\",\"" + userID + "\"," + 0 + "," + 0 + ", \"" + originUserID + "\",\""+url+program.uid+"\")");
+				
+				//ランキングテーブルに追加
+				cnx.request("INSERT INTO `day_ranking` (`proID`, `usrID`, `pv`) VALUES (\"" + program.uid + "\",\"" + userID + "\", 0)");
+				
 				html.body.push("<br><H3>データベースにIDを登録しました。</H3>");
 			} else {
 				html.body.push("<br><H3>未保存が選択されています。</H3>");
@@ -381,11 +386,11 @@ class Compiler {
 			html.body.push("originpro : "+originProjectID+" ,originuserID : "+originUserID+", currentuser : "+userID);
 			if (userID != originUserID) {
 				var fork = 0;
-				var rset2 = cnx.request("SELECT * FROM project where url = 'http://localhost/haxeon2/try-haxe/index.html#"+tmpID+"';");
+				var rset2 = cnx.request("SELECT * FROM project where url = '"+url+tmpID+"';");
 				for (row in rset2) {
 					fork = row.fork+1;
 				}
-				cnx.request("UPDATE project SET fork = "+fork+" WHERE url = 'http://localhost/haxeon2/try-haxe/index.html#"+tmpID+"' AND ownerUserID = '"+originUserID+"';");
+				cnx.request("UPDATE project SET fork = "+fork+" WHERE url = '"+url+tmpID+"' AND ownerUserID = '"+originUserID+"';");
 			}
 		}
 		//プロジェクトIDを更新
@@ -395,9 +400,11 @@ class Compiler {
 				html.body.push("プロジェクトID : "+row.projectID+" , 所有者 : "+userID+" , プロジェクト名 : "+projectName);
 			}
 			if (program.save == "SAVE") {
-				cnx.request("UPDATE project SET projectID = \""+program.uid+"\",modified = \""+Date.now().toString()+"\" , url = \"http://localhost/haxeon2/try-haxe/index.html#"+program.uid+"\" WHERE ownerUserID = '"+userID+"' AND url = 'http://localhost/haxeon2/try-haxe/index.html#"+tmpID+"';");
+				cnx.request("UPDATE project SET projectID = \""+program.uid+"\",modified = \""+Date.now().toString()+"\" , url = \""+url+program.uid+"\" WHERE ownerUserID = '"+userID+"' AND url = '"+url+tmpID+"';");
+				cnx.request("UPDATE day_ranking SET proID = \""+program.uid+"\" WHERE proID = '"+tmpID+"';");
 			} else {
-				cnx.request("UPDATE project SET projectID = \""+program.uid+"\",modified = \""+Date.now().toString()+"\" WHERE ownerUserID = '"+userID+"' AND url = 'http://localhost/haxeon2/try-haxe/index.html#"+tmpID+"';");
+				cnx.request("UPDATE project SET projectID = \""+program.uid+"\",modified = \""+Date.now().toString()+"\" WHERE ownerUserID = '"+userID+"' AND url = '"+url+tmpID+"';");
+				cnx.request("UPDATE day_ranking SET proID = \""+program.uid+"\" WHERE proID = '"+tmpID+"';");
 				html.body.push("<br><H3>未保存が選択されています。</H3>");
 			}
 		}
