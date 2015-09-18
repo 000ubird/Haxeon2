@@ -131,6 +131,17 @@ class Profile extends CI_Controller {
         }
     }
 
+    public function delete_tagmap($tagname){
+        $this->load->model("Model_project");
+
+        $tagID = $this->Model_project->getTagID($tagname);
+
+        $pid = $this->session->userdata('pid');
+        $this->Model_project->deleteTagMap($pid, $tagID);
+
+        $this->projectsettings($pid);
+    }
+
 	//アカウント削除
 	public function delete() {
 		$this->load->view('header');
