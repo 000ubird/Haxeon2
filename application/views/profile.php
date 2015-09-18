@@ -93,12 +93,11 @@ echo '      <h2>Projects</h2>';
 
             }
         }
-echo '    </div>';
-echo '</div>';
-
-echo '<div class="following">';
-
-echo '</div>';
-echo '</div>';
-
 ?>
+    </div>
+</div>
+
+<div class="following">
+
+</div>
+</div>
