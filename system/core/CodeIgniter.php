@@ -67,7 +67,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		require_once(APPPATH.'config/'.ENVIRONMENT.'/Constants.php');
 	}
 
-	require_once(APPPATH.'config/Constants.php');
+	require_once(APPPATH.'config/constants.php');
 
 /*
  * ------------------------------------------------------
