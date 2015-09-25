@@ -56,8 +56,9 @@
 	if ( file_exists('application/config/environment.php') ) {
 	    require_once('application/config/environment.php');
 	} else {
-	    define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
-	}
+//	    define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
+        require_once('application/config/environment.php');
+    }
 /*
  *---------------------------------------------------------------
  * ERROR REPORTING
@@ -68,14 +69,14 @@
  */
 switch (ENVIRONMENT)
 {
-	//’Ç‰Á•”•ª
+	//ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½ï¿½
 	case 'development':
 	case 'windows':
 	case 'linux':
 		error_reporting(-1);
 		ini_set('display_errors', 1);
 	break;
-	
+
 	case 'testing':
 	case 'production':
 		ini_set('display_errors', 0);
