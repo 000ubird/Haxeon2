@@ -51,7 +51,7 @@ foreach($projects as $project) {
 	echo '<p>User : '.$project->ownerUserID.'</p>';
 	echo '<p>pv : '.$project->pv.'</p>';
 	echo '<p>forked : '.$project->fork.'</p>';
-	echo '<p><a href='.$project->url.'>Edit Code</a></p>';
+	echo '<p><a href=http://localhost/haxeon/try-haxe/index.html#'.$project->projectID.'>Edit Code</a></p>';
 	echo '</div>';
 
 	echo '<div class="card-reveal">';
