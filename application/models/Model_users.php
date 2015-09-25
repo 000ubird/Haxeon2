@@ -223,4 +223,10 @@ class Model_users extends CI_Model{
         $this->db->update('account', array('userPass' => $pass));
     }
 
+    //urlの書き換え
+    public function updateUserURL($url, $userID){
+        $this->db->where('userID', $userID);
+        $this->db->update('account', array('userURL' => $url));
+    }
+
 }
