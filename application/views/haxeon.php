@@ -24,17 +24,17 @@ foreach($projects as $project) {
 	echo '</div>';
 
 	echo '<div class="card-content">';
-	echo '<span class="card-title activator black-text text-darken-4">'.$project->proID.'<i class="material-icons right">more_vert</i></span>';
-	echo '<p>User : '.$project->usrID.'</p>';
-	echo '<p>pv : '.$project->pv.'</p>';
-	echo '<p><a href=http://localhost/haxeon/try-haxe/index.html#'.$project->proID.'>Edit Code</a></p>';
+	echo '<span class="card-title activator black-text text-darken-4">'.$project[0]->projectName.'<i class="material-icons right">more_vert</i></span>';
+	echo '<p>User : '.$project[0]->ownerUserID.'</p>';
+	echo '<p>pv : '.$project[0]->pv.'</p>';
+	echo '<p><a href=http://localhost/haxeon/try-haxe/index.html#'.$project[0]->projectID.'>Edit Code</a></p>';
 	echo '</div>';
 
 	echo '<div class="card-reveal">';
-	echo '<span class="card-title grey-text text-darken-4">'.$project->proID.'<i class="material-icons right">close</i></span>';
-	echo '<p>Project ID : '.$project->proID.'</p>';
-	echo '<p>pv : '.$project->pv.'</p>';
-	echo '<p>User : '.$project->usrID.'</p>';
+	echo '<span class="card-title grey-text text-darken-4">'.$project[0]->projectName.'<i class="material-icons right">close</i></span>';
+	echo '<p>Project ID : '.$project[0]->projectID.'</p>';
+	echo '<p>pv : '.$project[0]->pv.'</p>';
+	echo '<p>User : '.$project[0]->ownerUserID.'</p>';
 	echo '</div>';
 
 	echo '</div>';

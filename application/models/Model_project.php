@@ -137,6 +137,12 @@ class Model_project extends CI_Model{
 
         return ($query->num_rows() > 0);
     }
+	
+	//プロジェクトIDを指定してプロジェクトを取得する
+	public function getOneProject($id) {
+		$query = $this->db->get_where('project', array('projectID' => $id));
+		return $query->result();
+	}	
 
 	//範囲を指定してプロジェクトを取得
 	public function getProject($beginDate,$endDate,$top,$end,$order) {
