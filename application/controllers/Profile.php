@@ -300,12 +300,14 @@ class Profile extends CI_Controller {
         $this->form_validation->set_rules("password", "パスワード", "alpha_numeric|min_length[4]");
         $this->form_validation->set_rules("email", "メールアドレス", "valid_email|callback_mail_check");
         $this->form_validation->set_rules("profile", "メッセージ", "max_length[140]");
+        $this->form_validation->set_rules("url", "url", "min_length[1]|callback_url_check");
 
         //エラーメッセージの設定
         $this->form_validation->set_message("alpha_numeric", "%s は半角英数字で入力してください。");
         $this->form_validation->set_message("min_length", "%s は4文字以上で入力してください。");
         $this->form_validation->set_message("valid_email", "有効なメールアドレスを入力してください。");
         $this->form_validation->set_message("max_length", "%s は140文字以内で入力してください。");
+        $this->form_validation->set_message("url_check", "有効なURLを入力してください。");
 
         if ($this->form_validation->run()){
             $this->load->model('Model_users');
@@ -314,6 +316,10 @@ class Profile extends CI_Controller {
             if($_POST['userName']){
                 //更新
                 $this->Model_users->updateUserName($_POST['userName'], $userID);
+            }
+
+            if($_POST['url']){
+                $this->Model_users->updateUserURL($_POST['url'], $userID);
             }
 
             //メッセージの更新
@@ -336,6 +342,17 @@ class Profile extends CI_Controller {
             $this->form_validation->set_message('space_check','[a-zA-Z0-9_-]です');
             return false;
         }
+    }
+
+    public function url_check($url){
+        if (preg_match('/^(https?|ftp)(:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)$/', $url)) {
+            //            echo "正しいURLです";
+            $header = get_headers($url);
+            if (preg_match('#^HTTP/.*\s+[200|302]+\s#i', $header[0])) {
+                return true;
+            }
+        }
+        return false;
     }
 
     //画像アップロードメソッド
