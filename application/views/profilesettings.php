@@ -22,6 +22,17 @@
     echo form_error('userName');
     ?>
     </div>
+
+    <div class="row">
+        <div class="input-field col s12">
+            <input name="url" type="text">
+            <label for="url">URL</label>
+        </div>
+        <?php
+        echo form_error('url');
+        ?>
+    </div>
+
 <!--    メッセージ文-->
     <div class="row">
     <div class="input-field col s12">
