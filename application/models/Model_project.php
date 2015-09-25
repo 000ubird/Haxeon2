@@ -12,13 +12,17 @@ class Model_project extends CI_Model{
 
 	//指定したプロジェクトのPV数を増やす
 	public function pvCountUp($projectID) {
+		//プロジェクトのPV数の取得と更新
 		$array = array('projectID' => $projectID);
 		$query = $this->db->get_where('project', $array);
-
-		//PV数の取得と更新
-		foreach ($query->result() as $row) $pv = $row->pv+1;
-		//echo $pv;	//デバッグ
-		$this->db->update('project', array('pv'=>$pv),$array);
+		foreach ($query->result() as $row) $pv = $row->pv + 1;
+		$this->db->update('project', array('pv' => $pv), $array);
+		
+		//デイリーランキングのPV数の取得と更新
+		$array = array('proID' => $projectID);
+		$query = $this->db->get_where('day_ranking', $array);
+		foreach ($query->result() as $row) $pv = $row->pv + 1;
+		$this->db->update('day_ranking', array('pv' => $pv), $array);
 	}
 
     //プロジェクト所有者とログインユーザが同一ならtrueを返す
