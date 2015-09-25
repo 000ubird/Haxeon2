@@ -145,6 +145,14 @@ class Model_project extends CI_Model{
 		$result = $this->db->get('project',$top,$end);
 		return $result->result();
 	}
+	
+	//デイリーランキングページからプロジェクトを9個取得
+	public function getRankingProject() {
+		$this->db->order_by("pv","desc");
+		$this->db->limit(9);
+		$result = $this->db->get('day_ranking');
+		return $result->result();
+	}
 
 	//登録されているプロジェクトの総数を取得
 	public function getProjectNum($beginDate,$endDate){
