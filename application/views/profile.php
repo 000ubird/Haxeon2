@@ -83,9 +83,35 @@ echo '      <h2>Projects</h2>';
         }
 ?>
     </div>
-</div>
 
+<hr>
+<!--フォローしている人たちをリスト表示する $followをつかう-->
 <div class="following">
+    <div class="row">
+        <h2>following</h2>
+        <?php
+        foreach($follow as $f){
+            echo($f->userFollowingID);
+            echo('<br>');
+        }
+        ?>
+    </div>
+</div>
+
+<hr>
+<!--ファボしたプロジェクトをリスト表示する $favoritesをつかう-->
+<div class="favs">
+    <div class="row">
+        <h2>favorites</h2>
+        <?php
+        foreach($favorites as $favorite){
+            echo($favorite->projectID);
+            echo('<br>');
+        }
+        ?>
+    </div>
+</div>
 
 </div>
+
 </div>
