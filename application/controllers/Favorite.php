@@ -10,11 +10,13 @@ class Favorite extends CI_Controller {
     public function regist_favorite($projectID){
         $this->load->model('Model_favorite');
         $this->Model_favorite->favorite($this->session->userdata('userID'), $projectID);
+        redirect($_SERVER['HTTP_REFERER']);
     }
 
     public function release_favorite($projectID){
         $this->load->model('Model_favorite');
         $this->Model_favorite->release_favorite($this->session->userdata('userID'), $projectID);
+        redirect($_SERVER['HTTP_REFERER']);
     }
 
 }
