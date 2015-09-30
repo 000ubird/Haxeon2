@@ -49,19 +49,31 @@ foreach($projects as $project) {
 
 	echo '<div class="card-content">';
 	echo '<span class="card-title activator black-text text-darken-4">'.$project->projectName.'<i class="material-icons right">more_vert</i></span>';
+
     if($this->session->userdata('userID') != $project->ownerUserID){
         $isfavorite = false;
+        $i = 0;
+        //print_r($favorites);
+
         foreach($favorites as $favorite){
-            if($favorite->projectID == $project->$projectID) $isfavorite = true;
+            $favo_id = $favorite->projectID;
+            $pro_id = $project->projectID;
+
+            if($favo_id == $pro_id) {
+                $isfavorite = true;
+                break;
+            }
         }
+
         if($isfavorite) {
-            echo '<p><i class="material-icons">visibility</i></p>';
+            echo '<p><a href="' .base_url(). 'favorite/release_favorite/' .$project->projectID. '"><i class="material-icons">visibility</i></a></p>';
         }else{
-            echo '<p><i class="material-icons">visibility_off</i></p>';
+            echo '<p><a href="' .base_url(). 'favorite/regist_favorite/' .$project->projectID. '"><i class="material-icons">visibility_off</i></a></p>';
         }
     }else{
         echo '<p><a href="' . base_url() . 'profile/profilesettings/' . $this->session->userdata('userID') . '"><i class="material-icons">settings</i></a></p>';
     }
+
 	echo '<p>User : '.$project->ownerUserID.'</p>';
 	echo '<p>pv : '.$project->pv.'</p>';
 	echo '<p>forked : '.$project->fork.'</p>';
