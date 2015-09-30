@@ -30,6 +30,8 @@ class Profile extends CI_Controller {
 
     private function getUserData($userID){
         $this->load->model('Model_users');
+        $this->load->model('Model_project');
+        $this->load->model('Model_favorite');
 
         $data['user'] = $this->Model_users->getUserData($userID);
         $data['projects'] = $this->Model_users->getProjects($userID);
@@ -38,6 +40,15 @@ class Profile extends CI_Controller {
         $data['isown'] = ($this->session->userdata('userID') == $userID);
         $data['isfollow'] = $this->Model_users->getIsFollow($userID);
         $data['isfollowed'] = $this->Model_users->getIsFollowed($userID);
+
+        $favorite_list = $this->Model_favorite->getFavorite($userID);
+
+        $favorite_projects = array();
+        foreach($favorite_list as $f){
+            $id = $f->projectID;
+            array_push($favorite_projects, $this->Model_project->getOneProject($id));
+        }
+        $data['favorites'] = $favorite_list;
 
         return $data;
     }

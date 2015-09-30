@@ -10,15 +10,9 @@ foreach($user as $row){
     $url = $row->userURL;
     $email = $row->userMail;
 }
+$project_total = count($projects);
 
-$project_total = 0;
-
-//プロジェクトは何も作られていない場合がある
-if(count($projects) > 1){
-    foreach($projects as $project) {
-        $project_total++;
-    }
-}
+$favorite_total = count($favorites);
 
 $follow_total = count($follow);
 
@@ -41,7 +35,7 @@ echo '    </div>';
 echo '    <ul class="info col s8 offset-s1">';
 echo '      <li class="codes">codes: '. $project_total .'</li>';
 echo '      <li class="forked">forked: </li>';
-echo '      <li class="favorites">favorites: </li>';
+echo '      <li class="favorites">favorites: '. $favorite_total .'</li>';
 echo '      <li class="following">following: '. $follow_total .'</li>';
 echo '      <li class="followers">followers: '. $followed_total .'</li>';
 echo '      <li class="url">url: <a href='. $url .'>'. $url .'</a></li>';
@@ -89,9 +83,35 @@ echo '      <h2>Projects</h2>';
         }
 ?>
     </div>
-</div>
 
+<hr>
+<!--フォローしている人たちをリスト表示する $followをつかう-->
 <div class="following">
+    <div class="row">
+        <h2>following</h2>
+        <?php
+        foreach($follow as $f){
+            echo($f->userFollowingID);
+            echo('<br>');
+        }
+        ?>
+    </div>
+</div>
+
+<hr>
+<!--ファボしたプロジェクトをリスト表示する $favoritesをつかう-->
+<div class="favs">
+    <div class="row">
+        <h2>favorites</h2>
+        <?php
+        foreach($favorites as $favorite){
+            echo($favorite->projectID);
+            echo('<br>');
+        }
+        ?>
+    </div>
+</div>
 
 </div>
+
 </div>
