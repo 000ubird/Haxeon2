@@ -9,6 +9,7 @@ $num = $ranking['num'];
 //$cur_page = $ranking['cur_page'];
 $cur_page = 0;
 $projects = $ranking['projects'];
+$favorites = $ranking['favorites'];
 echo '<ul id="dropdown2" class="dropdown-content">';
 echo '<li><a href="http://localhost/haxeon/ranking/index/day/'.$order.'/'.$num.'/'.$cur_page.'/">1日</a></li>';
 echo '<li><a href="http://localhost/haxeon/ranking/index/week/'.$order.'/'.$num.'/'.$cur_page.'/">1週間</a></li>';
@@ -48,6 +49,31 @@ foreach($projects as $project) {
 
 	echo '<div class="card-content">';
 	echo '<span class="card-title activator black-text text-darken-4">'.$project->projectName.'<i class="material-icons right">more_vert</i></span>';
+
+    if($this->session->userdata('userID') != $project->ownerUserID){
+        $isfavorite = false;
+        $i = 0;
+        //print_r($favorites);
+
+        foreach($favorites as $favorite){
+            $favo_id = $favorite->projectID;
+            $pro_id = $project->projectID;
+
+            if($favo_id == $pro_id) {
+                $isfavorite = true;
+                break;
+            }
+        }
+
+        if($isfavorite) {
+            echo '<p><a href="' .base_url(). 'favorite/release_favorite/' .$project->projectID. '"><img src="'.base_url().'img/star.png" width=30px height=30px></a></p>';
+        }else{
+            echo '<p><a href="' .base_url(). 'favorite/regist_favorite/' .$project->projectID. '"><img src="'.base_url().'img/unstar.png" width=30px height=30px></a></p>';
+        }
+    }else{
+        echo '<p><a href="' . base_url() . 'profile/profilesettings/' . $this->session->userdata('userID') . '"><i class="material-icons">settings</i></a></p>';
+    }
+
 	echo '<p>User : '.$project->ownerUserID.'</p>';
 	echo '<p>pv : '.$project->pv.'</p>';
 	echo '<p>forked : '.$project->fork.'</p>';

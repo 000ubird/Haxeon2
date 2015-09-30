@@ -5,6 +5,7 @@ class Ranking extends CI_Controller {
 
 	public function index($days = "day", $order = "pv ", $num = 0 ,$offset = 0) {
 		$this->load->model('Model_project');
+        $this->load->model('Model_favorite');
 		$this->load->library('pagination');
 
 		$config['base_url'] = 'http://localhost/haxeon/ranking/index/'.$days.'/'.$order.'/'.$num.'/';
@@ -51,8 +52,9 @@ class Ranking extends CI_Controller {
 		$this->pagination->initialize($config);
 
 		$projects = $this->Model_project->getProject($beginDate, $endDate, $config['per_page'], $offset, $order);
+        $favorites = $this->Model_favorite->getFavorite($this->session->userdata('userID'));
 
-		$data['ranking'] = array('days'=>$days,'order'=>$order,'num'=>$num,'cur_page'=>$offset,'projects'=>$projects);
+		$data['ranking'] = array('days'=>$days,'order'=>$order,'num'=>$num,'cur_page'=>$offset,'projects'=>$projects,'favorites'=>$favorites);
 		$this->load->view('header');
 		$this->load->view('ranking',$data);
 		$this->load->view('footer');

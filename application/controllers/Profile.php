@@ -352,6 +352,7 @@ class Profile extends CI_Controller {
                 return true;
             }
         }
+        if($url == "") return true;
         return false;
     }
 

@@ -12,8 +12,6 @@ foreach($user as $row){
 }
 
 $project_total = 0;
-$follow_total = 0;
-$followed_total = 0;
 
 //プロジェクトは何も作られていない場合がある
 if(count($projects) > 1){
@@ -22,13 +20,9 @@ if(count($projects) > 1){
     }
 }
 
-foreach($follow as $f){
-    $follow_total++;
-}
+$follow_total = count($follow);
 
-foreach($followed as $fd){
-    $followed_total++;
-}
+$followed_total= count($followed);
 
 echo '<div class="profile row">';
 
