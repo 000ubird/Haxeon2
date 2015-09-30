@@ -9,6 +9,7 @@ $num = $ranking['num'];
 //$cur_page = $ranking['cur_page'];
 $cur_page = 0;
 $projects = $ranking['projects'];
+$favorites = $ranking['favorites'];
 echo '<ul id="dropdown2" class="dropdown-content">';
 echo '<li><a href="http://localhost/haxeon/ranking/index/day/'.$order.'/'.$num.'/'.$cur_page.'/">1日</a></li>';
 echo '<li><a href="http://localhost/haxeon/ranking/index/week/'.$order.'/'.$num.'/'.$cur_page.'/">1週間</a></li>';
