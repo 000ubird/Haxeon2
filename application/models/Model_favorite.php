@@ -26,4 +26,10 @@ class Model_favorite extends CI_Model {
         $this->db->where($data);
         $this->db->update('favorite', array('projectID' => $afterID));
     }
+
+    //userIDがふぁぼしたリストを返す
+    public function getFavorite($userID){
+        $query = $this->db->get_where('favorite', array('userID' => $userID));
+        return $query->result();
+    }
 }
