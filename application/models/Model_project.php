@@ -12,13 +12,17 @@ class Model_project extends CI_Model{
 
 	//指定したプロジェクトのPV数を増やす
 	public function pvCountUp($projectID) {
+		//プロジェクトのPV数の取得と更新
 		$array = array('projectID' => $projectID);
 		$query = $this->db->get_where('project', $array);
-
-		//PV数の取得と更新
-		foreach ($query->result() as $row) $pv = $row->pv+1;
-		//echo $pv;	//デバッグ
-		$this->db->update('project', array('pv'=>$pv),$array);
+		foreach ($query->result() as $row) $pv = $row->pv + 1;
+		$this->db->update('project', array('pv' => $pv), $array);
+		
+		//デイリーランキングのPV数の取得と更新
+		$array = array('proID' => $projectID);
+		$query = $this->db->get_where('day_ranking', $array);
+		foreach ($query->result() as $row) $pv = $row->pv + 1;
+		$this->db->update('day_ranking', array('pv' => $pv), $array);
 	}
 
     //プロジェクト所有者とログインユーザが同一ならtrueを返す
@@ -133,12 +137,26 @@ class Model_project extends CI_Model{
 
         return ($query->num_rows() > 0);
     }
+	
+	//プロジェクトIDを指定してプロジェクトを取得する
+	public function getOneProject($id) {
+		$query = $this->db->get_where('project', array('projectID' => $id));
+		return $query->result();
+	}	
 
 	//範囲を指定してプロジェクトを取得
 	public function getProject($beginDate,$endDate,$top,$end,$order) {
 		$this->db->where("modified BETWEEN '$beginDate' AND '$endDate'");
 		$this->db->order_by($order, "desc");
 		$result = $this->db->get('project',$top,$end);
+		return $result->result();
+	}
+	
+	//デイリーランキングページからプロジェクトを9個取得
+	public function getRankingProject() {
+		$this->db->order_by("pv","desc");
+		$this->db->limit(9);
+		$result = $this->db->get('day_ranking');
 		return $result->result();
 	}
 
