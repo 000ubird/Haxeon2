@@ -30,10 +30,20 @@ class Compiler {
 	var tmpID : String;
 	var tmpDir : String;
 	var mainFile : String;
-
-	public static var haxePath = "C:/HaxeToolkit/haxe/haxe.exe";
-
-	public function new(){}
+	public static var haxePath = "";
+	
+	public function new() {
+		//サーバーのOSを取得し、コンパイラのパスを指定
+		var os = Sys.systemName();
+		switch (os) {
+			case "Windows" : 
+				haxePath = "C:/HaxeToolkit/haxe/haxe.exe";
+			case "Linux" : 
+				haxePath = "/usr/bin/haxe";
+			default : 
+				throw "Error";
+		}
+	}
 
 	static function checkMacros( s : String ){
 		var forbidden = [
@@ -347,12 +357,11 @@ class Compiler {
 		var projectName = program.projectName;
 		var originProjectID = program.originProjectID;
 		var originUserID = program.originUserID;
-		var url = "http://localhost/haxeon/try-haxe/index.html#";
-		html.body.push("<br><H3>生成されたID : " + program.uid +"\n 前のID : "+ tmpID+"</H3>");
+		html.body.push("<br><H3>生成されたID : " + program.uid +"\n 前のID : " + tmpID + "</H3>");
 
 		//2回目以降のクリック時は更新されたプロジェクトIDを保存
 		if (!isFirstClick) originProjectID = program.uid;
-
+		
 		var cnx = Mysql.connect( {
 			host : "localhost",
 			port : 3306,

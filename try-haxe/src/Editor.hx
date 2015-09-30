@@ -35,6 +35,7 @@ class Editor {
   
   //追加部分
   var isSave : JQuery;
+  var base_url : String;
   
   var mainName : JQuery;
   var dceName : JQuery;
@@ -52,8 +53,11 @@ class Editor {
 
 	public function new(){
     //追加部分
+	//URLを動的に取得
+	base_url = Browser.window.location.origin;
 	//APIからユーザID情報とプロジェクト名情報を持ってくる
-	var con = new Http("http://localhost/haxeon/haxeonhandler/get_is_login/");
+	var con = new Http(base_url+"/haxeon/haxeonhandler/get_is_login/");
+	
 	con.onError = onError;
 	con.onData = onResult;
 	con.request(false);
@@ -125,7 +129,6 @@ class Editor {
 	
 	//追加部分
 	isSave = new JQuery("#hx-options-form .hx-hx-save");
-	trace(isSave);
 	
     stage = new JQuery(".js-output .js-canvas");
     jsTab = new JQuery("a[href='#js-source']");
@@ -326,7 +329,6 @@ class Editor {
 	//function onProgram(p:{p:Program, o:Output})
   function onProgram(p:Program)
 	{
-		trace(p.uid);
 		p.originProjectID = p.uid;
 		
 		//trace(p);
@@ -338,7 +340,7 @@ class Editor {
 
     // auto-fork
 	//program.uid = null;
-	var con = new Http("http://localhost/haxeon/haxeonhandler/get_is_login/");
+	var con = new Http(base_url+"/haxeon/haxeonhandler/get_is_login/");
 	con.onError = onError;
 	con.onData = onResult2;
 	con.request(false);
@@ -647,7 +649,7 @@ class Editor {
 		var userDatas = Json.parse(data);
 		
 		//PV数をカウントアップする
-		var con = new Http("http://localhost/haxeon/haxeonhandler/update_pv/"+program.uid);
+		var con = new Http(base_url+"/haxeon/haxeonhandler/update_pv/"+program.uid);
 		con.request(false);
 		
 		//フォーク元のユーザーIDを保持する
