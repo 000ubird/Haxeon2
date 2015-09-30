@@ -30,6 +30,7 @@ class Profile extends CI_Controller {
 
     private function getUserData($userID){
         $this->load->model('Model_users');
+        $this->load->model('Model_favorite');
 
         $data['user'] = $this->Model_users->getUserData($userID);
         $data['projects'] = $this->Model_users->getProjects($userID);
@@ -38,6 +39,7 @@ class Profile extends CI_Controller {
         $data['isown'] = ($this->session->userdata('userID') == $userID);
         $data['isfollow'] = $this->Model_users->getIsFollow($userID);
         $data['isfollowed'] = $this->Model_users->getIsFollowed($userID);
+        $data['favorites'] = $this->Model_favorite->getFavorite($userID);
 
         return $data;
     }
