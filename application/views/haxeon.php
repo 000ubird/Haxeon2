@@ -17,17 +17,17 @@ foreach($projects as $project) {
 
 	//1,2,3位のプロジェクトには特別な画像を表示する
 	echo '<div class="card-image waves-effect waves-block waves-light">';
-		if ($i == 0 && $cur_page == 0) echo '<img class="activator" src="http://localhost/haxeon/img/1st_pro.jpg">';
-		else if ($i == 1 && $cur_page == 0) echo '<img class="activator" src="http://localhost/haxeon/img/2nd_pro.jpg">';
-		else if ($i == 2 && $cur_page == 0) echo '<img class="activator" src="http://localhost/haxeon/img/3rd_pro.jpg">';
-		else echo '<img class="activator" src="http://localhost/haxeon/img/project.jpg">';
+		if ($i == 0 && $cur_page == 0) echo '<img class="activator" src="'.base_url().'img/1st_pro.jpg">';
+		else if ($i == 1 && $cur_page == 0) echo '<img class="activator" src="'.base_url().'img/2nd_pro.jpg">';
+		else if ($i == 2 && $cur_page == 0) echo '<img class="activator" src="'.base_url().'img/3rd_pro.jpg">';
+		else echo '<img class="activator" src="'.base_url().'img/project.jpg">';
 	echo '</div>';
 
 	echo '<div class="card-content">';
 	echo '<span class="card-title activator black-text text-darken-4">'.$project[0]->projectName.'<i class="material-icons right">more_vert</i></span>';
 	echo '<p>User : '.$project[0]->ownerUserID.'</p>';
 	echo '<p>pv : '.$project[0]->pv.'</p>';
-	echo '<p><a href=http://localhost/haxeon/try-haxe/index.html#'.$project[0]->projectID.'>Edit Code</a></p>';
+	echo '<p><a href="'.base_url().'try-haxe/index.html#'.$project[0]->projectID.'">Edit Code</a></p>';
 	echo '</div>';
 
 	echo '<div class="card-reveal">';

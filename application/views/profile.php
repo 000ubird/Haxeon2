@@ -72,7 +72,7 @@ echo '      <h2>Projects</h2>';
             foreach ($projects as $project) {
 
                 echo '    <div class="col s3">';
-                echo '<a href=http://localhost/haxeon/try-haxe/index.html#' . $project->projectID . '>';
+                echo '<a href="'.base_url().'try-haxe/index.html#'.$project->projectID.'">';
                 echo '        <div class="card blue-grey lighten-4">';
                 echo '            <div class="card-content">';
                 echo '                <span class="card-title">' . $project->projectName . '</span>';
