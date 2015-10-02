@@ -1,7 +1,6 @@
 <h2>profile</h2>
 
 <?php
-$class = $category;
 
 foreach($user as $row){
     $uid = $row->userID;
@@ -55,13 +54,15 @@ if($isown || !$this->session->userdata('userID')){
 }
 
 echo '</div>';
-
 echo '<hr>';
+
+//debug
+echo '<h2>category: '.$category.'</h2>';
 
 echo '<div class="contents">';
 
-if($category == "") {
-echo '<div class="recently">';
+if($category == "" || $category == "projects") {
+echo '<div class="projects">';
 echo '    <div class="row">';
 
     echo '      <h2>Projects</h2>';
@@ -94,7 +95,7 @@ echo '<hr>';
 ?>
 
 <!--フォローしている人たちをリスト表示する $followをつかう-->
-<?php if($category == ""){?>
+<?php if($category == "" || $category == "follow"){?>
     <div class="following">
     <div class="row">
         <h2>following</h2>
@@ -115,7 +116,7 @@ echo '<hr>';
 <?php }?>
 
 <!--ファボしたプロジェクトをリスト表示する $favoritesをつかう-->
-<?php if($category == ""){?>
+<?php if($category == "" || $category == "favorite"){?>
 <div class="favs">
     <div class="row">
         <h2>favorites</h2>
