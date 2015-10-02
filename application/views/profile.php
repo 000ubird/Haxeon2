@@ -70,6 +70,8 @@ echo '    <div class="row">';
     echo '      <h2>Projects</h2>';
     //複数項目ある場合の書き方例
     if (count($projects) > 0) {
+        //プロジェクトを降順ソート
+        krsort($projects);
         foreach ($projects as $project) {
 
             echo '    <div class="col s3">';
@@ -103,6 +105,8 @@ echo '<hr>';
         <h2>follow</h2>
         <?php
         if($follow_total > 0){
+        //フォローが新しい人ほど先にくるように降順ソート
+        krsort($follow);
         foreach($follow as $f){
             echo($f->userFollowingID);
             echo('<br>');
@@ -123,6 +127,8 @@ echo '<hr>';
             <h2>follower</h2>
             <?php
             if($follower_total > 0){
+            //フォローが新しい人ほど先にくるように降順ソート
+            krsort($follower);
                 foreach($follower as $f){
                     echo($f->userID);
                     echo('<br>');
@@ -144,6 +150,8 @@ echo '<hr>';
         <h2>favorites</h2>
         <?php
         if($favorite_total > 0) {
+            //ふぁぼが新しいものほど先にくるように降順ソート
+            krsort($favorites);
             foreach ($favorites as $favorite) {
                 echo($favorite->projectID);
                 echo('<br>');
