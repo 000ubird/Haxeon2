@@ -1,6 +1,7 @@
 <h2>profile</h2>
 
 <?php
+$class = $category;
 
 foreach($user as $row){
     $uid = $row->userID;
@@ -21,9 +22,10 @@ $followed_total= count($followed);
 echo '<div class="profile row">';
 
 echo '    <div class="icons col s3" style="text-align: center">';
-echo '      <img class="responsive-img" src="'. $icon .'"></img>';
+echo '      <img class="responsive-img" src="'. $icon .'">';
 echo '      <h4>'. $uname. '<small> @'. $uid .'</small></h4>';
 
+//フォローボタンの表示
 if($isown || !$this->session->userdata('userID')) {
     echo '<a href="' . base_url() . 'profile/profilesettings/' . $uid . '"><i class="material-icons">settings</i></a>';
 }else{
@@ -58,59 +60,78 @@ echo '<hr>';
 
 echo '<div class="contents">';
 
+if($category == "") {
 echo '<div class="recently">';
 echo '    <div class="row">';
-echo '      <h2>Projects</h2>';
-        //複数項目ある場合の書き方例
-        if(count($projects) > 0) {
-            foreach ($projects as $project) {
 
-                echo '    <div class="col s3">';
-                echo '<a href="'.base_url().'try-haxe/index.html#'.$project->projectID.'">';
-                echo '        <div class="card blue-grey lighten-4">';
-                echo '            <div class="card-content">';
-                echo '                <span class="card-title">' . $project->projectName . '</span>';
-                echo '                <p>'. $project->projectID . ', pv:' . $project->pv . '</p>';
-                echo '            </div>';
-                echo '            <div class="card-action">';
-                echo '              <a href="';
-                echo                    base_url().'profile/projectsettings/'. $project->projectID .'"><i class="material-icons">settings</i></a>';
-                echo '             </div>';
-                echo '        </div>';
-                echo '    </div>';
+    echo '      <h2>Projects</h2>';
+    //複数項目ある場合の書き方例
+    if (count($projects) > 0) {
+        foreach ($projects as $project) {
 
-            }
+            echo '    <div class="col s3">';
+            echo '<a href="' . base_url() . 'try-haxe/index.html#' . $project->projectID . '">';
+            echo '        <div class="card blue-grey lighten-4">';
+            echo '            <div class="card-content">';
+            echo '                <span class="card-title">' . $project->projectName . '</span>';
+            echo '                <p>' . $project->projectID . ', pv:' . $project->pv . '</p>';
+            echo '            </div>';
+            echo '            <div class="card-action">';
+            echo '              <a href="';
+            echo base_url() . 'profile/projectsettings/' . $project->projectID . '"><i class="material-icons">settings</i></a>';
+            echo '             </div>';
+            echo '        </div>';
+            echo '    </div>';
+
         }
-?>
-    </div>
+    }else{
+        echo '<p>you have no project.</p>';
+    }
 
-<hr>
+echo  '</div>';
+echo '<hr>';
+}
+?>
+
 <!--フォローしている人たちをリスト表示する $followをつかう-->
-<div class="following">
+<?php if($category == ""){?>
+    <div class="following">
     <div class="row">
         <h2>following</h2>
         <?php
+        if($follow_total > 0){
         foreach($follow as $f){
             echo($f->userFollowingID);
             echo('<br>');
         }
+        }else{
+            echo '<p>you have no follow.</p>';
+        }
         ?>
     </div>
 </div>
 
 <hr>
+<?php }?>
+
 <!--ファボしたプロジェクトをリスト表示する $favoritesをつかう-->
+<?php if($category == ""){?>
 <div class="favs">
     <div class="row">
         <h2>favorites</h2>
         <?php
-        foreach($favorites as $favorite){
-            echo($favorite->projectID);
-            echo('<br>');
+        if($favorite_total > 0) {
+            foreach ($favorites as $favorite) {
+                echo($favorite->projectID);
+                echo('<br>');
+            }
+        }else{
+            echo '<p>you have no favorite project.</p>';
         }
         ?>
     </div>
 </div>
+<?php }?>
 
 </div>
 
