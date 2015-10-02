@@ -105,6 +105,8 @@ echo '<hr>';
         <h2>follow</h2>
         <?php
         if($follow_total > 0){
+        //フォローが新しい人ほど先にくるように降順ソート
+        krsort($follow);
         foreach($follow as $f){
             echo($f->userFollowingID);
             echo('<br>');
@@ -125,6 +127,8 @@ echo '<hr>';
             <h2>follower</h2>
             <?php
             if($follower_total > 0){
+            //フォローが新しい人ほど先にくるように降順ソート
+            krsort($follower);
                 foreach($follower as $f){
                     echo($f->userID);
                     echo('<br>');
@@ -146,6 +150,8 @@ echo '<hr>';
         <h2>favorites</h2>
         <?php
         if($favorite_total > 0) {
+            //ふぁぼが新しいものほど先にくるように降順ソート
+            krsort($favorites);
             foreach ($favorites as $favorite) {
                 echo($favorite->projectID);
                 echo('<br>');
