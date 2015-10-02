@@ -1,6 +1,10 @@
 <h2>profile</h2>
 
 <?php
+define("PROJECTS", "projects");
+define("FAVORITES", "favorites");
+define("FOLLOW", "follow");
+define("FOLLOWER", "follower");
 
 foreach($user as $row){
     $uid = $row->userID;
@@ -16,7 +20,7 @@ $favorite_total = count($favorites);
 
 $follow_total = count($follow);
 
-$followed_total= count($followed);
+$follower_total= count($follower);
 
 echo '<div class="profile row">';
 
@@ -33,12 +37,13 @@ if($isown || !$this->session->userdata('userID')) {
 
 echo '    </div>';
 
+$info = 'profile/information/';
 echo '    <ul class="info col s8 offset-s1">';
-echo '      <li class="codes">codes: '. $project_total .'</li>';
+echo '      <li class="codes">codes: <a href="'.base_url().''.$info.''.$uid.'/'.PROJECTS.'">'. $project_total .'</a></li>';
 echo '      <li class="forked">forked: </li>';
-echo '      <li class="favorites">favorites: '. $favorite_total .'</li>';
-echo '      <li class="following">following: '. $follow_total .'</li>';
-echo '      <li class="followers">followers: '. $followed_total .'</li>';
+echo '      <li class="favorites">favorite: <a href="'.base_url().''.$info.''.$uid.'/'.FAVORITES.'">'. $favorite_total .'</a></li>';
+echo '      <li class="following">follow: <a href="'.base_url().''.$info.''.$uid.'/'.FOLLOW.'">'. $follow_total .'</a></li>';
+echo '      <li class="followers">follower: <a href="'.base_url().''.$info.''.$uid.'/'.FOLLOWER.'">'. $follower_total .'</a></li>';
 echo '      <li class="url">url: <a href='. $url .'>'. $url .'</a></li>';
 echo '      <li class="comment">message: '. $comment .'</li>';
 echo '    </ul>';
@@ -56,12 +61,9 @@ if($isown || !$this->session->userdata('userID')){
 echo '</div>';
 echo '<hr>';
 
-//debug
-echo '<h2>category: '.$category.'</h2>';
-
 echo '<div class="contents">';
 
-if($category == "" || $category == "projects") {
+if($category == "" || $category == PROJECTS) {
 echo '<div class="projects">';
 echo '    <div class="row">';
 
@@ -95,10 +97,10 @@ echo '<hr>';
 ?>
 
 <!--フォローしている人たちをリスト表示する $followをつかう-->
-<?php if($category == "" || $category == "follow"){?>
-    <div class="following">
+<?php if($category == "" || $category == FOLLOW){?>
+    <div class="follow">
     <div class="row">
-        <h2>following</h2>
+        <h2>follow</h2>
         <?php
         if($follow_total > 0){
         foreach($follow as $f){
@@ -115,8 +117,28 @@ echo '<hr>';
 <hr>
 <?php }?>
 
+<?php if($category == FOLLOWER){?>
+    <div class="follower">
+        <div class="row">
+            <h2>follower</h2>
+            <?php
+            if($follower_total > 0){
+                foreach($follower as $f){
+                    echo($f->userID);
+                    echo('<br>');
+                }
+            }else{
+                echo '<p>you have no follower.</p>';
+            }
+            ?>
+        </div>
+    </div>
+
+    <hr>
+<?php }?>
+
 <!--ファボしたプロジェクトをリスト表示する $favoritesをつかう-->
-<?php if($category == "" || $category == "favorite"){?>
+<?php if($category == "" || $category == FAVORITES){?>
 <div class="favs">
     <div class="row">
         <h2>favorites</h2>
