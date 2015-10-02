@@ -35,7 +35,7 @@ class Login extends CI_Controller {
                 );
                 $this->session->set_userdata($data);
 
-                redirect("haxeon");
+                redirect("");
         }else{
             //初回、もしくはエラーがあったとき
             $this->index();
