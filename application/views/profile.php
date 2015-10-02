@@ -5,6 +5,9 @@ define("PROJECTS", "projects");
 define("FAVORITES", "favorites");
 define("FOLLOW", "follow");
 define("FOLLOWER", "follower");
+define("MAX_PROJECTS", 4);
+define("MAX_FOLLOW", 10);
+define("MAX_FAVORITE", 4);
 
 foreach($user as $row){
     $uid = $row->userID;
@@ -74,7 +77,7 @@ echo '    <div class="row">';
         krsort($projects);
         $num = 0;
         foreach ($projects as $project) {
-            if($category == "") if($num >= 4) break;
+            if($category == "") if($num >= MAX_PROJECTS) break;
             echo '    <div class="col s3">';
             echo '<a href="' . base_url() . 'try-haxe/index.html#' . $project->projectID . '">';
             echo '        <div class="card blue-grey lighten-4">';
@@ -108,9 +111,12 @@ echo '<hr>';
         if($follow_total > 0){
         //フォローが新しい人ほど先にくるように降順ソート
         krsort($follow);
+        $num = 0;
         foreach($follow as $f){
+            if($category == "") if($num >= MAX_FOLLOW) break;
             echo($f->userFollowingID);
             echo('<br>');
+            $num += 1;
         }
         }else{
             echo '<p>you have no follow.</p>';
@@ -150,12 +156,15 @@ echo '<hr>';
     <div class="row">
         <h2>favorites</h2>
         <?php
+        $num = 0;
         if($favorite_total > 0) {
             //ふぁぼが新しいものほど先にくるように降順ソート
             krsort($favorites);
             foreach ($favorites as $favorite) {
+                if($category == "") if($num >= MAX_FAVORITE) break;
                 echo($favorite->projectID);
                 echo('<br>');
+                $num += 1;
             }
         }else{
             echo '<p>you have no favorite project.</p>';
