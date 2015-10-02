@@ -230,4 +230,9 @@ class Model_users extends CI_Model{
         $this->db->update('account', array('userURL' => $url));
     }
 
+    //ユーザーのアイコンurlを更新する
+    public function updateIconURL($url, $userID){
+        $this->db->where('userID', $userID);
+        $this->db->update('account', array('userIcon' => $url));
+    }
 }

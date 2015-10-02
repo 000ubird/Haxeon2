@@ -371,7 +371,7 @@ class Profile extends CI_Controller {
 
     //画像アップロードメソッド
     public function do_upload($userID){
-        $config['upload_path'] = './img/';
+        $config['upload_path'] = './img/icon/';
         $config['allowed_types'] = 'jpg|png';
         //ファイル名の指定
         $config['file_name'] = $userID;
@@ -386,6 +386,11 @@ class Profile extends CI_Controller {
             $this->profilesettings($userID);
         }else{
 //            $data = array('upload_data' => $this->upload->data());
+            $this->load->model('Model_users');
+            $data = $this->upload->data();
+
+            $iconURL = base_url().'img/icon/'.$data['file_name'];
+            $this->Model_users->updateIconURL($iconURL, $this->session->userdata('userID'));
 
             $this->information($userID);
         }
