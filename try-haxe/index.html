@@ -38,37 +38,38 @@
   <link rel="stylesheet" href="lib/CodeMirror-4/addon/dialog/dialog.css">
   <link href="lib/CodeMirror-4/addon/lint/lint.css" type="text/css" rel="stylesheet">
   <link rel="shortcut icon" type="image/x-icon" href="http://www.haxe.org/favicon.ico" />
-  
+
 	<!--追加部分-->
-	<?php $base_url = "http://".$_SERVER['SERVER_NAME']; ?>
-	
-	<link type="text/css" rel="stylesheet" href="<?php echo $base_url;?>/haxeon/css/materialize.min.css"  media="screen,projection"/>
+	<?php $base_url = "http://".$_SERVER['SERVER_NAME']."/haxeon/"; ?>
+
+	<link type="text/css" rel="stylesheet" href="<?php echo $base_url;?>css/materialize.css"  media="screen,projection"/>
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
 	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-	<script type="text/javascript" src="<?php echo $base_url;?>/haxeon/js/footerFixed.js"></script>
-	<script type="text/javascript" src="<?php echo $base_url;?>/haxeon/js/materialize.min.js"></script>
+	<script type="text/javascript" src="<?php echo $base_url;?>js/footerFixed.js"></script>
+	<script type="text/javascript" src="<?php echo $base_url;?>js/materialize.js"></script>
 	<!--追加部分END-->
 </head>
 
 <body data-api=".">
-    <nav>
+<header>
+    <nav role="navigation">
         <div class="nav-wrapper orange">
-            <a href="<?php echo $base_url;?>/haxeon/" class="brand-logo">Haxeon</a>
+            <a href="<?php echo $base_url;?>haxeon/" class="brand-logo">Haxeon</a>
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
 
             <!--     PCサイズでの表示       -->
             <ul class="right hide-on-med-and-down">
-				<?php 
+				<?php
                 echo '<li><a href="'.$base_url.'createproject">Create Code</a></li>';
 				echo '<li><a href="'.$base_url.'ranking/index/day/pv/30/0">Ranking</a></li>';
 				//echo '<li><a href="'.$base_url.'profile/information/'.$this->session->userdata('userID').'">Profile</a></li>';
 				echo '<li><a href="'.$base_url.'logout">Logout</a></li>';
 				echo '<li><a href="http://haxe.org/documentation" target="_blank">Read the manual</a></li>';
 				echo '<li><a href="http://api.haxe.org/" target="_blank">API documentation</a></li>';
-				 ?>
+				?>
             </ul>
 
             <!--      バーに隠れてる表示      -->
@@ -83,6 +84,7 @@
             </ul>
         </div>
     </nav>
+</header>
 
   <!-- プロジェクトの情報を表示、編集したい場所 -->
   </br>
@@ -94,11 +96,11 @@
     <div class="row-fluid">
       <div class="span6">
         <div class="compiler-in">
-			
+
           <div class="btn-group pull-right">
               <a href="#" class="compile-btn btn" data-loading-text="Compiling"><i class="icon-cog"></i> Build + Run</a>
           </div>
-		  
+
           <ul class="nav nav-tabs">
                 <li class="active"><a href="#hx-source" data-toggle="tab">Source</a></li>
                 <li><a href="#hx-options" data-toggle="tab">Options</a></li>
@@ -162,7 +164,7 @@ class Test {
                     </div>
 
                   </div>
-				  
+
 		<!--追加部分-->
 		<div class="control-group hx-save">
 			<label class="control-label" for="libs-checkbox">Save</label>
@@ -171,7 +173,7 @@ class Test {
 				<label class="radio"><input type="radio" name="save" value="NOTSAVE"></input>No</label>
 			</div>
 		</div>
-		
+
                   <div class="control-group hx-dce-name">
                     <label class="control-label" for="main-class">DCE <a href="http://haxe.org/manual/cr-dce.html" target="_blank"><i class="icon-question-sign"></i></a></label>
                     <div class="controls">
