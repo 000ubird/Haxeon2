@@ -69,6 +69,7 @@ class Profile extends CI_Controller {
         if($this->Model_project->isOwner($projectID)) {
 
             $data['tags'] = $this->tag->getTag($projectID);
+            $data['projectID'] = $projectID;
 
             $this->load->view('header');
             $this->load->view('projectsettings', $data);
@@ -547,6 +548,15 @@ class Profile extends CI_Controller {
             $this->load->view('header');
             echo "メールアドレスの変更に失敗しました。";
         }
+    }
+
+    //プロジェクトを削除する
+    public function delete_project($projectID){
+        $this->load->model("Model_project");
+        $userID = $this->session->userdata('userID');
+        $this->Model_project->deleteOneProject($projectID, $userID);
+
+        $this->information($userID);
     }
 
 }

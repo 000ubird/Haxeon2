@@ -172,8 +172,14 @@ class Model_project extends CI_Model{
         $this->deleteDayRanking($userID);
 	}
 
+    //プロジェクトをひとつ削除する
+    public function deleteOneProject($projectID, $userID){
+        $this->db->delete('project', array('ownerUserID'=>$userID, 'projectID'=>$projectID));
+    }
+
     //day_rankingから削除
     public function deleteDayRanking($userID){
         $this->db->delete('day_ranking', array('usrID'=>$userID));
     }
+
 }
