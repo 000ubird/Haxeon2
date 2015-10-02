@@ -76,7 +76,7 @@ foreach($projects as $project) {
         echo '<p><a href="'.$base_url.'profile/profilesettings/' . $this->session->userdata('userID') . '"><i class="material-icons">settings</i></a></p>';
     }
 
-	echo '<p>User : '.$project->ownerUserID.'</p>';
+	echo '<p>User : <a href="'.base_url().'profile/information/'.$project->ownerUserID.'">@'.$project->ownerUserID.'</p>';
 	echo '<p>pv : '.$project->pv.'</p>';
 	echo '<p>forked : '.$project->fork.'</p>';
 	echo '<p><a href='.$base_url.'try-haxe/index.html#'.$project->projectID.'>Edit Code</a></p>';

@@ -25,8 +25,9 @@ foreach($projects as $project) {
 
 	echo '<div class="card-content">';
 	echo '<span class="card-title activator black-text text-darken-4">'.$project[0]->projectName.'<i class="material-icons right">more_vert</i></span>';
-	echo '<p>User : '.$project[0]->ownerUserID.'</p>';
-	echo '<p>pv : '.$project[0]->pv.'</p>';
+	echo '<p>User : <a href="'.base_url().'profile/information/'.$project[0]->ownerUserID.'">@'.$project[0]->ownerUserID.'</p>';
+	echo '<p>PV : '.$project[0]->pv.'</p>';
+	echo '<p>Fork : '.$project[0]->fork.'</p>';
 	echo '<p><a href="'.base_url().'try-haxe/index.html#'.$project[0]->projectID.'">Edit Code</a></p>';
 	echo '</div>';
 
