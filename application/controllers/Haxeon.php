@@ -11,6 +11,8 @@ class Haxeon extends CI_Controller {
 		//デイリーランキングテーブルから取得したプロジェクトIDで、プロジェクトテーブルを検索
 		foreach($ranking_projects as $project) {
 			$pro = $this->Model_project->getOneProject($project->proID);
+			//デイリーランキングのPV数を取得
+			$pro[0]->pv = $project->pv;
 			array_push($table_project,$pro);
 		}
 		
