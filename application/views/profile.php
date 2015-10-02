@@ -72,8 +72,9 @@ echo '    <div class="row">';
     if (count($projects) > 0) {
         //プロジェクトを降順ソート
         krsort($projects);
+        $num = 0;
         foreach ($projects as $project) {
-
+            if($category == "") if($num >= 4) break;
             echo '    <div class="col s3">';
             echo '<a href="' . base_url() . 'try-haxe/index.html#' . $project->projectID . '">';
             echo '        <div class="card blue-grey lighten-4">';
@@ -87,7 +88,7 @@ echo '    <div class="row">';
             echo '             </div>';
             echo '        </div>';
             echo '    </div>';
-
+            $num += 1;
         }
     }else{
         echo '<p>you have no project.</p>';
