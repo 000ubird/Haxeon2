@@ -1,3 +1,5 @@
 materialize/
 application/config/environment.php
 pull.sh
+*.jpg
+*.png
