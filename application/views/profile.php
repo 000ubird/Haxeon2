@@ -1,6 +1,10 @@
 <h2>profile</h2>
 
 <?php
+define("PROJECTS", "projects");
+define("FAVORITES", "favorites");
+define("FOLLOW", "follow");
+define("FOLLOWER", "follower");
 
 foreach($user as $row){
     $uid = $row->userID;
@@ -16,14 +20,15 @@ $favorite_total = count($favorites);
 
 $follow_total = count($follow);
 
-$followed_total= count($followed);
+$follower_total= count($follower);
 
 echo '<div class="profile row">';
 
 echo '    <div class="icons col s3" style="text-align: center">';
-echo '      <img class="responsive-img" src="'. $icon .'"></img>';
+echo '      <img class="responsive-img" src="'. $icon .'">';
 echo '      <h4>'. $uname. '<small> @'. $uid .'</small></h4>';
 
+//フォローボタンの表示
 if($isown || !$this->session->userdata('userID')) {
     echo '<a href="' . base_url() . 'profile/profilesettings/' . $uid . '"><i class="material-icons">settings</i></a>';
 }else{
@@ -32,12 +37,13 @@ if($isown || !$this->session->userdata('userID')) {
 
 echo '    </div>';
 
+$info = 'profile/information/';
 echo '    <ul class="info col s8 offset-s1">';
-echo '      <li class="codes">codes: '. $project_total .'</li>';
+echo '      <li class="codes">codes: <a href="'.base_url().''.$info.''.$uid.'/'.PROJECTS.'">'. $project_total .'</a></li>';
 echo '      <li class="forked">forked: </li>';
-echo '      <li class="favorites">favorites: '. $favorite_total .'</li>';
-echo '      <li class="following">following: '. $follow_total .'</li>';
-echo '      <li class="followers">followers: '. $followed_total .'</li>';
+echo '      <li class="favorites">favorite: <a href="'.base_url().''.$info.''.$uid.'/'.FAVORITES.'">'. $favorite_total .'</a></li>';
+echo '      <li class="following">follow: <a href="'.base_url().''.$info.''.$uid.'/'.FOLLOW.'">'. $follow_total .'</a></li>';
+echo '      <li class="followers">follower: <a href="'.base_url().''.$info.''.$uid.'/'.FOLLOWER.'">'. $follower_total .'</a></li>';
 echo '      <li class="url">url: <a href='. $url .'>'. $url .'</a></li>';
 echo '      <li class="comment">message: '. $comment .'</li>';
 echo '    </ul>';
@@ -53,64 +59,102 @@ if($isown || !$this->session->userdata('userID')){
 }
 
 echo '</div>';
-
 echo '<hr>';
 
 echo '<div class="contents">';
 
-echo '<div class="recently">';
+if($category == "" || $category == PROJECTS) {
+echo '<div class="projects">';
 echo '    <div class="row">';
-echo '      <h2>Projects</h2>';
-        //複数項目ある場合の書き方例
-        if(count($projects) > 0) {
-            foreach ($projects as $project) {
 
-                echo '    <div class="col s3">';
-                echo '<a href="'.base_url().'try-haxe/index.html#'.$project->projectID.'">';
-                echo '        <div class="card blue-grey lighten-4">';
-                echo '            <div class="card-content">';
-                echo '                <span class="card-title">' . $project->projectName . '</span>';
-                echo '                <p>'. $project->projectID . ', pv:' . $project->pv . '</p>';
-                echo '            </div>';
-                echo '            <div class="card-action">';
-                echo '              <a href="';
-                echo                    base_url().'profile/projectsettings/'. $project->projectID .'"><i class="material-icons">settings</i></a>';
-                echo '             </div>';
-                echo '        </div>';
-                echo '    </div>';
+    echo '      <h2>Projects</h2>';
+    //複数項目ある場合の書き方例
+    if (count($projects) > 0) {
+        foreach ($projects as $project) {
 
-            }
+            echo '    <div class="col s3">';
+            echo '<a href="' . base_url() . 'try-haxe/index.html#' . $project->projectID . '">';
+            echo '        <div class="card blue-grey lighten-4">';
+            echo '            <div class="card-content">';
+            echo '                <span class="card-title">' . $project->projectName . '</span>';
+            echo '                <p>' . $project->projectID . ', pv:' . $project->pv . '</p>';
+            echo '            </div>';
+            echo '            <div class="card-action">';
+            echo '              <a href="';
+            echo base_url() . 'profile/projectsettings/' . $project->projectID . '"><i class="material-icons">settings</i></a>';
+            echo '             </div>';
+            echo '        </div>';
+            echo '    </div>';
+
         }
-?>
-    </div>
+    }else{
+        echo '<p>you have no project.</p>';
+    }
 
-<hr>
+echo  '</div>';
+echo '<hr>';
+}
+?>
+
 <!--フォローしている人たちをリスト表示する $followをつかう-->
-<div class="following">
+<?php if($category == "" || $category == FOLLOW){?>
+    <div class="follow">
     <div class="row">
-        <h2>following</h2>
+        <h2>follow</h2>
         <?php
+        if($follow_total > 0){
         foreach($follow as $f){
             echo($f->userFollowingID);
             echo('<br>');
         }
+        }else{
+            echo '<p>you have no follow.</p>';
+        }
         ?>
     </div>
 </div>
 
 <hr>
+<?php }?>
+
+<?php if($category == FOLLOWER){?>
+    <div class="follower">
+        <div class="row">
+            <h2>follower</h2>
+            <?php
+            if($follower_total > 0){
+                foreach($follower as $f){
+                    echo($f->userID);
+                    echo('<br>');
+                }
+            }else{
+                echo '<p>you have no follower.</p>';
+            }
+            ?>
+        </div>
+    </div>
+
+    <hr>
+<?php }?>
+
 <!--ファボしたプロジェクトをリスト表示する $favoritesをつかう-->
+<?php if($category == "" || $category == FAVORITES){?>
 <div class="favs">
     <div class="row">
         <h2>favorites</h2>
         <?php
-        foreach($favorites as $favorite){
-            echo($favorite->projectID);
-            echo('<br>');
+        if($favorite_total > 0) {
+            foreach ($favorites as $favorite) {
+                echo($favorite->projectID);
+                echo('<br>');
+            }
+        }else{
+            echo '<p>you have no favorite project.</p>';
         }
         ?>
     </div>
 </div>
+<?php }?>
 
 </div>
 

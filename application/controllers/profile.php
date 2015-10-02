@@ -17,8 +17,8 @@ class Profile extends CI_Controller {
         $this->load->view('footer');
     }
 
-    public function information($userID){
-        $this->view($this->getUserData($userID));
+    public function information($userID, $category = ""){
+        $this->view($this->getUserData($userID, $category));
     }
 
     //プロフィールページを表示する本体
@@ -28,15 +28,16 @@ class Profile extends CI_Controller {
         $this->load->view('footer');
     }
 
-    private function getUserData($userID){
+    private function getUserData($userID, $category){
         $this->load->model('Model_users');
         $this->load->model('Model_project');
         $this->load->model('Model_favorite');
 
+        $data['category'] = $category;
         $data['user'] = $this->Model_users->getUserData($userID);
         $data['projects'] = $this->Model_users->getProjects($userID);
         $data['follow'] = $this->Model_users->getFollowInfo($userID);
-        $data['followed'] = $this->Model_users->getFollowedInfo($userID);
+        $data['follower'] = $this->Model_users->getFollowedInfo($userID);
         $data['isown'] = ($this->session->userdata('userID') == $userID);
         $data['isfollow'] = $this->Model_users->getIsFollow($userID);
         $data['isfollowed'] = $this->Model_users->getIsFollowed($userID);
