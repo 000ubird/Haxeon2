@@ -70,6 +70,8 @@ echo '    <div class="row">';
     echo '      <h2>Projects</h2>';
     //複数項目ある場合の書き方例
     if (count($projects) > 0) {
+        //プロジェクトを降順ソート
+        krsort($projects);
         foreach ($projects as $project) {
 
             echo '    <div class="col s3">';
