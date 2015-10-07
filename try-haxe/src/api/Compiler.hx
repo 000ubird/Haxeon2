@@ -357,7 +357,7 @@ class Compiler {
 		var projectName = program.projectName;
 		var originProjectID = program.originProjectID;
 		var originUserID = program.originUserID;
-		html.body.push("<br><H3>生成されたID : " + program.uid +"\n 前のID : " + tmpID + "</H3>");
+		//html.body.push("<br><H3>生成されたID : " + program.uid +"\n 前のID : " + tmpID + "</H3>");
 
 		//2回目以降のクリック時は更新されたプロジェクトIDを保存
 		if (!isFirstClick) originProjectID = program.uid;
@@ -370,15 +370,18 @@ class Compiler {
 			database : "haxeon",
 			socket : null
 		} );
-
+		//警告文出力の位置を調整
+		html.body.push("<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>");
+		html.body.push("<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>");
+		
 		//プロジェクトが登録されているかを確認
 		var rset = cnx.request("SELECT projectID FROM project where (tmpPro = '" + tmpID + "' AND ownerUserID = '" + userID + "') OR (ownerUserID = '" + userID + "' AND projectID = '"+tmpID+"');");
-
+		
 		//プロジェクトが登録されていない場合
 		if (rset.length == 0) {
-			html.body.push("<br><H3>プロジェクトIDなし</H3>");
-
-			if (program.save == "SAVE") {
+			//html.body.push("<br><H3>プロジェクトIDなし</H3>");
+			
+			if (program.save == "SAVE" && userID != null) {
 				//プロジェクトテーブルに追加
 				cnx.request("INSERT INTO `project`(`projectID`, `tmpPro`, `projectName` ,`ownerUserID`, `pv`, `fork`, `originUserID`) VALUES (\""
 				+program.uid + "\", \"" +program.uid+ "\", \"" + projectName+"\",\"" + userID + "\"," + 0 + "," + 0 + ", \"" + originUserID + "\");");
@@ -387,12 +390,20 @@ class Compiler {
 				cnx.request("INSERT INTO `day_ranking` (`proID`, `tmpPro`, `usrID`, `pv`) VALUES (\""+program.uid+"\",\""+program.uid+"\",\""+userID+"\", 0)");
 				
 				html.body.push("<br><H3>データベースにIDを登録しました。</H3>");
+			//コードが保存されない場合の処理
 			} else {
-				html.body.push("<br><H3>未保存が選択されています。</H3>");
+				//未ログイン状態の場合
+				if (userID == null) {
+					html.body.push("<font size=\"5\" color=\"#FF6600\">警告:未ログイン状態では現在のコードは保存されません。</font>");
+				} 
+				//未保存のチェックボックスが選択されている場合
+				else {
+					html.body.push("<font size=\"5\" color=\"#FF6600\">確認:現在、未保存が選択されています。</font>");
+				}
 			}
 
 			//フォークの場合は元のプロジェクト所持者のフォーク数を1上げる
-			html.body.push("originpro : "+originProjectID+" ,originuserID : "+originUserID+", currentuser : "+userID);
+			//html.body.push("originpro : "+originProjectID+" ,originuserID : "+originUserID+", currentuser : "+userID);
 			if (userID != originUserID) {
 				var fork = 0;
 				var rset2 = cnx.request("SELECT * FROM project where projectID = '"+tmpID+"';");
@@ -404,18 +415,25 @@ class Compiler {
 		}
 		//プロジェクトIDを更新
 		else {
-			html.body.push("<br><H3>プロジェクトIDあり</H3>");
+			//html.body.push("<br><H3>プロジェクトIDあり</H3>");
 			for (row in rset) {
 				html.body.push("プロジェクトID : "+row.projectID+" , 所有者 : "+userID+" , プロジェクト名 : "+projectName);
 			}
-			if (program.save == "SAVE") {
+			if (program.save == "SAVE" && userID != null) {
 				cnx.request("UPDATE project SET tmpPro = \""+program.uid+"\",modified = \""+Date.now().toString()+"\" , projectID = \""+program.uid+"\" WHERE ownerUserID = '"+userID+"' AND tmpPro = '"+tmpID+"';");
 				cnx.request("UPDATE day_ranking SET proID = \""+program.uid+"\" , tmpPro = \""+program.uid+"\" WHERE proID = '"+tmpID+"';");
                 cnx.request("UPDATE tagmap SET projectID = \""+program.uid+"\" WHERE projectID = '"+tmpID+"';");
 			} else {
 				cnx.request("UPDATE project SET tmpPro = \""+program.uid+"\",modified = \""+Date.now().toString()+"\" WHERE ownerUserID = '"+userID+"' AND tmpPro = '"+tmpID+"';");
 				cnx.request("UPDATE day_ranking SET tmpPro = \""+program.uid+"\" WHERE proID = '"+tmpID+"';");
-				html.body.push("<br><H3>未保存が選択されています。</H3>");
+				//未ログイン状態の場合
+				if (userID == null) {
+					html.body.push("<font size=\"5\" color=\"#FF6600\">警告:未ログイン状態では現在のコードは保存されません。</font>");
+				} 
+				//未保存のチェックボックスが選択されている場合
+				else {
+					html.body.push("<font size=\"5\" color=\"#FF6600\">確認:現在、未保存が選択されています。</font>");
+				}
 			}
 		}
 		cnx.close();
