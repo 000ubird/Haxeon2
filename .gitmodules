@@ -1,3 +1,6 @@
 [submodule "try-haxe/lib/haxe-bootstrap"]
 	path = try-haxe/lib/haxe-bootstrap
 	url = git://github.com/clemos/haxe-bootstrap.git
+[submodule "try-haxe/lib/CodeMirror-4"]
+	path = try-haxe/lib/CodeMirror-4
+	url = git://github.com/marijnh/CodeMirror.git
