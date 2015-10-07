@@ -57,19 +57,17 @@
 <header>
     <nav role="navigation">
         <div class="nav-wrapper orange">
-            <a href="<?php echo $base_url;?>haxeon/" class="brand-logo">Haxeon</a>
+            <a href="<?php echo $base_url;?>" class="brand-logo">Haxeon</a>
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
 
             <!--     PCサイズでの表示       -->
             <ul class="right hide-on-med-and-down">
-
                 <li><a href="<?php echo $base_url; ?>createproject">Create Code</a></li>
 				<li><a href="<?php echo $base_url; ?>ranking/index/day/pv/30/0">Ranking</a></li>
 				<!--<li><a href="'.$base_url.'profile/information/'.$this->session->userdata('userID').'">Profile</a></li>';-->
 				<li><a href="<?php echo $base_url; ?>logout">Logout</a></li>
 				<li><a href="http://haxe.org/documentation" target="_blank">Read the manual</a></li>
 				<li><a href="http://api.haxe.org/" target="_blank">API documentation</a></li>
-
             </ul>
 
             <!--      バーに隠れてる表示      -->
@@ -158,8 +156,8 @@ class Test {
                     <label class="control-label" for="libs-checkbox">Target</label>
 
                     <div class="controls">
-                      <label class="radio"><input type="radio" name="target" value="JS" checked></input> Javascript</label>
-                      <label class="radio"><input type="radio" name="target" value="SWF"></input> SWF</label>
+						<p><input name="target" type="radio" id="1" value="JS" checked /><label for="1">Javascript</label></p>
+						<p><input name="target" type="radio" id="2"value="SWF" /><label for="2">SWF</label></p>
                     </div>
 
                   </div>
@@ -168,19 +166,17 @@ class Test {
 		<div class="control-group hx-save">
 			<label class="control-label" for="libs-checkbox">Save</label>
 			<div class="controls">
-				<label class="radio"><input type="radio" name="save" value="SAVE" checked></input>Yes</label>
-				<label class="radio"><input type="radio" name="save" value="NOTSAVE"></input>No</label>
+					<p><input name="save" type="radio" id="3" value="SAVE" checked /><label for="3">Yes</label></p>
+					<p><input name="save" type="radio" id="4"value="NOTSAVE" /><label for="4">No</label></p>
 			</div>
 		</div>
 
                   <div class="control-group hx-dce-name">
                     <label class="control-label" for="main-class">DCE <a href="http://haxe.org/manual/cr-dce.html" target="_blank"><i class="icon-question-sign"></i></a></label>
                     <div class="controls">
-
-                      <label class="radio"><input type="radio" name="dce" value="full" checked></input> Full</label>
-                      <label class="radio"><input type="radio" name="dce" value="no"></input> No</label>
-                      <label class="radio"><input type="radio" name="dce" value="std"></input> Std</label>
-
+					  <p><input name="dce" type="radio" id="5" value="full" checked /><label for="5">Full</label></p>
+					  <p><input name="dce" type="radio" id="6" value="no" /><label for="6">No</label></p>
+					  <p><input name="dce" type="radio" id="7" value="std" /><label for="7">Std</label></p>
                     </div>
                   </div>
                   <div class="control-group hx-libs">
