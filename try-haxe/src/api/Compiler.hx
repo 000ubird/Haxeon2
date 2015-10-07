@@ -372,7 +372,7 @@ class Compiler {
 		} );
 		//警告文出力の位置を調整
 		html.body.push("<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>");
-		html.body.push("<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>");
+		html.body.push("<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>");
 		
 		//プロジェクトが登録されているかを確認
 		var rset = cnx.request("SELECT projectID FROM project where (tmpPro = '" + tmpID + "' AND ownerUserID = '" + userID + "') OR (ownerUserID = '" + userID + "' AND projectID = '"+tmpID+"');");
@@ -389,7 +389,7 @@ class Compiler {
 				//ランキングテーブルに追加
 				cnx.request("INSERT INTO `day_ranking` (`proID`, `tmpPro`, `usrID`, `pv`) VALUES (\""+program.uid+"\",\""+program.uid+"\",\""+userID+"\", 0)");
 				
-				html.body.push("<br><H3>データベースにIDを登録しました。</H3>");
+				//html.body.push("<br><H3>データベースにIDを登録しました。</H3>");
 			//コードが保存されない場合の処理
 			} else {
 				//未ログイン状態の場合
