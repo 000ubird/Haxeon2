@@ -1,0 +1,3 @@
+[submodule "try-haxe/lib/haxe-bootstrap"]
+	path = try-haxe/lib/haxe-bootstrap
+	url = git://github.com/clemos/haxe-bootstrap.git
