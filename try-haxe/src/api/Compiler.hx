@@ -416,16 +416,16 @@ class Compiler {
 		//プロジェクトIDを更新
 		else {
 			//html.body.push("<br><H3>プロジェクトIDあり</H3>");
-			for (row in rset) {
-				html.body.push("プロジェクトID : "+row.projectID+" , 所有者 : "+userID+" , プロジェクト名 : "+projectName);
-			}
+			//for (row in rset) {
+			//	html.body.push("プロジェクトID : "+row.projectID+" , 所有者 : "+userID+" , プロジェクト名 : "+projectName);
+			//}
 			if (program.save == "SAVE" && userID != null) {
 				cnx.request("UPDATE project SET tmpPro = \""+program.uid+"\",modified = \""+Date.now().toString()+"\" , projectID = \""+program.uid+"\" WHERE ownerUserID = '"+userID+"' AND tmpPro = '"+tmpID+"';");
-				cnx.request("UPDATE day_ranking SET proID = \""+program.uid+"\" , tmpPro = \""+program.uid+"\" WHERE proID = '"+tmpID+"';");
+				cnx.request("UPDATE day_ranking SET proID = \""+program.uid+"\" , tmpPro = \""+program.uid+"\" WHERE tmpPro = '"+tmpID+"';");
                 cnx.request("UPDATE tagmap SET projectID = \""+program.uid+"\" WHERE projectID = '"+tmpID+"';");
 			} else {
 				cnx.request("UPDATE project SET tmpPro = \""+program.uid+"\",modified = \""+Date.now().toString()+"\" WHERE ownerUserID = '"+userID+"' AND tmpPro = '"+tmpID+"';");
-				cnx.request("UPDATE day_ranking SET tmpPro = \""+program.uid+"\" WHERE proID = '"+tmpID+"';");
+				cnx.request("UPDATE day_ranking SET tmpPro = \""+program.uid+"\" WHERE tmpPro = '"+tmpID+"';");
 				//未ログイン状態の場合
 				if (userID == null) {
 					html.body.push("<font size=\"5\" color=\"#FF6600\">警告:未ログイン状態では現在のコードは保存されません。</font>");
