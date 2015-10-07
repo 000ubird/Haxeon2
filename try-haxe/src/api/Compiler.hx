@@ -404,7 +404,7 @@ class Compiler {
 
 			//フォークの場合は元のプロジェクト所持者のフォーク数を1上げる
 			//html.body.push("originpro : "+originProjectID+" ,originuserID : "+originUserID+", currentuser : "+userID);
-			if (userID != originUserID) {
+			if (userID != originUserID && userID != null) {
 				var fork = 0;
 				var rset2 = cnx.request("SELECT * FROM project where projectID = '"+tmpID+"';");
 				for (row in rset2) {
