@@ -2055,7 +2055,7 @@ i {
 
 img.responsive-img, video.responsive-video {
   max-width: 100%;
-  height: auto; }
+  max-height: 250px; }
 
 .pagination li {
   float: left;
