@@ -395,17 +395,21 @@ class Profile extends CI_Controller {
 
             //画像のリサイズ
             $config = array(
-                "source_image" => $iconURL,
-                "width" => 300,
-                "height" => 300,
+                'source_image' => $data['full_path'],
+                'create_thumb' => FALSE,
+                'maintain_ratio' => FALSE,
+                'width' => 300,
+                'height' => 300,
                 'quality' => 100
             );
 
             $this->load->library("image_lib", $config);
+
             if($this->image_lib->resize()){
-                print_r("success");
+//                print_r("success");
             }else{
-                print_r("faild");
+                echo $this->image_lib->display_errors();
+//                print_r("failed");
             }
 
             $this->information($userID);
