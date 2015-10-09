@@ -107,7 +107,7 @@ class Model_users extends CI_Model{
 				'userPass' => $row->password,
 				'userName' => $row->userID,
 				'userMail' => $row->userMail,
-                'userIcon' => base_url().'ing/icon/default.png'
+                'userIcon' => base_url().'img/icon/default.png'
 			);
 			return ($this->db->insert('account', $info));
 		} else {
