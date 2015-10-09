@@ -1,4 +1,4 @@
-<h2>profile</h2>
+<h2>Profile</h2>
 
 <?php
 define("PROJECTS", "projects");
