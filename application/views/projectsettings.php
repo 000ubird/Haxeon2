@@ -37,3 +37,4 @@ echo form_close();
         <i class="material-icons left">delete</i>
         </button>
     </div>
+</div>

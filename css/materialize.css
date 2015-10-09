@@ -8142,3 +8142,8 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
 
 .error{color:#f44336;}
 .username{font-size: 24px;}
+
+ul li.comment {
+    padding: 10px 0 0;
+    word-wrap: break-word;
+}

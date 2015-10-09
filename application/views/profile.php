@@ -106,7 +106,7 @@ echo '<hr>';
 <?php if($category == "" || $category == FOLLOW){?>
     <div class="follow">
     <div class="row">
-        <h2>follow</h2>
+        <h2>Follow</h2>
         <?php
         if($follow_total > 0){
         //フォローが新しい人ほど先にくるように降順ソート
@@ -131,7 +131,7 @@ echo '<hr>';
 <?php if($category == FOLLOWER){?>
     <div class="follower">
         <div class="row">
-            <h2>follower</h2>
+            <h2>Follower</h2>
             <?php
             if($follower_total > 0){
             //フォローが新しい人ほど先にくるように降順ソート
@@ -154,7 +154,7 @@ echo '<hr>';
 <?php if($category == "" || $category == FAVORITES){?>
 <div class="favs">
     <div class="row">
-        <h2>favorites</h2>
+        <h2>Favorites</h2>
         <?php
         $num = 0;
         if($favorite_total > 0) {
