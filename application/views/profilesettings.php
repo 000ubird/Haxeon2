@@ -36,8 +36,9 @@
 <!--    メッセージ文-->
     <div class="row">
     <div class="input-field col s12">
-    <input name="profile" type="text">
-    <label for="profile">message</label>
+        <textarea name="profile" class="materialize-textarea" maxlength="140"></textarea>
+<!--    <input name="profile" type="text">-->
+        <label for="profile">message</label>
     </div>
     <?php
     echo form_error('profile');

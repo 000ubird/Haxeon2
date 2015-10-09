@@ -48,7 +48,7 @@ echo '      <li class="favorites">favorite: <a href="'.base_url().''.$info.''.$u
 echo '      <li class="following">follow: <a href="'.base_url().''.$info.''.$uid.'/'.FOLLOW.'">'. $follow_total .'</a></li>';
 echo '      <li class="followers">follower: <a href="'.base_url().''.$info.''.$uid.'/'.FOLLOWER.'">'. $follower_total .'</a></li>';
 echo '      <li class="url">url: <a href='. $url .'>'. $url .'</a></li>';
-echo '      <li class="comment">message: '. $comment .'</li>';
+echo '      <li class="comment">'. nl2br($comment) .'</li>';
 echo '    </ul>';
 
 if($isown || !$this->session->userdata('userID')){
