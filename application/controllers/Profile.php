@@ -386,11 +386,31 @@ class Profile extends CI_Controller {
             $this->profilesettings($userID);
         }else{
 //            $data = array('upload_data' => $this->upload->data());
+            //データベースに反映
             $this->load->model('Model_users');
             $data = $this->upload->data();
 
             $iconURL = base_url().'img/icon/'.$data['file_name'];
             $this->Model_users->updateIconURL($iconURL, $this->session->userdata('userID'));
+
+            //画像のリサイズ
+            $config = array(
+                'source_image' => $data['full_path'],
+                'create_thumb' => FALSE,
+                'maintain_ratio' => FALSE,
+                'width' => 300,
+                'height' => 300,
+                'quality' => 100
+            );
+
+            $this->load->library("image_lib", $config);
+
+            if($this->image_lib->resize()){
+//                print_r("success");
+            }else{
+                echo $this->image_lib->display_errors();
+//                print_r("failed");
+            }
 
             $this->information($userID);
         }
