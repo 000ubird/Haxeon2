@@ -370,8 +370,8 @@ class Profile extends CI_Controller {
     }
 
     //画像アップロードメソッド
-    public function do_upload($userID){
-        $config['upload_path'] = './img/icon/';
+    public function icon_upload($userID){
+        $config['upload_path'] = 'img/icon/';
         $config['allowed_types'] = 'jpg|png';
         //ファイル名の指定
         $config['file_name'] = $userID;

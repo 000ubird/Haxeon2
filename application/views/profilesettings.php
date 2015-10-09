@@ -58,7 +58,7 @@
     <hr />
 
     <?php
-    echo form_open_multipart('profile/do_upload/'.$userID);
+    echo form_open_multipart('profile/icon_upload/'.$userID);
     ?>
 <!-- アイコン-->
     <form action="#">
