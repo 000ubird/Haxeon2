@@ -422,10 +422,14 @@ class Compiler {
 			if (program.save == "SAVE" && userID != null) {
 				cnx.request("UPDATE project SET tmpPro = \""+program.uid+"\",modified = \""+Date.now().toString()+"\" , projectID = \""+program.uid+"\" WHERE ownerUserID = '"+userID+"' AND tmpPro = '"+tmpID+"';");
 				cnx.request("UPDATE day_ranking SET proID = \""+program.uid+"\" , tmpPro = \""+program.uid+"\" WHERE tmpPro = '"+tmpID+"';");
-                cnx.request("UPDATE tagmap SET projectID = \""+program.uid+"\" WHERE projectID = '"+tmpID+"';");
+                cnx.request("UPDATE tagmap SET projectID = \""+program.uid+"\" , tmpPro = \""+program.uid+"\" WHERE tmpPro = '"+tmpID+"';");
+                cnx.request("UPDATE favorite SET projectID = \""+program.uid+"\" , tmpPro = \""+program.uid+"\" WHERE tmpPro = '"+tmpID+"';");
 			} else {
 				cnx.request("UPDATE project SET tmpPro = \""+program.uid+"\",modified = \""+Date.now().toString()+"\" WHERE ownerUserID = '"+userID+"' AND tmpPro = '"+tmpID+"';");
-				cnx.request("UPDATE day_ranking SET tmpPro = \""+program.uid+"\" WHERE tmpPro = '"+tmpID+"';");
+				cnx.request("UPDATE day_ranking SET tmpPro = \"" + program.uid + "\" WHERE tmpPro = '" + tmpID + "';");
+				cnx.request("UPDATE tagmap SET tmpPro = \"" + program.uid + "\" WHERE tmpPro = '" + tmpID + "';");
+				cnx.request("UPDATE favorite SET tmpPro = \"" + program.uid + "\" WHERE tmpPro = '" + tmpID + "';");
+				
 				//未ログイン状態の場合
 				if (userID == null) {
 					html.body.push("<font size=\"5\" color=\"#FF6600\">警告:未ログイン状態では現在のコードは保存されません。</font>");

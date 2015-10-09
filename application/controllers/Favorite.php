@@ -7,9 +7,16 @@ class Favorite extends CI_Controller {
 
     }
 
-    public function regist_favorite($projectID){
+    public function regist_favorite($projectID) {
+		//プロジェクトテーブルからtmpIDの情報を取得
+		$this->load->model('Model_project');
+		$result = $this->Model_project->getOneProject($projectID);
+		foreach ($result as $row) {
+			$tmpPro = $row->tmpPro;
+		}
+		
         $this->load->model('Model_favorite');
-        $this->Model_favorite->favorite($this->session->userdata('userID'), $projectID);
+        $this->Model_favorite->favorite($this->session->userdata('userID'), $projectID,$tmpPro);
         redirect($_SERVER['HTTP_REFERER']);
     }
 
