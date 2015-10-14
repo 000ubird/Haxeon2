@@ -395,6 +395,7 @@ class Profile extends CI_Controller {
 
             //画像のリサイズ
             $config = array(
+                'image_library' => 'gd2',
                 'source_image' => $data['full_path'],
                 'create_thumb' => FALSE,
                 'maintain_ratio' => FALSE,
