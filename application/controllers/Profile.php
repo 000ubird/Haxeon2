@@ -296,7 +296,11 @@ class Profile extends CI_Controller {
 
     //プロフィール編集ページを表示
     public function profilesettings($userID){
+        $this->load->model("Model_users");
+        $userData = $this->Model_users->getUserData($userID);
+
         $data['userID'] = $userID;
+        $data['user'] = $userData;
         $data['error'] = '';
         $this->load->view('header');
         $this->load->view('profilesettings',$data);
@@ -387,6 +391,7 @@ class Profile extends CI_Controller {
         }else{
 //            $data = array('upload_data' => $this->upload->data());
             //データベースに反映
+            $this->load->model('Model_users');
             $this->load->model('Model_users');
             $data = $this->upload->data();
 

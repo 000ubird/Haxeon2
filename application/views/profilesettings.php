@@ -11,71 +11,97 @@
 
 <div id="common" class="col s12">
     <?php
+
+    $uname = "";
+    $url = "";
+    $message = "";
+
+    foreach($user as $row){
+        $uname = $row->userName;
+        $url = $row->userURL;
+        $message = $row->userProfile;
+    }
+
     echo form_open('profile/validation_profile/'.$userID);
-?>
-    <div class="row">
-    <div class="input-field col s12">
-    <input name="userName" type="text">
-    <label for="userName">userName</label>
-    </div>
-    <?php
+
+    echo '<div class="row">';
+    echo '<div class="input-field col s12">';
+    echo '<input name="userName" type="text" value="'.$uname.'">';
+    echo '<label for="userName">userName</label>';
+    echo '</div>';
+
     echo form_error('userName');
-    ?>
-    </div>
 
-    <div class="row">
-        <div class="input-field col s12">
-            <input name="url" type="text">
-            <label for="url">URL</label>
-        </div>
-        <?php
+    echo '</div>';
+
+    echo '<div class="row">';
+    echo '    <div class="input-field col s12">';
+    echo '        <input name="url" type="text" value="'.$url.'">';
+    echo '        <label for="url">URL</label>';
+    echo '    </div>';
+
         echo form_error('url');
-        ?>
-    </div>
 
-<!--    メッセージ文-->
-    <div class="row">
-    <div class="input-field col s12">
-        <textarea name="profile" class="materialize-textarea" maxlength="140"></textarea>
-<!--    <input name="profile" type="text">-->
-        <label for="profile">message</label>
-    </div>
-    <?php
+    echo '</div>';
+
+    echo '<div class="row">';
+    echo '<div class="input-field col s12">';
+    echo '    <textarea name="profile" class="materialize-textarea" maxlength="140" placeholder="'.$message.'"></textarea>';
+    echo '    <label for="profile">message</label>';
+    echo '</div>';
+
     echo form_error('profile');
-    ?>
-    </div>
 
-    <div class="row">
-    <button class="btn waves-effect waves-light orange darken-4 col s3 offset-s9" type="submit" name="action">Change
-    <i class="material-icons">open_in_new</i>
-    </button>
-    </div>
+    echo '</div>';
 
-    <?php
+    echo '<div class="row">';
+    echo '<button class="btn waves-effect waves-light orange darken-4 col s3 offset-s9" type="submit" name="action">Change';
+    echo '<i class="material-icons">open_in_new</i>';
+    echo '</button>';
+    echo '</div>';
+
+
     echo form_close();
-    ?>
 
-    <br />
-    <hr />
 
-    <?php
+    echo '<br />';
+    echo '<hr />';
+
+
     echo form_open_multipart('profile/icon_upload/'.$userID);
     ?>
 <!-- アイコン-->
-    <form action="#">
-    <div class="file-field input-field">
-    <div class="btn">
-    <span>icon</span>
-    <input type="file" name="userfile"/>
+    <br />
+    <div class="row">
+        <div class="col s3">
+            <?php
+                $iconurl = "";
+                foreach ($user as $row) {
+                    $iconurl = $row->userIcon;
+                }
+
+            echo '<img src="'.$iconurl.'" width="100" height="100">';
+             ?>
+        </div>
+        <div class="col s9">
+            <form action="#">
+            <div class="file-field input-field">
+            <div class="btn">
+            <span>icon</span>
+            <input type="file" name="userfile"/>
+            </div>
+            <div class="file-path-wrapper">
+            <input class="file-path validate" type="text" />
+            </div>
+            </div>
+            <div class="row" align="right">
+            <button class="btn waves-effect" type="submit" value="upload">upload
+            <?php
+            echo form_close();
+            ?>
+            </div>
+        </div>
     </div>
-    <div class="file-path-wrapper">
-    <input class="file-path validate" type="text" />
-    </div>
-    </div>
-    <input type="submit" value="upload" />
-    <?php
-    echo form_close();
-    ?>
 </div>
 
 <div id="important" class="col s12">
