@@ -347,12 +347,12 @@ class Profile extends CI_Controller {
 
     //空白文字があったらfalseになるコールバック
     public function space_check($str){
-        $pattern = "^[a-zA-Z0-9_-]+$";
-        if(mb_ereg_match($pattern, $str)){
+        $pattern = ".*[\\s 　]";
+        if(!mb_ereg_match($pattern, $str)){
             return true;
         }else{
             if(count($str) == 0) return true;
-            $this->form_validation->set_message('space_check','[a-zA-Z0-9_-]です');
+            $this->form_validation->set_message('space_check','スペースは無効です。日本語と[a-zA-Z0-9_-]が有効です');
             return false;
         }
     }
