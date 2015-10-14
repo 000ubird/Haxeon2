@@ -409,10 +409,8 @@ class Profile extends CI_Controller {
 
             if($this->image_lib->resize()){
 //                print_r("success");
-                print_r(gd_info());
             }else{
 //                echo $this->image_lib->display_errors();
-                print_r(gd_info());
 //                print_r("failed");
             }
 
