@@ -332,7 +332,6 @@ class Profile extends CI_Controller {
             //userNameが入力されていた場合、userIDの使用されているすべてのテーブルを書き換える
             //更新
             $username = $_POST['userName'];
-            print_r(strlen($username));
             if(strlen($username) == 0){
                 $this->Model_users->updateUserName($userID, $userID);
             }else {
