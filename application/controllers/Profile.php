@@ -313,7 +313,7 @@ class Profile extends CI_Controller {
         $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
 
         //検証ルールの設定
-        $this->form_validation->set_rules("userName", "ユーザー名", "min_length[1]|callback_space_check");
+        $this->form_validation->set_rules("userName", "ユーザー名", "min_length[0]|callback_space_check");
         $this->form_validation->set_rules("password", "パスワード", "alpha_numeric|min_length[4]");
         $this->form_validation->set_rules("email", "メールアドレス", "valid_email|callback_mail_check");
         $this->form_validation->set_rules("profile", "メッセージ", "max_length[140]");
@@ -330,9 +330,13 @@ class Profile extends CI_Controller {
             $this->load->model('Model_users');
 
             //userNameが入力されていた場合、userIDの使用されているすべてのテーブルを書き換える
-            if($_POST['userName']){
-                //更新
-                $this->Model_users->updateUserName($_POST['userName'], $userID);
+            //更新
+            $username = $_POST['userName'];
+            print_r(strlen($username));
+            if(strlen($username) == 0){
+                $this->Model_users->updateUserName($userID, $userID);
+            }else {
+                $this->Model_users->updateUserName($username, $userID);
             }
 
             if($_POST['url']){
