@@ -372,7 +372,7 @@ class Profile extends CI_Controller {
     //画像アップロードメソッド
     public function icon_upload($userID){
         $config['upload_path'] = './img/icon/';
-        $config['allowed_types'] = 'jpg|png';
+        $config['allowed_types'] = 'jpg|jpeg|png';
         //ファイル名の指定
         $config['file_name'] = $userID;
         $config['overwrite'] = TRUE;
@@ -404,12 +404,15 @@ class Profile extends CI_Controller {
                 'quality' => 100
             );
 
-            $this->load->library("image_lib", $config);
+            $this->load->library("image_lib");
+            $this->image_lib->initialize($config);
 
             if($this->image_lib->resize()){
 //                print_r("success");
+                print_r(gd_info());
             }else{
-                echo $this->image_lib->display_errors();
+//                echo $this->image_lib->display_errors();
+                print_r(gd_info());
 //                print_r("failed");
             }
 
