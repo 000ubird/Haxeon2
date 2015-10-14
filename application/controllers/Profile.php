@@ -296,7 +296,11 @@ class Profile extends CI_Controller {
 
     //プロフィール編集ページを表示
     public function profilesettings($userID){
+        $this->load->model("Model_users");
+        $userData = $this->Model_users->getUserData($userID);
+
         $data['userID'] = $userID;
+        $data['user'] = $userData;
         $data['error'] = '';
         $this->load->view('header');
         $this->load->view('profilesettings',$data);
@@ -347,12 +351,12 @@ class Profile extends CI_Controller {
 
     //空白文字があったらfalseになるコールバック
     public function space_check($str){
-        $pattern = "^[a-zA-Z0-9_-]+$";
-        if(mb_ereg_match($pattern, $str)){
+        $pattern = ".*[\\s 　]";
+        if(!mb_ereg_match($pattern, $str)){
             return true;
         }else{
             if(count($str) == 0) return true;
-            $this->form_validation->set_message('space_check','[a-zA-Z0-9_-]です');
+            $this->form_validation->set_message('space_check','スペースは無効です。日本語と[a-zA-Z0-9_-]が有効です');
             return false;
         }
     }
@@ -372,7 +376,7 @@ class Profile extends CI_Controller {
     //画像アップロードメソッド
     public function icon_upload($userID){
         $config['upload_path'] = './img/icon/';
-        $config['allowed_types'] = 'jpg|png';
+        $config['allowed_types'] = 'jpg|jpeg|png';
         //ファイル名の指定
         $config['file_name'] = $userID;
         $config['overwrite'] = TRUE;
@@ -388,6 +392,7 @@ class Profile extends CI_Controller {
 //            $data = array('upload_data' => $this->upload->data());
             //データベースに反映
             $this->load->model('Model_users');
+            $this->load->model('Model_users');
             $data = $this->upload->data();
 
             $iconURL = base_url().'img/icon/'.$data['file_name'];
@@ -395,6 +400,7 @@ class Profile extends CI_Controller {
 
             //画像のリサイズ
             $config = array(
+                'image_library' => 'gd2',
                 'source_image' => $data['full_path'],
                 'create_thumb' => FALSE,
                 'maintain_ratio' => FALSE,
@@ -403,12 +409,13 @@ class Profile extends CI_Controller {
                 'quality' => 100
             );
 
-            $this->load->library("image_lib", $config);
+            $this->load->library("image_lib");
+            $this->image_lib->initialize($config);
 
             if($this->image_lib->resize()){
 //                print_r("success");
             }else{
-                echo $this->image_lib->display_errors();
+//                echo $this->image_lib->display_errors();
 //                print_r("failed");
             }
 
