@@ -103,8 +103,16 @@ class Profile extends CI_Controller {
 
                 //idを取得
                 $tagid = $this->Model_project->getTagID($tag);
-                //マップに登録
-                $this->Model_project->registTagMap($pid, $tagid);
+                
+				//プロジェクトテーブルからtmpIDの情報を取得
+				$this->load->model('Model_project');
+				$result = $this->Model_project->getOneProject($pid);
+				foreach($result as $row) {
+					$tmpPro = $row->tmpPro;
+				}
+				
+				//マップに登録
+                $this->Model_project->registTagMap($pid, $tagid,$tmpPro);
                 $this->projectsettings($pid);
 
         }else{

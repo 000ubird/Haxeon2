@@ -96,10 +96,11 @@ class Model_project extends CI_Model{
     }
 
     //tagmapテーブルに登録する
-    public function registTagMap($projectID, $tagID){
+    public function registTagMap($projectID, $tagID, $tmpPro){
         $array = array(
             'projectID' => $projectID,
-            'tagID' => $tagID
+            'tagID' => $tagID,
+			'tmpPro' => $tmpPro
         );
 
         $this->db->insert('tagmap', $array);
