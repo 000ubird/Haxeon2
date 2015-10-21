@@ -296,7 +296,11 @@ class Profile extends CI_Controller {
 
     //プロフィール編集ページを表示
     public function profilesettings($userID){
+        $this->load->model("Model_users");
+        $userData = $this->Model_users->getUserData($userID);
+
         $data['userID'] = $userID;
+        $data['user'] = $userData;
         $data['error'] = '';
         $this->load->view('header');
         $this->load->view('profilesettings',$data);
@@ -309,7 +313,7 @@ class Profile extends CI_Controller {
         $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
 
         //検証ルールの設定
-        $this->form_validation->set_rules("userName", "ユーザー名", "min_length[1]|callback_space_check");
+        $this->form_validation->set_rules("userName", "ユーザー名", "min_length[0]|callback_space_check");
         $this->form_validation->set_rules("password", "パスワード", "alpha_numeric|min_length[4]");
         $this->form_validation->set_rules("email", "メールアドレス", "valid_email|callback_mail_check");
         $this->form_validation->set_rules("profile", "メッセージ", "max_length[140]");
@@ -326,16 +330,22 @@ class Profile extends CI_Controller {
             $this->load->model('Model_users');
 
             //userNameが入力されていた場合、userIDの使用されているすべてのテーブルを書き換える
-            if($_POST['userName']){
-                //更新
-                $this->Model_users->updateUserName($_POST['userName'], $userID);
+            //更新
+
+            //ユーザー名は入力がなければidと同じにするように
+            $username = $_POST['userName'];
+            if(strlen($username) == 0){
+                $this->Model_users->updateUserName($userID, $userID);
+            }else {
+                $this->Model_users->updateUserName($username, $userID);
             }
 
+            //入力されていたら更新
             if($_POST['url']){
                 $this->Model_users->updateUserURL($_POST['url'], $userID);
             }
 
-            //メッセージの更新
+            //入力されていたら更新
             if($_POST['profile']){
                 $this->Model_users->updateUserProfile($_POST['profile'], $userID);
             }
@@ -347,12 +357,12 @@ class Profile extends CI_Controller {
 
     //空白文字があったらfalseになるコールバック
     public function space_check($str){
-        $pattern = "^[a-zA-Z0-9_-]+$";
-        if(mb_ereg_match($pattern, $str)){
+        $pattern = ".*[\\s 　]";
+        if(!mb_ereg_match($pattern, $str)){
             return true;
         }else{
             if(count($str) == 0) return true;
-            $this->form_validation->set_message('space_check','[a-zA-Z0-9_-]です');
+            $this->form_validation->set_message('space_check','スペースは無効です。日本語と[a-zA-Z0-9_-]が有効です');
             return false;
         }
     }
@@ -372,7 +382,7 @@ class Profile extends CI_Controller {
     //画像アップロードメソッド
     public function icon_upload($userID){
         $config['upload_path'] = './img/icon/';
-        $config['allowed_types'] = 'jpg|png';
+        $config['allowed_types'] = 'jpg|jpeg|png';
         //ファイル名の指定
         $config['file_name'] = $userID;
         $config['overwrite'] = TRUE;
@@ -386,11 +396,34 @@ class Profile extends CI_Controller {
             $this->profilesettings($userID);
         }else{
 //            $data = array('upload_data' => $this->upload->data());
+            //データベースに反映
+            $this->load->model('Model_users');
             $this->load->model('Model_users');
             $data = $this->upload->data();
 
             $iconURL = base_url().'img/icon/'.$data['file_name'];
             $this->Model_users->updateIconURL($iconURL, $this->session->userdata('userID'));
+
+            //画像のリサイズ
+            $config = array(
+                'image_library' => 'gd2',
+                'source_image' => $data['full_path'],
+                'create_thumb' => FALSE,
+                'maintain_ratio' => FALSE,
+                'width' => 300,
+                'height' => 300,
+                'quality' => 100
+            );
+
+            $this->load->library("image_lib");
+            $this->image_lib->initialize($config);
+
+            if($this->image_lib->resize()){
+//                print_r("success");
+            }else{
+//                echo $this->image_lib->display_errors();
+//                print_r("failed");
+            }
 
             $this->information($userID);
         }
