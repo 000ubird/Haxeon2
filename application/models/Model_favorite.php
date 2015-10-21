@@ -3,10 +3,11 @@
 class Model_favorite extends CI_Model {
 
     //favoriteテーブルにuserIDとprojectIDを登録する
-    public function favorite($userID, $projectID){
+    public function favorite($userID, $projectID, $tmpPro){
         $data = array(
             'userID' => $userID,
-            'projectID' => $projectID
+            'projectID' => $projectID,
+			'tmpPro' => $tmpPro
         );
 
         $this->db->insert('favorite', $data);

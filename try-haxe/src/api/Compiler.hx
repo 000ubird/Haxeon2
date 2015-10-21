@@ -375,7 +375,7 @@ class Compiler {
 		html.body.push("<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>");
 		
 		//プロジェクトが登録されているかを確認
-		var rset = cnx.request("SELECT projectID FROM project where (tmpPro = '" + tmpID + "' AND ownerUserID = '" + userID + "') OR (ownerUserID = '" + userID + "' AND projectID = '"+tmpID+"');");
+		var rset = cnx.request("SELECT * FROM project where (tmpPro = '" + tmpID + "' AND ownerUserID = '" + userID + "') OR (ownerUserID = '" + userID + "' AND projectID = '"+tmpID+"');");
 		
 		//プロジェクトが登録されていない場合
 		if (rset.length == 0) {
@@ -403,7 +403,7 @@ class Compiler {
 			}
 
 			//フォークの場合は元のプロジェクト所持者のフォーク数を1上げる
-			//html.body.push("originpro : "+originProjectID+" ,originuserID : "+originUserID+", currentuser : "+userID);
+			html.body.push("originpro : "+originProjectID+" ,originuserID : "+originUserID+", currentuser : "+userID);
 			if (userID != originUserID && userID != null) {
 				var fork = 0;
 				var rset2 = cnx.request("SELECT * FROM project where projectID = '"+tmpID+"';");
@@ -415,17 +415,41 @@ class Compiler {
 		}
 		//プロジェクトIDを更新
 		else {
+			var proID = "";
+			var tmpPro2 = "";
 			//html.body.push("<br><H3>プロジェクトIDあり</H3>");
-			//for (row in rset) {
-			//	html.body.push("プロジェクトID : "+row.projectID+" , 所有者 : "+userID+" , プロジェクト名 : "+projectName);
-			//}
+			for (row in rset) {
+				//データベース上のIDを取得
+				proID = row.projectID;
+				tmpPro2 = row.tmpPro;
+				//html.body.push("プロジェクトID : "+row.projectID+row.tmpPro+" , 所有者 : "+userID+" , プロジェクト名 : "+projectName);
+			}
 			if (program.save == "SAVE" && userID != null) {
-				cnx.request("UPDATE project SET tmpPro = \""+program.uid+"\",modified = \""+Date.now().toString()+"\" , projectID = \""+program.uid+"\" WHERE ownerUserID = '"+userID+"' AND tmpPro = '"+tmpID+"';");
-				cnx.request("UPDATE day_ranking SET proID = \""+program.uid+"\" , tmpPro = \""+program.uid+"\" WHERE tmpPro = '"+tmpID+"';");
-                cnx.request("UPDATE tagmap SET projectID = \""+program.uid+"\" WHERE projectID = '"+tmpID+"';");
+				//未保存状態で終了したプロジェクトを読み込んだ場合
+				if (proID != tmpPro2) {
+					cnx.request("UPDATE project SET tmpPro = \""+program.uid+"\",modified = \""+Date.now().toString()+"\" , projectID = \""+program.uid+"\" WHERE ownerUserID = '"+userID+"' AND projectID = '"+proID+"';");
+					cnx.request("UPDATE day_ranking SET proID = \""+program.uid+"\" , tmpPro = \""+program.uid+"\" WHERE proID = '"+proID+"';");
+					cnx.request("UPDATE tagmap SET projectID = \""+program.uid+"\" , tmpPro = \""+program.uid+"\" WHERE projectID = '"+proID+"';");
+					cnx.request("UPDATE favorite SET projectID = \"" + program.uid + "\" , tmpPro = \"" + program.uid + "\" WHERE projectID = '" + proID + "';");
+				} else {
+					cnx.request("UPDATE project SET tmpPro = \""+program.uid+"\",modified = \""+Date.now().toString()+"\" , projectID = \""+program.uid+"\" WHERE ownerUserID = '"+userID+"' AND tmpPro = '"+tmpID+"';");
+					cnx.request("UPDATE day_ranking SET proID = \""+program.uid+"\" , tmpPro = \""+program.uid+"\" WHERE tmpPro = '"+tmpID+"';");
+					cnx.request("UPDATE tagmap SET projectID = \""+program.uid+"\" , tmpPro = \""+program.uid+"\" WHERE tmpPro = '"+tmpID+"';");
+					cnx.request("UPDATE favorite SET projectID = \"" + program.uid + "\" , tmpPro = \"" + program.uid + "\" WHERE tmpPro = '" + tmpID + "';");
+				}
 			} else {
-				cnx.request("UPDATE project SET tmpPro = \""+program.uid+"\",modified = \""+Date.now().toString()+"\" WHERE ownerUserID = '"+userID+"' AND tmpPro = '"+tmpID+"';");
-				cnx.request("UPDATE day_ranking SET tmpPro = \""+program.uid+"\" WHERE tmpPro = '"+tmpID+"';");
+				if (proID != tmpPro2) {
+					cnx.request("UPDATE project SET tmpPro = \""+program.uid+"\",modified = \""+Date.now().toString()+"\" WHERE ownerUserID = '"+userID+"' AND projectID = '"+proID+"';");
+					cnx.request("UPDATE day_ranking SET tmpPro = \"" + program.uid + "\" WHERE proID = '" + proID + "';");
+					cnx.request("UPDATE tagmap SET tmpPro = \"" + program.uid + "\" WHERE projectID = '" + proID + "';");
+					cnx.request("UPDATE favorite SET tmpPro = \"" + program.uid + "\" WHERE projectID = '" + proID + "';");
+				} else {
+					cnx.request("UPDATE project SET tmpPro = \""+program.uid+"\",modified = \""+Date.now().toString()+"\" WHERE ownerUserID = '"+userID+"' AND tmpPro = '"+tmpID+"';");
+					cnx.request("UPDATE day_ranking SET tmpPro = \"" + program.uid + "\" WHERE tmpPro = '" + tmpID + "';");
+					cnx.request("UPDATE tagmap SET tmpPro = \"" + program.uid + "\" WHERE tmpPro = '" + tmpID + "';");
+					cnx.request("UPDATE favorite SET tmpPro = \"" + program.uid + "\" WHERE tmpPro = '" + tmpID + "';");
+				}
+				
 				//未ログイン状態の場合
 				if (userID == null) {
 					html.body.push("<font size=\"5\" color=\"#FF6600\">警告:未ログイン状態では現在のコードは保存されません。</font>");
