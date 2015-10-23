@@ -6,7 +6,7 @@ define("FAVORITES", "favorites");
 define("FOLLOW", "follow");
 define("FOLLOWER", "follower");
 define("MAX_PROJECTS", 4);
-define("MAX_FOLLOW", 10);
+define("MAX_FOLLOW", 12);
 define("MAX_FAVORITE", 4);
 
 foreach($user as $row){
@@ -55,9 +55,9 @@ if($isown || !$this->session->userdata('userID')){
     //自分自身なので何も表示させない
 }else{
     if ($isfollow) {
-        echo '<a href="' . base_url() . 'follow/accountunfollow/' . $uid . '"><button class="follow btn btn-large waves-effect waves-light cyan darken-4 z-depth-2 col s2 offset-s10">unfollow</button></a>';
+        echo '<a href="' . base_url() . 'follow/accountunfollow/' . $uid . '"><button class="follow btn btn-large waves-effect waves-light cyan darken-4 z-depth-2 col s2 offset-s10">フォロー解除</button></a>';
     } else {
-        echo '<a href="' . base_url() . 'follow/accountfollow/' . $uid . '"><button class="follow btn btn-large waves-effect waves-light orange darken-4 z-depth-2 col s2 offset-s10">follow</button></a>';
+        echo '<a href="' . base_url() . 'follow/accountfollow/' . $uid . '"><button class="follow btn btn-large waves-effect waves-light orange darken-4 z-depth-2 col s2 offset-s10">フォロー</button></a>';
     }
 }
 
@@ -85,10 +85,10 @@ echo '    <div class="row">';
             echo '                <span class="card-title">' . $project->projectName . '</span>';
             echo '                <p>' . $project->projectID . ', pv:' . $project->pv . '</p>';
             echo '            </div>';
-            echo '            <div class="card-action">';
+            echo '        <div class="card-action">';
             echo '              <a href="';
             echo base_url() . 'profile/projectsettings/' . $project->projectID . '"><i class="material-icons">settings</i></a>';
-            echo '             </div>';
+            echo '    </div>';
             echo '        </div>';
             echo '    </div>';
             $num += 1;
@@ -112,10 +112,19 @@ echo '<hr>';
         //フォローが新しい人ほど先にくるように降順ソート
         krsort($follow);
         $num = 0;
+        $this->load->model('Model_users');
         foreach($follow as $f){
             if($category == "") if($num >= MAX_FOLLOW) break;
-            echo($f->userFollowingID);
-            echo('<br>');
+            $id = $f->userFollowingID;
+            $icon = $this->Model_users->get_icon_url($id);
+            echo '<div class="col s3">';
+            echo '<a href="'.base_url().'profile/information/'.$id.'">';
+            echo '<div class="card-panel waves-effect waves-light z-depth-1">';
+            echo '<img src="'.$icon.'" width="30%" height="auto">';
+            echo '<span style="text-align: center"> '.$id.'</span>';
+            echo '</div>';
+            echo '</a>';
+            echo '</div>';
             $num += 1;
         }
         }else{
@@ -137,8 +146,16 @@ echo '<hr>';
             //フォローが新しい人ほど先にくるように降順ソート
             krsort($follower);
                 foreach($follower as $f){
-                    echo($f->userID);
-                    echo('<br>');
+                    $id = $f->userID;
+                    $icon = $this->Model_users->get_icon_url($id);
+                    echo '<div class="col s3">';
+                    echo '<a href="'.base_url().'profile/information/'.$id.'">';
+                    echo '<div class="card-panel waves-effect waves-light z-depth-1">';
+                    echo '<img src="'.$icon.'" width="30%" height="auto">';
+                    echo '<span style="text-align: center"> '.$id.'</span>';
+                    echo '</div>';
+                    echo '</a>';
+                    echo '</div>';
                 }
             }else{
                 echo '<p>you have no follower.</p>';
