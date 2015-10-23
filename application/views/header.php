@@ -25,6 +25,7 @@
             <ul class="right hide-on-med-and-down">
 
                 <?php if($this->session->userdata('userID')) {
+					echo '<li><a href="'.base_url().'search">Search</a></li>';
                     echo '<li><a href="'.base_url().'createproject">Create Code</a></li>';
                     echo '<li><a href="'.base_url().'ranking/index/day/pv/30/0">Ranking</a></li>';
                     echo '<li><a href="'.base_url().'profile/information/'.$this->session->userdata('userID').'">Profile</a></li>';
@@ -41,6 +42,7 @@
             <ul class="side-nav" id="mobile-demo">
 
                 <?php if($this->session->userdata('userID')) {
+					echo '<li><a href="'.base_url().'search">Search</a></li>';
                     echo '<li><a href="'.base_url().'createproject">Create Code</a></li>';
                     echo '<li><a href="'.base_url().'ranking/index/day/pv/30/0">Ranking</a></li>';
                     echo '<li><a href="'.base_url().'profile/information/'.$this->session->userdata('userID').'">Profile</a></li>';
