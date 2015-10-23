@@ -175,7 +175,8 @@ class Model_project extends CI_Model{
 		$query = $this->db->get();
 		
 		//デバッグ
-		echo $this->db->last_query()."<br/><br/>";
+		//echo $this->db->last_query()."<br/><br/>";
+		
 		return $query->result_array();
 	}
 	

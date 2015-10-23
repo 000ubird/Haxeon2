@@ -26,16 +26,11 @@ class Search extends CI_Controller {
 		
 		//データベースから検索
 		$this->load->model("Model_project");
-		$result = $this->Model_project->searchProject($str,$searchArray);
-		
-		//デバッグ
-		foreach($result as $row){
-			echo $row['projectID'].$row['ownerUserID']."<br>";
-		}
+		$result['result'] = $this->Model_project->searchProject($str,$searchArray);
 		
 		//Viewを表示
 		$this->load->view('header');
-		//$this->load->view('search_result');
+		$this->load->view('search_result',$result);
 		$this->load->view('footer');
 	}
 }
