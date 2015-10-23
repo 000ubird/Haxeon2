@@ -146,8 +146,16 @@ echo '<hr>';
             //フォローが新しい人ほど先にくるように降順ソート
             krsort($follower);
                 foreach($follower as $f){
-                    echo($f->userID);
-                    echo('<br>');
+                    $id = $f->userID;
+                    $icon = $this->Model_users->get_icon_url($id);
+                    echo '<div class="col s3">';
+                    echo '<a href="'.base_url().'profile/information/'.$id.'">';
+                    echo '<div class="card-panel waves-effect waves-light z-depth-1">';
+                    echo '<img src="'.$icon.'" width="30%" height="auto">';
+                    echo '<span style="text-align: center"> '.$id.'</span>';
+                    echo '</div>';
+                    echo '</a>';
+                    echo '</div>';
                 }
             }else{
                 echo '<p>you have no follower.</p>';
