@@ -49,7 +49,7 @@ class Profile extends CI_Controller {
             $id = $f->projectID;
             array_push($favorite_projects, $this->Model_project->getOneProject($id));
         }
-        $data['favorites'] = $favorite_list;
+        $data['favorites'] = $favorite_projects;
 
         return $data;
     }
@@ -103,14 +103,14 @@ class Profile extends CI_Controller {
 
                 //idを取得
                 $tagid = $this->Model_project->getTagID($tag);
-                
+
 				//プロジェクトテーブルからtmpIDの情報を取得
 				$this->load->model('Model_project');
 				$result = $this->Model_project->getOneProject($pid);
 				foreach($result as $row) {
 					$tmpPro = $row->tmpPro;
 				}
-				
+
 				//マップに登録
                 $this->Model_project->registTagMap($pid, $tagid,$tmpPro);
                 $this->projectsettings($pid);
@@ -394,13 +394,15 @@ class Profile extends CI_Controller {
         //ファイル名の指定
         $config['file_name'] = $userID;
         $config['overwrite'] = TRUE;
-        $config['max_size'] = 2000;
+        $config['max_size'] = 2048;
 
+        //アップロードライブラリ
         $this->load->library('upload',$config);
 
+        //アップロードを実行した結果
         if(!$this->upload->do_upload()){
 //            $error = array('userID' => $userID, 'error' => $this->upload->display_errors());
-
+            echo $this->upload->display_errors();
             $this->profilesettings($userID);
         }else{
 //            $data = array('upload_data' => $this->upload->data());

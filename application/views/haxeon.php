@@ -16,12 +16,12 @@ foreach($projects as $project) {
 	echo '<div class="card">';
 
 	//1,2,3位のプロジェクトには特別な画像を表示する
-	echo '<div class="card-image waves-effect waves-block waves-light">';
-		if ($i == 0 && $cur_page == 0) echo '<img class="activator" src="'.base_url().'img/1st_pro.jpg">';
-		else if ($i == 1 && $cur_page == 0) echo '<img class="activator" src="'.base_url().'img/2nd_pro.jpg">';
-		else if ($i == 2 && $cur_page == 0) echo '<img class="activator" src="'.base_url().'img/3rd_pro.jpg">';
-		else echo '<img class="activator" src="'.base_url().'img/project.jpg">';
-	echo '</div>';
+    echo '<div class="card-image waves-effect waves-block waves-light">';
+    if ($i == 0 && $cur_page == 0) echo '<img class="activator" src="'.base_url().'img/1st_pro.jpg">';
+    else if ($i == 1 && $cur_page == 0) echo '<img class="activator" src="'.base_url().'img/2nd_pro.jpg">';
+    else if ($i == 2 && $cur_page == 0) echo '<img class="activator" src="'.base_url().'img/3rd_pro.jpg">';
+    else echo '<img class="activator" src="'.base_url().'img/project.jpg">';
+    echo '</div>';
 
 	echo '<div class="card-content">';
 	echo '<span class="card-title activator black-text text-darken-4">'.$project[0]->projectName.'<i class="material-icons right">more_vert</i></span>';
