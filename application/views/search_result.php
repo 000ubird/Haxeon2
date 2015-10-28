@@ -5,7 +5,7 @@
 <div class="row">
 	<form class="col s12">
 		<div class="input-field col s3">
-			<input id="search" type="text" class="validate" name="search">
+			<input id="search" type="text" value= <?php echo $str;?> class="validate" name="search">
 			<label for="search">Search</label>
 		</div>
 		
@@ -17,16 +17,16 @@
 		
 		<div class="input-field col s6">
 		<p>検索対象</p>
-			<input type="checkbox" id="tag" value="0" name="chk[0]"/>
+			<input type="checkbox" id="tag" value="0" name="chk[0]" <?php if($chkbox[0]) echo 'checked="checked"';?> />
 			<label for="tag">タグ</label>
 
-			<input type="checkbox" id="projectName" value="1" name="chk[1]" checked="checked"/>
+			<input type="checkbox" id="projectName" value="1" name="chk[1]" <?php if($chkbox[1]) echo 'checked="checked"';?> />
 			<label for="projectName">プロジェクト名</label>
 
-			<input type="checkbox" id="projectID" value="2" name="chk[2]" />
+			<input type="checkbox" id="projectID" value="2" name="chk[2]" <?php if($chkbox[2]) echo 'checked="checked"';?> />
 			<label for="projectID">プロジェクトID</label>
 
-			<input type="checkbox" id="accountID" value="3" name="chk[3]" />
+			<input type="checkbox" id="accountID" value="3" name="chk[3]" <?php if($chkbox[3]) echo 'checked="checked"';?> />
 			<label for="accountID">アカウントID</label>
 		</div>
 	</form>

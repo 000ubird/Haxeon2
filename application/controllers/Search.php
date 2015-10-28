@@ -27,6 +27,8 @@ class Search extends CI_Controller {
 		//データベースから検索
 		$this->load->model("Model_project");
 		$result['result'] = $this->Model_project->searchProject($str,$searchArray);
+		$result['str'] = $str;
+		$result['chkbox'] = $searchArray;
 		
 		//Viewを表示
 		$this->load->view('header');
