@@ -78,6 +78,7 @@ echo '    <div class="row">';
         $num = 0;
         foreach ($projects as $project) {
             if($category == "") if($num >= MAX_PROJECTS) break;
+            echo '<a href="'.base_url().'try-haxe/index.html#'.$project->projectID.'">';
             echo '    <div class="col s4">';
             echo '        <div class="card">';
 
@@ -86,8 +87,9 @@ echo '    <div class="row">';
             echo '</div>';
 
             echo '        <div class="card-content">';
-            echo '            <span class="card-title activator black-text text-darken-4">' . $project->projectName . '<i class="material-icons right">more_vert</i></span>';
-            echo '            <p>User : <a href="'.base_url().'profile/information/'.$project->ownerUserID.'">@' . $project->ownerUserID .'</p>';
+            echo '            <span class="card-title activator black-text text-darken-4">' . $project->projectName . '</span>';
+            echo '</a>';
+            echo '            <p>User : <a href="'.base_url().'profile/information/'.$project->ownerUserID.'">@' . $project->ownerUserID .'</a></p>';
             echo '            <p>PV : '.$project->pv.'</p>';
             echo '            <p>Fork : '.$project->fork.'</p>';
             echo '            <p><a href="'.base_url().'try-haxe/index.html#'.$project->projectID.'">Edit Code</a></p>';
@@ -190,7 +192,10 @@ echo '<hr>';
             krsort($favorites);
             foreach ($favorites as $favorite) {
                 if($category == "") if($num >= MAX_FAVORITE) break;
+                echo '<a href="'.base_url().'try-haxe/index.html#'.$favorite[0]->projectID.'">';
+
                 echo '    <div class="col s4">';
+
                 echo '        <div class="card">';
 
                 echo '<div class="card-image waves-effect waves-block waves-light">';
@@ -198,18 +203,12 @@ echo '<hr>';
                 echo '</div>';
 
                 echo '        <div class="card-content">';
-                echo '            <span class="card-title activator black-text text-darken-4">' . $favorite[0]->projectName . '<i class="material-icons right">more_vert</i></span>';
-                echo '            <p>User : <a href="'.base_url().'profile/information/'.$favorite[0]->ownerUserID.'">@' . $favorite[0]->ownerUserID .'</p>';
+                echo '            <span class="card-title activator black-text text-darken-4">' . $favorite[0]->projectName . '</span>';
+                echo '</a>';
+                echo '            <p>User : <a href="'.base_url().'profile/information/'.$favorite[0]->ownerUserID.'">@' . $favorite[0]->ownerUserID .'</a></p>';
                 echo '            <p>PV : '.$favorite[0]->pv.'</p>';
                 echo '            <p>Fork : '.$favorite[0]->fork.'</p>';
                 echo '            <p><a href="'.base_url().'try-haxe/index.html#'.$favorite[0]->projectID.'">Edit Code</a></p>';
-                echo '        </div>';
-
-                echo '        <div class="card-reveal">';
-                echo '            <span class="card-title grey-text text-darken-4">'.$favorite[0]->projectName.'<i class="material-icons right">close</i></span>';
-                echo '            <p>project ID : '.$favorite[0]->projectID.'</p>';
-                echo '            <p>pv : '.$favorite[0]->pv.'</p>';
-                echo '            <p>User : '.$favorite[0]->ownerUserID.'</p>';
                 echo '        </div>';
 
                 echo '        </div>';
