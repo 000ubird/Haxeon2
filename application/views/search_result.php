@@ -5,7 +5,7 @@
 <div class="row">
 	<form class="col s12">
 		<div class="input-field col s3">
-			<input id="search" type="text" value= <?php echo $str;?> class="validate" name="search">
+			<input id="search" type="text" value="<?php echo $str;?>" class="validate" name="search">
 			<label for="search">Search</label>
 			<?php form_error('search'); ?>
 		</div>
