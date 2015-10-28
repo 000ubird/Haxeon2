@@ -165,9 +165,14 @@ class Model_project extends CI_Model{
 		//検索文字列と完全一致するタグを検索し、プロジェクトIDで検索
 		if ($searchFor[0]) {
 			//タグテーブルから条件に一致するプロジェクトIDを取得する
-			$getTagProIDquery = 'projectID = (SELECT projectID from tagmap WHERE tagID = (SELECT id FROM tag where tag = "'.$searchStr.'") )';
-			//プロジェクトIDが取得したIDに一致するものを検索
-			$this->db->or_where($getTagProIDquery);
+			$tagID = $this->Model_project->getTagID($searchStr);
+			$result = $this->Model_project->getProIDfromTagmap($tagID);
+			
+			//取得したプロジェクトIDからクエリ文を生成
+			$this->db->from('project');
+			foreach($result as $id) {
+				$this->db->or_where('projectID', $id['projectID']);
+			}
 		}
 		
 		//検索文字列と部分一致するプロジェクト名を検索
