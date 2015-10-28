@@ -24,7 +24,9 @@ foreach($projects as $project) {
     echo '</div>';
 
 	echo '<div class="card-content">';
-	echo '<span class="card-title activator black-text text-darken-4">'.$project[0]->projectName.'<i class="material-icons right">more_vert</i></span>';
+    echo '<span class="card-title activator black-text text-darken-4">' . $project[0]->projectName;
+    if($project[0]->ownerUserID == $this->session->userdata('userID')) echo '<a href="'.base_url() . 'profile/projectsettings/' . $project[0]->projectID . '"><i class="material-icons">settings</i></a>';
+    echo '</span>';
 	echo '<p>User : <a href="'.base_url().'profile/information/'.$project[0]->ownerUserID.'">@'.$project[0]->ownerUserID.'</p>';
 	echo '<p>PV : '.$project[0]->pv.'</p>';
 	echo '<p>Fork : '.$project[0]->fork.'</p>';

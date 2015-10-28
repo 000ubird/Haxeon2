@@ -87,7 +87,9 @@ echo '    <div class="row">';
             echo '</div>';
 
             echo '        <div class="card-content">';
-            echo '            <span class="card-title activator black-text text-darken-4">' . $project->projectName . '</span>';
+            echo '            <span class="card-title activator black-text text-darken-4">' . $project->projectName;
+            if($project->ownerUserID == $this->session->userdata('userID')) echo '<a href="'.base_url() . 'profile/projectsettings/' . $project->projectID . '"><i class="material-icons">settings</i></a>';
+            echo '</span>';
             echo '</a>';
             echo '            <p>User : <a href="'.base_url().'profile/information/'.$project->ownerUserID.'">@' . $project->ownerUserID .'</a></p>';
             echo '            <p>PV : '.$project->pv.'</p>';
