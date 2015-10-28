@@ -5,7 +5,7 @@ define("PROJECTS", "projects");
 define("FAVORITES", "favorites");
 define("FOLLOW", "follow");
 define("FOLLOWER", "follower");
-define("MAX_PROJECTS", 4);
+define("MAX_PROJECTS", 3);
 define("MAX_FOLLOW", 12);
 define("MAX_FAVORITE", 4);
 
@@ -78,17 +78,28 @@ echo '    <div class="row">';
         $num = 0;
         foreach ($projects as $project) {
             if($category == "") if($num >= MAX_PROJECTS) break;
-            echo '    <div class="col s3">';
-            echo '<a href="' . base_url() . 'try-haxe/index.html#' . $project->projectID . '">';
-            echo '        <div class="card blue-grey lighten-4">';
-            echo '            <div class="card-content">';
-            echo '                <span class="card-title">' . $project->projectName . '</span>';
-            echo '                <p>' . $project->projectID . ', pv:' . $project->pv . '</p>';
-            echo '            </div>';
-            echo '        <div class="card-action">';
-            echo '              <a href="';
-            echo base_url() . 'profile/projectsettings/' . $project->projectID . '"><i class="material-icons">settings</i></a>';
-            echo '    </div>';
+            echo '    <div class="col s4">';
+            echo '        <div class="card">';
+
+            echo '<div class="card-image waves-effect waves-block waves-light">';
+            echo '<img class="activator" src="'.base_url().'img/project.jpg">';
+            echo '</div>';
+
+            echo '        <div class="card-content">';
+            echo '            <span class="card-title activator black-text text-darken-4">' . $project->projectName . '<i class="material-icons right">more_vert</i></span>';
+            echo '            <p>User : <a href="'.base_url().'profile/information/'.$project->ownerUserID.'">@' . $project->ownerUserID .'</p>';
+            echo '            <p>PV : '.$project->pv.'</p>';
+            echo '            <p>Fork : '.$project->fork.'</p>';
+            echo '            <p><a href="'.base_url().'try-haxe/index.html#'.$project->projectID.'">Edit Code</a></p>';
+            echo '        </div>';
+
+            echo '        <div class="card-reveal">';
+            echo '            <span class="card-title grey-text text-darken-4">'.$project->projectName.'<i class="material-icons right">close</i></span>';
+            echo '            <p>Project ID : '.$project->projectID.'</p>';
+            echo '            <p>pv : '.$project->pv.'</p>';
+            echo '            <p>User : '.$project->ownerUserID.'</p>';
+            echo '        </div>';
+
             echo '        </div>';
             echo '    </div>';
             $num += 1;
@@ -189,6 +200,7 @@ echo '<hr>';
         ?>
     </div>
 </div>
+<hr>
 <?php }?>
 
 </div>
