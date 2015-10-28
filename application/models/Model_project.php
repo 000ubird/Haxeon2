@@ -139,6 +139,23 @@ class Model_project extends CI_Model{
         return ($query->num_rows() > 0);
     }
 	
+	//タグテーブルから引数のタグを持つタグIDを返す
+	//存在しなかった場合は0を返す
+	public function searchTagID($str) {
+		$this->db->select('id')->from('tag')->where('tag', array('tag' => $str));
+		$query = $this->db->get();
+		
+		return $query->result_array();
+	}
+	
+	//タグマップテーブルから引数のタグIDを持つプロジェクトIDを返す
+	public function getProIDfromTagmap($tagID) {
+		$this->db->select('projectID')->from('tagmap')->where('tagID', $tagID);
+		$query = $this->db->get();
+		
+		return $query->result_array();
+	}
+	
 	//検索単語と検索対象からプロジェクトを検索
 	//$searchFor => 0:tag, 1:projectName, 2:projectID, 3:accountID
 	public function searchProject($searchStr, $searchFor) {
