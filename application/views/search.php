@@ -7,6 +7,7 @@
 		<div class="input-field col s3">
 			<input id="search" type="text" class="validate" name="search">
 			<label for="search">Search</label>
+			<?php echo form_error('search'); ?>
 		</div>
 		
 		<div class="input-field col s2">
@@ -17,10 +18,10 @@
 		
 		<div class="input-field col s6">
 		<p>検索対象</p>
-			<input type="checkbox" id="tag" value="0" name="chk[0]"/>
+			<input type="checkbox" id="tag" value="0" name="chk[0]" checked="checked"/>
 			<label for="tag">タグ</label>
 
-			<input type="checkbox" id="projectName" value="1" name="chk[1]" checked="checked"/>
+			<input type="checkbox" id="projectName" value="1" name="chk[1]" />
 			<label for="projectName">プロジェクト名</label>
 
 			<input type="checkbox" id="projectID" value="2" name="chk[2]" />

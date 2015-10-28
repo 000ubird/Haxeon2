@@ -138,7 +138,24 @@ class Model_project extends CI_Model{
 
         return ($query->num_rows() > 0);
     }
-
+	
+	//タグテーブルから引数のタグを持つタグIDを返す
+	//存在しなかった場合は0を返す
+	public function searchTagID($str) {
+		$this->db->select('id')->from('tag')->where('tag', array('tag' => $str));
+		$query = $this->db->get();
+		
+		return $query->result_array();
+	}
+	
+	//タグマップテーブルから引数のタグIDを持つプロジェクトIDを返す
+	public function getProIDfromTagmap($tagID) {
+		$this->db->select('projectID')->from('tagmap')->where('tagID', $tagID);
+		$query = $this->db->get();
+		
+		return $query->result_array();
+	}
+	
 	//検索単語と検索対象からプロジェクトを検索
 	//$searchFor => 0:tag, 1:projectName, 2:projectID, 3:accountID
 	public function searchProject($searchStr, $searchFor) {
@@ -148,9 +165,20 @@ class Model_project extends CI_Model{
 		//検索文字列と完全一致するタグを検索し、プロジェクトIDで検索
 		if ($searchFor[0]) {
 			//タグテーブルから条件に一致するプロジェクトIDを取得する
-			$getTagProIDquery = 'projectID = (SELECT projectID from tagmap WHERE tagID = (SELECT id FROM tag where tag = "'.$searchStr.'") )';
-			//プロジェクトIDが取得したIDに一致するものを検索
-			$this->db->or_where($getTagProIDquery);
+			$tagID = $this->Model_project->getTagID($searchStr);
+			$result = $this->Model_project->getProIDfromTagmap($tagID);
+			
+			//取得したプロジェクトIDからクエリ文を生成
+			//取得してきたIDがなかった場合はダミープロジェクトIDで検索を行う
+			if (count($result) == 0) {
+				$this->db->from('project');
+				$this->db->or_where('projectID', '_____');
+			} else {
+				$this->db->from('project');
+				foreach($result as $id) {
+					$this->db->or_where('projectID', $id['projectID']);
+				}
+			}
 		}
 
 		//検索文字列と部分一致するプロジェクト名を検索
