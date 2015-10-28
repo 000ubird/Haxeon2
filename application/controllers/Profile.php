@@ -49,7 +49,7 @@ class Profile extends CI_Controller {
             $id = $f->projectID;
             array_push($favorite_projects, $this->Model_project->getOneProject($id));
         }
-        $data['favorites'] = $favorite_list;
+        $data['favorites'] = $favorite_projects;
 
         return $data;
     }

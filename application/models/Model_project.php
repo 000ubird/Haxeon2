@@ -138,13 +138,13 @@ class Model_project extends CI_Model{
 
         return ($query->num_rows() > 0);
     }
-	
+
 	//検索単語と検索対象からプロジェクトを検索
 	//$searchFor => 0:tag, 1:projectName, 2:projectID, 3:accountID
 	public function searchProject($searchStr, $searchFor) {
 		//プロジェクトテーブルからプロジェクトIDを検索
 		$this->db->select('*')->from('project');
-		
+
 		//検索文字列と完全一致するタグを検索し、プロジェクトIDで検索
 		if ($searchFor[0]) {
 			//タグテーブルから条件に一致するプロジェクトIDを取得する
@@ -152,34 +152,34 @@ class Model_project extends CI_Model{
 			//プロジェクトIDが取得したIDに一致するものを検索
 			$this->db->or_where($getTagProIDquery);
 		}
-		
+
 		//検索文字列と部分一致するプロジェクト名を検索
 		if ($searchFor[1]) {
 			// OR projectName LIKE '%【検索文字列】%'
-			$this->db->or_like('projectName', $searchStr); 
+			$this->db->or_like('projectName', $searchStr);
 		}
-		
+
 		//検索文字列と完全一致するプロジェクトIDを検索
 		if ($searchFor[2]) {
 			// OR projectID = '%【検索文字列】%'
 			$this->db->or_where('projectID', $searchStr);
 		}
-		
+
 		//検索文字列と部分一致するアカウント名を検索
 		if ($searchFor[3]) {
 			// OR ownerUserID LIKE '%【検索文字列】%'
-			$this->db->or_like('ownerUserID', $searchStr); 
+			$this->db->or_like('ownerUserID', $searchStr);
 		}
-		
+
 		//クエリの実行
 		$query = $this->db->get();
-		
+
 		//デバッグ
 		//echo $this->db->last_query()."<br/><br/>";
-		
+
 		return $query->result_array();
 	}
-	
+
 	//プロジェクトIDを指定してプロジェクトを取得する
 	public function getOneProject($id) {
 		$query = $this->db->get_where('project', array('projectID' => $id));
@@ -224,5 +224,5 @@ class Model_project extends CI_Model{
     public function deleteDayRanking($userID){
         $this->db->delete('day_ranking', array('usrID'=>$userID));
     }
-	
+
 }

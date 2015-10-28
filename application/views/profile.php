@@ -5,7 +5,7 @@ define("PROJECTS", "projects");
 define("FAVORITES", "favorites");
 define("FOLLOW", "follow");
 define("FOLLOWER", "follower");
-define("MAX_PROJECTS", 3);
+define("MAX_PROJECTS", 4);
 define("MAX_FOLLOW", 12);
 define("MAX_FAVORITE", 4);
 
@@ -100,8 +100,8 @@ echo '    <div class="row">';
             echo '            <p>User : '.$project->ownerUserID.'</p>';
             echo '        </div>';
 
-            echo '        </div>';
-            echo '    </div>';
+            echo '      </div>';
+            echo '  </div>';
             $num += 1;
         }
     }else{
@@ -190,8 +190,30 @@ echo '<hr>';
             krsort($favorites);
             foreach ($favorites as $favorite) {
                 if($category == "") if($num >= MAX_FAVORITE) break;
-                echo($favorite->projectID);
-                echo('<br>');
+                echo '    <div class="col s4">';
+                echo '        <div class="card">';
+
+                echo '<div class="card-image waves-effect waves-block waves-light">';
+                echo '<img class="activator" src="'.base_url().'img/project.jpg">';
+                echo '</div>';
+
+                echo '        <div class="card-content">';
+                echo '            <span class="card-title activator black-text text-darken-4">' . $favorite[0]->projectName . '<i class="material-icons right">more_vert</i></span>';
+                echo '            <p>User : <a href="'.base_url().'profile/information/'.$favorite[0]->ownerUserID.'">@' . $favorite[0]->ownerUserID .'</p>';
+                echo '            <p>PV : '.$favorite[0]->pv.'</p>';
+                echo '            <p>Fork : '.$favorite[0]->fork.'</p>';
+                echo '            <p><a href="'.base_url().'try-haxe/index.html#'.$favorite[0]->projectID.'">Edit Code</a></p>';
+                echo '        </div>';
+
+                echo '        <div class="card-reveal">';
+                echo '            <span class="card-title grey-text text-darken-4">'.$favorite[0]->projectName.'<i class="material-icons right">close</i></span>';
+                echo '            <p>project ID : '.$favorite[0]->projectID.'</p>';
+                echo '            <p>pv : '.$favorite[0]->pv.'</p>';
+                echo '            <p>User : '.$favorite[0]->ownerUserID.'</p>';
+                echo '        </div>';
+
+                echo '        </div>';
+                echo '        </div>';
                 $num += 1;
             }
         }else{
