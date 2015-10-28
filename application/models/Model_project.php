@@ -169,9 +169,15 @@ class Model_project extends CI_Model{
 			$result = $this->Model_project->getProIDfromTagmap($tagID);
 			
 			//取得したプロジェクトIDからクエリ文を生成
-			$this->db->from('project');
-			foreach($result as $id) {
-				$this->db->or_where('projectID', $id['projectID']);
+			//取得してきたIDがなかった場合はダミープロジェクトIDで検索を行う
+			if (count($result) == 0) {
+				$this->db->from('project');
+				$this->db->or_where('projectID', '_____');
+			} else {
+				$this->db->from('project');
+				foreach($result as $id) {
+					$this->db->or_where('projectID', $id['projectID']);
+				}
 			}
 		}
 		
