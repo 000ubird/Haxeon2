@@ -86,22 +86,21 @@
         <div class="col s9">
             <form action="#">
             <div class="file-field input-field">
-            <div class="btn">
-            <span>icon</span>
-            <input type="file" name="userfile"/>
-            </div>
-            <div class="file-path-wrapper">
-            <input class="file-path validate" type="text" />
-            </div>
+                <div class="btn">
+                    <span>icon</span>
+                    <input type="file" name="userfile"/>
+                </div>
+                <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text" />
+                </div>
             </div>
             <div class="row" align="right">
             <button class="btn waves-effect" type="submit" value="upload">upload
-            <?php
-            echo form_close();
-            ?>
             </div>
+            </form>
         </div>
     </div>
+    </form>
 </div>
 
 <div id="important" class="col s12">
