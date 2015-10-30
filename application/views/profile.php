@@ -1,13 +1,13 @@
-<h2>Profile</h2>
+<h1>Profile</h1>
 
 <?php
 define("PROJECTS", "projects");
 define("FAVORITES", "favorites");
 define("FOLLOW", "follow");
 define("FOLLOWER", "follower");
-define("MAX_PROJECTS", 4);
+define("MAX_PROJECTS", 3);
 define("MAX_FOLLOW", 12);
-define("MAX_FAVORITE", 4);
+define("MAX_FAVORITE", 3);
 
 foreach($user as $row){
     $uid = $row->userID;
@@ -112,7 +112,9 @@ echo '    <div class="row">';
         echo '<p>you have no project.</p>';
     }
 
+    echo '<h4 align="right"><a href="'.base_url().''.$info.''.$uid.'/'.PROJECTS.'">...more projects</a></h4>';
 echo  '</div>';
+
 echo '<hr>';
 }
 ?>
@@ -147,7 +149,11 @@ echo '<hr>';
         }
         ?>
     </div>
-</div>
+    <?php
+    echo '<h4 align="right"><a href="'.base_url().''.$info.''.$uid.'/'.FOLLOW.'">...more followers</a></h4>';
+    ?>
+
+    </div>
 
 <hr>
 <?php }?>
@@ -222,6 +228,9 @@ echo '<hr>';
         }
         ?>
     </div>
+    <?php
+    echo '<h4 align="right"><a href="'.base_url().''.$info.''.$uid.'/'.FAVORITES.'">...more favorites</a></h4>';
+    ?>
 </div>
 <hr>
 <?php }?>
