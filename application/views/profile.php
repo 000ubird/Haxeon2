@@ -17,13 +17,6 @@ foreach($user as $row){
     $url = $row->userURL;
     $email = $row->userMail;
 }
-$project_total = count($projects);
-
-$favorite_total = count($favorites);
-
-$follow_total = count($follow);
-
-$follower_total= count($follower);
 
 echo '<div class="profile row">';
 
@@ -67,50 +60,58 @@ echo '<hr>';
 echo '<div class="contents">';
 
 if($category == "" || $category == PROJECTS) {
-echo '<div class="projects">';
-echo '    <div class="row">';
-
-    echo '      <h2>Projects</h2>';
-    //複数項目ある場合の書き方例
-    if (count($projects) > 0) {
-        //プロジェクトを降順ソート
-        krsort($projects);
-        $num = 0;
-        foreach ($projects as $project) {
-            if($category == "") if($num >= MAX_PROJECTS) break;
-            echo '<a href="'.base_url().'try-haxe/index.html#'.$project->projectID.'">';
-            echo '    <div class="col s4">';
-            echo '        <div class="card">';
-
-            echo '<div class="card-image waves-effect waves-block waves-light">';
-            echo '<img class="activator" src="'.base_url().'img/project.jpg">';
-            echo '</div>';
-
-            echo '        <div class="card-content">';
-            echo '            <span class="card-title activator black-text text-darken-4 truncate">' . $project->projectName;
-            if($project->ownerUserID == $this->session->userdata('userID')) echo '<a href="'.base_url() . 'profile/projectsettings/' . $project->projectID . '"><i class="material-icons">settings</i></a>';
-            echo '</span>';
-            echo '</a>';
-            echo '            <p class="truncate">User : <a href="'.base_url().'profile/information/'.$project->ownerUserID.'">@' . $project->ownerUserID .'</a></p>';
-            echo '            <p class="truncate">PV : '.$project->pv.'</p>';
-            echo '            <p class="truncate">Fork : '.$project->fork.'</p>';
-            echo '            <p class="truncate"><a href="'.base_url().'try-haxe/index.html#'.$project->projectID.'">Edit Code</a></p>';
-            echo '        </div>';
-
-            echo '        <div class="card-reveal">';
-            echo '            <span class="card-title grey-text text-darken-4">'.$project->projectName.'<i class="material-icons right">close</i></span>';
-            echo '            <p>Project ID : '.$project->projectID.'</p>';
-            echo '            <p>pv : '.$project->pv.'</p>';
-            echo '            <p>User : '.$project->ownerUserID.'</p>';
-            echo '        </div>';
-
-            echo '      </div>';
-            echo '  </div>';
-            $num += 1;
-        }
-    }else{
-        echo '<p>you have no project.</p>';
+    echo '<div class="projects">';
+    if($category == PROJECTS) {
+        //プロジェクト一覧を表示するとき
+        $this->load->library('pagination');
+        echo $this->pagination->create_links();
     }
+    echo '    <div class="row">';
+    echo '      <h2>Projects</h2>';
+
+        //トップページのとき
+        //複数項目ある場合の書き方例
+        if (count($projects) > 0) {
+//            //プロジェクトを降順ソート
+//            krsort($projects);
+            $num = 0;
+            foreach ($projects as $project) {
+                if ($category == "" && $num >= MAX_PROJECTS) break;
+
+                echo '<a href="' . base_url() . 'try-haxe/index.html#' . $project->projectID . '">';
+                echo '    <div class="col s4">';
+                echo '        <div class="card">';
+
+                echo '<div class="card-image waves-effect waves-block waves-light">';
+                echo '<img class="activator" src="' . base_url() . 'img/project.jpg">';
+                echo '</div>';
+
+                echo '        <div class="card-content">';
+                echo '            <span class="card-title activator black-text text-darken-4 truncate">' . $project->projectName;
+                if ($project->ownerUserID == $this->session->userdata('userID')) echo '<a href="' . base_url() . 'profile/projectsettings/' . $project->projectID . '"><i class="material-icons">settings</i></a>';
+                echo '</span>';
+                echo '</a>';
+                echo '            <p class="truncate">User : <a href="' . base_url() . 'profile/information/' . $project->ownerUserID . '">@' . $project->ownerUserID . '</a></p>';
+                echo '            <p class="truncate">PV : ' . $project->pv . '</p>';
+                echo '            <p class="truncate">Fork : ' . $project->fork . '</p>';
+                echo '            <p class="truncate"><a href="' . base_url() . 'try-haxe/index.html#' . $project->projectID . '">Edit Code</a></p>';
+                echo '        </div>';
+
+                echo '        <div class="card-reveal">';
+                echo '            <span class="card-title grey-text text-darken-4">' . $project->projectName . '<i class="material-icons right">close</i></span>';
+                echo '            <p>Project ID : ' . $project->projectID . '</p>';
+                echo '            <p>pv : ' . $project->pv . '</p>';
+                echo '            <p>User : ' . $project->ownerUserID . '</p>';
+                echo '        </div>';
+
+                echo '      </div>';
+                echo '  </div>';
+                $num += 1;
+            }
+        } else {
+            echo '<p>you have no project.</p>';
+        }
+}
 
     if(!(current_url() == base_url().''.$info.''.$uid.'/'.PROJECTS)) {
         echo '<h4 align="right"><a href="' . base_url() . '' . $info . '' . $uid . '/' . PROJECTS . '">...more projects</a></h4>';
@@ -119,18 +120,22 @@ echo '    <div class="row">';
 echo  '</div>';
 
 echo '<hr>';
-}
+
 ?>
 
 <!--フォローしている人たちをリスト表示する $followをつかう-->
 <?php if($category == "" || $category == FOLLOW){?>
     <div class="follow">
+        <?php     if($category == FOLLOW) {
+            $this->load->library('pagination');
+            echo $this->pagination->create_links();
+        }?>
     <div class="row">
         <h2>Follow</h2>
         <?php
         if($follow_total > 0){
         //フォローが新しい人ほど先にくるように降順ソート
-        krsort($follow);
+//        krsort($follow);
         $num = 0;
         $this->load->model('Model_users');
         foreach($follow as $f){
@@ -170,7 +175,7 @@ echo '<hr>';
             <?php
             if($follower_total > 0){
             //フォローが新しい人ほど先にくるように降順ソート
-            krsort($follower);
+//            krsort($follower);
                 foreach($follower as $f){
                     $id = $f->userID;
                     $icon = $this->Model_users->get_icon_url($id);
@@ -196,13 +201,17 @@ echo '<hr>';
 <!--ファボしたプロジェクトをリスト表示する $favoritesをつかう-->
 <?php if($category == "" || $category == FAVORITES){?>
 <div class="favs">
+    <?php     if($category == FAVORITES) {
+        $this->load->library('pagination');
+        echo $this->pagination->create_links();
+    }?>
     <div class="row">
         <h2>Favorites</h2>
         <?php
         $num = 0;
         if($favorite_total > 0) {
             //ふぁぼが新しいものほど先にくるように降順ソート
-            krsort($favorites);
+//            krsort($favorites);
             foreach ($favorites as $favorite) {
                 if($category == "") if($num >= MAX_FAVORITE) break;
                 echo '<a href="'.base_url().'try-haxe/index.html#'.$favorite[0]->projectID.'">';

@@ -8,7 +8,7 @@ class Ranking extends CI_Controller {
         $this->load->model('Model_favorite');
 		$this->load->library('pagination');
 
-		$config['base_url'] = 'http://localhost/haxeon/ranking/index/'.$days.'/'.$order.'/'.$num.'/';
+		$config['base_url'] = base_url().'ranking/index/'.$days.'/'.$order.'/'.$num.'/';
 		if ($num > 100 ) $num = 100;	//最高数以上の場合は弾く
 		$config['per_page'] = $num;
 		$config['uri_segment'] = 6;
