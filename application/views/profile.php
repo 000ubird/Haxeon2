@@ -29,7 +29,7 @@ echo '<div class="profile row">';
 
 echo '    <div class="icons col s3" style="text-align: center">';
 echo '      <img class="responsive-img" src="'. $icon .'">';
-echo '      <h4>'. $uname. '<small> @'. $uid .'</small></h4>';
+echo '      <h4 class="truncate">'. $uname. '<br><small> @'. $uid .'</small></h4>';
 
 //フォローボタンの表示
 if($isown || !$this->session->userdata('userID')) {
@@ -87,14 +87,14 @@ echo '    <div class="row">';
             echo '</div>';
 
             echo '        <div class="card-content">';
-            echo '            <span class="card-title activator black-text text-darken-4">' . $project->projectName;
+            echo '            <span class="card-title activator black-text text-darken-4 truncate">' . $project->projectName;
             if($project->ownerUserID == $this->session->userdata('userID')) echo '<a href="'.base_url() . 'profile/projectsettings/' . $project->projectID . '"><i class="material-icons">settings</i></a>';
             echo '</span>';
             echo '</a>';
-            echo '            <p>User : <a href="'.base_url().'profile/information/'.$project->ownerUserID.'">@' . $project->ownerUserID .'</a></p>';
-            echo '            <p>PV : '.$project->pv.'</p>';
-            echo '            <p>Fork : '.$project->fork.'</p>';
-            echo '            <p><a href="'.base_url().'try-haxe/index.html#'.$project->projectID.'">Edit Code</a></p>';
+            echo '            <p class="truncate">User : <a href="'.base_url().'profile/information/'.$project->ownerUserID.'">@' . $project->ownerUserID .'</a></p>';
+            echo '            <p class="truncate">PV : '.$project->pv.'</p>';
+            echo '            <p class="truncate">Fork : '.$project->fork.'</p>';
+            echo '            <p class="truncate"><a href="'.base_url().'try-haxe/index.html#'.$project->projectID.'">Edit Code</a></p>';
             echo '        </div>';
 
             echo '        <div class="card-reveal">';
@@ -136,7 +136,7 @@ echo '<hr>';
             $icon = $this->Model_users->get_icon_url($id);
             echo '<div class="col s3">';
             echo '<a href="'.base_url().'profile/information/'.$id.'">';
-            echo '<div class="card-panel waves-effect waves-light z-depth-1">';
+            echo '<div class="card-panel waves-effect waves-light z-depth-1 truncate">';
             echo '<img src="'.$icon.'" width="30%" height="auto">';
             echo '<span style="text-align: center"> '.$id.'</span>';
             echo '</div>';
@@ -171,7 +171,7 @@ echo '<hr>';
                     $icon = $this->Model_users->get_icon_url($id);
                     echo '<div class="col s3">';
                     echo '<a href="'.base_url().'profile/information/'.$id.'">';
-                    echo '<div class="card-panel waves-effect waves-light z-depth-1">';
+                    echo '<div class="card-panel waves-effect waves-light z-depth-1 truncate">';
                     echo '<img src="'.$icon.'" width="30%" height="auto">';
                     echo '<span style="text-align: center"> '.$id.'</span>';
                     echo '</div>';
@@ -211,12 +211,12 @@ echo '<hr>';
                 echo '</div>';
 
                 echo '        <div class="card-content">';
-                echo '            <span class="card-title activator black-text text-darken-4">' . $favorite[0]->projectName . '</span>';
+                echo '            <span class="card-title activator black-text text-darken-4 truncate">' . $favorite[0]->projectName . '</span>';
                 echo '</a>';
-                echo '            <p>User : <a href="'.base_url().'profile/information/'.$favorite[0]->ownerUserID.'">@' . $favorite[0]->ownerUserID .'</a></p>';
-                echo '            <p>PV : '.$favorite[0]->pv.'</p>';
-                echo '            <p>Fork : '.$favorite[0]->fork.'</p>';
-                echo '            <p><a href="'.base_url().'try-haxe/index.html#'.$favorite[0]->projectID.'">Edit Code</a></p>';
+                echo '            <p class="truncate">User : <a href="'.base_url().'profile/information/'.$favorite[0]->ownerUserID.'">@' . $favorite[0]->ownerUserID .'</a></p>';
+                echo '            <p class="truncate">PV : '.$favorite[0]->pv.'</p>';
+                echo '            <p class="truncate">Fork : '.$favorite[0]->fork.'</p>';
+                echo '            <p class="truncate"><a href="'.base_url().'try-haxe/index.html#'.$favorite[0]->projectID.'">Edit Code</a></p>';
                 echo '        </div>';
 
                 echo '        </div>';
