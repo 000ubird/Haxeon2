@@ -1,8 +1,5 @@
 <h1>ログインページ</h1>
-<h3>セッション情報</h3>
 <?php
-
-print_r($this->session->all_userdata());
 echo form_open("login/validation");
 echo validation_errors();
 ?>
