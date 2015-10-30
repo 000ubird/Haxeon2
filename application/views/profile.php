@@ -73,7 +73,6 @@ if($category == "" || $category == PROJECTS) {
         //複数項目ある場合の書き方例
         if (count($projects) > 0) {
 //            //プロジェクトを降順ソート
-//            krsort($projects);
             $num = 0;
             foreach ($projects as $project) {
                 if ($category == "" && $num >= MAX_PROJECTS) break;
@@ -135,7 +134,6 @@ echo '<hr>';
         <?php
         if($follow_total > 0){
         //フォローが新しい人ほど先にくるように降順ソート
-//        krsort($follow);
         $num = 0;
         $this->load->model('Model_users');
         foreach($follow as $f){
@@ -175,7 +173,6 @@ echo '<hr>';
             <?php
             if($follower_total > 0){
             //フォローが新しい人ほど先にくるように降順ソート
-//            krsort($follower);
                 foreach($follower as $f){
                     $id = $f->userID;
                     $icon = $this->Model_users->get_icon_url($id);
@@ -211,7 +208,6 @@ echo '<hr>';
         $num = 0;
         if($favorite_total > 0) {
             //ふぁぼが新しいものほど先にくるように降順ソート
-//            krsort($favorites);
             foreach ($favorites as $favorite) {
                 if($category == "") if($num >= MAX_FAVORITE) break;
                 echo '<a href="'.base_url().'try-haxe/index.html#'.$favorite[0]->projectID.'">';
