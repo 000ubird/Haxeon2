@@ -1,6 +1,5 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-define('NUM_CHECKBOX', 4);	//サーチ画面のチェックボックスの数
 
 class Search extends CI_Controller {
 
@@ -11,18 +10,23 @@ class Search extends CI_Controller {
 		$this->load->view('footer');
 	}
 	
-	//検索を実行
+	//検索の実行と結果表示
 	public function doSearch() {
 		//検索文字列の取得
-		$str = $this->input->get_post('search', TRUE);
+		$str = set_value('search', 'search');
 		
 		//チェックボックス情報の取得
-		//0:tag, 1:projectName, 2:projectID, 3:accountID
-		$searchArray = [false, false, false, false];
-		for ($i = 0; $i < NUM_CHECKBOX; $i++ ) {
-			//チェックが付いていた所だけtrueを代入する
-			if (set_checkbox('chk['.$i.']', $i)) $searchArray[$i] = true;
-		}
+		$searchArray = [
+			set_checkbox('chk[0]', 0),	//tag
+			set_checkbox('chk[1]', 1),	//projectName
+			set_checkbox('chk[2]', 2),	//projectID
+			set_checkbox('chk[3]', 3),	//accountID
+		];
+		$sortBy = [
+			set_radio('sort', 'New'),	//new
+			set_radio('sort', 'PV'),	//pv
+			set_radio('sort', 'Name')	//name
+		];
 		
 		//バリデーション
 		$this->load->library("form_validation");
@@ -36,15 +40,16 @@ class Search extends CI_Controller {
         if ($this->form_validation->run()) {
 			//データベースから検索
 			$this->load->model("Model_project");
-			$result['result'] = $this->Model_project->searchProject($str,$searchArray);
+			$result['result'] = $this->Model_project->searchProject($str,$searchArray,$sortBy);
 			$result['str'] = $str;
-			$result['chkbox'] = $searchArray;
 			
 			//Viewを表示
 			$this->load->view('header');
 			$this->load->view('search_result',$result);
 			$this->load->view('footer');
-		} else {
+		}
+		//問題のある文字列が入力された場合は検索画面に戻る
+		else {
 			$this->load->view('header');
 			$this->load->view('search');
 			$this->load->view('footer');
