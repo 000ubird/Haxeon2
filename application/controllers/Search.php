@@ -34,7 +34,7 @@ class Search extends CI_Controller {
 				
 		//エラーメッセージの設定
 		$this->form_validation->set_rules("search", "検索", "alpha_numeric");
-        $this->form_validation->set_message("alpha_numeric", "%s は半角英数字で入力してください。");
+        $this->form_validation->set_message("alpha_numeric", "%sは半角英数字のみ可能です。");
 		
 		//正しい場合は検索を実行
         if ($this->form_validation->run()) {
