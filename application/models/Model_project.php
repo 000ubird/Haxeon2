@@ -158,7 +158,7 @@ class Model_project extends CI_Model{
 	
 	//検索単語と検索対象からプロジェクトを検索
 	//$searchFor => 0:tag, 1:projectName, 2:projectID, 3:accountID
-	public function searchProject($searchStr, $searchFor) {
+	public function searchProject($searchStr, $searchFor, $sortBy) {
 		//プロジェクトテーブルからプロジェクトIDを検索
 		$this->db->select('*')->from('project');
 
@@ -198,7 +198,22 @@ class Model_project extends CI_Model{
 			// OR ownerUserID LIKE '%【検索文字列】%'
 			$this->db->or_like('ownerUserID', $searchStr);
 		}
-
+		
+		//更新日時が新しい順にソートする
+		if ($sortBy[0]) {
+			$this->db->order_by("modified", "desc"); 
+		}
+		
+		//PV数が多い順にソートする
+		else if ($sortBy[1]) {
+			$this->db->order_by("pv", "desc"); 
+		}
+		
+		//名前順にソートする
+		else if ($sortBy[2]) {
+			$this->db->order_by("projectName", "asc"); 
+		}
+		
 		//クエリの実行
 		$query = $this->db->get();
 
