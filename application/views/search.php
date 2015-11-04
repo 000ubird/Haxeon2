@@ -18,11 +18,11 @@
 		
 		<p>並べ替え</p>
 		<div class="input-field col s8">
-			<input name="sort" type="radio" id="new" value="New" <?php if(set_radio('sort', 'New')) echo 'checked="checked"';?> />
+			<input name="sort" type="radio" id="new" value="New" checked="checked" />
 			<label for="new">New</label>
-			<input name="sort" type="radio" id="pv" value="PV" <?php if(set_radio('sort', 'PV')) echo 'checked="checked"';?> />
+			<input name="sort" type="radio" id="pv" value="PV" />
 			<label for="pv">PV</label>
-			<input name="sort" type="radio" id="name" value="Name" <?php if(set_radio('sort', 'Name')) echo 'checked="checked"';?> />
+			<input name="sort" type="radio" id="name" value="Name" />
 			<label for="name">Name</label>
 
 		<p>検索対象</p>
