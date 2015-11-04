@@ -1,9 +1,6 @@
 <h1>新規プロジェクトページ</h1>
 
-<h2>セッション情報</h2>
 <?php
-print_r($this->session->all_userdata());
-
 echo form_open("createproject/validation");
 echo validation_errors();
 ?>
