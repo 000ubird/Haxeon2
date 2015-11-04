@@ -16,6 +16,16 @@
 			</button>
 		</div>
 		
+		<p>SortBy</p>
+		<div class="input-field col s4">
+			<input name="sort" type="radio" id="new" value="New" <?php if(set_radio('sort', 'New')) echo 'checked="checked"';?> />
+			<label for="new">New</label>
+			<input name="sort" type="radio" id="pv" value="PV" <?php if(set_radio('sort', 'PV')) echo 'checked="checked"';?> />
+			<label for="pv">PV</label>
+			<input name="sort" type="radio" id="name" value="Name" <?php if(set_radio('sort', 'Name')) echo 'checked="checked"';?> />
+			<label for="name">Name</label>
+		</div>
+		
 		<div class="input-field col s6">
 		<p>検索対象</p>
 			<input type="checkbox" id="tag" value="0" name="chk[0]" checked="checked"/>
