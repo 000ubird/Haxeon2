@@ -1,6 +1,3 @@
-<div align="center">
-<img src="<?php echo base_url();?>img/top.jpg" width="767" height="230" alt="">
-</div>
 
 <h2>Today's HotCode!</h2>
 
