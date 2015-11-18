@@ -50,4 +50,6 @@ if($i==0) {
 	echo "<p>現在、ランキングに関する情報がありません。</p>";
 }
 
+echo '<Div Align="right"><p><a href="'.base_url().'ranking/index/day/pv/30/0">show more...</a></p></Div>';
+
 ?>
