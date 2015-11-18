@@ -21,7 +21,7 @@ class Createproject extends CI_Controller {
         $this->form_validation->set_error_delimiters('<div class="error">','</div>');
 
         //入力の有無確認
-        $this->form_validation->set_rules("projectName", "プロジェクト名", "required|callback_validate_credentials");
+        $this->form_validation->set_rules("projectName", "プロジェクト名", "required");
         $this->form_validation->set_message("required", "%sが入力されていません");
 
         if($this->form_validation->run()){
