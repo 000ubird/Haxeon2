@@ -301,11 +301,13 @@ class Profile extends CI_Controller {
             if ($this->Model_users->add_tmp_user($key)) {
                 //メール送信
                 if ($this->email->send()) {
+					$data['msg'] = "登録用メールが送信されました。";
                     $this->load->view('header');
-                    echo "登録用メールが送信されました。";
+                    $this->load->view('signup_msg',$data);
                     $this->load->view('footer');
                 }else {
-                    echo "登録用メールの送信に失敗しました。お手数ですがやり直して下さい。";
+					$data['msg'] = "登録用メールの送信に失敗しました。お手数ですがやり直して下さい。";
+					$this->load->view('signup_msg',$data);
                     $this->signup();
                 }
             } else {
@@ -320,13 +322,18 @@ class Profile extends CI_Controller {
     public function register($key) {
         $this->load->model("Model_users");
         if ($this->Model_users->add_user($key)) {
+			$data['msg'] = "アカウントが有効になりました。";
             $this->load->view('header');
-            echo "アカウントが有効になりました。";
+			$this->load->view('signup_msg', $data);
+			$this->load->view('footer');
+			
             //仮テーブルから削除
             $this->Model_users->deleteTmpAccountFromKey($key);
         } else {
+			$data['msg'] = "アカウントの認証に失敗しました。";
             $this->load->view('header');
-            echo "アカウントの認証に失敗しました。";
+            $this->load->view('signup_msg', $data);
+			$this->load->view('footer');
         }
     }
 
