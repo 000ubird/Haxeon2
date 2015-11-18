@@ -61,13 +61,7 @@ if($isown || !$this->session->userdata('userID')){
 
 <?php if($category == "" || $category == PROJECTS) { ?>
     <div class="projects">
-        <?php
-        if ($category == PROJECTS) {
-            //プロジェクト一覧を表示するとき
-            $this->load->library('pagination');
-            echo $this->pagination->create_links();
-        }
-        ?>
+
         <div class="row">
             <h2>Projects</h2>
 
@@ -114,11 +108,19 @@ if($isown || !$this->session->userdata('userID')){
                 echo '<p>you have no project.</p>';
             }
 
-            echo '</div>';
-            if (!(current_url() == base_url() . '' . $info . '' . $uid . '/' . PROJECTS)) {
+            //ページネーション
+            if ($category == PROJECTS) {
+            //プロジェクト一覧を表示するとき
+            $this->load->library('pagination');
+            echo $this->pagination->create_links();
+            }
+            ?>
+
+            </div>
+            <?php if (!(current_url() == base_url() . '' . $info . '' . $uid . '/' . PROJECTS)) {
                 echo '<h4 align="right"><a href="' . base_url() . '' . $info . '' . $uid . '/' . PROJECTS . '">...more projects</a></h4>';
             }
-    ?>
+            ?>
 
 <hr>
 <?php }?>
@@ -126,10 +128,6 @@ if($isown || !$this->session->userdata('userID')){
 <!--フォローしている人たちをリスト表示する $followをつかう-->
 <?php if($category == "" || $category == FOLLOW){?>
     <div class="follow">
-        <?php     if($category == FOLLOW) {
-            $this->load->library('pagination');
-            echo $this->pagination->create_links();
-        }?>
     <div class="row">
         <h2>Follow</h2>
         <?php
@@ -154,8 +152,15 @@ if($isown || !$this->session->userdata('userID')){
         }else{
             echo '<p>you have no follow.</p>';
         }
-        ?>
+
+        //ページネーション
+        if($category == FOLLOW) {
+            $this->load->library('pagination');
+            echo $this->pagination->create_links();
+        }?>
+
     </div>
+
     <?php
     if(!(current_url() == base_url().''.$info.''.$uid.'/'.FOLLOW)) {
         echo '<h4 align="right"><a href="' . base_url() . '' . $info . '' . $uid . '/' . FOLLOW . '">...more followers</a></h4>';
@@ -189,6 +194,12 @@ if($isown || !$this->session->userdata('userID')){
             }else{
                 echo '<p>you have no follower.</p>';
             }
+
+            //ページネーション
+            if($category == FOLLOW) {
+                $this->load->library('pagination');
+                echo $this->pagination->create_links();
+            }?>
             ?>
         </div>
     </div>
