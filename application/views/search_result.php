@@ -4,30 +4,38 @@
 
 <div class="row">
 	<form class="col s12">
-		<div class="input-field col s3">
+		<div class="input-field col s2">
 			<input id="search" type="text" value="<?php echo $str;?>" class="validate" name="search">
 			<label for="search">Search</label>
 			<?php form_error('search'); ?>
 		</div>
 		
 		<div class="input-field col s2">
-			<button class="btn waves-effect waves-light" >Search!
+			<button class="btn waves-effect waves-light" >Search
 				<i class="material-icons right">send</i>
 			</button>
 		</div>
 		
-		<div class="input-field col s6">
+		<p>並べ替え</p>
+		<div class="input-field col s8">
+			<input name="sort" type="radio" id="new" value="New" <?php if(set_radio('sort', 'New')) echo 'checked="checked"';?> />
+			<label for="new">New</label>
+			<input name="sort" type="radio" id="pv" value="PV" <?php if(set_radio('sort', 'PV')) echo 'checked="checked"';?> />
+			<label for="pv">PV</label>
+			<input name="sort" type="radio" id="name" value="Name" <?php if(set_radio('sort', 'Name')) echo 'checked="checked"';?> />
+			<label for="name">Name</label>
+			
 		<p>検索対象</p>
-			<input type="checkbox" id="tag" value="0" name="chk[0]" <?php if($chkbox[0]) echo 'checked="checked"';?> />
+			<input type="checkbox" id="tag" value="0" name="chk[0]" <?php if(set_checkbox('chk[0]',0)) echo 'checked="checked"';?> />
 			<label for="tag">タグ</label>
 
-			<input type="checkbox" id="projectName" value="1" name="chk[1]" <?php if($chkbox[1]) echo 'checked="checked"';?> />
+			<input type="checkbox" id="projectName" value="1" name="chk[1]" <?php if(set_checkbox('chk[1]',1)) echo 'checked="checked"';?> />
 			<label for="projectName">プロジェクト名</label>
 
-			<input type="checkbox" id="projectID" value="2" name="chk[2]" <?php if($chkbox[2]) echo 'checked="checked"';?> />
+			<input type="checkbox" id="projectID" value="2" name="chk[2]" <?php if(set_checkbox('chk[2]',2)) echo 'checked="checked"';?> />
 			<label for="projectID">プロジェクトID</label>
 
-			<input type="checkbox" id="accountID" value="3" name="chk[3]" <?php if($chkbox[3]) echo 'checked="checked"';?> />
+			<input type="checkbox" id="accountID" value="3" name="chk[3]" <?php if(set_checkbox('chk[3]',3)) echo 'checked="checked"';?> />
 			<label for="accountID">アカウントID</label>
 		</div>
 	</form>

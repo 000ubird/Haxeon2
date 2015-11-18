@@ -1,4 +1,5 @@
 <h1>ログインページ</h1>
+
 <?php
 echo form_open("login/validation");
 echo validation_errors();
