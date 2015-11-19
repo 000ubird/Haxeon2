@@ -17,15 +17,29 @@ echo validation_errors();
 </div>
 </div>
 
+<?php echo form_close();
+    echo form_open();
+?>
+
+<br />
+
 <div class="row">
-<button class="btn waves-effect waves-light orange darken-4 col s3 offset-s9" type="submit" name="action">create Tag
-<i class="material-icons">input</i>
-</button>
+    <div class="input-field col s12">
+        <textarea name="description" class="materialize-textarea" maxlength="140" placeholder="<?php $message ?>"></textarea>
+    <label for="description">project description</label>
+    </div>
 </div>
 
+
 <?php
-echo form_close();
+    echo form_close();
 ?>
+
+<div class="row">
+    <button class="btn waves-effect waves-light orange darken-4 col s3 offset-s9" type="submit" name="action">create Tag
+        <i class="material-icons">input</i>
+    </button>
+</div>
 
 <br>
 <div id="important" class="col s12">
