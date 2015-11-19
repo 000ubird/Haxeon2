@@ -196,6 +196,9 @@ class Profile extends CI_Controller {
             }
         }
 
+        //どちらも入力されないで更新されたとき
+        $this->projectsettings($pid);
+
     }
 
     public function tag_table_check($str){
