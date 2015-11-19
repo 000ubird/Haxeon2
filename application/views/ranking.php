@@ -52,7 +52,6 @@ foreach($projects as $project) {
 	echo '<div class="card-content">';
 	echo '<span class="card-title activator black-text text-darken-4">'.$project->projectName.'<i class="material-icons right">more_vert</i></span>';
 
-    if($this->session->userdata('userID') != $project->ownerUserID){
         $isfavorite = false;
         $i = 0;
         //print_r($favorites);
@@ -72,9 +71,6 @@ foreach($projects as $project) {
         }else{
             echo '<p><a href="'.$base_url.'favorite/regist_favorite/' .$project->projectID. '"><img src="'.$base_url.'img/unstar.png" width=30px height=30px></a></p>';
         }
-    }else{
-        echo '<p><a href="'.$base_url.'profile/projectsettings/' . $project->projectID . '"><i class="material-icons">settings</i></a></p>';
-    }
 
 	echo '<p>User : <a href="'.base_url().'profile/information/'.$project->ownerUserID.'">@'.$project->ownerUserID.'</p>';
 	echo '<p>pv : '.$project->pv.'</p>';
