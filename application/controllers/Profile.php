@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 //タグの登録上限数
-define("TAG_LIMIT", 3);
+define("TAG_LIMIT", 10);
 //プロジェクト、お気に入りの表示数
 define("PROJECT_PER_PAGE", 18);
 //フォロー、フォロワーの表示数
@@ -124,6 +124,7 @@ class Profile extends CI_Controller {
 
             $data['tags'] = $this->tag->getTag($projectID);
             $data['projectID'] = $projectID;
+            $data['message'] = $this->Model_project->getDescription($projectID);
 
             $this->load->view('header');
             $this->load->view('projectsettings', $data);
@@ -138,39 +139,45 @@ class Profile extends CI_Controller {
         $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
 
         //検証ルールの設定
-        $this->form_validation->set_rules("tag", "タグ", "required|callback_tag_table_check");
+        $this->form_validation->set_rules("tag", "タグ", "callback_tag_table_check");
 
         $this->form_validation->set_message("required", "%s を入力してください");
 
         $pid = $this->session->userdata('pid');
-        //正しい場合は登録処理
-        if ($this->form_validation->run()) {
-            $this->load->model("Model_project");
-            //タグマップテーブルの登録数についての確認
+        $tag = $_POST['tag'];
+
+        //長さが0なら実行しない
+        if(strlen($tag) == 0){}
+        else {
+            //正しい場合は登録処理
+            if ($this->form_validation->run()) {
+                $this->load->model("Model_project");
+                //タグマップテーブルの登録数についての確認
                 //入力を保持
                 $tag = $this->input->post('tag');
 
-                if(!$this->tag_check($tag)){
+                if (!$this->tag_check($tag)) {
                     //タグテーブルに存在しないタグのとき
-                     $this->Model_project->registTag($tag);
+                    $this->Model_project->registTag($tag);
                 }
 
                 //idを取得
                 $tagid = $this->Model_project->getTagID($tag);
 
-				//プロジェクトテーブルからtmpIDの情報を取得
-				$this->load->model('Model_project');
-				$result = $this->Model_project->getOneProject($pid);
-				foreach($result as $row) {
-					$tmpPro = $row->tmpPro;
-				}
+                //プロジェクトテーブルからtmpIDの情報を取得
+                $this->load->model('Model_project');
+                $result = $this->Model_project->getOneProject($pid);
+                foreach ($result as $row) {
+                    $tmpPro = $row->tmpPro;
+                }
 
-				//マップに登録
-                $this->Model_project->registTagMap($pid, $tagid,$tmpPro);
+                //マップに登録
+                $this->Model_project->registTagMap($pid, $tagid, $tmpPro);
                 $this->projectsettings($pid);
 
-        }else{
-            $this->projectsettings($pid);
+            } else {
+                $this->projectsettings($pid);
+            }
         }
     }
 
