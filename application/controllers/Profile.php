@@ -124,7 +124,7 @@ class Profile extends CI_Controller {
 
             $data['tags'] = $this->tag->getTag($projectID);
             $data['projectID'] = $projectID;
-            $data['message'] = $this->Model_project->getDescription($projectID);
+            $data['description'] = $this->Model_project->getDescription($projectID);
 
             $this->load->view('header');
             $this->load->view('projectsettings', $data);
@@ -134,24 +134,26 @@ class Profile extends CI_Controller {
         }
     }
 
-    public function validation_tag(){
+    public function validation_project(){
         $this->load->library("form_validation");
         $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
 
         //検証ルールの設定
         $this->form_validation->set_rules("tag", "タグ", "callback_tag_table_check");
-
-        $this->form_validation->set_message("required", "%s を入力してください");
+        //ひとまず500文字程度にしておく
+        $this->form_validation->set_rules("description", "プロジェクト説明", 'max_length[500]|callback_description_check');
+        $this->form_validation->set_message("max_length", "%sは500文字以内でお願いします");
 
         $pid = $this->session->userdata('pid');
         $tag = $_POST['tag'];
 
+        //タグに関する登録
         //長さが0なら実行しない
         if(strlen($tag) == 0){}
         else {
+            $this->load->model("Model_project");
             //正しい場合は登録処理
             if ($this->form_validation->run()) {
-                $this->load->model("Model_project");
                 //タグマップテーブルの登録数についての確認
                 //入力を保持
                 $tag = $this->input->post('tag');
@@ -179,6 +181,21 @@ class Profile extends CI_Controller {
                 $this->projectsettings($pid);
             }
         }
+
+        //プロジェクトの説明
+        $des = $_POST['description'];
+        if(strlen($des) == 0){}
+        else{
+            //登録処理
+            if($this->form_validation->run()){
+                $this->Model_project->updateDescription($pid, $des);
+                $this->projectsettings($pid);
+//                print_r($des);
+            }else{
+                $this->projectsettings($pid);
+            }
+        }
+
     }
 
     public function tag_table_check($str){
@@ -198,6 +215,13 @@ class Profile extends CI_Controller {
             return false;
         }
 
+        return true;
+    }
+
+    //プロジェクト説明のバリデーション
+    //バリデーションの必要がでたらここに書く
+    //2015/11/19 特に制限するものが浮かばないので、trueにしている
+    public function description_check($str){
         return true;
     }
 
