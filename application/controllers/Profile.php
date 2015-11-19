@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 //タグの登録上限数
-define("TAG_LIMIT", 3);
+define("TAG_LIMIT", 10);
 //プロジェクト、お気に入りの表示数
 define("PROJECT_PER_PAGE", 18);
 //フォロー、フォロワーの表示数
@@ -124,6 +124,7 @@ class Profile extends CI_Controller {
 
             $data['tags'] = $this->tag->getTag($projectID);
             $data['projectID'] = $projectID;
+            $data['description'] = $this->Model_project->getDescription($projectID);
 
             $this->load->view('header');
             $this->load->view('projectsettings', $data);
@@ -133,45 +134,68 @@ class Profile extends CI_Controller {
         }
     }
 
-    public function validation_tag(){
+    public function validation_project(){
         $this->load->library("form_validation");
         $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
 
         //検証ルールの設定
-        $this->form_validation->set_rules("tag", "タグ", "required|callback_tag_table_check");
-
-        $this->form_validation->set_message("required", "%s を入力してください");
+        $this->form_validation->set_rules("tag", "タグ", "callback_tag_table_check");
+        //ひとまず500文字程度にしておく
+        $this->form_validation->set_rules("description", "プロジェクト説明", 'max_length[500]|callback_description_check');
+        $this->form_validation->set_message("max_length", "%sは500文字以内でお願いします");
 
         $pid = $this->session->userdata('pid');
-        //正しい場合は登録処理
-        if ($this->form_validation->run()) {
+        $tag = $_POST['tag'];
+
+        //タグに関する登録
+        //長さが0なら実行しない
+        if(strlen($tag) == 0){}
+        else {
             $this->load->model("Model_project");
-            //タグマップテーブルの登録数についての確認
+            //正しい場合は登録処理
+            if ($this->form_validation->run()) {
+                //タグマップテーブルの登録数についての確認
                 //入力を保持
                 $tag = $this->input->post('tag');
 
-                if(!$this->tag_check($tag)){
+                if (!$this->tag_check($tag)) {
                     //タグテーブルに存在しないタグのとき
-                     $this->Model_project->registTag($tag);
+                    $this->Model_project->registTag($tag);
                 }
 
                 //idを取得
                 $tagid = $this->Model_project->getTagID($tag);
 
-				//プロジェクトテーブルからtmpIDの情報を取得
-				$this->load->model('Model_project');
-				$result = $this->Model_project->getOneProject($pid);
-				foreach($result as $row) {
-					$tmpPro = $row->tmpPro;
-				}
+                //プロジェクトテーブルからtmpIDの情報を取得
+                $this->load->model('Model_project');
+                $result = $this->Model_project->getOneProject($pid);
+                foreach ($result as $row) {
+                    $tmpPro = $row->tmpPro;
+                }
 
-				//マップに登録
-                $this->Model_project->registTagMap($pid, $tagid,$tmpPro);
+                //マップに登録
+                $this->Model_project->registTagMap($pid, $tagid, $tmpPro);
                 $this->projectsettings($pid);
 
-        }else{
-            $this->projectsettings($pid);
+            } else {
+                $this->projectsettings($pid);
+            }
         }
+
+        //プロジェクトの説明
+        $des = $_POST['description'];
+        if(strlen($des) == 0){}
+        else{
+            //登録処理
+            if($this->form_validation->run()){
+                $this->Model_project->updateDescription($pid, $des);
+                $this->projectsettings($pid);
+//                print_r($des);
+            }else{
+                $this->projectsettings($pid);
+            }
+        }
+
     }
 
     public function tag_table_check($str){
@@ -191,6 +215,13 @@ class Profile extends CI_Controller {
             return false;
         }
 
+        return true;
+    }
+
+    //プロジェクト説明のバリデーション
+    //バリデーションの必要がでたらここに書く
+    //2015/11/19 特に制限するものが浮かばないので、trueにしている
+    public function description_check($str){
         return true;
     }
 
