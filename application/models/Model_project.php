@@ -138,24 +138,24 @@ class Model_project extends CI_Model{
 
         return ($query->num_rows() > 0);
     }
-	
+
 	//タグテーブルから引数のタグを持つタグIDを返す
 	//存在しなかった場合は0を返す
 	public function searchTagID($str) {
 		$this->db->select('id')->from('tag')->where('tag', array('tag' => $str));
 		$query = $this->db->get();
-		
+
 		return $query->result_array();
 	}
-	
+
 	//タグマップテーブルから引数のタグIDを持つプロジェクトIDを返す
 	public function getProIDfromTagmap($tagID) {
 		$this->db->select('projectID')->from('tagmap')->where('tagID', $tagID);
 		$query = $this->db->get();
-		
+
 		return $query->result_array();
 	}
-	
+
 	//検索単語と検索対象からプロジェクトを検索
 	//$searchFor => 0:tag, 1:projectName, 2:projectID, 3:accountID
 	public function searchProject($searchStr, $searchFor, $sortBy) {
@@ -167,7 +167,7 @@ class Model_project extends CI_Model{
 			//タグテーブルから条件に一致するプロジェクトIDを取得する
 			$tagID = $this->Model_project->getTagID($searchStr);
 			$result = $this->Model_project->getProIDfromTagmap($tagID);
-			
+
 			//取得したプロジェクトIDからクエリ文を生成
 			//取得してきたIDがなかった場合はダミープロジェクトIDで検索を行う
 			if (count($result) == 0) {
@@ -198,22 +198,22 @@ class Model_project extends CI_Model{
 			// OR ownerUserID LIKE '%【検索文字列】%'
 			$this->db->or_like('ownerUserID', $searchStr);
 		}
-		
+
 		//更新日時が新しい順にソートする
 		if ($sortBy[0]) {
-			$this->db->order_by("modified", "desc"); 
+			$this->db->order_by("modified", "desc");
 		}
-		
+
 		//PV数が多い順にソートする
 		else if ($sortBy[1]) {
-			$this->db->order_by("pv", "desc"); 
+			$this->db->order_by("pv", "desc");
 		}
-		
+
 		//名前順にソートする
 		else if ($sortBy[2]) {
-			$this->db->order_by("projectName", "asc"); 
+			$this->db->order_by("projectName", "asc");
 		}
-		
+
 		//クエリの実行
 		$query = $this->db->get();
 
@@ -266,6 +266,13 @@ class Model_project extends CI_Model{
     //day_rankingから削除
     public function deleteDayRanking($userID){
         $this->db->delete('day_ranking', array('usrID'=>$userID));
+    }
+
+    //プロジェクトの説明文を取得する
+    public function getDescription($projectID){
+        $this->db->select('description');
+        $query = $this->db->get_where('project', array('projectID' => $projectID));
+        return $query->result();
     }
 
 }
