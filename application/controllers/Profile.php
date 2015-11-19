@@ -240,6 +240,8 @@ class Profile extends CI_Controller {
     public function delete_tagmap($tagname){
         $this->load->model("Model_project");
 
+        $tagname = urldecode($tagname);
+        file_put_contents("out.txt", $tagname);
         $tagID = $this->Model_project->getTagID($tagname);
 
         $pid = $this->session->userdata('pid');
