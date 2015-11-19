@@ -277,8 +277,8 @@ class Model_project extends CI_Model{
 
     //プロジェクトの説明文をアップデート
     public function updateDescription($projectID, $description){
-        $this->db->where('description', $description);
-        $this->db->update('project', array('projectID' => $projectID));
+        $this->db->where('projectID', $projectID);
+        $this->db->update('project', array('description' => $description));
     }
 
 }
