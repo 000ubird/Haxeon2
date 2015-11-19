@@ -326,7 +326,7 @@ class Profile extends CI_Controller {
             $this->load->view('header');
 			$this->load->view('signup_msg', $data);
 			$this->load->view('footer');
-			
+
             //仮テーブルから削除
             $this->Model_users->deleteTmpAccountFromKey($key);
         } else {
@@ -598,6 +598,7 @@ class Profile extends CI_Controller {
 
         //検証ルールの設定
         $this->form_validation->set_rules("new", "メールアドレス", "required|valid_email");
+        $this->form_validation->set_rules("current", "現在のパスワード", "required|alpha_numeric|callback_current_check");
 
         //エラーメッセージの設定
         $this->form_validation->set_message("required", "%s を入力してください。");
