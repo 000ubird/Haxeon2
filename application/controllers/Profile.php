@@ -197,7 +197,7 @@ class Profile extends CI_Controller {
         }
 
         //どちらも入力されないで更新されたとき
-        $this->projectsettings($pid);
+        if(strlen($tag) == 0 && strlen($des) == 0) $this->projectsettings($pid);
 
     }
 
