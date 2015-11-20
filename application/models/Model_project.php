@@ -213,7 +213,10 @@ class Model_project extends CI_Model{
 		else if ($sortBy[2]) {
 			$this->db->order_by("projectName", "asc");
 		}
-
+		
+		//公開プロジェクトのみ取得
+		$this->db->where('isPublic', true);
+		
 		//クエリの実行
 		$query = $this->db->get();
 
