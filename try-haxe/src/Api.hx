@@ -118,6 +118,7 @@ class Api {
 				  
 				  //追加部分
 				  save : "",
+				  isPublic : "",
 				  userID : "",
 				  originUserID : "",
 				  originProjectID : "",

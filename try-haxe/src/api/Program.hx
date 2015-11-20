@@ -9,7 +9,9 @@ typedef Program = {
 //	?modules : Hash<Module>,
 	
 	//追加部分
-	save : String,
+	save : String,		//Editorの保存・非保存情報を取得する
+	isPublic : String,	//Editorの公開非公開設定を取得する
+	
 	userID : String,			//現在編集中のユーザーID
 	originUserID : String,		//フォーク元のユーザーID
 	originProjectID : String,	//新しく生成する前のプロジェクトID

@@ -35,6 +35,7 @@ class Editor {
   
   //追加部分
   var isSave : JQuery;
+  var isPublic:JQuery;
   var base_url : String;
   
   var mainName : JQuery;
@@ -129,6 +130,7 @@ class Editor {
 	
 	//追加部分
 	isSave = new JQuery("#hx-options-form .hx-hx-save");
+	isPublic = new JQuery("#hx-options-public .hx-public");
 	
     stage = new JQuery(".js-output .js-canvas");
     jsTab = new JQuery("a[href='#js-source']");
@@ -163,6 +165,7 @@ class Editor {
 	
 	//追加部分
     isSave.delegate("input[name='save']" , "change" , onSave );
+    isSave.delegate("input[name='isPublic']" , "change" , onPublic );
 
 		compileBtn.bind( "click" , compile );
 
@@ -181,6 +184,7 @@ class Editor {
 
 	  //追加部分
 	  save : "",
+	  isPublic : "",
 	  userID : "",
 	  originUserID : "",
 	  originProjectID : "",
@@ -263,6 +267,22 @@ class Editor {
   function setSave(save:String) {
 	program.save = save;
 	var radio = new JQuery( 'input[name=\'save\'][value=\'$save\']' );
+	radio.attr( "checked" ,"checked" );
+  }
+  
+   //追加部分
+  function onPublic(e : JqEvent ) {
+	var cb = new JQuery(e.target);
+	var name = cb.val();
+	switch(name) {
+	  case "true" :
+		setPublic(name);
+	  default : 
+	}
+  }
+  function setPublic(isPublic:String) {
+	program.isPublic = isPublic;
+	var radio = new JQuery( 'input[name=\'isPublic\'][value=\'$isPublic\']' );
 	radio.attr( "checked" ,"checked" );
   }
   
@@ -349,6 +369,7 @@ class Editor {
       setTarget( program.target );
       setDCE(program.dce);
 	  setSave(program.save);
+	  setPublic(program.isPublic);
 
       if( program.libs != null ){
         for( lib in libs.find("input.lib") ){
@@ -492,6 +513,7 @@ class Editor {
     program.dce = new JQuery( 'input[name=\'dce\']:checked' ).val();
 	
     program.save = new JQuery( 'input[name=\'save\']:checked' ).val();
+    program.isPublic = new JQuery( 'input[name=\'isPublic\']:checked' ).val();
 
 		var libs = new Array();
     var sel = Type.enumConstructor(program.target);
