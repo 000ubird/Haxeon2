@@ -354,13 +354,24 @@ class Compiler {
 
 		//追加部分
 		var userID = program.userID;
+		var isPublic = false;
 		var projectName = program.projectName;
 		var originProjectID = program.originProjectID;
 		var originUserID = program.originUserID;
-		//html.body.push("<br><H3>生成されたID : " + program.uid +"\n 前のID : " + tmpID + "</H3>");
-
+		
+		//公開非公開情報の取得
+		if (program.isPublic != null) {
+			isPublic = true;
+			html.body.push("<br><br>公開されます");		//デバッグ
+		} else {
+			isPublic = false;
+			html.body.push("<br><br>公開されません。");	//デバッグ
+		}
+		
 		//2回目以降のクリック時は更新されたプロジェクトIDを保存
-		if (!isFirstClick) originProjectID = program.uid;
+		if (!isFirstClick) {
+			originProjectID = program.uid;
+		}
 		
 		var cnx = Mysql.connect( {
 			host : "localhost",
