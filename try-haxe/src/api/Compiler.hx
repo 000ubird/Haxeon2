@@ -362,10 +362,10 @@ class Compiler {
 		//公開非公開情報の取得
 		if (program.isPublic != null) {
 			isPublic = true;
-			html.body.push("<br><br>公開されます");		//デバッグ
+			//html.body.push("<br><br>公開されます");		//デバッグ
 		} else {
 			isPublic = false;
-			html.body.push("<br><br>公開されません。");	//デバッグ
+			//html.body.push("<br><br>公開されません。");	//デバッグ
 		}
 		
 		//2回目以降のクリック時は更新されたプロジェクトIDを保存
@@ -394,8 +394,8 @@ class Compiler {
 			
 			if (program.save == "SAVE" && userID != null) {
 				//プロジェクトテーブルに追加
-				cnx.request("INSERT INTO `project`(`projectID`, `tmpPro`, `projectName` ,`ownerUserID`, `pv`, `fork`, `originUserID`) VALUES (\""
-				+program.uid + "\", \"" +program.uid+ "\", \"" + projectName+"\",\"" + userID + "\"," + 0 + "," + 0 + ", \"" + originUserID + "\");");
+				cnx.request("INSERT INTO `project`(`projectID`, `tmpPro`, `projectName` ,`ownerUserID`, `pv`, `fork`, `originUserID`, `isPublic`) VALUES (\""
+				+program.uid + "\", \"" +program.uid+ "\", \"" + projectName+"\",\"" + userID + "\"," + 0 + "," + 0 + ", \"" + originUserID + "\", \"" +isPublic+ "\");");
 				
 				//ランキングテーブルに追加
 				cnx.request("INSERT INTO `day_ranking` (`proID`, `tmpPro`, `usrID`, `pv`) VALUES (\""+program.uid+"\",\""+program.uid+"\",\""+userID+"\", 0)");
@@ -438,24 +438,24 @@ class Compiler {
 			if (program.save == "SAVE" && userID != null) {
 				//未保存状態で終了したプロジェクトを読み込んだ場合
 				if (proID != tmpPro2) {
-					cnx.request("UPDATE project SET tmpPro = \""+program.uid+"\",modified = \""+Date.now().toString()+"\" , projectID = \""+program.uid+"\" WHERE ownerUserID = '"+userID+"' AND projectID = '"+proID+"';");
+					cnx.request("UPDATE project SET tmpPro = \""+program.uid+"\",modified = \""+Date.now().toString()+"\" , projectID = \""+program.uid+"\" , isPublic = "+isPublic+" WHERE ownerUserID = '"+userID+"' AND projectID = '"+proID+"';");
 					cnx.request("UPDATE day_ranking SET proID = \""+program.uid+"\" , tmpPro = \""+program.uid+"\" WHERE proID = '"+proID+"';");
 					cnx.request("UPDATE tagmap SET projectID = \""+program.uid+"\" , tmpPro = \""+program.uid+"\" WHERE projectID = '"+proID+"';");
 					cnx.request("UPDATE favorite SET projectID = \"" + program.uid + "\" , tmpPro = \"" + program.uid + "\" WHERE projectID = '" + proID + "';");
 				} else {
-					cnx.request("UPDATE project SET tmpPro = \""+program.uid+"\",modified = \""+Date.now().toString()+"\" , projectID = \""+program.uid+"\" WHERE ownerUserID = '"+userID+"' AND tmpPro = '"+tmpID+"';");
+					cnx.request("UPDATE project SET tmpPro = \""+program.uid+"\",modified = \""+Date.now().toString()+"\" , projectID = \""+program.uid+"\" , isPublic = "+isPublic+" WHERE ownerUserID = '"+userID+"' AND tmpPro = '"+tmpID+"';");
 					cnx.request("UPDATE day_ranking SET proID = \""+program.uid+"\" , tmpPro = \""+program.uid+"\" WHERE tmpPro = '"+tmpID+"';");
 					cnx.request("UPDATE tagmap SET projectID = \""+program.uid+"\" , tmpPro = \""+program.uid+"\" WHERE tmpPro = '"+tmpID+"';");
 					cnx.request("UPDATE favorite SET projectID = \"" + program.uid + "\" , tmpPro = \"" + program.uid + "\" WHERE tmpPro = '" + tmpID + "';");
 				}
 			} else {
 				if (proID != tmpPro2) {
-					cnx.request("UPDATE project SET tmpPro = \""+program.uid+"\",modified = \""+Date.now().toString()+"\" WHERE ownerUserID = '"+userID+"' AND projectID = '"+proID+"';");
+					cnx.request("UPDATE project SET tmpPro = \""+program.uid+"\",modified = \""+Date.now().toString()+"\" , isPublic = "+isPublic+" WHERE ownerUserID = '"+userID+"' AND projectID = '"+proID+"';");
 					cnx.request("UPDATE day_ranking SET tmpPro = \"" + program.uid + "\" WHERE proID = '" + proID + "';");
 					cnx.request("UPDATE tagmap SET tmpPro = \"" + program.uid + "\" WHERE projectID = '" + proID + "';");
 					cnx.request("UPDATE favorite SET tmpPro = \"" + program.uid + "\" WHERE projectID = '" + proID + "';");
 				} else {
-					cnx.request("UPDATE project SET tmpPro = \""+program.uid+"\",modified = \""+Date.now().toString()+"\" WHERE ownerUserID = '"+userID+"' AND tmpPro = '"+tmpID+"';");
+					cnx.request("UPDATE project SET tmpPro = \""+program.uid+"\",modified = \""+Date.now().toString()+"\" , isPublic = "+isPublic+" WHERE ownerUserID = '"+userID+"' AND tmpPro = '"+tmpID+"';");
 					cnx.request("UPDATE day_ranking SET tmpPro = \"" + program.uid + "\" WHERE tmpPro = '" + tmpID + "';");
 					cnx.request("UPDATE tagmap SET tmpPro = \"" + program.uid + "\" WHERE tmpPro = '" + tmpID + "';");
 					cnx.request("UPDATE favorite SET tmpPro = \"" + program.uid + "\" WHERE tmpPro = '" + tmpID + "';");
