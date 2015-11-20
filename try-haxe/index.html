@@ -138,50 +138,67 @@ class Test {
 }</textarea>
             </div>
 
-            <div class="tab-pane hx-options" id="hx-options">
-              <form id="hx-options-form" class="form-horizontal">
-                  <div class="control-group hx-main-name">
-                    <label class="control-label" for="main-class">Main class</label>
-                    <div class="controls">
-                      <input type="text" name="main" value="Test"></input>
-                    </div>
-                  </div>
-                  <div class="control-group hx-targets">
-                    <label class="control-label" for="libs-checkbox">Target</label>
+	<div class="tab-pane hx-options" id="hx-options">
+		<form id="hx-options-form" class="form-horizontal">
+			<div class="control-group hx-main-name">
+				<label class="control-label" for="main-class">Main class</label>
+				<div class="controls">
+					<input type="text" name="main" value="Test"></input>
+				</div>
+			</div>
+			
+			<div class="control-group hx-targets">
+				<label class="control-label" for="libs-checkbox">Target</label>
+				<div class="controls">
+					<p><input name="target" type="radio" id="1" value="JS" checked /><label for="1">Javascript</label></p>
+					<p><input name="target" type="radio" id="2"value="SWF" /><label for="2">SWF</label></p>
+				</div>
+			</div>
 
-                    <div class="controls">
-						<p><input name="target" type="radio" id="1" value="JS" checked /><label for="1">Javascript</label></p>
-						<p><input name="target" type="radio" id="2"value="SWF" /><label for="2">SWF</label></p>
-                    </div>
-
-                  </div>
-
-		<!--追加部分-->
-		<div class="control-group hx-save">
-			<label class="control-label" for="libs-checkbox">Save</label>
-			<div class="controls">
+			<!--追加部分-->
+			<div class="control-group hx-save">
+				<label class="control-label" for="libs-checkbox">Save</label>
+				<div class="controls">
 					<p><input name="save" type="radio" id="3" value="SAVE" checked /><label for="3">Yes</label></p>
 					<p><input name="save" type="radio" id="4"value="NOTSAVE" /><label for="4">No</label></p>
+				</div>
 			</div>
+
+			<div class="control-group hx-dce-name">
+				<label class="control-label" for="main-class">DCE <a href="http://haxe.org/manual/cr-dce.html" target="_blank"><i class="icon-question-sign"></i></a></label>
+				<div class="controls">
+					<p><input name="dce" type="radio" id="5" value="full" checked /><label for="5">Full</label></p>
+					<p><input name="dce" type="radio" id="6" value="no" /><label for="6">No</label></p>
+					<p><input name="dce" type="radio" id="7" value="std" /><label for="7">Std</label></p>
+				</div>
+			</div>
+			
+			<div class="control-group hx-libs">
+				<label class="control-label" for="libs-checkbox">Libraries</label>
+				<div class="controls SWF-libs"></div>
+				<div class="controls JS-libs"></div>
+			</div>
+		</form>
+	</div>
+		
+		<!-- 追加部分 公開非公開設定 -->
+		<div class="hx-options-public" id="hx-options">
+			<form id="hx-options-public" class="form-horizontal">
+				<div class="control-group hx-public">
+					<div class="switch">
+						<label>
+						<input type="checkbox" name="isPublic" value="true" checked>
+						非公開
+						<span class="lever"></span>
+						公開
+						</label>
+					</div>
+				</div>
+			</form>
 		</div>
-
-                  <div class="control-group hx-dce-name">
-                    <label class="control-label" for="main-class">DCE <a href="http://haxe.org/manual/cr-dce.html" target="_blank"><i class="icon-question-sign"></i></a></label>
-                    <div class="controls">
-					  <p><input name="dce" type="radio" id="5" value="full" checked /><label for="5">Full</label></p>
-					  <p><input name="dce" type="radio" id="6" value="no" /><label for="6">No</label></p>
-					  <p><input name="dce" type="radio" id="7" value="std" /><label for="7">Std</label></p>
-                    </div>
-                  </div>
-                  <div class="control-group hx-libs">
-                    <label class="control-label" for="libs-checkbox">Libraries</label>
-
-                    <div class="controls SWF-libs"></div>
-                    <div class="controls JS-libs"></div>
-
-                  </div>
-              </form>
-            </div>
+		<!-- 追加部分 終了 -->
+		
+	
 			<div class="tab-pane hx-options" id="hx-about">
 				<h2>About Try-Haxe</h2>
 				<h4>The Haxe Playground</h4>
@@ -221,8 +238,8 @@ class Test {
         <div class=" pull-right">-->
           <!--a href="#" class="fullscreen-btn btn disabled"><i class="icon-resize-full"></i> Fullscreen</a-->
         </div>
-
-        <ul class="nav nav-tabs">
+		
+		<ul class="nav nav-tabs">
               <li class="active"><a href="#js-output" data-toggle="tab" id="output">Output</a></li>
               <li><a href="#js-source" data-toggle="tab">JS Source</a></li>
               <li><a href="#embed-source" data-toggle="tab">Embed</a></li>
