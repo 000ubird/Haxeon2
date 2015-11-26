@@ -9,7 +9,9 @@ $projects = $ranking['projects'];
 echo '<div class="row">';
 $i = 0;
 foreach($projects as $project) {
-	echo '<div class="col s4">';
+    echo '<a href="' . base_url() . 'try-haxe/index.html#' . $project[0]->projectID . '">';
+
+    echo '<div class="col s4">';
 	echo '<div class="card">';
 
 	//1,2,3位のプロジェクトには特別な画像を表示する
@@ -21,10 +23,12 @@ foreach($projects as $project) {
     echo '</div>';
 
 	echo '<div class="card-content">';
-    echo '<span class="card-title activator black-text text-darken-4">' . $project[0]->projectName;
+    echo '<span class="card-title activator black-text text-darken-4 truncate">' . $project[0]->projectName;
     if($project[0]->ownerUserID == $this->session->userdata('userID')) echo '<a href="'.base_url() . 'profile/projectsettings/' . $project[0]->projectID . '"><i class="material-icons">settings</i></a>';
+    echo '<a href="' . base_url() .'profile/tagsettings/' . $project[0]->projectID . '">タグ編集</a>';
     echo '</span>';
-	echo '<p>User : <a href="'.base_url().'profile/information/'.$project[0]->ownerUserID.'">@'.$project[0]->ownerUserID.'</p>';
+    echo '</a>';
+    echo '<p>User : <a href="'.base_url().'profile/information/'.$project[0]->ownerUserID.'">@'.$project[0]->ownerUserID.'</p>';
 	echo '<p>PV : '.$project[0]->pv.'</p>';
 	echo '<p>Fork : '.$project[0]->fork.'</p>';
 	echo '<p><a href="'.base_url().'try-haxe/index.html#'.$project[0]->projectID.'">Edit Code</a></p>';
