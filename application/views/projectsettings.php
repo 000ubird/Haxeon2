@@ -1,6 +1,5 @@
 <h2>プロジェクト設定</h2>
 
-<p>タグ一覧</p>
 <?php
 foreach ($tags as $tag) {
     echo '<div class="row">'. $tag .'<a href="'.base_url().'profile/delete_tagmap/'. $tag .'"><i class="material-icons offset-s5">delete</i></a></div>';
