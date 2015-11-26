@@ -32,12 +32,12 @@ class Editor {
 	var compileBtn : JQuery;
   var libs : JQuery;
   var targets : JQuery;
-  
+
   //追加部分
   var isSave : JQuery;
   var isPublic:JQuery;
   var base_url : String;
-  
+
   var mainName : JQuery;
   var dceName : JQuery;
   var stage : JQuery;
@@ -58,7 +58,7 @@ class Editor {
 	base_url = Browser.window.location.origin;
 	//APIからユーザID情報とプロジェクト名情報を持ってくる
 	var con = new Http(base_url+"/haxeon/HaxeonHandler/get_is_login/");
-	
+
 	con.onError = onError;
 	con.onData = onResult;
 	con.request(false);
@@ -127,11 +127,11 @@ class Editor {
 	compileBtn = new JQuery(".compile-btn");
     libs = new JQuery("#hx-options-form .hx-libs");
     targets = new JQuery("#hx-options-form .hx-targets");
-	
+
 	//追加部分
 	isSave = new JQuery("#hx-options-form .hx-hx-save");
 	isPublic = new JQuery("#hx-options-public .hx-public");
-	
+
     stage = new JQuery(".js-output .js-canvas");
     jsTab = new JQuery("a[href='#js-source']");
     embedTab = new JQuery("a[href='#embed-source']");
@@ -162,7 +162,7 @@ class Editor {
 
     dceName.delegate("input[name='dce']" , "change" , onDce );
     targets.delegate("input[name='target']" , "change" , onTarget );
-	
+
 	//追加部分
     isSave.delegate("input[name='save']" , "change" , onSave );
     isSave.delegate("input[name='isPublic']" , "change" , onPublic );
@@ -189,7 +189,7 @@ class Editor {
 	  originUserID : "",
 	  originProjectID : "",
 	  projectName : "",
-	  
+
     };
 
     initLibs();
@@ -269,7 +269,7 @@ class Editor {
 	var radio = new JQuery( 'input[name=\'save\'][value=\'$save\']' );
 	radio.attr( "checked" ,"checked" );
   }
-  
+
    //追加部分
   function onPublic(e : JqEvent ) {
 	var cb = new JQuery(e.target);
@@ -277,7 +277,7 @@ class Editor {
 	switch(name) {
 	  case "true" :
 		setPublic(name);
-	  default : 
+	  default :
 	}
   }
   function setPublic(isPublic:String) {
@@ -285,8 +285,8 @@ class Editor {
 	var radio = new JQuery( 'input[name=\'isPublic\'][value=\'$isPublic\']' );
 	radio.attr( "checked" ,"checked" );
   }
-  
-  
+
+
   function onTarget(e : JqEvent){
     var cb = new JQuery( e.target );
     var name = cb.val();
@@ -350,7 +350,7 @@ class Editor {
   function onProgram(p:Program)
 	{
 		p.originProjectID = p.uid;
-		
+
 		//trace(p);
 		if (p != null)
 		{
@@ -511,7 +511,7 @@ class Editor {
 		program.main.source = haxeSource.getValue();
 		program.main.name = mainName.val();
     program.dce = new JQuery( 'input[name=\'dce\']:checked' ).val();
-	
+
     program.save = new JQuery( 'input[name=\'save\']:checked' ).val();
     program.isPublic = new JQuery( 'input[name=\'isPublic\']:checked' ).val();
 
@@ -660,32 +660,36 @@ class Editor {
 		program.userID = userDatas.userID;
 		program.originUserID = userDatas.userID;
 		program.projectName = userDatas.projectName;
-		
+
 		//HTMLファイルにプロジェクト名を出力する
 		new JQuery("p.proName").text(program.projectName);
+        //説明文を出力する
+        new JQuery("p.description").text(userDatas.description);
 	}
-	
+
 	//既存のプロジェクトを読み込んだ際に呼ばれる
 	private function onResult2(data : String) : Void {
 		//プロジェクト編集中のユーザー情報を取得
 		var userDatas = Json.parse(data);
-		
+
 		//PV数をカウントアップする
 		var con = new Http(base_url+"/haxeon/HaxeonHandler/update_pv/"+program.uid);
 		con.request(false);
-		
+
 		//フォーク元のユーザーIDを保持する
 		program.originUserID = program.userID;
-		
+
 		//フォークしたプロジェクトであることを記録
 		if (program.userID != userDatas.userID) {
 			program.projectName = "Forked_from_"+program.projectName;
 		}
-		
+
 		//プログラム所持者のIDを更新する
 		program.userID = userDatas.userID;
-		
+
 		//HTMLファイルにプロジェクト名を出力する
 		new JQuery("p.proName").text(program.projectName);
+        //説明文を出力する
+        new JQuery("p.description").text(userDatas.description);
 	}
 }

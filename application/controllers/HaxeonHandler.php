@@ -19,7 +19,11 @@ class HaxeonHandler extends CI_Controller {
 			exit;
 		}
 
-		echo '{"userID":"'.$this->session->userdata('userID').'","projectName":"'.$this->session->userdata('projectName').'"}';
+        //projectIDを取得したい。できれば説明文の取得ができる
+        //Model_project()->getDescription($projectID)をしたい
+        //現在はhelloが入っているが、ここに説明文を入れたい
+//        $this->model->Model_project();
+		echo '{"userID":"'.$this->session->userdata('userID').'","projectName":"'.$this->session->userdata('projectName').'","description":"hello"}';
 	}
 
 	public function update_pv($projectID) {
