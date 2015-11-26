@@ -10,13 +10,6 @@ echo form_open('profile/validation_project');
 echo validation_errors();
 ?>
 
-<div class="row">
-    <div class="input-field col s12">
-        <input name="tag" type="text" class="validate">
-        <label for="tag">new tag</label>
-    </div>
-</div>
-
 <br />
 
 <div class="row">
