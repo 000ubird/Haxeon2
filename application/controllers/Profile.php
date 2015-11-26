@@ -141,16 +141,53 @@ class Profile extends CI_Controller
         }
     }
 
+    //タグ設定画面
+    public function tagsettings($projectID){
+        $this->session->set_userdata(array('pid' => $projectID));
+
+        $this->load->model('Model_project');
+        $this->load->library('tag');
+
+        $data['tags'] = $this->tag->getTag($projectID);
+        $data['projectID'] = $projectID;
+
+        $this->load->view('header');
+        $this->load->view('tagsettings', $data);
+        $this->load->view('footer');
+    }
+
 public function validation_project()
 {
     $this->load->library("form_validation");
     $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
 
     //検証ルールの設定
-    $this->form_validation->set_rules("tag", "タグ", "callback_tag_table_check");
     //ひとまず500文字程度にしておく
     $this->form_validation->set_rules("description", "プロジェクト説明", 'max_length[500]|callback_description_check');
     $this->form_validation->set_message("max_length", "%sは500文字以内でお願いします");
+
+    $pid = $this->session->userdata('pid');
+    $this->load->model("Model_project");
+    
+    //プロジェクトの説明
+    $des = $_POST['description'];
+    //登録処理
+    if ($this->form_validation->run()) {
+        $this->Model_project->updateDescription($pid, $des);
+        //            print_r($des);
+    } else {
+    }
+
+    //処理が終わったらとりあえず同じ画面を表示する
+    $this->projectsettings($pid);
+
+}
+
+public function validation_tag(){
+    $this->load->library("form_validation");
+    $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
+
+    $this->form_validation->set_rules("tag", "タグ", "callback_tag_table_check");
 
     $pid = $this->session->userdata('pid');
     $tag = $_POST['tag'];
@@ -188,16 +225,8 @@ public function validation_project()
         }
     }
 
-    //プロジェクトの説明
-    $des = $_POST['description'];
-    //登録処理
-    if ($this->form_validation->run()) {
-        $this->Model_project->updateDescription($pid, $des);
-        //            print_r($des);
-    } else {
-    }
-
-    $this->projectsettings($pid);
+    //処理が終わったらとりあえず同じ画面を表示する
+    $this->tagsettings($pid);
 
 }
 
@@ -250,7 +279,7 @@ public function validation_project()
         $pid = $this->session->userdata('pid');
         $this->Model_project->deleteTagMap($pid, $tagID);
 
-        $this->projectsettings($pid);
+        $this->tagsettings($pid);
     }
 
 	//アカウント削除

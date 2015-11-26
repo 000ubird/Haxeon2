@@ -85,6 +85,7 @@ if($isown || !$this->session->userdata('userID')){
                     echo '        <div class="card-content">';
                     echo '            <span class="card-title activator black-text text-darken-4 truncate">' . $project->projectName;
                     if ($project->ownerUserID == $this->session->userdata('userID')) echo '<a href="' . base_url() . 'profile/projectsettings/' . $project->projectID . '"><i class="material-icons">settings</i></a>';
+                    echo '<a href="' . base_url() .'profile/tagsettings/' . $project->projectID . '">タグ編集</a>';
                     echo '</span>';
                     echo '</a>';
                     echo '            <p class="truncate">User : <a href="' . base_url() . 'profile/information/' . $project->ownerUserID . '">@' . $project->ownerUserID . '</a></p>';
