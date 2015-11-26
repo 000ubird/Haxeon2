@@ -21,7 +21,7 @@ echo validation_errors();
 
 <div class="row">
     <div class="input-field col s12">
-        <textarea name="description" class="materialize-textarea" placeholder="<?php echo $description[0]->description; ?>"></textarea>
+        <textarea name="description" class="materialize-textarea"><?php echo $description[0]->description; ?></textarea>
     <label for="description">project description</label>
     </div>
 </div>
