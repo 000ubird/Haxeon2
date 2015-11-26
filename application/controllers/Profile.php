@@ -7,26 +7,31 @@ define("PROJECT_PER_PAGE", 18);
 //フォロー、フォロワーの表示数
 define("FOLLOW_PER_PAGE", 28);
 
-class Profile extends CI_Controller {
+class Profile extends CI_Controller
+{
 
-    public function index() {
+    public function index()
+    {
         $this->load->view('header');
         $this->load->view('haxeon');
         $this->load->view('footer');
     }
 
-    public function signup(){
+    public function signup()
+    {
         $this->load->view('header');
         $this->load->view('signup');
         $this->load->view('footer');
     }
 
-    public function information($userID, $category = ""){
+    public function information($userID, $category = "")
+    {
         $this->view($this->getUserData($userID, $category));
     }
 
     //プロフィールページを表示する本体
-    public function view($data){
+    public function view($data)
+    {
         //新しい順にソートしておく
         krsort($data['projects']);
         krsort($data['follow']);
@@ -35,14 +40,14 @@ class Profile extends CI_Controller {
 
         $category = $data['category'];
 
-        if(!$category == "") {
+        if (!$category == "") {
             //ページネーション
             $this->load->library('pagination');
 
-            $config['base_url'] = base_url().'profile/information/Tom0/'.$category.'/';
+            $config['base_url'] = base_url() . 'profile/information/Tom0/' . $category . '/';
             $config['total_rows'] = count($data[$category]);
             $config['per_page'] = PROJECT_PER_PAGE;
-            if($category == 'follow' || $category == 'follower') $config['per_page'] = FOLLOW_PER_PAGE;
+            if ($category == 'follow' || $category == 'follower') $config['per_page'] = FOLLOW_PER_PAGE;
 
             $config['uri_segment'] = 5;
 
@@ -68,17 +73,18 @@ class Profile extends CI_Controller {
 
             $this->pagination->initialize($config);
 
-            if($category == 'projects') $data['projects'] = array_slice($data['projects'], $this->uri->segment(5), PROJECT_PER_PAGE);
-            if($category == 'follow') $data['follow'] = array_slice($data['follow'], $this->uri->segment(5), FOLLOW_PER_PAGE);
+            if ($category == 'projects') $data['projects'] = array_slice($data['projects'], $this->uri->segment(5), PROJECT_PER_PAGE);
+            if ($category == 'follow') $data['follow'] = array_slice($data['follow'], $this->uri->segment(5), FOLLOW_PER_PAGE);
         }
 
 
         $this->load->view('header');
-        $this->load->view('profile',$data);
+        $this->load->view('profile', $data);
         $this->load->view('footer');
     }
 
-    private function getUserData($userID, $category){
+    private function getUserData($userID, $category)
+    {
         $this->load->model('Model_users');
         $this->load->model('Model_project');
         $this->load->model('Model_favorite');
@@ -98,7 +104,7 @@ class Profile extends CI_Controller {
         $favorite_list = $this->Model_favorite->getFavorite($userID);
 
         $favorite_projects = array();
-        foreach($favorite_list as $f){
+        foreach ($favorite_list as $f) {
             $id = $f->projectID;
             array_push($favorite_projects, $this->Model_project->getOneProject($id));
         }
@@ -113,14 +119,15 @@ class Profile extends CI_Controller {
      * プロジェクトの所有者のみが変更できる設定を行う
      * タグ設定やプロジェクトの削除など
      */
-    public function projectsettings($projectID){
+    public function projectsettings($projectID)
+    {
         $this->session->set_userdata(array('pid' => $projectID));
 
         $this->load->model('Model_project');
         $this->load->library('tag');
 
         //sessionのuserIDとprojectIDの所有者が同じかチェック
-        if($this->Model_project->isOwner($projectID)) {
+        if ($this->Model_project->isOwner($projectID)) {
 
             $data['tags'] = $this->tag->getTag($projectID);
             $data['projectID'] = $projectID;
@@ -129,77 +136,70 @@ class Profile extends CI_Controller {
             $this->load->view('header');
             $this->load->view('projectsettings', $data);
             $this->load->view('footer');
-        }else{
+        } else {
             $this->index();
         }
     }
 
-    public function validation_project(){
-        $this->load->library("form_validation");
-        $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
+public function validation_project()
+{
+    $this->load->library("form_validation");
+    $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
 
-        //検証ルールの設定
-        $this->form_validation->set_rules("tag", "タグ", "callback_tag_table_check");
-        //ひとまず500文字程度にしておく
-        $this->form_validation->set_rules("description", "プロジェクト説明", 'max_length[500]|callback_description_check');
-        $this->form_validation->set_message("max_length", "%sは500文字以内でお願いします");
+    //検証ルールの設定
+    $this->form_validation->set_rules("tag", "タグ", "callback_tag_table_check");
+    //ひとまず500文字程度にしておく
+    $this->form_validation->set_rules("description", "プロジェクト説明", 'max_length[500]|callback_description_check');
+    $this->form_validation->set_message("max_length", "%sは500文字以内でお願いします");
 
-        $pid = $this->session->userdata('pid');
-        $tag = $_POST['tag'];
+    $pid = $this->session->userdata('pid');
+    $tag = $_POST['tag'];
 
-        //タグに関する登録
-        //長さが0なら実行しない
-        if(strlen($tag) == 0){}
-        else {
-            $this->load->model("Model_project");
-            //正しい場合は登録処理
-            if ($this->form_validation->run()) {
-                //タグマップテーブルの登録数についての確認
-                //入力を保持
-                $tag = $this->input->post('tag');
+    //タグに関する登録
+    //長さが0なら実行しない
+    if (strlen($tag) == 0) {
+    } else {
+        $this->load->model("Model_project");
+        //正しい場合は登録処理
+        if ($this->form_validation->run()) {
+            //タグマップテーブルの登録数についての確認
+            //入力を保持
+            $tag = $this->input->post('tag');
 
-                if (!$this->tag_check($tag)) {
-                    //タグテーブルに存在しないタグのとき
-                    $this->Model_project->registTag($tag);
-                }
-
-                //idを取得
-                $tagid = $this->Model_project->getTagID($tag);
-
-                //プロジェクトテーブルからtmpIDの情報を取得
-                $this->load->model('Model_project');
-                $result = $this->Model_project->getOneProject($pid);
-                foreach ($result as $row) {
-                    $tmpPro = $row->tmpPro;
-                }
-
-                //マップに登録
-                $this->Model_project->registTagMap($pid, $tagid, $tmpPro);
-                $this->projectsettings($pid);
-
-            } else {
-                $this->projectsettings($pid);
+            if (!$this->tag_check($tag)) {
+                //タグテーブルに存在しないタグのとき
+                $this->Model_project->registTag($tag);
             }
-        }
 
-        //プロジェクトの説明
-        $des = $_POST['description'];
-        if(strlen($des) == 0){}
-        else{
-            //登録処理
-            if($this->form_validation->run()){
-                $this->Model_project->updateDescription($pid, $des);
-                $this->projectsettings($pid);
-//                print_r($des);
-            }else{
-                $this->projectsettings($pid);
+            //idを取得
+            $tagid = $this->Model_project->getTagID($tag);
+
+            //プロジェクトテーブルからtmpIDの情報を取得
+            $this->load->model('Model_project');
+            $result = $this->Model_project->getOneProject($pid);
+            foreach ($result as $row) {
+                $tmpPro = $row->tmpPro;
             }
+
+            //マップに登録
+            $this->Model_project->registTagMap($pid, $tagid, $tmpPro);
+
+        } else {
         }
-
-        //どちらも入力されないで更新されたとき
-        if(strlen($tag) == 0 && strlen($des) == 0) $this->projectsettings($pid);
-
     }
+
+    //プロジェクトの説明
+    $des = $_POST['description'];
+    //登録処理
+    if ($this->form_validation->run()) {
+        $this->Model_project->updateDescription($pid, $des);
+        //            print_r($des);
+    } else {
+    }
+
+    $this->projectsettings($pid);
+
+}
 
     public function tag_table_check($str){
         $this->load->model("Model_project");
