@@ -141,6 +141,27 @@ class Profile extends CI_Controller
         }
     }
 
+    //タグ設定画面
+    public function tagsettings($projectID){
+        $this->session->set_userdata(array('pid' => $projectID));
+
+        $this->load->model('Model_project');
+        $this->load->library('tag');
+
+        //sessionのuserIDとprojectIDの所有者が同じかチェック
+        if ($this->Model_project->isOwner($projectID)) {
+
+            $data['tags'] = $this->tag->getTag($projectID);
+            $data['projectID'] = $projectID;
+
+            $this->load->view('header');
+            $this->load->view('tagsettings', $data);
+            $this->load->view('footer');
+        } else {
+            $this->index();
+        }
+    }
+
 public function validation_project()
 {
     $this->load->library("form_validation");
