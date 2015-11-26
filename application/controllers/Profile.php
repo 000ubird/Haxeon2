@@ -148,18 +148,12 @@ class Profile extends CI_Controller
         $this->load->model('Model_project');
         $this->load->library('tag');
 
-        //sessionのuserIDとprojectIDの所有者が同じかチェック
-        if ($this->Model_project->isOwner($projectID)) {
+        $data['tags'] = $this->tag->getTag($projectID);
+        $data['projectID'] = $projectID;
 
-            $data['tags'] = $this->tag->getTag($projectID);
-            $data['projectID'] = $projectID;
-
-            $this->load->view('header');
-            $this->load->view('tagsettings', $data);
-            $this->load->view('footer');
-        } else {
-            $this->index();
-        }
+        $this->load->view('header');
+        $this->load->view('tagsettings', $data);
+        $this->load->view('footer');
     }
 
 public function validation_project()
@@ -173,7 +167,8 @@ public function validation_project()
     $this->form_validation->set_message("max_length", "%sは500文字以内でお願いします");
 
     $pid = $this->session->userdata('pid');
-
+    $this->load->model("Model_project");
+    
     //プロジェクトの説明
     $des = $_POST['description'];
     //登録処理
@@ -284,7 +279,7 @@ public function validation_tag(){
         $pid = $this->session->userdata('pid');
         $this->Model_project->deleteTagMap($pid, $tagID);
 
-        $this->projectsettings($pid);
+        $this->tagsettings($pid);
     }
 
 	//アカウント削除
