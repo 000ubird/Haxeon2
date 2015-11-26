@@ -1,10 +1,6 @@
 <h2>プロジェクト設定</h2>
 
 <?php
-foreach ($tags as $tag) {
-    echo '<div class="row">'. $tag .'<a href="'.base_url().'profile/delete_tagmap/'. $tag .'"><i class="material-icons offset-s5">delete</i></a></div>';
-}
-
 echo form_open('profile/validation_project');
 echo validation_errors();
 ?>
@@ -13,7 +9,7 @@ echo validation_errors();
 
 <div class="row">
     <div class="input-field col s12">
-        <textarea name="description" class="materialize-textarea"><?php echo $description[0]->description; ?></textarea>
+        <textarea name="description" class="materialize-textarea" placeholder="このプロジェクトについての説明"><?php echo $description[0]->description; ?></textarea>
     <label for="description">project description</label>
     </div>
 </div>
