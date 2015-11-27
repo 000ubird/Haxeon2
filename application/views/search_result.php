@@ -31,10 +31,10 @@
 
 			<input type="checkbox" id="projectName" value="1" name="chk[1]" <?php if(set_checkbox('chk[1]',1)) echo 'checked="checked"';?> />
 			<label for="projectName">プロジェクト名</label>
-
+<!--
 			<input type="checkbox" id="projectID" value="2" name="chk[2]" <?php if(set_checkbox('chk[2]',2)) echo 'checked="checked"';?> />
 			<label for="projectID">プロジェクトID</label>
-
+-->
 			<input type="checkbox" id="accountID" value="3" name="chk[3]" <?php if(set_checkbox('chk[3]',3)) echo 'checked="checked"';?> />
 			<label for="accountID">アカウントID</label>
 		</div>
