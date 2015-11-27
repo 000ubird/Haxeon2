@@ -88,10 +88,25 @@ class Profile extends CI_Controller
         $this->load->model('Model_users');
         $this->load->model('Model_project');
         $this->load->model('Model_favorite');
-
+		
+		$array = [];
+		//ログイン中のユーザが自分のプロフィールを閲覧する場合
+		if ($this->session->userdata('userID') == $userID) {
+			$data['projects'] = $this->Model_users->getProjects($userID);
+		}
+		//ログイン中のユーザが他人のプロフィールを閲覧する場合
+		else {
+			$projects = $this->Model_users->getProjects($userID);
+			//公開プロジェクトだけを抽出する
+			foreach($projects as $pro) {
+				if ($pro->isPublic) array_push($array, $pro);
+			}
+			
+			$data['projects'] = $array;
+		}
+		
         $data['category'] = $category;
         $data['user'] = $this->Model_users->getUserData($userID);
-        $data['projects'] = $this->Model_users->getProjects($userID);
         $data['project_total'] = count($data['projects']);
         $data['follow'] = $this->Model_users->getFollowInfo($userID);
         $data['follow_total'] = count($data['follow']);
