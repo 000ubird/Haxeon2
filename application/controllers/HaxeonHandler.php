@@ -34,10 +34,10 @@ class HaxeonHandler extends CI_Controller {
 		$this->Model_project->pvCountUp($projectID);
 	}
 
-    public function get_description($projectID){
+    public function get_description($projectID = ""){
         $this->load->model('Model_project');
         $description = $this->Model_project->getDescription($projectID);
 
-        echo $description[0]->description;
+        if($description) echo $description[0]->description;
     }
 }
