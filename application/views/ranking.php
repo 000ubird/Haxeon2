@@ -11,29 +11,36 @@ $cur_page = 0;
 $projects = $ranking['projects'];
 $favorites = $ranking['favorites'];
 $base_url = base_url();
+?>
 
-echo '<ul id="dropdown2" class="dropdown-content">';
-echo '<li><a href="'.$base_url.'ranking/index/day/'.$order.'/'.$num.'/'.$cur_page.'/">1日</a></li>';
-echo '<li><a href="'.$base_url.'ranking/index/week/'.$order.'/'.$num.'/'.$cur_page.'/">1週間</a></li>';
-echo '<li><a href="'.$base_url.'ranking/index/all/'.$order.'/'.$num.'/'.$cur_page.'/">すべて</a></li>';
-echo '</ul>';
-echo '<a class="btn dropdown-button" href="#!" data-activates="dropdown2">表示範囲<i class="mdi-navigation-arrow-drop-down right"></i></a>';
+<div class="row">
+	<div class="input-field col s3">表示範囲
+		<select onChange="location.href=this.options[this.selectedIndex].value" class="browser-default">
+			<option VALUE=<?php echo '"'.$base_url.'ranking/index/day/'.$order.'/'.$num.'/'.$cur_page.'/"'; if($days == "day") echo "selected";?> >１日</option>
+			<option VALUE=<?php echo '"'.$base_url.'ranking/index/week/'.$order.'/'.$num.'/'.$cur_page.'/"';if($days == "week")echo "selected";?> >１週間</option>
+			<option VALUE=<?php echo '"'.$base_url.'ranking/index/all/'.$order.'/'.$num.'/'.$cur_page.'/"'; if($days == "all") echo "selected";?> >すべて</option> 
+		</select>
+	</div>
+	
+	<div class="input-field col s3">並べ替え
+		<select onChange="location.href=this.options[this.selectedIndex].value" class="browser-default">
+			<option VALUE=<?php echo '"'.$base_url.'ranking/index/'.$days.'/pv/'.$num.'/'.$cur_page.'/"';	if($order == "pv") echo "selected"; ?> >閲覧数</option>
+			<option VALUE=<?php echo '"'.$base_url.'ranking/index/'.$days.'/fork/'.$num.'/'.$cur_page.'/"';	if($order == "fork")echo "selected";?> >フォーク数</option>
+			<option VALUE=<?php echo '"'.$base_url.'ranking/index/'.$days.'/projectID/'.$num.'/'.$cur_page.'/"';	if($order == "projectID") echo "selected"; ?> >お気に入り数</option> 
+		</select>
+	</div>
+	
+	<div class="input-field col s3">表示数
+		<select onChange="location.href=this.options[this.selectedIndex].value" class="browser-default">
+			<option VALUE=<?php echo '"'.$base_url.'ranking/index/'.$days.'/'.$order.'/15/'.$cur_page.'/"'; 	if($num == 15) echo "selected";?>  >15個</option>
+			<option VALUE=<?php echo '"'.$base_url.'ranking/index/'.$days.'/'.$order.'/30/'.$cur_page.'/"';		if($num == 30) echo "selected";?>  >30個</option>
+			<option VALUE=<?php echo '"'.$base_url.'ranking/index/'.$days.'/'.$order.'/60/'.$cur_page.'/"'; 	if($num == 60) echo "selected";?>  >60個</option> 
+			<option VALUE=<?php echo '"'.$base_url.'ranking/index/'.$days.'/'.$order.'/100/'.$cur_page.'/"'; 	if($num == 100) echo "selected";?> >100個</option> 
+		</select>
+	</div>
+</div>
 
-echo '<ul id="dropdown3" class="dropdown-content">';
-echo '<li><a href="'.$base_url.'ranking/index/'.$days.'/pv/'.$num.'/'.$cur_page.'/">閲覧数</a></li>';
-echo '<li><a href="'.$base_url.'ranking/index/'.$days.'/fork/'.$num.'/'.$cur_page.'/">フォーク数</a></li>';
-echo '<li><a href="'.$base_url.'ranking/index/'.$days.'/pv/'.$num.'/'.$cur_page.'/">お気に入り数</a></li>';
-echo '</ul>';
-echo '<a class="btn dropdown-button" href="#!" data-activates="dropdown3">並び替え<i class="mdi-navigation-arrow-drop-down right"></i></a>';
-
-echo '<ul id="dropdown4" class="dropdown-content">';
-echo '<li><a href="'.$base_url.'ranking/index/'.$days.'/pv/15/'.$cur_page.'/">15個</a></li>';
-echo '<li><a href="'.$base_url.'ranking/index/'.$days.'/fork/30/'.$cur_page.'/">30個</a></li>';
-echo '<li><a href="'.$base_url.'ranking/index/'.$days.'/fork/60/'.$cur_page.'/">60個</a></li>';
-echo '<li><a href="'.$base_url.'ranking/index/'.$days.'/pv/100/'.$cur_page.'/">100個</a></li>';
-echo '</ul>';
-echo '<a class="btn dropdown-button" href="#!" data-activates="dropdown4">表示数<i class="mdi-navigation-arrow-drop-down right"></i></a>';
-
+<?php
 //カードの表示
 echo '<div class="row">';
 $i = 0;
