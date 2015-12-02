@@ -9,13 +9,16 @@ class HaxeonHandler extends CI_Controller {
 	}
 
 	public function get_is_login() {
-		if(($this->session->userdata('userID') == null)) {
-			echo '{ "error":"not login"}';
+        $userID = $this->session->userdata('userID');
+        $projectName = $this->session->userdata('projectName');
+
+		if(($userID == null)) {
+			echo '{"error":"not login"}';
 			exit;
 		}
 
-		if(($this->session->userdata('projectName') == null)) {
-			echo '{"userID":"'.$this->session->userdata('userID').'","projectName":""}';
+		if(($projectName == null)) {
+			echo '{"userID":"'.$userID.'","projectName":""}';
 			exit;
 		}
 
@@ -23,11 +26,18 @@ class HaxeonHandler extends CI_Controller {
         //Model_project()->getDescription($projectID)をしたい
         //現在はhelloが入っているが、ここに説明文を入れたい
 //        $this->model->Model_project();
-		echo '{"userID":"'.$this->session->userdata('userID').'","projectName":"'.$this->session->userdata('projectName').'","description":"hello"}';
+		echo '{"userID":"'.$userID.'","projectName":"'.$projectName.'"}';
 	}
 
 	public function update_pv($projectID) {
 		$this->load->model('Model_project');
 		$this->Model_project->pvCountUp($projectID);
 	}
+
+    public function get_description($projectID){
+        $this->load->model('Model_project');
+        $description = $this->Model_project->getDescription($projectID);
+
+        echo $description[0]->description;
+    }
 }

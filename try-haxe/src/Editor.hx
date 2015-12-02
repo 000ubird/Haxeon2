@@ -202,7 +202,7 @@ class Editor {
     }
   }
 
-  function  onDce(e : JqEvent){
+  function onDce(e : JqEvent){
     var cb = new JQuery( e.target );
     var name = cb.val();
     switch( name ){
@@ -661,10 +661,14 @@ class Editor {
 		program.originUserID = userDatas.userID;
 		program.projectName = userDatas.projectName;
 
+        //説明文を取得する
+        var con2 = new Http(base_url+"/haxeon/HaxeonHandler/get_description/"+program.uid);
+        con2.onData = onDescription;
+        con2.onError = onError;
+        con2.request(false);
+
 		//HTMLファイルにプロジェクト名を出力する
 		new JQuery("p.proName").text(program.projectName);
-        //説明文を出力する
-        new JQuery("p.description").text(userDatas.description);
 	}
 
 	//既存のプロジェクトを読み込んだ際に呼ばれる
@@ -675,6 +679,12 @@ class Editor {
 		//PV数をカウントアップする
 		var con = new Http(base_url+"/haxeon/HaxeonHandler/update_pv/"+program.uid);
 		con.request(false);
+
+        //説明文を取得する
+        var con2 = new Http(base_url+"/haxeon/HaxeonHandler/get_description/"+program.uid);
+        con2.onData = onDescription;
+        con2.onError = onError;
+        con2.request(false);
 
 		//フォーク元のユーザーIDを保持する
 		program.originUserID = program.userID;
@@ -689,7 +699,10 @@ class Editor {
 
 		//HTMLファイルにプロジェクト名を出力する
 		new JQuery("p.proName").text(program.projectName);
-        //説明文を出力する
-        new JQuery("p.description").text(userDatas.description);
 	}
+
+    private function onDescription(data: String):Void{
+        //説明文を出力する
+        new JQuery("p.proDes").text(data);
+    }
 }
