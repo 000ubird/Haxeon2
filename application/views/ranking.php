@@ -24,9 +24,9 @@ $base_url = base_url();
 	
 	<div class="input-field col s3">並べ替え
 		<select onChange="location.href=this.options[this.selectedIndex].value" class="browser-default">
-			<option VALUE=<?php echo '"'.$base_url.'ranking/index/'.$days.'/pv/'.$num.'/'.$cur_page.'/"';	if($order == "pv") echo "selected"; ?> >閲覧数</option>
-			<option VALUE=<?php echo '"'.$base_url.'ranking/index/'.$days.'/fork/'.$num.'/'.$cur_page.'/"';	if($order == "fork")echo "selected";?> >フォーク数</option>
-			<option VALUE=<?php echo '"'.$base_url.'ranking/index/'.$days.'/projectID/'.$num.'/'.$cur_page.'/"';	if($order == "projectID") echo "selected"; ?> >お気に入り数</option> 
+			<option VALUE=<?php echo '"'.$base_url.'ranking/index/'.$days.'/pv/'.$num.'/'.$cur_page.'/"';		if($order == "pv") echo "selected"; ?> >閲覧数</option>
+			<option VALUE=<?php echo '"'.$base_url.'ranking/index/'.$days.'/fork/'.$num.'/'.$cur_page.'/"';		if($order == "fork")echo "selected";?> >フォーク数</option>
+			<option VALUE=<?php echo '"'.$base_url.'ranking/index/'.$days.'/favorite/'.$num.'/'.$cur_page.'/"';	if($order == "favorite") echo "selected"; ?> >お気に入り数</option> 
 		</select>
 	</div>
 	
@@ -74,8 +74,12 @@ foreach($projects as $project) {
         }
 
         if($isfavorite) {
+			$this->load->model('Model_favorite');
+			$this->Model_favorite->updateFavorite($project->projectID);
             echo '<p><a href="'.$base_url.'favorite/release_favorite/' .$project->projectID. '"><img src="'.$base_url.'img/star.png" width=30px height=30px></a></p>';
         }else{
+			$this->load->model('Model_favorite');
+			$this->Model_favorite->updateFavorite($project->projectID);
             echo '<p><a href="'.$base_url.'favorite/regist_favorite/' .$project->projectID. '"><img src="'.$base_url.'img/unstar.png" width=30px height=30px></a></p>';
         }
 
