@@ -395,7 +395,7 @@ class Compiler {
 			if (program.save == "SAVE" && userID != null) {
 				//プロジェクトテーブルに追加
 				cnx.request("INSERT INTO `project`(`projectID`, `tmpPro`, `projectName` ,`ownerUserID`, `pv`, `fork`, `originUserID`, `isPublic`) VALUES (\""
-				+program.uid + "\", \"" +program.uid+ "\", \"" + projectName+"\",\"" + userID + "\"," + 0 + "," + 0 + ", \"" + originUserID + "\", \"" +isPublic+ "\");");
+				+program.uid + "\", \"" +program.uid+ "\", \"" + projectName+"\",\"" + userID + "\"," + 0 + "," + 0 + ", \"" + originUserID + "\","+isPublic+");");
 				
 				//ランキングテーブルに追加
 				cnx.request("INSERT INTO `day_ranking` (`proID`, `tmpPro`, `usrID`, `pv`) VALUES (\""+program.uid+"\",\""+program.uid+"\",\""+userID+"\", 0)");
