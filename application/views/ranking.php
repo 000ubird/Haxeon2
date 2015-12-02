@@ -75,11 +75,11 @@ foreach($projects as $project) {
 
         if($isfavorite) {
 			$this->load->model('Model_favorite');
-			$this->Model_favorite->updateFavorite($project->projectID);
+			$this->Model_favorite->updateFavoriteNum($project->projectID);
             echo '<p><a href="'.$base_url.'favorite/release_favorite/' .$project->projectID. '"><img src="'.$base_url.'img/star.png" width=30px height=30px></a></p>';
         }else{
 			$this->load->model('Model_favorite');
-			$this->Model_favorite->updateFavorite($project->projectID);
+			$this->Model_favorite->updateFavoriteNum($project->projectID);
             echo '<p><a href="'.$base_url.'favorite/regist_favorite/' .$project->projectID. '"><img src="'.$base_url.'img/unstar.png" width=30px height=30px></a></p>';
         }
 

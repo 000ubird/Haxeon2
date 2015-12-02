@@ -35,7 +35,7 @@ class Model_favorite extends CI_Model {
     }
 	
 	//指定したプロジェクトのお気に入り数を更新
-	public function updateFavorite($projectID) {
+	public function updateFavoriteNum($projectID) {
 		$query = $this->db->get_where('favorite', array('projectID' => $projectID));
 		
 		//プロジェクトテーブル内のお気に入り数更新
