@@ -9,6 +9,16 @@ class Middle extends CI_Controller{
         $this->load->view('footer');
     }
 
+    //取得したデータをビューの引数にする
+    public function detail($projectID){
+        $data = array();
+        $data['program'] = $this->getProgramData($projectID);
+
+        $this->load->view('header');
+        $this->load->view('middle', $data);
+        $this->load->view('footer');
+    }
+
     //プロジェクトのデータの取得
     //プロジェクトのhxファイル読み込み
     public function getProgramData($projectID){
@@ -25,5 +35,4 @@ class Middle extends CI_Controller{
         return file_get_contents($filepath.'/'.$filename);
     }
 
-    //取得したデータをビューの引数にする
 }
