@@ -88,7 +88,7 @@ class Profile extends CI_Controller
         $this->load->model('Model_users');
         $this->load->model('Model_project');
         $this->load->model('Model_favorite');
-		
+
 		$array = [];
 		//ログイン中のユーザが自分のプロフィールを閲覧する場合
 		if ($this->session->userdata('userID') == $userID) {
@@ -101,10 +101,10 @@ class Profile extends CI_Controller
 			foreach($projects as $pro) {
 				if ($pro->isPublic) array_push($array, $pro);
 			}
-			
+
 			$data['projects'] = $array;
 		}
-		
+
         $data['category'] = $category;
         $data['user'] = $this->Model_users->getUserData($userID);
         $data['project_total'] = count($data['projects']);
@@ -183,7 +183,7 @@ public function validation_project()
 
     $pid = $this->session->userdata('pid');
     $this->load->model("Model_project");
-    
+
     //プロジェクトの説明
     $des = $_POST['description'];
     //登録処理
@@ -494,10 +494,9 @@ public function validation_tag(){
                 $this->Model_users->updateUserURL($_POST['url'], $userID);
             }
 
-            //入力されていたら更新
-            if($_POST['profile']){
-                $this->Model_users->updateUserProfile($_POST['profile'], $userID);
-            }
+            //プロフィール文の更新
+            $this->Model_users->updateUserProfile($_POST['profile'], $userID);
+
             $this->information($userID);
         }else{
             $this->profilesettings($userID);
