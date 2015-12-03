@@ -5097,8 +5097,6 @@ nav ul a span.badge {
     .row .col.s1 {
       width: 8.33333%;
       margin-left: 0; }
-    .row .col.offset-s1 {
-      margin-left: 8.33333%; }
     .row .col.pull-s1 {
       right: 8.33333%; }
     .row .col.push-s1 {
@@ -5106,8 +5104,6 @@ nav ul a span.badge {
     .row .col.s2 {
       width: 16.66667%;
       margin-left: 0; }
-    .row .col.offset-s2 {
-      margin-left: 16.66667%; }
     .row .col.pull-s2 {
       right: 16.66667%; }
     .row .col.push-s2 {
@@ -5115,8 +5111,6 @@ nav ul a span.badge {
     .row .col.s3 {
       width: 25%;
       margin-left: 0; }
-    .row .col.offset-s3 {
-      margin-left: 25%; }
     .row .col.pull-s3 {
       right: 25%; }
     .row .col.push-s3 {
@@ -5124,8 +5118,6 @@ nav ul a span.badge {
     .row .col.s4 {
       width: 33.33333%;
       margin-left: 0; }
-    .row .col.offset-s4 {
-      margin-left: 33.33333%; }
     .row .col.pull-s4 {
       right: 33.33333%; }
     .row .col.push-s4 {
@@ -5133,8 +5125,6 @@ nav ul a span.badge {
     .row .col.s5 {
       width: 41.66667%;
       margin-left: 0; }
-    .row .col.offset-s5 {
-      margin-left: 41.66667%; }
     .row .col.pull-s5 {
       right: 41.66667%; }
     .row .col.push-s5 {
@@ -5142,8 +5132,6 @@ nav ul a span.badge {
     .row .col.s6 {
       width: 50%;
       margin-left: 0; }
-    .row .col.offset-s6 {
-      margin-left: 50%; }
     .row .col.pull-s6 {
       right: 50%; }
     .row .col.push-s6 {
@@ -5151,8 +5139,6 @@ nav ul a span.badge {
     .row .col.s7 {
       width: 58.33333%;
       margin-left: 0; }
-    .row .col.offset-s7 {
-      margin-left: 58.33333%; }
     .row .col.pull-s7 {
       right: 58.33333%; }
     .row .col.push-s7 {
@@ -5160,8 +5146,6 @@ nav ul a span.badge {
     .row .col.s8 {
       width: 66.66667%;
       margin-left: 0; }
-    .row .col.offset-s8 {
-      margin-left: 66.66667%; }
     .row .col.pull-s8 {
       right: 66.66667%; }
     .row .col.push-s8 {
@@ -5169,17 +5153,14 @@ nav ul a span.badge {
     .row .col.s9 {
       width: 75%;
       margin-left: 0; }
-    .row .col.offset-s9 {
-      margin-left: 75%; }
     .row .col.pull-s9 {
       right: 75%; }
     .row .col.push-s9 {
       left: 75%; }
     .row .col.s10 {
       width: 83.33333%;
-      margin-left: 0; }
-    .row .col.offset-s10 {
-      margin-left: 83.33333%; }
+      margin-left: 0;
+      }
     .row .col.pull-s10 {
       right: 83.33333%; }
     .row .col.push-s10 {
@@ -5187,8 +5168,6 @@ nav ul a span.badge {
     .row .col.s11 {
       width: 91.66667%;
       margin-left: 0; }
-    .row .col.offset-s11 {
-      margin-left: 91.66667%; }
     .row .col.pull-s11 {
       right: 91.66667%; }
     .row .col.push-s11 {
@@ -5196,12 +5175,34 @@ nav ul a span.badge {
     .row .col.s12 {
       width: 100%;
       margin-left: 0; }
-    .row .col.offset-s12 {
-      margin-left: 100%; }
     .row .col.pull-s12 {
       right: 100%; }
     .row .col.push-s12 {
       left: 100%; }
+    .row .col.offset-s1 {
+        margin-left: 8.33333%; }
+    .row .col.offset-s2 {
+        margin-left: 16.66667%; }
+    .row .col.offset-s3 {
+        margin-left: 25%; }
+    .row .col.offset-s4 {
+        margin-left: 33.33333%; }
+    .row .col.offset-s5 {
+        margin-left: 41.66667%; }
+    .row .col.offset-s6 {
+        margin-left: 50%; }
+    .row .col.offset-s7 {
+        margin-left: 58.33333%; }
+    .row .col.offset-s8 {
+        margin-left: 66.66667%; }
+    .row .col.offset-s9 {
+        margin-left: 75%; }
+    .row .col.offset-s10 {
+        margin-left: 83.33333%; }
+    .row .col.offset-s11 {
+        margin-left: 91.66667%; }
+    .row .col.offset-s12 {
+        margin-left: 100%; }
     @media only screen and (min-width : 601px) {
       .row .col.m1 {
         width: 8.33333%;
