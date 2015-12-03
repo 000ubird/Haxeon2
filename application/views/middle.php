@@ -37,7 +37,7 @@
 
 <div class="row">
     <div class="col s12">
-        <a class="waves-effect waves-light btn col s4 offset-s4" href="">フォーク</a>
+        <?php echo '<a class="waves-effect waves-light btn col s4 offset-s4" href="' . base_url() . 'try-haxe/index.html#' . $projectID . '">フォーク</a>'; ?>
     </div>
 </div>
 
@@ -45,7 +45,7 @@
 
 <div class="row">
     <div class="col s12">
-        <a class="waves-effect waves-light btn col s4 offset-s4" href="">フォーク</a>
+        <?php echo '<a class="waves-effect waves-light btn col s4 offset-s4" href="' . base_url() . 'try-haxe/index.html#' . $projectID . '">フォーク</a>'; ?>
     </div>
 </div>
 
