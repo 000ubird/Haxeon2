@@ -46,7 +46,7 @@
 
     echo '<div class="row">';
     echo '<div class="input-field col s12">';
-    echo '    <textarea name="profile" class="materialize-textarea" maxlength="140" placeholder="'.$message.'"></textarea>';
+    echo '    <textarea name="profile" class="materialize-textarea" maxlength="140">'.$message.'</textarea>';
     echo '    <label for="profile">message</label>';
     echo '</div>';
 
