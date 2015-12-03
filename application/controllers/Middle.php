@@ -35,7 +35,19 @@ class Middle extends CI_Controller{
 
         //コメント取得
         $this->load->model('Model_comment');
-        $data['comments'] = $this->Model_comment->getComment($projectID);
+        $comments = $this->Model_comment->getComment($projectID);
+
+        //アイコンURLを追加
+        $this->load->model('Model_users');
+        foreach($comments as $comment){
+            $udata = $this->Model_users->getUserData($comment->commentedUserID);
+            $comment->commentedUserID = $udata[0]->userName;
+            $comment->icon = $udata[0]->userIcon;
+        }
+
+        $data['comments'] = $comments;
+
+        //コメントのuserIDからアイコン取得
 
         $this->load->view('header');
         $this->load->view('middle', $data);

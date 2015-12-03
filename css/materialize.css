@@ -8431,3 +8431,14 @@ ul.info{margin-top: 1%;}
 ul.info li.comment{
     margin-top: 5%;
     word-wrap: break-word;}
+
+div.commentIcon img{
+    max-width: 30px;
+    height: auto;
+}
+div.userchip{
+    margin-top: 2.2%;
+}
+div.timestamp{
+    text-align: right;
+}

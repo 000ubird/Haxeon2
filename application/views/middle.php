@@ -51,15 +51,14 @@
 
 <hr />
 
-
 <!-- コメント部分 -->
 <?php
 foreach($comments as $comment){
-    echo '<p>commentID:'.$comment->commentID.'</p>';
-    echo '<p>projectID:'.$comment->projectID.'</p>';
-    echo '<p>comment:'.$comment->comment.'</p>';
-    echo '<p>commentedUserID:'.$comment->commentedUserID.'</p>';
-    echo '<p>modified:'.$comment->modified.'</p>';
+    echo '<div class="row">';
+    echo '<div class="userchip chip col s2"><img src="'.$comment->icon.'"><span class="truncate">'.$comment->commentedUserID.'</span></div>';
+    echo '<div class="col s10 offset-s"><div class="card-panel white"><span>'.$comment->comment.'</span></div></div>';
+    echo '<div class="timestamp"><small>'.$comment->modified.'</small></div>';
+    echo '</div>';
 }
 
 echo form_open('middle/validation_comment/'.$projectID);
