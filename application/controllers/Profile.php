@@ -241,8 +241,7 @@ public function validation_tag(){
     }
 
     //処理が終わったらとりあえず同じ画面を表示する
-    $this->tagsettings($pid);
-
+    header('Location:'.base_url().'profile/tagsettings/'.$pid);
 }
 
     public function tag_table_check($str){

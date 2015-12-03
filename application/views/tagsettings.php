@@ -3,7 +3,7 @@
 <p>タグ一覧</p>
 <?php
 foreach ($tags as $tag) {
-    echo '<div class="row">'. $tag .'<a href="'.base_url().'profile/delete_tagmap/'. $tag .'"><i class="material-icons offset-s5">delete</i></a></div>';
+    echo '<div class="chip">' .$tag. '<a href="'.base_url().'profile/delete_tagmap/'. $tag .'"><i class="material-icons">delete</i></a></div>';
 }
 
 echo form_open('profile/validation_tag');
