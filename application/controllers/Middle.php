@@ -18,6 +18,7 @@ class Middle extends CI_Controller{
         $information = $this->Model_project->getOneProject($projectID);
         $i = $information[0]; //この後でたくさん使うので変数化
 
+        $data['projectID'] = $projectID;
         $data['projectName'] = $i->projectName;
         $data['owner'] = $i->ownerUserID;
         $data['pv'] = $i->pv;
@@ -52,4 +53,16 @@ class Middle extends CI_Controller{
         return file_get_contents($filepath.'/'.$filename);
     }
 
+    //コメントのバリデーション
+    public function validation_comment(){
+        $this->load->library("form_validation");
+        $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
+        $this->form_validation->set_rules("comment", "コメント", "min_length[5]");
+        $this->form_validation->set_message("min_length", "%s は5文字以上で入力してください。");
+
+        if ($this->form_validation->run()){
+            //投稿するメソッドを作る
+            //ビューを呼び出す(リダイレクト)
+        }
+    }
 }
