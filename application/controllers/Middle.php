@@ -59,15 +59,22 @@ class Middle extends CI_Controller{
     }
 
     //コメントのバリデーション
-    public function validation_comment(){
+    public function validation_comment($projectID){
         $this->load->library("form_validation");
         $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
         $this->form_validation->set_rules("comment", "コメント", "min_length[5]");
         $this->form_validation->set_message("min_length", "%s は5文字以上で入力してください。");
 
         if ($this->form_validation->run()){
-            //投稿するメソッドを作る
-            //ビューを呼び出す(リダイレクト)
+            //コメントを登録
+            $this->load->Model('Model_comment');
+            //id:引数, comment:submitされポストされたデータ, userID:現在ログインしているuserID
+            $this->Model_comment->registComment($projectID, $_POST['comment'], $this->session->userdata('userID'));
+
+            //データのクリア
+
+            //ビューを呼び出す(リダイレクトで二重投稿対策)
+            header('Location:'.base_url().'/middle/detail/'.$projectID);
         }
     }
 }

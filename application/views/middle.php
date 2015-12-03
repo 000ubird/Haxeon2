@@ -1,3 +1,4 @@
+<?php print_r($_POST); ?>
 <h2><?php echo $projectName ?></h2>
 <p>author: <?php echo $owner; ?></p>
 <!-- タグ一覧 -->
@@ -53,22 +54,33 @@
 
 
 <!-- コメント部分 -->
-
+<?php
+foreach($comments as $comment){
+    echo '<p>commentID:'.$comment->commentID.'</p>';
+    echo '<p>projectID:'.$comment->projectID.'</p>';
+    echo '<p>comment:'.$comment->comment.'</p>';
+    echo '<p>commentedUserID:'.$comment->commentedUserID.'</p>';
+    echo '<p>modified:'.$comment->modified.'</p>';
+}
+?>
 <!-- フォーム -->
+<?php echo form_open('middle/validation_comment/'.$projectID);?>
+
 <div class="row">
     <div class="input-field col s10 offset-s1">
         <i class="material-icons prefix">mode_edit</i>
-        <textarea name="comment" class="materialize-textarea" maxlength="1000" placeholder=""></textarea>
+        <textarea name="comment" class="materialize-textarea" minlength="5" maxlength="1000"></textarea>
         <label for="comment">comment</label>
     </div>
 </div>
 
-<?php echo form_open('middle/validation_comment/'.$projectID);
-      echo form_error('comment');?>
+<?php echo form_error('comment');?>
 
 <div class="row">
-    <button class="btn waves-effect waves-light col s4 offset-s4" type="submit" name="action">
+    <button class="btn waves-effect waves-light col s4 offset-s4" type="submit" name="comment">
         コメントを投稿する
         <i class="material-icons">chat_bubble_outline</i>
     </button>
 </div>
+
+<?php echo form_close(); ?>
