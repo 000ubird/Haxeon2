@@ -80,9 +80,10 @@ class Middle extends CI_Controller{
         if ($this->form_validation->run()){
             //コメントを登録
             $this->load->Model('Model_comment');
-            //id:引数, comment:submitされポストされたデータ, userID:現在ログインしているuserID
-            $this->Model_comment->registComment($projectID, $_POST['comment'], $this->session->userdata('userID'));
-
+            if($_POST['comment']) {
+                //id:引数, comment:submitされポストされたデータ, userID:現在ログインしているuserID
+                $this->Model_comment->registComment($projectID, $_POST['comment'], $this->session->userdata('userID'));
+            }
             //ビューを呼び出す(リダイレクトで二重投稿対策)
             header('Location:'.base_url().'/middle/detail/'.$projectID);
         }
