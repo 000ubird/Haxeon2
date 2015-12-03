@@ -19,7 +19,7 @@ class Model_comment extends CI_Model{
             'commentID' => $commentID
         );
 
-        $this->db->delete('comment, $array');
+        $this->db->delete('comment', $array);
     }
 
     //コメントを取得する
