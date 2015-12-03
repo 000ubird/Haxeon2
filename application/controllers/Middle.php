@@ -11,8 +11,20 @@ class Middle extends CI_Controller{
 
     //取得したデータをビューの引数にする
     public function detail($projectID){
-        $data = array();
-        $data['program'] = $this->getProgramData($projectID);
+        $data = array(); //引き渡すデータ
+        $data['program'] = $this->getProgramData($projectID); //プログラム文字列
+
+        $this->load->model('Model_project');
+        $information = $this->Model_project->getOneProject($projectID);
+        $i = $information[0]; //この後でたくさん使うので変数化
+
+        $data['projectName'] = $i->projectName;
+        $data['owner'] = $i->ownerUserID;
+        $data['pv'] = $i->pv;
+        $data['fork'] = $i->fork;
+        $data['originUserID'] = $i->originUserID;
+        $data['modified'] = $i->modified;
+        $data['description'] = $i->description;
 
         $this->load->view('header');
         $this->load->view('middle', $data);
