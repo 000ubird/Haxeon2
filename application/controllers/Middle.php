@@ -26,6 +26,11 @@ class Middle extends CI_Controller{
         $data['modified'] = $i->modified;
         $data['description'] = $i->description;
 
+        $this->load->model('Model_project');
+        $this->load->library('tag');
+
+        $data['tags'] = $this->tag->getTag($projectID);
+
         $this->load->view('header');
         $this->load->view('middle', $data);
         $this->load->view('footer');

@@ -1,4 +1,16 @@
 <h1><?php echo $projectName ?></h1>
+
+<!-- タグ一覧 -->
+<div class="row">
+    <div class="col s12">
+<?php
+foreach($tags as $tag){
+    echo '<div class="chip">' .$tag. '</div>';
+}
+?>
+    </div>
+</div>
+
 <pre><code class="haxe"><?php echo $program; ?></code></pre>
 
 <div class="row description">
@@ -9,4 +21,9 @@
             </span>
         </div>
     </div>
+</div>
+
+<!-- pvなどのデータ群 -->
+<div>
+
 </div>
