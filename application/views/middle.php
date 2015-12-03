@@ -1,4 +1,5 @@
 <h2><?php echo $projectName ?></h2>
+<p>author: <?php echo $owner; ?></p>
 <!-- タグ一覧 -->
 <div class="row">
     <div class="col s12">
