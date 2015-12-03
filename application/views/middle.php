@@ -55,7 +55,7 @@
 <?php
 foreach($comments as $comment){
     echo '<div class="row">';
-    echo '<div class="userchip chip col s2"><img src="'.$comment->icon.'"><span class="truncate">'.$comment->commentedUserID.'</span></div>';
+    echo '<a href="'.base_url().'/profile/information/'.$comment->commentedUserID.'"><div class="userchip chip col s2"><img src="'.$comment->icon.'"><span class="truncate">'.$comment->commentedUserName.'</span></div></a>';
     echo '<div class="col s10 offset-s"><div class="card-panel white"><span>'.$comment->comment.'</span></div></div>';
     echo '<div class="timestamp"><small>'.$comment->modified.'</small></div>';
     echo '</div>';
