@@ -18,6 +18,7 @@ class Middle extends CI_Controller{
         $information = $this->Model_project->getOneProject($projectID);
         $i = $information[0]; //この後でたくさん使うので変数化
 
+        //プロジェクト自体のデータ
         $data['projectID'] = $projectID;
         $data['projectName'] = $i->projectName;
         $data['owner'] = $i->ownerUserID;
@@ -27,10 +28,14 @@ class Middle extends CI_Controller{
         $data['modified'] = $i->modified;
         $data['description'] = $i->description;
 
+        //タグ取得
         $this->load->model('Model_project');
         $this->load->library('tag');
-
         $data['tags'] = $this->tag->getTag($projectID);
+
+        //コメント取得
+        $this->load->model('Model_comment');
+        $data['comments'] = $this->Model_comment->getComment($projectID);
 
         $this->load->view('header');
         $this->load->view('middle', $data);
