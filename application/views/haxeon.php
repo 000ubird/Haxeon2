@@ -9,7 +9,7 @@ $projects = $ranking['projects'];
 echo '<div class="row">';
 $i = 0;
 foreach($projects as $project) {
-    echo '<a href="' . base_url() . 'try-haxe/index.html#' . $project[0]->projectID . '">';
+    echo '<a href="' . base_url() . 'middle/detail/' . $project[0]->projectID . '">';
 
     echo '<div class="col s4">';
 	echo '<div class="card">';
