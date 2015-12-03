@@ -71,8 +71,6 @@ class Middle extends CI_Controller{
             //id:引数, comment:submitされポストされたデータ, userID:現在ログインしているuserID
             $this->Model_comment->registComment($projectID, $_POST['comment'], $this->session->userdata('userID'));
 
-            //データのクリア
-
             //ビューを呼び出す(リダイレクトで二重投稿対策)
             header('Location:'.base_url().'/middle/detail/'.$projectID);
         }
