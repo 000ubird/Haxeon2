@@ -61,6 +61,9 @@ foreach($comments as $comment){
     echo '</div>';
 }
 
+//ログイン状態の時のみコメントフォームを表示する。
+if($this->session->userdata('userID') != null) {
+
 echo form_open('middle/validation_comment/'.$projectID);
       echo form_error('comment');?>
 <div class="row">
@@ -76,4 +79,6 @@ echo form_open('middle/validation_comment/'.$projectID);
     </button>
 </div>
 
-<?php echo form_close(); ?>
+<?php 
+}
+echo form_close(); ?>
