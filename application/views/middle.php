@@ -42,6 +42,8 @@
         <?php 
 			if ($owner == $this->session->userdata('userID')) {
 				echo '<a class="waves-effect waves-light btn col s4 offset-s4" href="' . base_url() . 'try-haxe/index.html#' . $projectID . '">編集</a>'; 
+			} else if ($this->session->userdata('userID') == null)　{
+				echo '<a class="waves-effect waves-light btn col s4 offset-s4" href="' . base_url() . 'try-haxe/index.html#' . $projectID . '">フォーク (未ログイン状態のため保存できません)</a>'; 
 			} else {
 				echo '<a class="waves-effect waves-light btn col s4 offset-s4" href="' . base_url() . 'try-haxe/index.html#' . $projectID . '">フォーク</a>'; 
 			}
