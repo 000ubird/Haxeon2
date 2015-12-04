@@ -6,6 +6,7 @@ class Model_comment extends CI_Model{
     public function registComment($projectID, $comment, $commentedUserID){
         $array = array(
             'projectID' => $projectID,
+            'tmpPro' => $projectID,
             'comment' => $comment,
             'commentedUserID' => $commentedUserID
         );
