@@ -15,35 +15,32 @@ foreach($projects as $project) {
 			<div class="card-content">
 				<span class="card-title">
 					<a href="<?php echo base_url().'middle/detail/'.$project[0]->projectID;?>">
-						<u><font size="6px"><?php echo $project[0]->projectName; ?></font>
+						<u><?php echo $project[0]->projectName; ?></font>
 						</u>
 					</a>
 				</span>
 				
 				<span class="card-title activator grey-text text-darken-4"><i class="material-icons right">info</i></span>		
 				<div class="card-action">
-					<font color="#000000" size="4px">
+					<font color="#000000">
 						<p>
 							<i class="material-icons">visibility</i>PV : <?php echo $project[0]->pv;?> , 
 							<i class="material-icons">trending_down</i>Forked : <?php echo $project[0]->fork;?> , 
 							<i class="material-icons">grade</i>Favorite : <?php echo $project[0]->favorite;?>
-						</p><br>
+						</p>
 						<i class="material-icons">perm_identity</i>Author : 
 						<a href="<?php echo base_url().'profile/information/'.$project[0]->ownerUserID;?>">
 							<u><?php echo "@".$project[0]->ownerUserID;?></u>
 						</a>
 					</font>
 				</div>
+				<center>
+					<a href="<?php echo base_url().'middle/detail/'.$project[0]->projectID;?>"><u><i class="material-icons">play_for_work</i>Edit Project</u></a></span></font>
+				</center>
 			</div>
-			<center>
-				<div class="card-action"><font color="#000000" size="4px">
-					<a href="<?php echo base_url().'middle/detail/'.$project[0]->projectID;?>"><u><i class="material-icons">play_for_work</i>Edit Project</u></a></span>
-				</div>
-			</center></font>
-
 			<div class="card-reveal orange lighten-4">
 				<span class="card-title grey-text text-darken-4">Project Information<i class="material-icons right">close</i></span>
-				<font color="#000000" size="4px">
+				<font color="#000000">
 					<p><i class="material-icons">loop</i>LastMdified : <?php echo $project[0]->modified;?></p>
 					<p><i class="material-icons">album</i>ProjectID : <?php echo $project[0]->projectID;?></p>
 					<p><i class="material-icons">assignment</i>Description : <?php echo $project[0]->description;?></p>
