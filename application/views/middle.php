@@ -35,17 +35,17 @@
 
 <hr />
 
-<div class="row">
-    <div class="col s12">
-        <?php echo '<a class="waves-effect waves-light btn col s4 offset-s4" href="' . base_url() . 'try-haxe/index.html#' . $projectID . '">フォーク</a>'; ?>
-    </div>
-</div>
-
 <pre><code class="haxe"><?php echo $program; ?></code></pre>
 
 <div class="row">
     <div class="col s12">
-        <?php echo '<a class="waves-effect waves-light btn col s4 offset-s4" href="' . base_url() . 'try-haxe/index.html#' . $projectID . '">フォーク</a>'; ?>
+        <?php 
+			if ($owner == $this->session->userdata('userID')) {
+				echo '<a class="waves-effect waves-light btn col s4 offset-s4" href="' . base_url() . 'try-haxe/index.html#' . $projectID . '">編集</a>'; 
+			} else {
+				echo '<a class="waves-effect waves-light btn col s4 offset-s4" href="' . base_url() . 'try-haxe/index.html#' . $projectID . '">フォーク</a>'; 
+			}
+		?>
     </div>
 </div>
 
