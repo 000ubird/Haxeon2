@@ -9,41 +9,49 @@ $projects = $ranking['projects'];
 echo '<div class="row">';
 $i = 0;
 foreach($projects as $project) {
-    echo '<a href="' . base_url() . 'middle/detail/' . $project[0]->projectID . '">';
+?>
+	<div class="col s4">
+		<div class="card amber ">
+			<div class="card-content">
+				<span class="card-title">
+					<a href="<?php echo base_url().'middle/detail/'.$project[0]->projectID;?>">
+						<u><font size="6px"><?php echo $project[0]->projectName; ?></font>
+						</u>
+					</a>
+				</span>
+				
+				<span class="card-title activator grey-text text-darken-4"><i class="material-icons right">info</i></span>		
+				<div class="card-action">
+					<font color="#000000" size="4px">
+						<p>
+							<i class="material-icons">visibility</i>PV : <?php echo $project[0]->pv;?> , 
+							<i class="material-icons">trending_down</i>Forked : <?php echo $project[0]->fork;?> , 
+							<i class="material-icons">grade</i>Favorite : <?php echo $project[0]->favorite;?>
+						</p><br>
+						<i class="material-icons">perm_identity</i>Author : 
+						<a href="<?php echo base_url().'profile/information/'.$project[0]->ownerUserID;?>">
+							<u><?php echo "@".$project[0]->ownerUserID;?></u>
+						</a>
+					</font>
+				</div>
+			</div>
+			<center>
+				<div class="card-action"><font color="#000000" size="4px">
+					<a href="<?php echo base_url().'middle/detail/'.$project[0]->projectID;?>"><u><i class="material-icons">play_for_work</i>Edit Project</u></a></span>
+				</div>
+			</center></font>
 
-    echo '<div class="col s4">';
-	echo '<div class="card">';
-
-	//1,2,3位のプロジェクトには特別な画像を表示する
-    echo '<div class="card-image waves-effect waves-block waves-light">';
-    if ($i == 0 && $cur_page == 0) echo '<img class="activator" src="'.base_url().'img/1st_pro.jpg">';
-    else if ($i == 1 && $cur_page == 0) echo '<img class="activator" src="'.base_url().'img/2nd_pro.jpg">';
-    else if ($i == 2 && $cur_page == 0) echo '<img class="activator" src="'.base_url().'img/3rd_pro.jpg">';
-    else echo '<img class="activator" src="'.base_url().'img/project.jpg">';
-    echo '</div>';
-
-	echo '<div class="card-content">';
-    echo '<span class="card-title activator black-text text-darken-4 truncate">' . $project[0]->projectName;
-    if($project[0]->ownerUserID == $this->session->userdata('userID')) echo '<a href="'.base_url() . 'profile/projectsettings/' . $project[0]->projectID . '"><i class="material-icons">settings</i></a>';
-    echo '<a href="' . base_url() .'profile/tagsettings/' . $project[0]->projectID . '">タグ編集</a>';
-    echo '</span>';
-    echo '</a>';
-    echo '<p>User : <a href="'.base_url().'profile/information/'.$project[0]->ownerUserID.'">@'.$project[0]->ownerUserID.'</p>';
-	echo '<p>PV : '.$project[0]->pv.'</p>';
-	echo '<p>Fork : '.$project[0]->fork.'</p>';
-	echo '<p><a href="'.base_url().'try-haxe/index.html#'.$project[0]->projectID.'">Edit Code</a></p>';
-	echo '</div>';
-
-	echo '<div class="card-reveal">';
-	echo '<span class="card-title grey-text text-darken-4">'.$project[0]->projectName.'<i class="material-icons right">close</i></span>';
-	echo '<p>Project ID : '.$project[0]->projectID.'</p>';
-	echo '<p>pv : '.$project[0]->pv.'</p>';
-	echo '<p>User : '.$project[0]->ownerUserID.'</p>';
-	echo '</div>';
-
-	echo '</div>';
-	echo '</div>';
-	$i++;
+			<div class="card-reveal orange lighten-4">
+				<span class="card-title grey-text text-darken-4">Project Information<i class="material-icons right">close</i></span>
+				<font color="#000000" size="4px">
+					<p><i class="material-icons">loop</i>LastMdified : <?php echo $project[0]->modified;?></p>
+					<p><i class="material-icons">album</i>ProjectID : <?php echo $project[0]->projectID;?></p>
+					<p><i class="material-icons">assignment</i>Description : <?php echo $project[0]->description;?></p>
+				</font>
+			</div>
+		</div>
+	</div>
+<?php	$i++;
 }
 echo '</div>';
 
