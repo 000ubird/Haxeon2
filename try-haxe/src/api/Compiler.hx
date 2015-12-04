@@ -442,11 +442,13 @@ class Compiler {
 					cnx.request("UPDATE day_ranking SET proID = \""+program.uid+"\" , tmpPro = \""+program.uid+"\" WHERE proID = '"+proID+"';");
 					cnx.request("UPDATE tagmap SET projectID = \""+program.uid+"\" , tmpPro = \""+program.uid+"\" WHERE projectID = '"+proID+"';");
 					cnx.request("UPDATE favorite SET projectID = \"" + program.uid + "\" , tmpPro = \"" + program.uid + "\" WHERE projectID = '" + proID + "';");
+					cnx.request("UPDATE comment SET projectID = \"" + program.uid + "\" , tmpPro = \"" + program.uid + "\" WHERE projectID = '" + proID + "';");
 				} else {
 					cnx.request("UPDATE project SET tmpPro = \""+program.uid+"\",modified = \""+Date.now().toString()+"\" , projectID = \""+program.uid+"\" , isPublic = "+isPublic+" WHERE ownerUserID = '"+userID+"' AND tmpPro = '"+tmpID+"';");
 					cnx.request("UPDATE day_ranking SET proID = \""+program.uid+"\" , tmpPro = \""+program.uid+"\" WHERE tmpPro = '"+tmpID+"';");
 					cnx.request("UPDATE tagmap SET projectID = \""+program.uid+"\" , tmpPro = \""+program.uid+"\" WHERE tmpPro = '"+tmpID+"';");
 					cnx.request("UPDATE favorite SET projectID = \"" + program.uid + "\" , tmpPro = \"" + program.uid + "\" WHERE tmpPro = '" + tmpID + "';");
+					cnx.request("UPDATE comment SET projectID = \"" + program.uid + "\" , tmpPro = \"" + program.uid + "\" WHERE tmpPro = '" + tmpID + "';");
 				}
 			} else {
 				if (proID != tmpPro2) {
@@ -454,11 +456,13 @@ class Compiler {
 					cnx.request("UPDATE day_ranking SET tmpPro = \"" + program.uid + "\" WHERE proID = '" + proID + "';");
 					cnx.request("UPDATE tagmap SET tmpPro = \"" + program.uid + "\" WHERE projectID = '" + proID + "';");
 					cnx.request("UPDATE favorite SET tmpPro = \"" + program.uid + "\" WHERE projectID = '" + proID + "';");
+					cnx.request("UPDATE comment SET tmpPro = \"" + program.uid + "\" WHERE projectID = '" + proID + "';");
 				} else {
 					cnx.request("UPDATE project SET tmpPro = \""+program.uid+"\",modified = \""+Date.now().toString()+"\" , isPublic = "+isPublic+" WHERE ownerUserID = '"+userID+"' AND tmpPro = '"+tmpID+"';");
 					cnx.request("UPDATE day_ranking SET tmpPro = \"" + program.uid + "\" WHERE tmpPro = '" + tmpID + "';");
 					cnx.request("UPDATE tagmap SET tmpPro = \"" + program.uid + "\" WHERE tmpPro = '" + tmpID + "';");
 					cnx.request("UPDATE favorite SET tmpPro = \"" + program.uid + "\" WHERE tmpPro = '" + tmpID + "';");
+					cnx.request("UPDATE comment SET tmpPro = \"" + program.uid + "\" WHERE tmpPro = '" + tmpID + "';");
 				}
 				
 				//未ログイン状態の場合
