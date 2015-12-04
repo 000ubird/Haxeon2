@@ -1,5 +1,5 @@
 <h2><?php echo $projectName ?></h2>
-<p>author: <?php echo $owner; ?></p>
+<p>Author: <?php echo $owner; ?></p>
 <!-- タグ一覧 -->
 <div class="row">
     <div class="col s12">
@@ -11,14 +11,29 @@
     </div>
 </div>
 <div>
-    <a href="">タグ編集</a>
+    <a href=<?php echo '"'.base_url().'profile/tagsettings/'.$projectID.'"';?> >タグを編集</a>
+	<?php 
+		//説明文の編集リンクは所有者のみ
+		if ($owner == $this->session->userdata('userID')) {
+			echo '<a href= "'.base_url().'profile/projectsettings/'.$projectID.'">説明文を編集</a>';
+		}
+	?>
+    
 </div>
 
 <div class="row description">
     <div class="col s12">
         <div class="card-panel white">
             <span>
-                <?php echo nl2br($description); ?>
+                <?php 
+					//説明文が未登録の場合
+					if ($description == "") {
+						echo "This project has no description.";
+					}
+					else {
+						echo nl2br($description); 
+					}
+				?>
             </span>
         </div>
     </div>
