@@ -88,4 +88,16 @@ class Middle extends CI_Controller{
             header('Location:'.base_url().'/middle/detail/'.$projectID);
         }
     }
+	
+	//タグの検索を行い結果を表示する
+	public function tagSearch($tag) {
+		//Viewを表示
+		$this->load->model("Model_project");
+		$result['result'] = $this->Model_project->searchProject($tag,[1,0,0,0],[0,1,0]);
+		$result['str'] = $tag;
+			
+		$this->load->view('header');
+		$this->load->view('search_result',$result);
+		$this->load->view('footer');
+	}
 }
