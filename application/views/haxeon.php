@@ -15,7 +15,7 @@ foreach($projects as $project) {
 			<div class="card-content">
 				<span class="card-title">
 					<a href="<?php echo base_url().'middle/detail/'.$project[0]->projectID;?>">
-						<?php echo $project[0]->projectName; ?></font>
+						<?php echo $project[0]->projectName; ?>
 					</a>
 				</span>
 
@@ -32,11 +32,11 @@ foreach($projects as $project) {
 					</font>
 				</div>
 				<center>
-					<a href="<?php echo base_url().'middle/detail/'.$project[0]->projectID;?>"><i class="material-icons">play_for_work</i>Edit Project</a></span></font>
+					<a href="<?php echo base_url().'middle/detail/'.$project[0]->projectID;?>"><i class="material-icons">play_for_work</i>Edit Project</a>
 				</center>
 			</div>
 			<div class="card-reveal orange lighten-4">
-				<span class="card-title grey-text text-darken-4">Project Information<i class="material-icons right">close</i></span>
+				<span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i></span>
 				<font color="#000000">
 					<p><i class="material-icons">loop</i>LastModified : <?php echo $project[0]->modified;?></p>
 					<p><i class="material-icons">album</i>ProjectID : <?php echo $project[0]->projectID;?></p>

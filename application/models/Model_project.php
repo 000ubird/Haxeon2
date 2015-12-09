@@ -213,10 +213,10 @@ class Model_project extends CI_Model{
 		else if ($sortBy[2]) {
 			$this->db->order_by("projectName", "asc");
 		}
-		
+
 		//公開プロジェクトのみ取得
 		$this->db->where('isPublic', true);
-		
+
 		//クエリの実行
 		$query = $this->db->get();
 
@@ -235,10 +235,10 @@ class Model_project extends CI_Model{
 	//範囲を指定してプロジェクトを取得
 	public function getProject($beginDate,$endDate,$top,$end,$order) {
 		$this->db->where("modified BETWEEN '$beginDate' AND '$endDate'");
-		
+
 		//公開プロジェクトのみ取得
 		$this->db->where('isPublic', true);
-		
+
 		$this->db->order_by($order, "desc");
 		$result = $this->db->get('project',$top,$end);
 		return $result->result();
@@ -247,7 +247,7 @@ class Model_project extends CI_Model{
 	//デイリーランキングページからプロジェクトを9個取得
 	public function getRankingProject() {
 		$this->db->order_by("pv","desc");
-		$this->db->limit(9);
+		$this->db->limit(12);
 		$result = $this->db->get('day_ranking');
 		return $result->result();
 	}
