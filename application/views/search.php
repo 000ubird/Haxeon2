@@ -31,11 +31,8 @@
 
 			<input type="checkbox" id="projectName" value="1" name="chk[1]" />
 			<label for="projectName">プロジェクト名</label>
-<!--
-			<input type="checkbox" id="projectID" value="2" name="chk[2]" />
-			<label for="projectID">プロジェクトID</label>
--->
-			<input type="checkbox" id="accountID" value="3" name="chk[3]" />
+			
+			<input type="checkbox" id="accountID" value="2" name="chk[2]" checked="checked"/>
 			<label for="accountID">アカウントID</label>
 		</div>
 	</form>
