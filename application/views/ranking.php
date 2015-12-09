@@ -44,62 +44,65 @@ $base_url = base_url();
 echo '<div class="row">';
 $i = 0;
 foreach($projects as $project) {
-	echo '<div class="col s4">';
-	echo '<div class="card">';
+?>
+<div class="col s3">
+    <div class="card amber">
+        <div class="card-content">
+                                <span class="card-title">
+					                <p class="truncate"><a href="<?php echo base_url().'middle/detail/'.$project->projectID;?>"><?php echo $project->projectName; ?></a></p>
+                                </span>
 
-	//1,2,3位のプロジェクトには特別な画像を表示する
-	echo '<div class="card-image waves-effect waves-block waves-light">';
-		if ($i == 0 && $cur_page == 0) echo '<img class="activator" src="http://localhost/haxeon/img/1st_pro.jpg">';
-		else if ($i == 1 && $cur_page == 0) echo '<img class="activator" src="http://localhost/haxeon/img/2nd_pro.jpg">';
-		else if ($i == 2 && $cur_page == 0) echo '<img class="activator" src="http://localhost/haxeon/img/3rd_pro.jpg">';
-		else echo '<img class="activator" src="'.$base_url.'img/project.jpg">';
-	echo '</div>';
+            <span class="card-title activator black-text"><i class="material-icons right">info</i></span>
+            <div class="card-action">
+                <p><i class="material-icons">visibility</i>PV : <?php echo $project->pv;?></p>
+                <p><i class="material-icons">trending_down</i>Forked : <?php echo $project->fork;?></p>
+                <p><i class="material-icons">grade</i>Favorite : <?php echo $project->favorite;?></p>
+                <p class="truncate"><i class="material-icons">perm_identity</i>
+                    <a href="<?php echo base_url().'profile/information/'.$project->ownerUserID;?>">
+                        <?php echo "@".$project->ownerUserID;?>
+                    </a></p>
+                <?php
+                $isfavorite = false;
+                $i = 0;
 
-	echo '<div class="card-content">';
-	echo '<span class="card-title activator black-text text-darken-4">'.$project->projectName.'<i class="material-icons right">more_vert</i></span>';
+                $pro_id = $project->projectID;
+                foreach($favorites as $favorite){
+                    $favo_id = $favorite->projectID;
 
-        $isfavorite = false;
-        $i = 0;
-        //print_r($favorites);
+                    if($favo_id == $pro_id) {
+                        $isfavorite = true;
+                        break;
+                    }
+                }
 
-        foreach($favorites as $favorite){
-            $favo_id = $favorite->projectID;
-            $pro_id = $project->projectID;
+                if($isfavorite){
+                    $this->load->model('Model_favorite');
+                    $this->Model_favorite->updateFavoriteNum($project->projectID);
+                    echo '<p><a href="' . base_url() . 'favorite/release_favorite/' . $favorite->projectID . '"><span><i class="material-icons">grade</i></span></a></p>';
+                }else {
+                    $this->load->model('Model_favorite');
+                    $this->Model_favorite->updateFavoriteNum($project->projectID);
+                    echo '<p><a href="'.base_url().'favorite/regist_favorite/' .$project->projectID. '"><span><i class="material-icons">stars</i></span></a></p>';
+                }
+                ?>
+            </div>
 
-            if($favo_id == $pro_id) {
-                $isfavorite = true;
-                break;
-            }
-        }
+            <center>
+                <a href="<?php echo base_url().'middle/detail/'.$project->projectID;?>"><i class="material-icons">play_for_work</i>Edit Project</a>
+            </center>
+        </div>
+        <div class="card-reveal orange lighten-4">
+            <span class="card-title black-text"><i class="material-icons right">close</i></span>
+            <p><i class="material-icons">loop</i>LastModified : <?php echo $project->modified;?></p>
+            <p><i class="material-icons">album</i>ProjectID : <?php echo $project->projectID;?></p>
+            <p><i class="material-icons">assignment</i>Description : <?php echo $project->description;?></p>
+        </div>
 
-        if($isfavorite) {
-			$this->load->model('Model_favorite');
-			$this->Model_favorite->updateFavoriteNum($project->projectID);
-            echo '<p><a href="'.$base_url.'favorite/release_favorite/' .$project->projectID. '"><img src="'.$base_url.'img/star.png" width=30px height=30px></a></p>';
-        }else{
-			$this->load->model('Model_favorite');
-			$this->Model_favorite->updateFavoriteNum($project->projectID);
-            echo '<p><a href="'.$base_url.'favorite/regist_favorite/' .$project->projectID. '"><img src="'.$base_url.'img/unstar.png" width=30px height=30px></a></p>';
-        }
+    </div>
+</div>
 
-	echo '<p>User : <a href="'.base_url().'profile/information/'.$project->ownerUserID.'">@'.$project->ownerUserID.'</p>';
-	echo '<p>pv : '.$project->pv.'</p>';
-	echo '<p>forked : '.$project->fork.'</p>';
-	echo '<p><a href='.$base_url.'try-haxe/index.html#'.$project->projectID.'>Edit Code</a></p>';
-	echo '</div>';
-
-	echo '<div class="card-reveal">';
-	echo '<span class="card-title grey-text text-darken-4">'.$project->projectName.'<i class="material-icons right">close</i></span>';
-	echo '<p>Project ID : '.$project->projectID.'</p>';
-	echo '<p>pv : '.$project->pv.'</p>';
-	echo '<p>forked : '.$project->fork.'</p>';
-	echo '<p>User : '.$project->ownerUserID.'</p>';
-	echo '<p>Last Modified : '.$project->modified.'</p>';
-	echo '</div>';
-
-	echo '</div>';
-	echo '</div>';
-	$i++;
+<?php
+$i++;
 }
 echo '</div>';
 
