@@ -35,6 +35,7 @@ echo '    </div>';
 
 $info = 'profile/information/';
 echo '    <ul class="info col s8 offset-s1">';
+echo '      <li class="name">name: '. $uname .'</li>';
 echo '      <li class="codes">codes: <a href="'.base_url().''.$info.''.$uid.'/'.PROJECTS.'">'. $project_total .'</a></li>';
 echo '      <li class="forked">forked: </li>';
 echo '      <li class="favorites">favorite: <a href="'.base_url().''.$info.''.$uid.'/'.FAVORITES.'">'. $favorite_total .'</a></li>';
