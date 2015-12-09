@@ -200,12 +200,11 @@ public function validation_project()
     //登録処理
     if ($this->form_validation->run()) {
         $this->Model_project->updateDescription($pid, $des);
-        //            print_r($des);
     } else {
     }
 
-    //処理が終わったらとりあえず同じ画面を表示する
-    $this->projectsettings($pid);
+    //元のプロジェクト設定ページに移動する
+    header("Location: ".$_SERVER['HTTP_REFERER']);
 
 }
 
