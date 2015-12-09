@@ -87,14 +87,45 @@ if($isown || !$this->session->userdata('userID')){
                                     <p><i class="material-icons">visibility</i>PV : <?php echo $project->pv;?></p>
                                     <p><i class="material-icons">trending_down</i>Forked : <?php echo $project->fork;?></p>
                                     <p><i class="material-icons">grade</i>Favorite : <?php echo $project->favorite;?></p>
-                                    <p><i class="material-icons">perm_identity</i>Author :
+                                    <p class="truncate"><i class="material-icons">perm_identity</i>
                                         <a href="<?php echo base_url().'profile/information/'.$project->ownerUserID;?>">
                                             <?php echo "@".$project->ownerUserID;?>
                                         </a></p>
+                                    <?php
+                                    $isfavorite = false;
+                                    $i = 0;
+
+                                    $pro_id = $project->projectID;
+                                    foreach($favorites as $favorite){
+                                        $favo_id = $favorite[0]->projectID;
+
+                                        if($favo_id == $pro_id) {
+                                            $isfavorite = true;
+                                            break;
+                                        }
+                                    }
+
+                                    if($isfavorite){
+                                        $this->load->model('Model_favorite');
+                                        $this->Model_favorite->updateFavoriteNum($project->projectID);
+                                        echo '<p><a href="' . base_url() . 'favorite/release_favorite/' . $favorite[0]->projectID . '"><span><i class="material-icons">grade</i></span></a></p>';
+                                    }else {
+                                        $this->load->model('Model_favorite');
+                                        $this->Model_favorite->updateFavoriteNum($project->projectID);
+                                        echo '<p><a href="'.base_url().'favorite/regist_favorite/' .$project->projectID. '"><span><i class="material-icons">stars</i></span></a></p>';
+                                    }
+                                    ?>
                                 </div>
+
                                 <center>
                                     <a href="<?php echo base_url().'middle/detail/'.$project->projectID;?>"><i class="material-icons">play_for_work</i>Edit Project</a>
                                 </center>
+                            </div>
+                            <div class="card-reveal orange lighten-4">
+                                <span class="card-title black-text"><i class="material-icons right">close</i></span>
+                                <p><i class="material-icons">loop</i>LastModified : <?php echo $project->modified;?></p>
+                                <p><i class="material-icons">album</i>ProjectID : <?php echo $project->projectID;?></p>
+                                <p><i class="material-icons">assignment</i>Description : <?php echo $project->description;?></p>
                             </div>
 
                         </div>
@@ -234,14 +265,26 @@ if($isown || !$this->session->userdata('userID')){
                         <p><i class="material-icons">visibility</i>PV : <?php echo $favorite[0]->pv;?></p>
                         <p><i class="material-icons">trending_down</i>Forked : <?php echo $favorite[0]->fork;?></p>
                         <p><i class="material-icons">grade</i>Favorite : <?php echo $favorite[0]->favorite;?></p>
-                        <p><i class="material-icons">perm_identity</i>Author :
+                        <p class="truncate"><i class="material-icons">perm_identity</i>
                             <a href="<?php echo base_url().'profile/information/'.$favorite[0]->ownerUserID;?>">
                                 <?php echo "@".$favorite[0]->ownerUserID;?>
                             </a></p>
+                        <?php
+                        $this->load->model('Model_favorite');
+                        $this->Model_favorite->updateFavoriteNum($favorite[0]->projectID);
+                        echo '<p><a href="'.base_url().'favorite/release_favorite/' .$favorite[0]->projectID. '"><span><i class="material-icons">grade</i></span></a></p>';
+                        ?>
                     </div>
+
                     <center>
                         <a href="<?php echo base_url().'middle/detail/'.$favorite[0]->projectID;?>"><i class="material-icons">play_for_work</i>Edit Project</a>
                     </center>
+                </div>
+                <div class="card-reveal orange lighten-4">
+                    <span class="card-title black-text"><i class="material-icons right">close</i></span>
+                    <p><i class="material-icons">loop</i>LastModified : <?php echo $favorite[0]->modified;?></p>
+                    <p><i class="material-icons">album</i>ProjectID : <?php echo $favorite[0]->projectID;?></p>
+                    <p><i class="material-icons">assignment</i>Description : <?php echo $favorite[0]->description;?></p>
                 </div>
 
             </div>
