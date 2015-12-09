@@ -2,7 +2,6 @@
 
 <?php
 
-echo $this->pagination->create_links();
 $days = $ranking['days'];
 $order = $ranking['order'];
 $num = $ranking['num'];
@@ -18,24 +17,24 @@ $base_url = base_url();
 		<select onChange="location.href=this.options[this.selectedIndex].value" class="browser-default">
 			<option VALUE=<?php echo '"'.$base_url.'ranking/index/day/'.$order.'/'.$num.'/'.$cur_page.'/"'; if($days == "day") echo "selected";?> >１日</option>
 			<option VALUE=<?php echo '"'.$base_url.'ranking/index/week/'.$order.'/'.$num.'/'.$cur_page.'/"';if($days == "week")echo "selected";?> >１週間</option>
-			<option VALUE=<?php echo '"'.$base_url.'ranking/index/all/'.$order.'/'.$num.'/'.$cur_page.'/"'; if($days == "all") echo "selected";?> >すべて</option> 
+			<option VALUE=<?php echo '"'.$base_url.'ranking/index/all/'.$order.'/'.$num.'/'.$cur_page.'/"'; if($days == "all") echo "selected";?> >すべて</option>
 		</select>
 	</div>
-	
+
 	<div class="input-field col s3">並べ替え
 		<select onChange="location.href=this.options[this.selectedIndex].value" class="browser-default">
 			<option VALUE=<?php echo '"'.$base_url.'ranking/index/'.$days.'/pv/'.$num.'/'.$cur_page.'/"';		if($order == "pv") echo "selected"; ?> >閲覧数</option>
 			<option VALUE=<?php echo '"'.$base_url.'ranking/index/'.$days.'/fork/'.$num.'/'.$cur_page.'/"';		if($order == "fork")echo "selected";?> >フォーク数</option>
-			<option VALUE=<?php echo '"'.$base_url.'ranking/index/'.$days.'/favorite/'.$num.'/'.$cur_page.'/"';	if($order == "favorite") echo "selected"; ?> >お気に入り数</option> 
+			<option VALUE=<?php echo '"'.$base_url.'ranking/index/'.$days.'/favorite/'.$num.'/'.$cur_page.'/"';	if($order == "favorite") echo "selected"; ?> >お気に入り数</option>
 		</select>
 	</div>
-	
+
 	<div class="input-field col s3">表示数
 		<select onChange="location.href=this.options[this.selectedIndex].value" class="browser-default">
 			<option VALUE=<?php echo '"'.$base_url.'ranking/index/'.$days.'/'.$order.'/15/'.$cur_page.'/"'; 	if($num == 15) echo "selected";?>  >15個</option>
 			<option VALUE=<?php echo '"'.$base_url.'ranking/index/'.$days.'/'.$order.'/30/'.$cur_page.'/"';		if($num == 30) echo "selected";?>  >30個</option>
-			<option VALUE=<?php echo '"'.$base_url.'ranking/index/'.$days.'/'.$order.'/60/'.$cur_page.'/"'; 	if($num == 60) echo "selected";?>  >60個</option> 
-			<option VALUE=<?php echo '"'.$base_url.'ranking/index/'.$days.'/'.$order.'/100/'.$cur_page.'/"'; 	if($num == 100) echo "selected";?> >100個</option> 
+			<option VALUE=<?php echo '"'.$base_url.'ranking/index/'.$days.'/'.$order.'/60/'.$cur_page.'/"'; 	if($num == 60) echo "selected";?>  >60個</option>
+			<option VALUE=<?php echo '"'.$base_url.'ranking/index/'.$days.'/'.$order.'/100/'.$cur_page.'/"'; 	if($num == 100) echo "selected";?> >100個</option>
 		</select>
 	</div>
 </div>
@@ -107,5 +106,8 @@ echo '</div>';
 if($i==0) {
 	echo "<p>検索に一致するプロジェクトはありません。</p>";
 }
+
+echo '<br>';
+echo '<div>'.$this->pagination->create_links().'</div>';
 
 ?>
