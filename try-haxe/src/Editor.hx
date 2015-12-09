@@ -703,6 +703,6 @@ class Editor {
 
     private function onDescription(data: String):Void{
         //説明文を出力する
-        new JQuery("p.proDes").text(data);
+        new JQuery("p.proDes").html(data);
     }
 }
