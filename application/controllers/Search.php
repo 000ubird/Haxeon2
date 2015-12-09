@@ -9,12 +9,19 @@ class Search extends CI_Controller {
 		$this->load->view('search');
 		$this->load->view('footer');
 	}
-	
+
+    //検索結果の表示
+    public function searchResult($result){
+        $this->load->view('header');
+        $this->load->view('search_result',$result);
+        $this->load->view('footer');
+    }
+
 	//検索の実行と結果表示
 	public function doSearch() {
 		//検索文字列の取得
 		$str = set_value('search', 'search');
-		
+
 		//チェックボックス情報の取得
 		$searchArray = [
 			set_checkbox('chk[0]', 0),	//tag
@@ -27,33 +34,30 @@ class Search extends CI_Controller {
 			set_radio('sort', 'PV'),	//pv
 			set_radio('sort', 'Name')	//name
 		];
-		
+
 		//バリデーション
 		$this->load->library("form_validation");
 		$this->form_validation->set_error_delimiters('<div class="error">', '</div>');
-				
+
 		//エラーメッセージの設定
 		$this->form_validation->set_rules("search", "検索", "alpha_numeric");
         $this->form_validation->set_message("alpha_numeric", "%sは半角英数字のみ可能です。");
-		
+
 		//正しい場合は検索を実行
         if ($this->form_validation->run()) {
 			//データベースから検索
 			$this->load->model("Model_project");
 			$result['result'] = $this->Model_project->searchProject($str,$searchArray,$sortBy);
 			$result['str'] = $str;
-			
+
 			//Viewを表示
-			$this->load->view('header');
-			$this->load->view('search_result',$result);
-			$this->load->view('footer');
+			$this->searchResult($result);
+
 		}
 		//問題のある文字列が入力された場合は検索画面に戻る
 		else {
-			$this->load->view('header');
-			$this->load->view('search');
-			$this->load->view('footer');
+			$this->index();
 		}
 	}
-	
+
 }
