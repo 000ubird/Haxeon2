@@ -24,10 +24,34 @@ foreach($projects as $project) {
 						<p><i class="material-icons">visibility</i>PV : <?php echo $project[0]->pv;?></p>
                         <p><i class="material-icons">trending_down</i>Forked : <?php echo $project[0]->fork;?></p>
                         <p><i class="material-icons">grade</i>Favorite : <?php echo $project[0]->favorite;?></p>
-						<p><i class="material-icons">perm_identity</i>Author :
+						<p class="truncate"><i class="material-icons">perm_identity</i>
 						<a href="<?php echo base_url().'profile/information/'.$project[0]->ownerUserID;?>">
 							<?php echo "@".$project[0]->ownerUserID;?>
 						</a></p>
+                    <?php
+                    $isfavorite = false;
+                    $i = 0;
+
+                    $pro_id = $project[0]->projectID;
+                    foreach($favorites as $favorite){
+                        $favo_id = $favorite[0]->projectID;
+
+                        if($favo_id == $pro_id) {
+                            $isfavorite = true;
+                            break;
+                        }
+                    }
+
+                    if($isfavorite){
+                        $this->load->model('Model_favorite');
+                        $this->Model_favorite->updateFavoriteNum($project[0]->projectID);
+                        echo '<p><a href="' . base_url() . 'favorite/release_favorite/' . $favorite[0]->projectID . '"><span><i class="material-icons">grade</i></span></a></p>';
+                    }else {
+                        $this->load->model('Model_favorite');
+                        $this->Model_favorite->updateFavoriteNum($project[0]->projectID);
+                        echo '<p><a href="'.base_url().'favorite/regist_favorite/' .$project[0]->projectID. '"><span><i class="material-icons">stars</i></span></a></p>';
+                    }
+                    ?>
 				</div>
 				<center>
 					<a href="<?php echo base_url().'middle/detail/'.$project[0]->projectID;?>"><i class="material-icons">play_for_work</i>Edit Project</a>
