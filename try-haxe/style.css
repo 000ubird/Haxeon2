@@ -199,3 +199,7 @@ body.fullscreen-runner {
 .proName {
 	font-size: 30px;
 }
+
+div.desc {
+    margin-bottom: 5%;
+}
