@@ -11,12 +11,12 @@ $i = 0;
 foreach($projects as $project) {
 ?>
 	<div class="col s3">
-		<div class="card amber ">
+		<div class="card amber">
 			<div class="card-content">
 				<span class="card-title">
-					<a href="<?php echo base_url().'middle/detail/'.$project[0]->projectID;?>">
+					<p class="truncate"><a href="<?php echo base_url().'middle/detail/'.$project[0]->projectID;?>">
 						<?php echo $project[0]->projectName; ?>
-					</a>
+					</a></p>
 				</span>
 
 				<span class="card-title activator grey-text text-darken-4"><i class="material-icons right">info</i></span>
