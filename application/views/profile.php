@@ -138,17 +138,18 @@ if($isown || !$this->session->userdata('userID')){
                 echo '<p>you have no project.</p>';
             }
 
-            //ページネーション
-            if ($category == PROJECTS) {
-            //プロジェクト一覧を表示するとき
-            $this->load->library('pagination');
-            echo $this->pagination->create_links();
-            }
             ?>
 
             </div>
             <?php if (!(current_url() == base_url() . '' . $info . '' . $uid . '/' . PROJECTS)) {
                 echo '<h4 align="right"><a href="' . base_url() . '' . $info . '' . $uid . '/' . PROJECTS . '">...more projects</a></h4>';
+            }
+            //ページネーション
+            if ($category == PROJECTS) {
+                //プロジェクト一覧を表示するとき
+                $this->load->library('pagination');
+                echo '<br>';
+                echo '<div>'.$this->pagination->create_links().'</div>';
             }
             ?>
 
