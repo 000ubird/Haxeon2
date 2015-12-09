@@ -48,9 +48,9 @@ foreach($projects as $project) {
 <div class="col s3">
     <div class="card amber">
         <div class="card-content">
-                                <span class="card-title">
-					                <p class="truncate"><a href="<?php echo base_url().'middle/detail/'.$project->projectID;?>"><?php echo $project->projectName; ?></a></p>
-                                </span>
+            <span class="card-title">
+			    <p class="truncate"><a href="<?php echo base_url().'middle/detail/'.$project->projectID;?>"><?php echo $project->projectName; ?></a></p>
+            </span>
 
             <span class="card-title activator black-text"><i class="material-icons right">info</i></span>
             <div class="card-action">
