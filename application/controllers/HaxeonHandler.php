@@ -38,6 +38,6 @@ class HaxeonHandler extends CI_Controller {
         $this->load->model('Model_project');
         $description = $this->Model_project->getDescription($projectID);
 
-        if($description) echo $description[0]->description;
+        if($description) echo nl2br(htmlspecialchars($description[0]->description));
     }
 }
