@@ -96,7 +96,7 @@ if($isown || !$this->session->userdata('userID')){
                                     $i = 0;
 
                                     $pro_id = $project->projectID;
-                                    foreach($favorites as $favorite){
+                                    foreach($my_favorites as $favorite){
                                         $favo_id = $favorite[0]->projectID;
 
                                         if($favo_id == $pro_id) {
@@ -216,10 +216,7 @@ if($isown || !$this->session->userdata('userID')){
 <!--ファボしたプロジェクトをリスト表示する $favoritesをつかう-->
 <?php if($category == "" || $category == FAVORITES){?>
 <div class="favs">
-    <?php     if($category == FAVORITES) {
-        $this->load->library('pagination');
-        echo $this->pagination->create_links();
-    }?>
+
     <div class="row">
         <h2>Favorites</h2>
         <?php
@@ -246,9 +243,28 @@ if($isown || !$this->session->userdata('userID')){
                                 <?php echo "@".$favorite[0]->ownerUserID;?>
                             </a></p>
                         <?php
-                        $this->load->model('Model_favorite');
-                        $this->Model_favorite->updateFavoriteNum($favorite[0]->projectID);
-                        echo '<p><a href="'.base_url().'favorite/release_favorite/' .$favorite[0]->projectID. '"><span><i class="material-icons">grade</i></span></a></p>';
+                        $isfavorite = false;
+                        $i = 0;
+
+                        $pro_id = $favorite[0]->projectID;
+                        foreach($my_favorites as $favorite){
+                            $favo_id = $favorite[0]->projectID;
+
+                            if($favo_id == $pro_id) {
+                                $isfavorite = true;
+                                break;
+                            }
+                        }
+
+                        if($isfavorite){
+                            $this->load->model('Model_favorite');
+                            $this->Model_favorite->updateFavoriteNum($favorite[0]->projectID);
+                            echo '<p><a href="' . base_url() . 'favorite/release_favorite/' . $favorite[0]->projectID . '"><span><i class="material-icons">grade</i></span></a></p>';
+                        }else {
+                            $this->load->model('Model_favorite');
+                            $this->Model_favorite->updateFavoriteNum($favorite[0]->projectID);
+                            echo '<p><a href="'.base_url().'favorite/regist_favorite/' .$favorite[0]->projectID. '"><span><i class="material-icons">stars</i></span></a></p>';
+                        }
                         ?>
                     </div>
 

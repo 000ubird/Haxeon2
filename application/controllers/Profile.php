@@ -143,8 +143,20 @@ class Profile extends CI_Controller
         $data['isfollowed'] = $this->Model_users->getIsFollowed($userID);
 
 		//お気に入りプロジェクトの取得
-        $favorite_list = $this->Model_favorite->getFavorite($userID);
+        //自分
+        $myID = $this->session->userdata('userID');
+        $myfavofite_list = $this->Model_favorite->getFavorite($myID);
+        if($myID == $userID) {
+            $favorite_list = $this->Model_favorite->getFavorite($myID);
+        }else {
+            //他人
+            $favorite_list = $this->Model_favorite->getFavorite($userID);
+        }
+
         $favorite_projects = array();
+        //自分の方
+        $my_favorite_projects = array();
+
         foreach ($favorite_list as $f) {
 			//プロジェクトテーブルから情報を取得
 			$project = $this->Model_project->getOneProject($f->projectID);
@@ -160,7 +172,17 @@ class Profile extends CI_Controller
 				if($project[0]->isPublic) array_push($favorite_projects, $project);
 			}
         }
+
+        foreach ($myfavofite_list as $mf){
+            //プロジェクトテーブルから情報を取得
+            $project = $this->Model_project->getOneProject($mf->projectID);
+            //ログイン中のユーザが自分のお気に入りリストを閲覧する場合
+                //すべてのプロジェクトを取得
+                array_push($my_favorite_projects, $project);
+        }
+
         $data['favorites'] = $favorite_projects;
+        $data['my_favorites'] = $my_favorite_projects;
         $data['favorite_total'] = count($data['favorites']);
 
         return $data;
