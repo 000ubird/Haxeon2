@@ -16,18 +16,38 @@ class Search extends CI_Controller {
 		if ($chk0 == '1') $searchArray[0] = true;
 		if ($chk1 == '1') $searchArray[1] = true;
 		if ($chk2 == '1') $searchArray[3] = true;
-		
+
 		$sortBy = [0, 0, 0];
 		if ($sort0 == '1') $sortBy[0] = true;
 		if ($sort1 == '1') $sortBy[1] = true;
 		if ($sort2 == '1') $sortBy[2] = true;
-		
+
 		$this->load->model("Model_project");
 		$result['result'] = $this->Model_project->searchProject($str,$searchArray,$sortBy);
 		$result['str'] = $str;
 		$result['search'] = $searchArray;
 		$result['sort'] = $sortBy;
-		
+
+        $this->load->model("Model_favorite");
+        $favorite_list = $this->Model_favorite->getFavorite($this->session->userdata['userID']);
+        $favorite_projects = array();
+        foreach ($favorite_list as $f) {
+            //プロジェクトテーブルから情報を取得
+            $project = $this->Model_project->getOneProject($f->projectID);
+
+            //ログイン中のユーザが自分のお気に入りリストを閲覧する場合
+            if ($this->session->userdata('userID')) {
+                //すべてのプロジェクトを取得
+                array_push($favorite_projects, $project);
+            }
+            //ログイン中のユーザが他人のお気に入りリストを閲覧する場合
+            else {
+                //公開プロジェクトのみ取得
+                if($project[0]->isPublic) array_push($favorite_projects, $project);
+            }
+        }
+        $result['favorites'] = $favorite_projects;
+
         $this->load->view('header');
         $this->load->view('search_result',$result);
         $this->load->view('footer');
@@ -37,17 +57,17 @@ class Search extends CI_Controller {
 	public function doSearch() {
 		//検索文字列の取得
 		$str = set_value('search', 'search');
-		
+
 		$searchArray = ['0','0','0'];
 		for ($i = 0; $i < 3; $i++) {
 			if(set_checkbox('chk['.$i.']', $i)) $searchArray[$i] = '1';
 		}
-		
+
 		$sortBy = ['0','0','0'];
 		if (set_radio('sort', 'New')) $sortBy[0] = '1';
 		else if (set_radio('sort', 'PV')) $sortBy[1] = '1';
 		else if (set_radio('sort', 'Name')) $sortBy[2] = '1';
-		
+
 		//バリデーション
 		$this->load->library("form_validation");
 		$this->form_validation->set_error_delimiters('<div class="error">', '</div>');
