@@ -36,7 +36,7 @@ class Profile extends CI_Controller
         krsort($data['projects']);
         krsort($data['follow']);
         krsort($data['follower']);
-        if($this->session->userdata('userID') != FALSE) {
+        if($data['favorites'] != null) {
             krsort($data['favorites']);
         }
 
@@ -144,7 +144,6 @@ class Profile extends CI_Controller
         $data['isfollow'] = $this->Model_users->getIsFollow($userID);
         $data['isfollowed'] = $this->Model_users->getIsFollowed($userID);
 
-        if($this->session->userdata('userID') != FALSE) {
             //お気に入りプロジェクトの取得
             //自分
             $myID = $this->session->userdata('userID');
@@ -159,6 +158,9 @@ class Profile extends CI_Controller
             $favorite_projects = array();
             //自分の方
             $my_favorite_projects = array();
+
+            $data['favorites'] = $favorite_projects;
+            $data['my_favorites'] = $my_favorite_projects;
 
             foreach ($favorite_list as $f) {
                 //プロジェクトテーブルから情報を取得
@@ -182,24 +184,11 @@ class Profile extends CI_Controller
                     array_push($my_favorite_projects, $project);
                 }
 
+                //ふぁぼがあれば更新する
                 $data['favorites'] = $favorite_projects;
                 $data['my_favorites'] = $my_favorite_projects;
             }
-            $data['favorite_total'] = count($data['favorites']);
-        }else{
-            $favorite_list = $this->Model_favorite->getFavorite($userID);
-            $favorite_projects = array();
-
-            foreach($favorite_list as $f){
-                //プロジェクトテーブルから情報を取得
-                $project = $this->Model_project->getOneProject($f->projectID);
-
-                //公開プロジェクトのみ取得
-                if ($project[0]->isPublic) array_push($favorite_projects, $project);
-            }
-            $data['favorites'] = $favorite_projects;
-            $data['favorite_total'] = count($data['favorites']);
-        }
+            $data['favorite_total'] = count($favorite_projects);
 
         return $data;
     }
