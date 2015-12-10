@@ -37,8 +37,9 @@ $info = 'profile/information/';
 echo '    <ul class="info col s8 offset-s1">';
 echo '      <li class="name">name: '. $uname .'</li>';
 echo '      <li class="codes">codes: <a href="'.base_url().''.$info.''.$uid.'/'.PROJECTS.'">'. $project_total .'</a></li>';
-echo '      <li class="forked">forked: </li>';
-echo '      <li class="favorites">favorite: <a href="'.base_url().''.$info.''.$uid.'/'.FAVORITES.'">'. $favorite_total .'</a></li>';
+if($this->session->userdata('userID')) {
+    echo '      <li class="favorites">favorite: <a href="' . base_url() . '' . $info . '' . $uid . '/' . FAVORITES . '">' . $favorite_total . '</a></li>';
+}
 echo '      <li class="following">follow: <a href="'.base_url().''.$info.''.$uid.'/'.FOLLOW.'">'. $follow_total .'</a></li>';
 echo '      <li class="followers">follower: <a href="'.base_url().''.$info.''.$uid.'/'.FOLLOWER.'">'. $follower_total .'</a></li>';
 echo '      <li class="url">url: <a href='. $url .'>'. $url .'</a></li>';
@@ -96,19 +97,21 @@ if($isown || !$this->session->userdata('userID')){
                                     $i = 0;
 
                                     $pro_id = $project->projectID;
-                                    foreach($my_favorites as $favorite){
-                                        $favo_id = $favorite[0]->projectID;
+                                    if($this->session->userdata('userID') != FALSE) {
+                                        foreach ($my_favorites as $f) {
+                                            $favo_id = $f[0]->projectID;
 
-                                        if($favo_id == $pro_id) {
-                                            $isfavorite = true;
-                                            break;
+                                            if ($favo_id == $pro_id) {
+                                                $isfavorite = true;
+                                                break;
+                                            }
                                         }
-                                    }
 
-                                    if($isfavorite){
-                                        echo '<p><a href="' . base_url() . 'favorite/release_favorite/' . $favorite[0]->projectID . '"><span><i class="material-icons">grade</i></span></a></p>';
-                                    }else {
-                                        echo '<p><a href="'.base_url().'favorite/regist_favorite/' .$favorite[0]->projectID. '"><span><i class="material-icons">stars</i></span></a></p>';
+                                        if ($isfavorite) {
+                                            echo '<p><a href="' . base_url() . 'favorite/release_favorite/' . $project->projectID . '"><span><i class="material-icons">grade</i></span></a></p>';
+                                        } else {
+                                            echo '<p><a href="' . base_url() . 'favorite/regist_favorite/' . $project->projectID . '"><span><i class="material-icons">stars</i></span></a></p>';
+                                        }
                                     }
                                     ?>
                                 </div>
@@ -210,74 +213,97 @@ if($isown || !$this->session->userdata('userID')){
 <?php }?>
 
 <!--ファボしたプロジェクトをリスト表示する $favoritesをつかう-->
-<?php if($category == "" || $category == FAVORITES){?>
-<div class="favs">
+<?php if($category == "" || $category == FAVORITES){ ?>
+        <div class="favs">
 
-    <div class="row">
-        <h2>Favorites</h2>
-        <?php
-        $num = 0;
-        if($favorite_total > 0) {
-            //ふぁぼが新しいものほど先にくるように降順ソート
-            foreach ($favorites as $favorite) {
-                if($category == "") if($num >= MAX_FAVORITE) break;
-                ?>
-        <div class="col s3">
-            <div class="card amber">
-                <div class="card-content">
+            <div class="row">
+                <h2>Favorites</h2>
+                <?php
+                $num = 0;
+                    if (count($favorites) > 0) {
+                        //ふぁぼが新しいものほど先にくるように降順ソート
+                        krsort($favorites);
+                        foreach ($favorites as $favorite) {
+                            if ($category == "") if ($num >= MAX_FAVORITE) break;
+                            ?>
+                            <div class="col s3">
+                                <div class="card amber">
+                                    <div class="card-content">
                                 <span class="card-title">
-					                <p class="truncate"><a href="<?php echo base_url().'middle/detail/'.$favorite[0]->projectID;?>"><?php echo $favorite[0]->projectName; ?></a></p>
+					                <p class="truncate"><a
+                                            href="<?php echo base_url() . 'middle/detail/' . $favorite[0]->projectID; ?>"><?php echo $favorite[0]->projectName; ?></a>
+                                    </p>
                                 </span>
 
-                    <span class="card-title activator black-text"><i class="material-icons right">info</i></span>
-                    <div class="card-action">
-                        <p><i class="material-icons">visibility</i>PV : <?php echo $favorite[0]->pv;?></p>
-                        <p><i class="material-icons">trending_down</i>Forked : <?php echo $favorite[0]->fork;?></p>
-                        <p><i class="material-icons">grade</i>Favorite : <?php echo $favorite[0]->favorite;?></p>
-                        <p class="truncate"><i class="material-icons">perm_identity</i>
-                            <a href="<?php echo base_url().'profile/information/'.$favorite[0]->ownerUserID;?>">
-                                <?php echo "@".$favorite[0]->ownerUserID;?>
-                            </a></p>
-                        <?php
-                        $isfavorite = false;
-                        $i = 0;
+                                <span class="card-title activator black-text"><i
+                                        class="material-icons right">info</i></span>
 
-                        $pro_id = $favorite[0]->projectID;
-                        foreach($my_favorites as $f){
-                            $favo_id = $f[0]->projectID;
+                                        <div class="card-action">
+                                            <p><i class="material-icons">visibility</i>PV
+                                                : <?php echo $favorite[0]->pv; ?>
+                                            </p>
 
-                            if($favo_id == $pro_id) {
-                                $isfavorite = true;
-                                break;
-                            }
+                                            <p><i class="material-icons">trending_down</i>Forked
+                                                : <?php echo $favorite[0]->fork; ?></p>
+
+                                            <p><i class="material-icons">grade</i>Favorite
+                                                : <?php echo $favorite[0]->favorite; ?></p>
+
+                                            <p class="truncate"><i class="material-icons">perm_identity</i>
+                                                <a href="<?php echo base_url() . 'profile/information/' . $favorite[0]->ownerUserID; ?>">
+                                                    <?php echo "@" . $favorite[0]->ownerUserID; ?>
+                                                </a></p>
+                                            <?php
+                                            if($this->session->userdata('userID') != FALSE) {
+                                                $isfavorite = false;
+                                                $i = 0;
+
+                                                $pro_id = $favorite[0]->projectID;
+                                                foreach ($my_favorites as $f) {
+                                                    $favo_id = $f[0]->projectID;
+
+                                                    if ($favo_id == $pro_id) {
+                                                        $isfavorite = true;
+                                                        break;
+                                                    }
+                                                }
+
+                                                if ($isfavorite) {
+                                                    echo '<p><a href="' . base_url() . 'favorite/release_favorite/' . $favorite[0]->projectID . '"><span><i class="material-icons">grade</i></span></a></p>';
+                                                } else {
+                                                    echo '<p><a href="' . base_url() . 'favorite/regist_favorite/' . $favorite[0]->projectID . '"><span><i class="material-icons">stars</i></span></a></p>';
+                                                }
+                                            }
+                                            ?>
+                                        </div>
+
+                                        <center>
+                                            <a href="<?php echo base_url() . 'middle/detail/' . $favorite[0]->projectID; ?>"><i
+                                                    class="material-icons">play_for_work</i>Edit Project</a>
+                                        </center>
+                                    </div>
+                                    <div class="card-reveal orange lighten-4">
+                                        <span class="card-title black-text"><i
+                                                class="material-icons right">close</i></span>
+
+                                        <p><i class="material-icons">loop</i>LastModified
+                                            : <?php echo $favorite[0]->modified; ?></p>
+
+                                        <p><i class="material-icons">album</i>ProjectID
+                                            : <?php echo $favorite[0]->projectID; ?>
+                                        </p>
+
+                                        <p><i class="material-icons">assignment</i>Description
+                                            : <?php echo $favorite[0]->description; ?></p>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <?php
+                            $num += 1;
                         }
-
-                        if($isfavorite){
-                            echo '<p><a href="' . base_url() . 'favorite/release_favorite/' . $favorite[0]->projectID . '"><span><i class="material-icons">grade</i></span></a></p>';
-                        }else {
-                            echo '<p><a href="'.base_url().'favorite/regist_favorite/' .$favorite[0]->projectID. '"><span><i class="material-icons">stars</i></span></a></p>';
-                        }
-                        ?>
-                    </div>
-
-                    <center>
-                        <a href="<?php echo base_url().'middle/detail/'.$favorite[0]->projectID;?>"><i class="material-icons">play_for_work</i>Edit Project</a>
-                    </center>
-                </div>
-                <div class="card-reveal orange lighten-4">
-                    <span class="card-title black-text"><i class="material-icons right">close</i></span>
-                    <p><i class="material-icons">loop</i>LastModified : <?php echo $favorite[0]->modified;?></p>
-                    <p><i class="material-icons">album</i>ProjectID : <?php echo $favorite[0]->projectID;?></p>
-                    <p><i class="material-icons">assignment</i>Description : <?php echo $favorite[0]->description;?></p>
-                </div>
-
-            </div>
-        </div>
-
-    <?php
-                $num += 1;
-            }
-        }else{
+                }else {
             echo '<p>no favorite project.</p>';
         }
         ?>
