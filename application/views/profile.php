@@ -187,7 +187,8 @@ if($isown || !$this->session->userdata('userID')){
         //ページネーション
         if($category == FOLLOW) {
             $this->load->library('pagination');
-            echo $this->pagination->create_links();
+            echo '<br>';
+            echo '<div>'.$this->pagination->create_links().'</div>';
         }?>
 
     </div>
@@ -229,7 +230,8 @@ if($isown || !$this->session->userdata('userID')){
             //ページネーション
             if($category == FOLLOW) {
                 $this->load->library('pagination');
-                echo $this->pagination->create_links();
+                echo '<br>';
+                echo '<div>'.$this->pagination->create_links().'</div>';
             }?>
             ?>
         </div>
