@@ -115,14 +115,14 @@ class Profile extends CI_Controller
         $data['isown'] = ($this->session->userdata('userID') == $userID);
         $data['isfollow'] = $this->Model_users->getIsFollow($userID);
         $data['isfollowed'] = $this->Model_users->getIsFollowed($userID);
-		
+
 		//お気に入りプロジェクトの取得
         $favorite_list = $this->Model_favorite->getFavorite($userID);
         $favorite_projects = array();
         foreach ($favorite_list as $f) {
 			//プロジェクトテーブルから情報を取得
 			$project = $this->Model_project->getOneProject($f->projectID);
-			
+
 			//ログイン中のユーザが自分のお気に入りリストを閲覧する場合
 			if ($this->session->userdata('userID') == $userID) {
 				//すべてのプロジェクトを取得
@@ -506,9 +506,10 @@ public function validation_tag(){
             //プロフィール文の更新
             $this->Model_users->updateUserProfile($_POST['profile'], $userID);
 
-            $this->information($userID);
+            header("Location: ".base_url()."profile/information/". $userID);
+
         }else{
-            $this->profilesettings($userID);
+            header("Location: ".base_url()."profile/profilesettings/".$userID);
         }
     }
 
