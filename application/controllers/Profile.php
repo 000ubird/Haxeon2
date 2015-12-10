@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 //タグの登録上限数
 define("TAG_LIMIT", 10);
 //プロジェクト、お気に入りの表示数
-define("PROJECT_PER_PAGE", 18);
+define("PROJECT_PER_PAGE", 20);
 //フォロー、フォロワーの表示数
 define("FOLLOW_PER_PAGE", 28);
 
@@ -44,7 +44,7 @@ class Profile extends CI_Controller
             //ページネーション
             $this->load->library('pagination');
 
-            $config['base_url'] = base_url() . 'profile/information/Tom0/' . $category . '/';
+            $config['base_url'] = base_url() . 'profile/information/'.$data['userID'].'/' . $category . '/';
             $config['total_rows'] = count($data[$category]);
             $config['per_page'] = PROJECT_PER_PAGE;
             if ($category == 'follow' || $category == 'follower') $config['per_page'] = FOLLOW_PER_PAGE;
@@ -73,8 +73,33 @@ class Profile extends CI_Controller
 
             $this->pagination->initialize($config);
 
-            if ($category == 'projects') $data['projects'] = array_slice($data['projects'], $this->uri->segment(5), PROJECT_PER_PAGE);
-            if ($category == 'follow') $data['follow'] = array_slice($data['follow'], $this->uri->segment(5), FOLLOW_PER_PAGE);
+            if ($category == 'projects' || $category == 'favorites') $data['projects'] = array_slice($data['projects'], $this->uri->segment(5), PROJECT_PER_PAGE);
+
+            //Viewに関する指定
+            $config['full_tag_open'] = '<ul class="pagination">';
+            $config['full_tag_close'] = '</ul>';
+
+            $config['first_tag_open'] = '<li class="waves-effect"><i class="material-icons">';
+            $config['first_link'] = 'fast_rewind';
+            $config['first_tag_close'] = '</i></li>';
+
+            $config['last_tag_open'] = '<li class="waves-effect"><i class="material-icons">';
+            $config['last_link'] = 'fast_forward';
+            $config['last_tag_close'] = '</i></li>';
+
+            $config['cur_tag_open'] = '<li class="active">';
+            $config['cur_tag_close'] = '</li>';
+
+            $config['num_tag_open'] = '<li class="waves-effect">';
+            $config['num_tag_close'] = '</li>';
+
+            $config['next_tag_open'] = '<li class="waves-effect"><i class="material-icons">';
+            $config['next_link'] = '&gt;';
+            $config['next_tag_close'] = '</i></li>';
+
+            $config['prev_tag_open'] = '<li class="waves-effect"><i class="material-icons">';
+            $config['prev_link'] = '&lt;';
+            $config['prev_tag_close'] = '</i></li>';
         }
 
 
@@ -107,6 +132,7 @@ class Profile extends CI_Controller
 
         $data['category'] = $category;
         $data['user'] = $this->Model_users->getUserData($userID);
+        $data['userID'] = $userID;
         $data['project_total'] = count($data['projects']);
         $data['follow'] = $this->Model_users->getFollowInfo($userID);
         $data['follow_total'] = count($data['follow']);
