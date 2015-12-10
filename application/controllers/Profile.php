@@ -808,7 +808,7 @@ public function validation_tag(){
         $userID = $this->session->userdata('userID');
         $this->Model_project->deleteOneProject($projectID, $userID);
 
-        $this->information($userID);
+        header('Location: '.base_url().'profile/information/'.$userID);
     }
 
 }

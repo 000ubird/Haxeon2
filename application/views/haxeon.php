@@ -34,8 +34,8 @@ foreach($projects as $project) {
 
                     $pro_id = $project[0]->projectID;
                     if($this->session->userdata('userID') != FALSE) {
-                    foreach($favorites as $favorite){
-                        $favo_id = $favorite[0]->projectID;
+                    foreach($favorites as $f){
+                        $favo_id = $f[0]->projectID;
 
                         if($favo_id == $pro_id) {
                             $isfavorite = true;
@@ -46,7 +46,7 @@ foreach($projects as $project) {
                         if ($isfavorite) {
                             $this->load->model('Model_favorite');
                             $this->Model_favorite->updateFavoriteNum($project[0]->projectID);
-                            echo '<p><a href="' . base_url() . 'favorite/release_favorite/' . $favorite[0]->projectID . '"><span><i class="material-icons">grade</i></span></a></p>';
+                            echo '<p><a href="' . base_url() . 'favorite/release_favorite/' . $project[0]->projectID . '"><span><i class="material-icons">grade</i></span></a></p>';
                         } else {
                             $this->load->model('Model_favorite');
                             $this->Model_favorite->updateFavoriteNum($project[0]->projectID);

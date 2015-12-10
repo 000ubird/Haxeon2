@@ -39,7 +39,7 @@ class Haxeon extends CI_Controller {
                 } //ログイン中のユーザが他人のお気に入りリストを閲覧する場合
                 else {
                     //公開プロジェクトのみ取得
-                    if ($project[0]->isPublic) array_push($favorite_projects, $project);
+                    if ($project->isPublic) array_push($favorite_projects, $project);
                 }
             }
             $data['favorites'] = $favorite_projects;
