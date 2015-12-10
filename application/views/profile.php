@@ -70,7 +70,7 @@ if($isown || !$this->session->userdata('userID')){
             //トップページのとき
             //複数項目ある場合の書き方例
             if (count($projects) > 0) {
-                //            //プロジェクトを降順ソート
+                //プロジェクトを降順ソート
                 $num = 0;
                 foreach ($projects as $project) {
                     if ($category == "" && $num >= MAX_PROJECTS) break;
@@ -135,7 +135,7 @@ if($isown || !$this->session->userdata('userID')){
             $num += 1;
                 }
             } else {
-                echo '<p>you have no project.</p>';
+                echo '<p>no project.</p>';
             }
 
             ?>
@@ -170,26 +170,13 @@ if($isown || !$this->session->userdata('userID')){
             if($category == "") if($num >= MAX_FOLLOW) break;
             $id = $f->userFollowingID;
             $icon = $this->Model_users->get_icon_url($id);
-            echo '<div class="col s3">';
-            echo '<a href="'.base_url().'profile/information/'.$id.'">';
-            echo '<div class="card-panel waves-effect waves-light z-depth-1 truncate">';
-            echo '<img src="'.$icon.'" width="30%" height="auto">';
-            echo '<span style="text-align: center"> '.$id.'</span>';
-            echo '</div>';
-            echo '</a>';
-            echo '</div>';
+            echo '<a href="'.base_url().'/profile/information/'.$id.'"><div class="userchip chip col s2"><img src="'.$icon.'"><span class="truncate">'.$id.'</span></div></a>';
             $num += 1;
         }
         }else{
-            echo '<p>you have no follow.</p>';
+            echo '<p>no follow.</p>';
         }
-
-        //ページネーション
-        if($category == FOLLOW) {
-            $this->load->library('pagination');
-            echo '<br>';
-            echo '<div>'.$this->pagination->create_links().'</div>';
-        }?>
+?>
 
     </div>
 
@@ -214,26 +201,12 @@ if($isown || !$this->session->userdata('userID')){
                 foreach($follower as $f){
                     $id = $f->userID;
                     $icon = $this->Model_users->get_icon_url($id);
-                    echo '<div class="col s3">';
-                    echo '<a href="'.base_url().'profile/information/'.$id.'">';
-                    echo '<div class="card-panel waves-effect waves-light z-depth-1 truncate">';
-                    echo '<img src="'.$icon.'" width="30%" height="auto">';
-                    echo '<span style="text-align: center"> '.$id.'</span>';
-                    echo '</div>';
-                    echo '</a>';
-                    echo '</div>';
+                    echo '<a href="'.base_url().'/profile/information/'.$id.'"><div class="userchip chip col s2"><img src="'.$icon.'"><span class="truncate">'.$id.'</span></div></a>';
                 }
             }else{
-                echo '<p>you have no follower.</p>';
+                echo '<p>no follower.</p>';
             }
-
-            //ページネーション
-            if($category == FOLLOW) {
-                $this->load->library('pagination');
-                echo '<br>';
-                echo '<div>'.$this->pagination->create_links().'</div>';
-            }?>
-            ?>
+?>
         </div>
     </div>
 
@@ -297,13 +270,21 @@ if($isown || !$this->session->userdata('userID')){
                 $num += 1;
             }
         }else{
-            echo '<p>you have no favorite project.</p>';
+            echo '<p>no favorite project.</p>';
         }
         ?>
     </div>
     <?php
     if(!(current_url() == base_url().''.$info.''.$uid.'/'.FAVORITES)) {
         echo '<h4 align="right"><a href="' . base_url() . '' . $info . '' . $uid . '/' . FAVORITES . '">...more favorites</a></h4>';
+    }
+
+    //ページネーション
+    if ($category == FAVORITES) {
+        //プロジェクト一覧を表示するとき
+        $this->load->library('pagination');
+        echo '<br>';
+        echo '<div>'.$this->pagination->create_links().'</div>';
     }
     ?>
 </div>

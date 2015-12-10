@@ -73,8 +73,7 @@ class Profile extends CI_Controller
 
             $this->pagination->initialize($config);
 
-            if ($category == 'projects') $data['projects'] = array_slice($data['projects'], $this->uri->segment(5), PROJECT_PER_PAGE);
-            if ($category == 'follow') $data['follow'] = array_slice($data['follow'], $this->uri->segment(5), FOLLOW_PER_PAGE);
+            if ($category == 'projects' || $category == 'favorites') $data['projects'] = array_slice($data['projects'], $this->uri->segment(5), PROJECT_PER_PAGE);
 
             //Viewに関する指定
             $config['full_tag_open'] = '<ul class="pagination">';
