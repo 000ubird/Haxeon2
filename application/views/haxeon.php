@@ -34,10 +34,10 @@ foreach($projects as $project) {
 
                     $pro_id = $project[0]->projectID;
                     if($this->session->userdata('userID') != FALSE) {
-                    foreach($favorites as $f){
-                        $favo_id = $f->projectID;
+                    foreach ($favorites as $f) {
+                        $favo_id = $f[0]->projectID;
 
-                        if($favo_id == $pro_id) {
+                        if ($favo_id == $pro_id) {
                             $isfavorite = true;
                             break;
                         }
