@@ -14,15 +14,19 @@ class Favorite extends CI_Controller {
 		foreach ($result as $row) {
 			$tmpPro = $row->tmpPro;
 		}
-		
+
         $this->load->model('Model_favorite');
         $this->Model_favorite->favorite($this->session->userdata('userID'), $projectID,$tmpPro);
+
+        $this->Model_favorite->updateFavoriteNum($projectID);
+
         redirect($_SERVER['HTTP_REFERER']);
     }
 
     public function release_favorite($projectID){
         $this->load->model('Model_favorite');
         $this->Model_favorite->release_favorite($this->session->userdata('userID'), $projectID);
+        $this->Model_favorite->updateFavoriteNum($projectID);
         redirect($_SERVER['HTTP_REFERER']);
     }
 

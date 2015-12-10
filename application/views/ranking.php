@@ -78,7 +78,7 @@ foreach($projects as $project) {
                 if($isfavorite){
                     $this->load->model('Model_favorite');
                     $this->Model_favorite->updateFavoriteNum($project->projectID);
-                    echo '<p><a href="' . base_url() . 'favorite/release_favorite/' . $favorite->projectID . '"><span><i class="material-icons">grade</i></span></a></p>';
+                    echo '<p><a href="' . base_url() . 'favorite/release_favorite/' . $project->projectID . '"><span><i class="material-icons">grade</i></span></a></p>';
                 }else {
                     $this->load->model('Model_favorite');
                     $this->Model_favorite->updateFavoriteNum($project->projectID);
