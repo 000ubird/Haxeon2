@@ -77,10 +77,18 @@ if($isown || !$this->session->userdata('userID')){
                     if ($category == "" && $num >= MAX_PROJECTS) break;
 ?>
                     <div class="col s3">
-                        <div class="card amber">
+						<?php 
+							//公開プロジェクトと非公開プロジェクトはそれぞれ色を変える
+							if($project->isPublic) echo '<div class="card amber">';
+							else echo '<div class="card grey lighten-1">';
+						?>
                             <div class="card-content">
                                 <span class="card-title">
-					                <p class="truncate"><a href="<?php echo base_url().'middle/detail/'.$project->projectID;?>"><?php echo $project->projectName; ?></a></p>
+									<p class="truncate">
+										<?php if($project->isPublic) echo '<i class="material-icons">assignment</i>';	//公開アイコンの表示
+										else echo '<i class="material-icons">lock</i>';	//非公開アイコンの表示?>
+										<a href="<?php echo base_url().'middle/detail/'.$project->projectID;?>"><?php echo $project->projectName; ?></a>
+									</p>
                                 </span>
 
                                 <span class="card-title activator black-text"><i class="material-icons right">info</i></span>
@@ -227,11 +235,17 @@ if($isown || !$this->session->userdata('userID')){
                             if ($category == "") if ($num >= MAX_FAVORITE) break;
                             ?>
                             <div class="col s3">
-                                <div class="card amber">
+								<?php 
+									//公開プロジェクトと非公開プロジェクトはそれぞれ色を変える
+									if($favorite[0]->isPublic) echo '<div class="card amber">';
+									else echo '<div class="card grey lighten-1">';
+								?>
                                     <div class="card-content">
                                 <span class="card-title">
-					                <p class="truncate"><a
-                                            href="<?php echo base_url() . 'middle/detail/' . $favorite[0]->projectID; ?>"><?php echo $favorite[0]->projectName; ?></a>
+					                <p class="truncate">
+										<?php if($favorite[0]->isPublic) echo '<i class="material-icons">assignment</i>';	//公開アイコンの表示
+										else echo '<i class="material-icons">lock</i>';	//非公開アイコンの表示?>
+										<a href="<?php echo base_url() . 'middle/detail/' . $favorite[0]->projectID; ?>"><?php echo $favorite[0]->projectName; ?></a>
                                     </p>
                                 </span>
 
