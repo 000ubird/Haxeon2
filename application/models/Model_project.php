@@ -263,6 +263,17 @@ class Model_project extends CI_Model{
 		$this->db->delete('project', array('ownerUserID'=>$userID));
         $this->deleteDayRanking($userID);
 	}
+	
+	//公開プロジェクトは非公開に、非公開プロジェクトは公開にする。
+	public function switchPublic($projectID,$isPublic){
+		$this->db->where('projectID', $projectID);
+		//公開プロジェクトの場合は非公開にする
+		if($isPublic=='1') {
+			$this->db->update('project', array('isPublic' => 0));
+		} else {
+			$this->db->update('project', array('isPublic' => 1));
+		}
+	}
 
     //プロジェクトをひとつ削除する
     public function deleteOneProject($projectID, $userID){
