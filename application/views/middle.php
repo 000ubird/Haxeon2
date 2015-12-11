@@ -76,7 +76,12 @@ foreach($comments as $comment){
     echo '<div class="row">';
     echo '<a href="'.base_url().'/profile/information/'.$comment->commentedUserID.'"><div class="userchip chip col s2"><img src="'.$comment->icon.'"><span class="truncate">'.$comment->commentedUserName.'</span></div></a>';
     echo '<div class="col s10 offset-s"><div class="card-panel white"><span>'.$comment->comment.'</span></div></div>';
-    echo '<div class="timestamp"><small>'.$comment->modified.'</small></div>';
+    echo '<div class="timestamp"><small>'.$comment->modified;
+	//自身が登録したコメントのみ削除可能
+	if ($comment->commentedUserID == $this->session->userdata('userID')) {
+		echo '<a href="'.base_url().'middle/delete_comment/'.$comment->commentID.'"><i class="material-icons">delete</i></a>';
+	}
+	echo '</small></div>';
     echo '</div>';
 }
 
