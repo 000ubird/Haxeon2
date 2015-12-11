@@ -22,7 +22,7 @@ echo '<div class="profile row">';
 
 echo '    <div class="icons col s3" style="text-align: center">';
 echo '      <img class="responsive-img" src="'. $icon .'">';
-echo '      <h4 class="truncate">'. $uname. '<br><small> @'. $uid .'</small></h4>';
+echo '      <h4 class="truncate">'. $uname. '<br><small><a href="'.base_url().'profile/information/'.$uid.'">@'.$uid.'</a></small></h4>';
 
 //プロフィール設定ページへのリンク
 if($this->session->userdata('userID') == $uid && $this->session->userdata('userID') !=null ) {
