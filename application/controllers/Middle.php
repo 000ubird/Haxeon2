@@ -89,6 +89,14 @@ class Middle extends CI_Controller{
         }
     }
 	
+	//指定したコメントを削除する
+	public function delete_comment($commentID) {
+		$this->load->model("Model_comment");
+		$this->Model_comment->deleteComment($commentID);
+		//ひとつ前のページに自動的に遷移
+		header('Location:'.$_SERVER['HTTP_REFERER']);
+	}
+	
 	//タグの検索を行い結果を表示する
 	public function tagSearch($tag) {
 		//Viewを表示
