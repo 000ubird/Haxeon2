@@ -510,6 +510,15 @@ public function validation_tag(){
             return true;
         }
     }
+	
+	//プロジェクトの公開非公開を入れ替える
+	public function changePublic($projectID, $isPublic) {
+		$this->load->model("Model_project");
+		$this->Model_project->switchPublic($projectID, $isPublic);
+		
+		//ひとつ前のページに自動的に遷移
+		header('Location:'.$_SERVER['HTTP_REFERER']);
+	}
 
     //プロフィール編集ページを表示
     public function profilesettings($userID) {
