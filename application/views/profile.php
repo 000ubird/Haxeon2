@@ -93,7 +93,7 @@ if($isown || !$this->session->userdata('userID')){
 						if($this->session->userdata('userID') == $project->ownerUserID){
 							echo '<a href="'.base_url().'profile/changePublic/'.$project->projectID.'/1">';
 						}
-						echo 'assignment';
+						echo 'settings_input_antenna';
 						if($this->session->userdata('userID') == $project->ownerUserID) echo '</a>'; 
 						echo '</i>';
 					}
@@ -273,7 +273,7 @@ if($isown || !$this->session->userdata('userID')){
 						if($this->session->userdata('userID') == $favorite[0]->ownerUserID){
 							echo '<a href="'.base_url().'profile/changePublic/'.$favorite[0]->projectID.'/1">';
 						}
-						echo 'assignment';
+						echo 'settings_input_antenna';
 						if($this->session->userdata('userID') == $favorite[0]->ownerUserID) echo '</a>'; 
 						echo '</i>';
 					}
