@@ -109,7 +109,7 @@ if($isown || !$this->session->userdata('userID')){
 						echo '</i>';
 					}
 					?>
-										<a href="<?php echo base_url().'middle/detail/'.$project->projectID;?>"><?php echo $project->projectName; ?></a>
+									<?php echo $project->projectName; ?>
 									</p>
                                 </span>
 
@@ -289,7 +289,7 @@ if($isown || !$this->session->userdata('userID')){
 						echo '</i>';
 					}
 					?>
-										<a href="<?php echo base_url() . 'middle/detail/' . $favorite[0]->projectID; ?>"><?php echo $favorite[0]->projectName; ?></a>
+									<?php echo $favorite[0]->projectName; ?>
                                     </p>
                                 </span>
 
