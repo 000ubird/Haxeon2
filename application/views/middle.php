@@ -5,7 +5,7 @@
     <div class="col s12">
         <?php
         foreach($tags as $tag){
-            echo '<div class="chip"><a href="'.base_url().'middle/tagSearch/'.$tag.'">'.$tag.'</div></a>';
+            echo '<div class="chip"><a href="'.base_url().'search/searchResult/'.$tag.'/1/0/0/1/0/0/">'.$tag.'</div></a>';
         }
         ?>
     </div>
