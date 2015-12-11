@@ -200,7 +200,7 @@ class Profile extends CI_Controller
      */
     public function projectsettings($projectID)
     {
-		if ($this->session->userdata('userID') == null) header('Location: http://localhost/haxeon/login');
+		if ($this->session->userdata('userID') == null) header('Location: '.base_url().'login');
 		
         $this->session->set_userdata(array('pid' => $projectID));
 
@@ -224,7 +224,7 @@ class Profile extends CI_Controller
 
     //タグ設定画面
     public function tagsettings($projectID) {
-		if ($this->session->userdata('userID') == null) header('Location: http://localhost/haxeon/login');
+		if ($this->session->userdata('userID') == null) header('Location: '.base_url().'login');
         
 		$this->session->set_userdata(array('pid' => $projectID));
 
@@ -365,7 +365,7 @@ public function validation_tag(){
 
 	//アカウント削除
 	public function delete() {
-		if ($this->session->userdata('userID') == null) header('Location: http://localhost/haxeon/login');
+		if ($this->session->userdata('userID') == null) header('Location: '.base_url().'login');
 		
 		$this->load->view('header');
 		$this->load->view('delete_account');
@@ -513,7 +513,7 @@ public function validation_tag(){
 
     //プロフィール編集ページを表示
     public function profilesettings($userID) {
-		if ($this->session->userdata('userID') == null) header('Location: http://localhost/haxeon/login');
+		if ($this->session->userdata('userID') == null) header('Location: '.base_url().'login');
 		
         $this->load->model("Model_users");
         $userData = $this->Model_users->getUserData($userID);
@@ -652,7 +652,7 @@ public function validation_tag(){
 
     //パスワード変更ページを表示
     public function change_pass($userID) {
-		if ($this->session->userdata('userID') == null) header('Location: http://localhost/haxeon/login');
+		if ($this->session->userdata('userID') == null) header('Location: '.base_url().'login');
 		
         $data['userID'] = $userID;
         $this->load->view('header');
@@ -737,7 +737,7 @@ public function validation_tag(){
 
     //メールアドレス設定ページを表示する
     public function change_email($userID){
-		if ($this->session->userdata('userID') == null) header('Location: http://localhost/haxeon/login');
+		if ($this->session->userdata('userID') == null) header('Location: '.base_url().'login');
 		
         $data['userID'] = $userID;
         $this->load->view('header');
@@ -816,7 +816,7 @@ public function validation_tag(){
 
     //プロジェクトを削除する
     public function delete_project($projectID){
-		if ($this->session->userdata('userID') == null) header('Location: http://localhost/haxeon/login');
+		if ($this->session->userdata('userID') == null) header('Location: '.base_url().'login');
 	
         $this->load->model("Model_project");
         $userID = $this->session->userdata('userID');

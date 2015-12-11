@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Createproject extends CI_Controller {
 
     public function index() {
-		if ($this->session->userdata('userID') == null) header('Location: http://localhost/haxeon/login');
+		if ($this->session->userdata('userID') == null) header('Location: '.base_url().'login');
 		
         //セッションにuserIDがあったら遷移するようにする
         if(isset($_SESSION['userID'])){
