@@ -24,8 +24,8 @@ echo '    <div class="icons col s3" style="text-align: center">';
 echo '      <img class="responsive-img" src="'. $icon .'">';
 echo '      <h4 class="truncate">'. $uname. '<br><small> @'. $uid .'</small></h4>';
 
-//フォローボタンの表示
-if($isown || !$this->session->userdata('userID')) {
+//プロフィール設定ページへのリンク
+if($this->session->userdata('userID') == $uid && $this->session->userdata('userID') !=null ) {
     echo '<a href="' . base_url() . 'profile/profilesettings/' . $uid . '"><i class="material-icons">settings</i></a>';
 }else{
     //自分以外のユーザーのときはプロフィール設定をしないため何も表示しない
