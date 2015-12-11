@@ -109,8 +109,7 @@ if($isown || !$this->session->userdata('userID')){
 						echo '</i>';
 					}
 					?>
-									<?php echo $project->projectName; ?>
-									</p>
+						<?php echo $project->projectName; ?></p>
                                 </span>
 
                                 <span class="card-title activator black-text"><i class="material-icons right">info</i></span>
@@ -289,8 +288,7 @@ if($isown || !$this->session->userdata('userID')){
 						echo '</i>';
 					}
 					?>
-									<?php echo $favorite[0]->projectName; ?>
-                                    </p>
+								<?php echo $favorite[0]->projectName; ?></p>
                                 </span>
 
                                 <span class="card-title activator black-text"><i
