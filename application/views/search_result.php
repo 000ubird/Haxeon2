@@ -50,9 +50,7 @@
 		        <div class="card amber">
 		        	<div class="card-content">
 		        		<span class="card-title">
-		        			<p class="truncate"><a href="<?php echo base_url().'middle/detail/'.$row['projectID'];?>">
-		        				<?php echo $row['projectName']; ?>
-                </a></p>
+		        			<p class="truncate"><?php echo $row['projectName']; ?></p>
                 </span>
 
                 <span class="card-title activator black-text"><i class="material-icons right">info</i></span>

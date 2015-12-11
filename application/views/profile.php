@@ -85,10 +85,31 @@ if($isown || !$this->session->userdata('userID')){
                             <div class="card-content">
                                 <span class="card-title">
 									<p class="truncate">
-										<?php if($project->isPublic) echo '<i class="material-icons">assignment</i>';	//公開アイコンの表示
-										else echo '<i class="material-icons">lock</i>';	//非公開アイコンの表示?>
-										<a href="<?php echo base_url().'middle/detail/'.$project->projectID;?>"><?php echo $project->projectName; ?></a>
-									</p>
+					<?php
+					//公開アイコンの表示
+					if($project->isPublic) {
+						echo '<i class="material-icons">';
+						//所持プロジェクトのみ公開・非公開設定の変更可能
+						if($this->session->userdata('userID') == $project->ownerUserID){
+							echo '<a href="'.base_url().'profile/changePublic/'.$project->projectID.'/1">';
+						}
+						echo 'settings_input_antenna';
+						if($this->session->userdata('userID') == $project->ownerUserID) echo '</a>'; 
+						echo '</i>';
+					}
+					//非公開アイコンの表示
+					else {
+						echo '<i class="material-icons">';
+						//所持プロジェクトのみ公開・非公開設定の変更可能
+						if($this->session->userdata('userID') == $project->ownerUserID){
+							echo '<a href="'.base_url().'profile/changePublic/'.$project->projectID.'/0">';
+						}
+						echo 'lock';
+						if($this->session->userdata('userID') == $project->ownerUserID) echo '</a>'; 
+						echo '</i>';
+					}
+					?>
+						<?php echo $project->projectName; ?></p>
                                 </span>
 
                                 <span class="card-title activator black-text"><i class="material-icons right">info</i></span>
@@ -243,10 +264,31 @@ if($isown || !$this->session->userdata('userID')){
                                     <div class="card-content">
                                 <span class="card-title">
 					                <p class="truncate">
-										<?php if($favorite[0]->isPublic) echo '<i class="material-icons">assignment</i>';	//公開アイコンの表示
-										else echo '<i class="material-icons">lock</i>';	//非公開アイコンの表示?>
-										<a href="<?php echo base_url() . 'middle/detail/' . $favorite[0]->projectID; ?>"><?php echo $favorite[0]->projectName; ?></a>
-                                    </p>
+					<?php
+					//公開アイコンの表示
+					if($favorite[0]->isPublic) {
+						echo '<i class="material-icons">';
+						//所持プロジェクトのみ公開・非公開設定の変更可能
+						if($this->session->userdata('userID') == $favorite[0]->ownerUserID){
+							echo '<a href="'.base_url().'profile/changePublic/'.$favorite[0]->projectID.'/1">';
+						}
+						echo 'settings_input_antenna';
+						if($this->session->userdata('userID') == $favorite[0]->ownerUserID) echo '</a>'; 
+						echo '</i>';
+					}
+					//非公開アイコンの表示
+					else {
+						echo '<i class="material-icons">';
+						//所持プロジェクトのみ公開・非公開設定の変更可能
+						if($this->session->userdata('userID') == $favorite[0]->ownerUserID){
+							echo '<a href="'.base_url().'profile/changePublic/'.$favorite[0]->projectID.'/0">';
+						}
+						echo 'lock';
+						if($this->session->userdata('userID') == $favorite[0]->ownerUserID) echo '</a>'; 
+						echo '</i>';
+					}
+					?>
+								<?php echo $favorite[0]->projectName; ?></p>
                                 </span>
 
                                 <span class="card-title activator black-text"><i

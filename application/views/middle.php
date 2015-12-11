@@ -1,5 +1,5 @@
 <h2><?php echo $projectName ?></h2>
-<p>Author: <?php echo $owner; ?></p>
+<p> Author: <a href="<?php echo base_url().'profile/information/'.$owner;?>">@<?php echo $owner; ?></a></p>
 <!-- タグ一覧 -->
 <div class="row">
     <div class="col s12">
