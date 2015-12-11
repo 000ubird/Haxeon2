@@ -8,6 +8,7 @@ class Model_comment extends CI_Model{
             'projectID' => $projectID,
             'tmpPro' => $projectID,
             'comment' => $comment,
+			'commentID' => md5(date("Ymd\,H:i:s")),	//コメントIDは登録時刻のハッシュ値
             'commentedUserID' => $commentedUserID
         );
 
