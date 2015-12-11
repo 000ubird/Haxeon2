@@ -29,7 +29,12 @@ class Search extends CI_Controller {
 		$result['sort'] = $sortBy;
 
         $this->load->model("Model_favorite");
-        $favorite_list = $this->Model_favorite->getFavorite($this->session->userdata['userID']);
+		
+		if ($this->session->userdata('userID') != null) {
+			$favorite_list = $this->Model_favorite->getFavorite($this->session->userdata['userID']);
+		} else {
+			$favorite_list = [];
+		}
         $favorite_projects = array();
         foreach ($favorite_list as $f) {
             //プロジェクトテーブルから情報を取得
