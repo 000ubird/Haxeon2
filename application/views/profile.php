@@ -1,4 +1,3 @@
-<h1>Profile</h1>
 
 <?php
 define("PROJECTS", "projects");
@@ -17,16 +16,16 @@ foreach($user as $row){
     $url = $row->userURL;
     $email = $row->userMail;
 }
-
+echo '<h3>'.$uname.' さんのプロフィール</h3>';
 echo '<div class="profile row">';
 
 echo '    <div class="icons col s3" style="text-align: center">';
-echo '      <img class="responsive-img" src="'. $icon .'">';
+echo '      <img class="responsive-img" src="'. $icon .'" width="100" height="100">';
 echo '      <h4 class="truncate">'. $uname. '<br><small><a href="'.base_url().'profile/information/'.$uid.'">@'.$uid.'</a></small></h4>';
 
 //プロフィール設定ページへのリンク
 if($this->session->userdata('userID') == $uid && $this->session->userdata('userID') !=null ) {
-    echo '<a href="' . base_url() . 'profile/profilesettings/' . $uid . '"><i class="material-icons">settings</i></a>';
+    echo '<a href="' . base_url() . 'profile/profilesettings/' . $uid . '"><i class="material-icons">settings</i>アカウント設定</a>';
 }else{
     //自分以外のユーザーのときはプロフィール設定をしないため何も表示しない
 }
@@ -35,14 +34,14 @@ echo '    </div>';
 
 $info = 'profile/information/';
 echo '    <ul class="info col s8 offset-s1">';
-echo '      <li class="name">name: '. $uname .'</li>';
-echo '      <li class="codes">codes: <a href="'.base_url().''.$info.''.$uid.'/'.PROJECTS.'">'. $project_total .'</a></li>';
+echo '      <li class="name">公開ネーム : '. $uname .'</li>';
+echo '      <li class="codes">所持プロジェクト数 : <a href="'.base_url().''.$info.''.$uid.'/'.PROJECTS.'">'. $project_total .'</a></li>';
 if($this->session->userdata('userID')) {
-    echo '      <li class="favorites">favorite: <a href="' . base_url() . '' . $info . '' . $uid . '/' . FAVORITES . '">' . $favorite_total . '</a></li>';
+    echo '      <li class="favorites">お気に入りプロジェクト数 : <a href="' . base_url() . '' . $info . '' . $uid . '/' . FAVORITES . '">' . $favorite_total . '</a></li>';
 }
-echo '      <li class="following">follow: <a href="'.base_url().''.$info.''.$uid.'/'.FOLLOW.'">'. $follow_total .'</a></li>';
-echo '      <li class="followers">follower: <a href="'.base_url().''.$info.''.$uid.'/'.FOLLOWER.'">'. $follower_total .'</a></li>';
-echo '      <li class="url">url: <a href='. $url .'>'. $url .'</a></li>';
+echo '      <li class="following">フォロー : <a href="'.base_url().''.$info.''.$uid.'/'.FOLLOW.'">'. $follow_total .'</a></li>';
+echo '      <li class="followers">フォロワー : <a href="'.base_url().''.$info.''.$uid.'/'.FOLLOWER.'">'. $follower_total .'</a></li>';
+echo '      <li class="url">URL: <a href='. $url .'>'. $url .'</a></li>';
 echo '      <li class="comment">'. nl2br($comment) .'</li>';
 echo '    </ul>';
 
@@ -65,7 +64,7 @@ if($isown || !$this->session->userdata('userID')){
     <div class="projects">
 
         <div class="row">
-            <h2>Projects</h2>
+            <h4>プロジェクト一覧</h4>
 
             <?php
             //トップページのとき
@@ -114,9 +113,9 @@ if($isown || !$this->session->userdata('userID')){
 
                                 <span class="card-title activator black-text"><i class="material-icons right">info</i></span>
                                 <div class="card-action">
-                                    <p><i class="material-icons">visibility</i>PV : <?php echo $project->pv;?></p>
-                                    <p><i class="material-icons">trending_down</i>Forked : <?php echo $project->fork;?></p>
-                                    <p><i class="material-icons">grade</i>Favorite : <?php echo $project->favorite;?></p>
+                                    <p><i class="material-icons">visibility</i>閲覧数 : <?php echo $project->pv;?></p>
+                                    <p><i class="material-icons">trending_down</i>フォーク数 : <?php echo $project->fork;?></p>
+                                    <p><i class="material-icons">grade</i>お気に入り数 : <?php echo $project->favorite;?></p>
                                     <p class="truncate"><i class="material-icons">perm_identity</i>
                                         <a href="<?php echo base_url().'profile/information/'.$project->ownerUserID;?>">
                                             <?php echo "@".$project->ownerUserID;?>
@@ -146,14 +145,14 @@ if($isown || !$this->session->userdata('userID')){
                                 </div>
 
                                 <center>
-                                    <a href="<?php echo base_url().'middle/detail/'.$project->projectID;?>"><i class="material-icons">play_for_work</i>Edit Project</a>
+                                    <a href="<?php echo base_url().'middle/detail/'.$project->projectID;?>"><i class="material-icons">play_for_work</i>プロジェクトを編集</a>
                                 </center>
                             </div>
                             <div class="card-reveal orange lighten-4">
                                 <span class="card-title black-text"><i class="material-icons right">close</i></span>
-                                <p><i class="material-icons">loop</i>LastModified : <?php echo $project->modified;?></p>
-                                <p><i class="material-icons">album</i>ProjectID : <?php echo $project->projectID;?></p>
-                                <p><i class="material-icons">assignment</i>Description : <?php echo $project->description;?></p>
+                                <p><i class="material-icons">loop</i>最終更新日 : <?php echo $project->modified;?></p>
+                                <p><i class="material-icons">album</i>プロジェクトID : <?php echo $project->projectID;?></p>
+                                <p><i class="material-icons">assignment</i>説明 : <?php echo $project->description;?></p>
                             </div>
 
                         </div>
@@ -170,7 +169,7 @@ if($isown || !$this->session->userdata('userID')){
 
             </div>
             <?php if (!(current_url() == base_url() . '' . $info . '' . $uid . '/' . PROJECTS)) {
-                echo '<h4 align="right"><a href="' . base_url() . '' . $info . '' . $uid . '/' . PROJECTS . '">...more projects</a></h4>';
+                echo '<h6 align="right"><a href="' . base_url() . '' . $info . '' . $uid . '/' . PROJECTS . '">さらにプロジェクトを表示...</a></h6>';
             }
             //ページネーション
             if ($category == PROJECTS) {
@@ -188,7 +187,7 @@ if($isown || !$this->session->userdata('userID')){
 <?php if($category == "" || $category == FOLLOW){?>
     <div class="follow">
     <div class="row">
-        <h2>Follow</h2>
+        <h4>フォロー</h4>
         <?php
         if($follow_total > 0){
         //フォローが新しい人ほど先にくるように降順ソート
@@ -202,7 +201,7 @@ if($isown || !$this->session->userdata('userID')){
             $num += 1;
         }
         }else{
-            echo '<p>no follow.</p>';
+            echo '<p>フォローアカウントはありません。</p>';
         }
 ?>
 
@@ -210,7 +209,7 @@ if($isown || !$this->session->userdata('userID')){
 
     <?php
     if(!(current_url() == base_url().''.$info.''.$uid.'/'.FOLLOW)) {
-        echo '<h4 align="right"><a href="' . base_url() . '' . $info . '' . $uid . '/' . FOLLOW . '">...more followers</a></h4>';
+        echo '<h6 align="right"><a href="' . base_url() . '' . $info . '' . $uid . '/' . FOLLOW . '">さらにフォローアカウントを表示...</a></h6>';
     }
     ?>
 
@@ -237,7 +236,6 @@ if($isown || !$this->session->userdata('userID')){
 ?>
         </div>
     </div>
-
     <hr>
 <?php }?>
 
@@ -246,7 +244,7 @@ if($isown || !$this->session->userdata('userID')){
         <div class="favs">
 
             <div class="row">
-                <h2>Favorites</h2>
+                <h4>お気に入りのプロジェクト</h4>
                 <?php
                 $num = 0;
                     if (count($favorites) > 0) {
@@ -295,14 +293,14 @@ if($isown || !$this->session->userdata('userID')){
                                         class="material-icons right">info</i></span>
 
                                         <div class="card-action">
-                                            <p><i class="material-icons">visibility</i>PV
+                                            <p><i class="material-icons">visibility</i>閲覧数
                                                 : <?php echo $favorite[0]->pv; ?>
                                             </p>
 
-                                            <p><i class="material-icons">trending_down</i>Forked
+                                            <p><i class="material-icons">trending_down</i>フォーク数
                                                 : <?php echo $favorite[0]->fork; ?></p>
 
-                                            <p><i class="material-icons">grade</i>Favorite
+                                            <p><i class="material-icons">grade</i>お気に入り数
                                                 : <?php echo $favorite[0]->favorite; ?></p>
 
                                             <p class="truncate"><i class="material-icons">perm_identity</i>
@@ -335,21 +333,21 @@ if($isown || !$this->session->userdata('userID')){
 
                                         <center>
                                             <a href="<?php echo base_url() . 'middle/detail/' . $favorite[0]->projectID; ?>"><i
-                                                    class="material-icons">play_for_work</i>Edit Project</a>
+                                                    class="material-icons">play_for_work</i>プロジェクト編集</a>
                                         </center>
                                     </div>
                                     <div class="card-reveal orange lighten-4">
                                         <span class="card-title black-text"><i
                                                 class="material-icons right">close</i></span>
 
-                                        <p><i class="material-icons">loop</i>LastModified
+                                        <p><i class="material-icons">loop</i>最終更新日
                                             : <?php echo $favorite[0]->modified; ?></p>
 
-                                        <p><i class="material-icons">album</i>ProjectID
+                                        <p><i class="material-icons">album</i>プロジェクトID
                                             : <?php echo $favorite[0]->projectID; ?>
                                         </p>
 
-                                        <p><i class="material-icons">assignment</i>Description
+                                        <p><i class="material-icons">assignment</i>説明
                                             : <?php echo $favorite[0]->description; ?></p>
                                     </div>
 
@@ -360,13 +358,13 @@ if($isown || !$this->session->userdata('userID')){
                             $num += 1;
                         }
                 }else {
-            echo '<p>no favorite project.</p>';
+            echo '<p>お気に入りのプロジェクトはありません。</p>';
         }
         ?>
     </div>
     <?php
     if(!(current_url() == base_url().''.$info.''.$uid.'/'.FAVORITES)) {
-        echo '<h4 align="right"><a href="' . base_url() . '' . $info . '' . $uid . '/' . FAVORITES . '">...more favorites</a></h4>';
+        echo '<h6 align="right"><a href="' . base_url() . '' . $info . '' . $uid . '/' . FAVORITES . '">さらにお気に入りを表示...</a></h6>';
     }
 
     //ページネーション

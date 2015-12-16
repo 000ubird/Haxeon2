@@ -1,5 +1,5 @@
 
-<h2>Today's HotCode!</h2>
+<h3>人気のプロジェクト</h3>
 
 <?php
 $cur_page = 0;
@@ -19,9 +19,9 @@ foreach($projects as $project) {
 
 				<span class="card-title activator black-text"><i class="material-icons right">info</i></span>
 				<div class="card-action">
-						<p><i class="material-icons">visibility</i>PV : <?php echo $project[0]->pv;?></p>
-                        <p><i class="material-icons">trending_down</i>Forked : <?php echo $project[0]->fork;?></p>
-                        <p><i class="material-icons">grade</i>Favorite : <?php echo $project[0]->favorite;?></p>
+						<p><i class="material-icons">visibility</i>閲覧数 : <?php echo $project[0]->pv;?></p>
+                        <p><i class="material-icons">trending_down</i>フォーク数 : <?php echo $project[0]->fork;?></p>
+                        <p><i class="material-icons">grade</i>お気に入り数 : <?php echo $project[0]->favorite;?></p>
 						<p class="truncate"><i class="material-icons">perm_identity</i>
 						<a href="<?php echo base_url().'profile/information/'.$project[0]->ownerUserID;?>">
 							<?php echo "@".$project[0]->ownerUserID;?>
@@ -54,14 +54,14 @@ foreach($projects as $project) {
                     ?>
 				</div>
 				<center>
-					<a href="<?php echo base_url().'middle/detail/'.$project[0]->projectID;?>"><i class="material-icons">play_for_work</i>Edit Project</a>
+					<a href="<?php echo base_url().'middle/detail/'.$project[0]->projectID;?>"><i class="material-icons">play_for_work</i>プロジェクトを編集</a>
 				</center>
 			</div>
 			<div class="card-reveal orange lighten-4">
 				<span class="card-title black-text"><i class="material-icons right">close</i></span>
-					<p><i class="material-icons">loop</i>LastModified : <?php echo $project[0]->modified;?></p>
-					<p><i class="material-icons">album</i>ProjectID : <?php echo $project[0]->projectID;?></p>
-					<p><i class="material-icons">assignment</i>Description : <?php echo $project[0]->description;?></p>
+					<p><i class="material-icons">loop</i>最終更新日時 : <?php echo $project[0]->modified;?></p>
+					<p><i class="material-icons">album</i>プロジェクトID : <?php echo $project[0]->projectID;?></p>
+					<p><i class="material-icons">assignment</i>説明 : <?php echo $project[0]->description;?></p>
 			</div>
 		</div>
 	</div>
@@ -73,6 +73,6 @@ if($i==0) {
 	echo "<p>現在、ランキングに関する情報がありません。</p>";
 }
 
-echo '<Div Align="right"><p><a href="'.base_url().'ranking/index/day/pv/30/0">show more...</a></p></Div>';
+echo '<Div Align="right"><p><a href="'.base_url().'ranking/index/day/pv/30/0">さらに表示...</a></p></Div>';
 
 ?>

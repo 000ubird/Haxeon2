@@ -1,4 +1,4 @@
-<h2>タグ設定</h2>
+<h3>タグ設定</h3>
 
 <p>タグ一覧</p>
 <?php
@@ -13,12 +13,12 @@ echo validation_errors();
 <div class="row">
     <div class="input-field col s12">
         <input name="tag" type="text" class="validate">
-        <label for="tag">new tag</label>
+        <label for="tag">新しいタグを追加</label>
     </div>
 </div>
 
 <div class="row">
-    <button class="btn waves-effect waves-light orange darken-4 col s3 offset-s9" type="submit" name="action">UPDATE
+    <button class="btn waves-effect waves-light orange darken-4 col s3 offset-s9" type="submit" name="action">更新
         <i class="material-icons">input</i>
     </button>
 </div>

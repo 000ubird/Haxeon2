@@ -1,4 +1,4 @@
-<h1>ランキング</h1>
+<h3>ランキング</h3>
 
 <?php
 
@@ -54,9 +54,9 @@ foreach($projects as $project) {
 
             <span class="card-title activator black-text"><i class="material-icons right">info</i></span>
             <div class="card-action">
-                <p><i class="material-icons">visibility</i>PV : <?php echo $project->pv;?></p>
-                <p><i class="material-icons">trending_down</i>Forked : <?php echo $project->fork;?></p>
-                <p><i class="material-icons">grade</i>Favorite : <?php echo $project->favorite;?></p>
+                <p><i class="material-icons">visibility</i>閲覧数 : <?php echo $project->pv;?></p>
+                <p><i class="material-icons">trending_down</i>フォーク数 : <?php echo $project->fork;?></p>
+                <p><i class="material-icons">grade</i>お気に入り数 : <?php echo $project->favorite;?></p>
                 <p class="truncate"><i class="material-icons">perm_identity</i>
                     <a href="<?php echo base_url().'profile/information/'.$project->ownerUserID;?>">
                         <?php echo "@".$project->ownerUserID;?>
@@ -91,14 +91,14 @@ foreach($projects as $project) {
             </div>
 
             <center>
-                <a href="<?php echo base_url().'middle/detail/'.$project->projectID;?>"><i class="material-icons">play_for_work</i>Edit Project</a>
+                <a href="<?php echo base_url().'middle/detail/'.$project->projectID;?>"><i class="material-icons">play_for_work</i>プロジェクトを編集</a>
             </center>
         </div>
         <div class="card-reveal orange lighten-4">
             <span class="card-title black-text"><i class="material-icons right">close</i></span>
-            <p><i class="material-icons">loop</i>LastModified : <?php echo $project->modified;?></p>
-            <p><i class="material-icons">album</i>ProjectID : <?php echo $project->projectID;?></p>
-            <p><i class="material-icons">assignment</i>Description : <?php echo $project->description;?></p>
+            <p><i class="material-icons">loop</i>最終更新日 : <?php echo $project->modified;?></p>
+            <p><i class="material-icons">album</i>プロジェクトID : <?php echo $project->projectID;?></p>
+            <p><i class="material-icons">assignment</i>説明 : <?php echo $project->description;?></p>
         </div>
 
     </div>
@@ -110,7 +110,7 @@ $i++;
 echo '</div>';
 
 if($i==0) {
-	echo "<p>検索に一致するプロジェクトはありません。</p>";
+	echo "<p>プロジェクトはありません。</p>";
 }
 
 echo '<br>';

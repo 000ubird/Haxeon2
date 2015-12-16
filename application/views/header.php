@@ -29,14 +29,14 @@
             <ul class="right hide-on-med-and-down">
 
                 <?php if($this->session->userdata('userID')) {
-					echo '<li><a href="'.base_url().'search">Search</a></li>';
-                    echo '<li><a href="'.base_url().'createproject">Create Code</a></li>';
-                    echo '<li><a href="'.base_url().'ranking/index/day/pv/30/0">Ranking</a></li>';
-                    echo '<li><a href="'.base_url().'profile/information/'.$this->session->userdata('userID').'">Profile</a></li>';
-                    echo '<li><a href="'.base_url().'logout">Logout</a></li>';
+					echo '<li><a href="'.base_url().'search">検索</a></li>';
+                    echo '<li><a href="'.base_url().'createproject">プロジェクト作成</a></li>';
+                    echo '<li><a href="'.base_url().'ranking/index/day/pv/30/0">ランキング</a></li>';
+                    echo '<li><a href="'.base_url().'profile/information/'.$this->session->userdata('userID').'">@'.$this->session->userdata('userID').'</a></li>';
+                    echo '<li><a href="'.base_url().'logout">ログアウト</a></li>';
                 }else{
-                    echo '<li><a href="'.base_url().'profile/signup">Sign up</a></li>';
-                    echo '<li><a href="'.base_url().'login">Login</a></li>';
+                    echo '<li><a href="'.base_url().'profile/signup">アカウント作成</a></li>';
+                    echo '<li><a href="'.base_url().'login">ログイン</a></li>';
                 }
                 ?>
 
@@ -46,14 +46,14 @@
             <ul class="side-nav" id="mobile-demo">
 
                 <?php if($this->session->userdata('userID')) {
-					echo '<li><a href="'.base_url().'search">Search</a></li>';
-                    echo '<li><a href="'.base_url().'createproject">Create Code</a></li>';
-                    echo '<li><a href="'.base_url().'ranking/index/day/pv/30/0">Ranking</a></li>';
-                    echo '<li><a href="'.base_url().'profile/information/'.$this->session->userdata('userID').'">Profile</a></li>';
-                    echo '<li><a href="'.base_url().'logout">Logout</a></li>';
+					echo '<li><a href="'.base_url().'search">検索</a></li>';
+                    echo '<li><a href="'.base_url().'createproject">プロジェクト作成</a></li>';
+                    echo '<li><a href="'.base_url().'ranking/index/day/pv/30/0">ランキング</a></li>';
+                    echo '<li><a href="'.base_url().'profile/information/'.$this->session->userdata('userID').'">@'.$this->session->userdata('userID').'</a></li>';
+                    echo '<li><a href="'.base_url().'logout">ログアウト</a></li>';
                 }else{
-                    echo '<li><a href="'.base_url().'profile/signup">Sign up</a></li>';
-                    echo '<li><a href="'.base_url().'login">Login</a></li>';
+                    echo '<li><a href="'.base_url().'profile/signup">アカウント作成</a></li>';
+                    echo '<li><a href="'.base_url().'login">ログイン</a></li>';
                 }
                 ?>
 

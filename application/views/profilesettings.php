@@ -1,4 +1,4 @@
-<h2>プロフィール設定</h2>
+<h3>アカウント設定</h3>
 
 <div class="row">
     <div class="col s12 orange darken-4">
@@ -27,7 +27,7 @@
     echo '<div class="row">';
     echo '<div class="input-field col s12">';
     echo '<input name="userName" type="text" value="'.$uname.'">';
-    echo '<label for="userName">userName</label>';
+    echo '<label for="userName">公開ネーム</label>';
     echo '</div>';
 
     echo form_error('userName');
@@ -37,7 +37,7 @@
     echo '<div class="row">';
     echo '    <div class="input-field col s12">';
     echo '        <input name="url" type="text" value="'.$url.'">';
-    echo '        <label for="url">URL</label>';
+    echo '        <label for="url">ホームページ</label>';
     echo '    </div>';
 
         echo form_error('url');
@@ -47,7 +47,7 @@
     echo '<div class="row">';
     echo '<div class="input-field col s12">';
     echo '    <textarea name="profile" class="materialize-textarea" maxlength="140">'.$message.'</textarea>';
-    echo '    <label for="profile">message</label>';
+    echo '    <label for="profile">自己紹介</label>';
     echo '</div>';
 
     echo form_error('profile');
@@ -55,7 +55,7 @@
     echo '</div>';
 
     echo '<div class="row">';
-    echo '<button class="btn waves-effect waves-light orange darken-4 col s3 offset-s9" type="submit" name="action">Change';
+    echo '<button class="btn waves-effect waves-light orange darken-4 col s3 offset-s9" type="submit" name="action">変更';
     echo '<i class="material-icons">open_in_new</i>';
     echo '</button>';
     echo '</div>';
@@ -65,7 +65,7 @@
 
 
     echo '<br />';
-    echo '<hr />';
+    //echo '<hr />';
 
 
     echo form_open_multipart('profile/icon_upload/'.$userID);
@@ -87,7 +87,7 @@
             <form action="#">
             <div class="file-field input-field">
                 <div class="btn">
-                    <span>icon</span>
+                    <span>アイコン</span>
                     <input type="file" name="userfile"/>
                 </div>
                 <div class="file-path-wrapper">
@@ -95,7 +95,7 @@
                 </div>
             </div>
             <div class="row" align="right">
-            <button class="btn waves-effect" type="submit" value="upload">upload
+            <button class="btn waves-effect" type="submit" value="upload">アップロード
             </div>
             </form>
         </div>

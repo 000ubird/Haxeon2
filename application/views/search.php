@@ -1,4 +1,4 @@
-<h2>検索</h2>
+<h3>検索</h3>
 
 <?php echo form_open('search/doSearch'); ?>
 
@@ -6,12 +6,12 @@
 	<form class="col s12">
 		<div class="input-field col s2">
 			<input id="search" type="text" class="validate" name="search">
-			<label for="search">Search</label>
+			<label for="search">検索文字列を入力</label>
 			<?php echo form_error('search'); ?>
 		</div>
 		
 		<div class="input-field col s2">
-			<button class="btn waves-effect waves-light" >Search
+			<button class="btn waves-effect waves-light" >検索
 				<i class="material-icons right">send</i>
 			</button>
 		</div>
@@ -19,11 +19,11 @@
 		<p>並べ替え</p>
 		<div class="input-field col s8">
 			<input name="sort" type="radio" id="new" value="New" checked="checked" />
-			<label for="new">New</label>
+			<label for="new">新着</label>
 			<input name="sort" type="radio" id="pv" value="PV" />
-			<label for="pv">PV</label>
+			<label for="pv">閲覧数</label>
 			<input name="sort" type="radio" id="name" value="Name" />
-			<label for="name">Name</label>
+			<label for="name">名前</label>
 
 		<p>検索対象</p>
 			<input type="checkbox" id="tag" value="0" name="chk[0]" checked="checked"/>

@@ -1,5 +1,5 @@
-<h2><?php echo $projectName ?></h2>
-<p> Author: <a href="<?php echo base_url().'profile/information/'.$owner;?>">@<?php echo $owner; ?></a></p>
+<h3><?php echo $projectName ?></h3>
+<p> プロジェクト作成者 : <a href="<?php echo base_url().'profile/information/'.$owner;?>">@<?php echo $owner; ?></a></p>
 <!-- タグ一覧 -->
 <div class="row">
     <div class="col s12">
@@ -28,7 +28,7 @@
                 <?php 
 					//説明文が未登録の場合
 					if ($description == "") {
-						echo "This project has no description.";
+						echo "このプロジェクトの説明はありません。";
 					}
 					else {
 						echo nl2br($description); 
@@ -42,9 +42,9 @@
 <!-- pvなどのデータ群 -->
 <div class="row">
 <ul style="text-align: right;">
-    <li class="middle">pv:<?php echo $pv; ?>,</li>
-    <li class="middle">fork:<?php echo $fork; ?>,</li>
-    <li class="middle">modified:<?php echo $modified;?></li>
+    <li class="middle">閲覧数:<?php echo $pv; ?>, </li>
+    <li class="middle">フォーク数:<?php echo $fork; ?>, </li>
+    <li class="middle">最終更新日:<?php echo $modified;?></li>
 </ul>
 </div>
 
@@ -94,11 +94,11 @@ echo form_open('middle/validation_comment/'.$projectID);
     <div class="input-field col s10 offset-s1">
         <i class="material-icons prefix">mode_edit</i>
         <textarea name="comment" class="materialize-textarea" minlength="5" maxlength="1000"></textarea>
-        <label for="comment">comment</label>
+        <label for="comment">コメント</label>
     </div>
 
     <button class="btn waves-effect waves-light col s4 offset-s4" type="submit" name="action">
-        コメントを投稿する
+        コメントを投稿
         <i class="material-icons">chat_bubble_outline</i>
     </button>
 </div>

@@ -1,6 +1,5 @@
-<h1>パスワード変更確認</h1>
+<h3>パスワード変更確認</h3>
 
-<?php echo print_r($this->session->all_userdata()); ?>
 <?php echo form_open('profile/validation_password/'.$userID); ?>
 
 <div class="row">
@@ -28,7 +27,7 @@
 </div>
 
 <div class="row">
-<button class="btn waves-effect waves-light orange darken-4 col s3 offset-s9" type="submit" name="action">change
+<button class="btn waves-effect waves-light orange darken-4 col s3 offset-s9" type="submit" name="action">変更
 <i class="material-icons">open_in_new</i>
 </button>
 </div>

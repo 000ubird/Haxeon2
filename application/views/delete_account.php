@@ -1,6 +1,4 @@
-<h1>アカウントを削除します<br/></h1>
-
-<p>あなたのパスワードを入力してください。</p>
+<h3>アカウント削除</h3>
 
 <?php
 
@@ -10,16 +8,15 @@ echo validation_errors();
 ?>
 
 <div class="row">
-<div class="input-field col s4">
-<input name="password" type="password" class="validate">
-<label for="password">Password</label>
-</div>
-</div>
-
-<div class="row">
-<button class="btn waves-effect waves-light orange darken-4" style="float:right" type="submit" name="action">削除を実行
-<i class="material-icons">delete</i>
-</button>
+	<div class="input-field col s6">
+		<input name="password" type="password" class="validate">
+		<label for="password">パスワードを入力</label>
+	</div>
+	<div class="input-field col s4">
+		<button class="btn waves-effect waves-light orange darken-4" style="float:right" type="submit" name="action">アカウント削除
+		<i class="material-icons">delete</i>
+		</button>
+	</div>
 </div>
 
 <?php
