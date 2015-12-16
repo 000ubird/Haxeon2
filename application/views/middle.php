@@ -106,3 +106,18 @@ echo form_open('middle/validation_comment/'.$projectID);
 <?php 
 }
 echo form_close(); ?>
+
+<?php 
+//プロジェクト削除ボタンの表示
+if ($owner == $this->session->userdata('userID')) { ?>
+<br><br><br>
+<div id="important" class="col s12">
+    <div class="row">
+        <?php
+        echo '<button class="btn waves-effect waves-light red darken-4 col s4 offset-s4" value="プロジェクトを削除する" onClick="location.href=\''. base_url() .'profile/delete_project/'. $projectID .'\'">プロジェクトを削除';
+        ?>
+        <i class="material-icons left">delete</i>
+        </button>
+    </div>
+</div>
+<?php } ?>
