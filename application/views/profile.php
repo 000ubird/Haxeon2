@@ -35,6 +35,7 @@ echo '    </div>';
 $info = 'profile/information/';
 echo '    <ul class="info col s8 offset-s1">';
 echo '      <li class="name">公開ネーム : '. $uname .'</li>';
+echo '      <li class="name">アカウントID : '. $uid .'</li>';
 echo '      <li class="codes">所持プロジェクト数 : <a href="'.base_url().''.$info.''.$uid.'/'.PROJECTS.'">'. $project_total .'</a></li>';
 if($this->session->userdata('userID')) {
     echo '      <li class="favorites">お気に入りプロジェクト数 : <a href="' . base_url() . '' . $info . '' . $uid . '/' . FAVORITES . '">' . $favorite_total . '</a></li>';
