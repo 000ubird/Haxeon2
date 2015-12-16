@@ -62,7 +62,7 @@ class Search extends CI_Controller {
 	public function doSearch() {
 		//検索文字列の取得
 		$str = set_value('search', 'search');
-
+		
 		$searchArray = ['0','0','0'];
 		for ($i = 0; $i < 3; $i++) {
 			if(set_checkbox('chk['.$i.']', $i)) $searchArray[$i] = '1';
@@ -78,8 +78,7 @@ class Search extends CI_Controller {
 		$this->form_validation->set_error_delimiters('<div class="error">', '</div>');
 
 		//エラーメッセージの設定
-		$this->form_validation->set_rules("search", "検索", "alpha_numeric|required");
-        $this->form_validation->set_message("alpha_numeric", "%sは半角英数字のみ可能です。");
+		$this->form_validation->set_rules("search", "検索", "required");
         $this->form_validation->set_message("required", "%s項目を入力して下さい。");
 
 		//正しい場合は検索を実行

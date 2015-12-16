@@ -5,7 +5,7 @@
 <div class="row">
 	<form class="col s12">
 		<div class="input-field col s2">
-			<input id="search" type="text" value="<?php echo $str;?>" class="validate" name="search">
+			<input id="search" type="text" value="<?php echo urldecode($str);?>" class="validate" name="search">
 			<label for="search">検索文字列を入力</label>
 			<?php form_error('search'); ?>
 		</div>
