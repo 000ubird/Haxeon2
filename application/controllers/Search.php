@@ -12,6 +12,8 @@ class Search extends CI_Controller {
 
     //検索結果の表示
     public function searchResult($str="", $chk0, $chk1, $chk2, $sort0, $sort1, $sort2) {
+		$str = urldecode($str);	//URLデコード
+		
 		$searchArray = [0, 0, 0, 0];
 		if ($chk0 == '1') $searchArray[0] = true;
 		if ($chk1 == '1') $searchArray[1] = true;
