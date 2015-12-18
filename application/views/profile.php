@@ -248,7 +248,13 @@ if($isown || !$this->session->userdata('userID')){
                     if ($count_fav > 0) {
                         //ふぁぼが新しいものほど先にくるように降順ソート
                         krsort($favorites);
-                        foreach ($favorites as $favorite) {
+                        krsort($my_favorites);
+
+                //どのリストを使うかを決める
+                    if($this->session->userdata('userID') == $uid) $favorite_list = $my_favorites;
+                    else $favorite_list = $favorites;
+
+                    foreach ($favorite_list as $favorite) {
                             if ($category == "") if ($num >= MAX_FAVORITE) break;
                             ?>
                             <div class="col s3">

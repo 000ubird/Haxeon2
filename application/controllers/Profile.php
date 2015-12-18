@@ -190,7 +190,7 @@ class Profile extends CI_Controller
 
                 $data['favorites'] = $favorite_projects;
                 $data['my_favorites'] = $my_favorite_projects;
-            $data['favorite_total'] = count($favorite_projects);
+                $data['favorite_total'] = count($favorite_projects);
 
         return $data;
     }
