@@ -176,8 +176,14 @@ class Profile extends CI_Controller
                 //プロジェクトテーブルから情報を取得
                 $project = $this->Model_project->getOneProject($mf->projectID);
                 //ログイン中のユーザが自分のお気に入りリストを閲覧する場合
-                //すべてのプロジェクトを取得
-                array_push($my_favorite_projects, $project);
+                if ($this->session->userdata('userID') == $userID) {
+                    //すべてのプロジェクトを取得
+                    array_push($favorite_projects, $project);
+                } //ログイン中のユーザが他人のお気に入りリストを閲覧する場合
+                else {
+                    //公開のプロジェクトを取得
+                    if ($project[0]->isPublic) array_push($my_favorite_projects, $project);
+                }
             }
 
                 //ふぁぼがあれば更新する
