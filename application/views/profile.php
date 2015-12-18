@@ -70,7 +70,8 @@ if($isown || !$this->session->userdata('userID')){
             <?php
             //トップページのとき
             //複数項目ある場合の書き方例
-            if (count($projects) > 0) {
+            $count_project = count($projects);
+            if ($count_project > 0) {
                 //プロジェクトを降順ソート
                 $num = 0;
                 foreach ($projects as $project) {
@@ -169,7 +170,7 @@ if($isown || !$this->session->userdata('userID')){
             ?>
 
             </div>
-            <?php if (!(current_url() == base_url() . '' . $info . '' . $uid . '/' . PROJECTS)) {
+            <?php if (!(current_url() == base_url() . '' . $info . '' . $uid . '/' . PROJECTS) && $count_project > MAX_PROJECTS) {
                 echo '<h6 align="right"><a href="' . base_url() . '' . $info . '' . $uid . '/' . PROJECTS . '">さらにプロジェクトを表示...</a></h6>';
             }
             //ページネーション
