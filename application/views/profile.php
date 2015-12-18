@@ -209,7 +209,7 @@ if($isown || !$this->session->userdata('userID')){
     </div>
 
     <?php
-    if(!(current_url() == base_url().''.$info.''.$uid.'/'.FOLLOW) && $follow_total > 0) {
+    if(!(current_url() == base_url().''.$info.''.$uid.'/'.FOLLOW) && $follow_total > MAX_FOLLOW) {
         echo '<h6 align="right"><a href="' . base_url() . '' . $info . '' . $uid . '/' . FOLLOW . '">さらにフォローアカウントを表示...</a></h6>';
     }
     ?>
@@ -365,7 +365,7 @@ if($isown || !$this->session->userdata('userID')){
         ?>
     </div>
     <?php
-    if(!(current_url() == base_url().''.$info.''.$uid.'/'.FAVORITES) && $count_fav > 0) {
+    if(!(current_url() == base_url().''.$info.''.$uid.'/'.FAVORITES) && $count_fav > MAX_FAVORITE) {
         echo '<h6 align="right"><a href="' . base_url() . '' . $info . '' . $uid . '/' . FAVORITES . '">さらにお気に入りを表示...</a></h6>';
     }
 
