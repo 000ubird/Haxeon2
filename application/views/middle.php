@@ -1,5 +1,5 @@
 <h3><?php echo $projectName ?></h3>
-<p> プロジェクト作成者 : <a href="<?php echo base_url().'profile/information/'.$owner;?>">@<?php echo $owner; ?></a></p>
+<p> プロジェクト作成者 : <a href="<?php echo base_url().'profile/information/'.$owner;?>"><?php echo $owner; ?></a></p>
 <!-- タグ一覧 -->
 <div class="row">
     <div class="col s12">

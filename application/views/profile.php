@@ -16,10 +16,10 @@ foreach($user as $row){
     $email = $row->userMail;
 }
 echo '<div class="profile row">';
-echo '<h3>@'.$uid.' さんのプロフィール</h3>';
+echo '<h3>'.$uid.' さんのプロフィール</h3>';
 echo '    <div class="icons col s3" style="text-align: center">';
 echo '      <img class="responsive-img" src="'. $icon .'" width="100" height="100">';
-echo '      <h4 class="truncate"><a href="'.base_url().'profile/information/'.$uid.'">@'.$uid.'</a></h4>';
+echo '      <h4 class="truncate"><a href="'.base_url().'profile/information/'.$uid.'">'.$uid.'</a></h4>';
 
 //プロフィール設定ページへのリンク
 if($this->session->userdata('userID') == $uid && $this->session->userdata('userID') !=null ) {
@@ -116,7 +116,7 @@ if($isown || !$this->session->userdata('userID')){
                                     <p><i class="material-icons">grade</i>お気に入り数 : <?php echo $project->favorite;?></p>
                                     <p class="truncate"><i class="material-icons">perm_identity</i>
                                         <a href="<?php echo base_url().'profile/information/'.$project->ownerUserID;?>">
-                                            <?php echo "@".$project->ownerUserID;?>
+                                            <?php echo $project->ownerUserID;?>
                                         </a></p>
                                     <?php
                                     $isfavorite = false;
@@ -302,7 +302,7 @@ if($isown || !$this->session->userdata('userID')){
 
                                             <p class="truncate"><i class="material-icons">perm_identity</i>
                                                 <a href="<?php echo base_url() . 'profile/information/' . $favorite[0]->ownerUserID; ?>">
-                                                    <?php echo "@" . $favorite[0]->ownerUserID; ?>
+                                                    <?php echo $favorite[0]->ownerUserID; ?>
                                                 </a></p>
                                             <?php
                                             if($this->session->userdata('userID') != FALSE) {

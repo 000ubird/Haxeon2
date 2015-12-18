@@ -59,7 +59,7 @@ foreach($projects as $project) {
                 <p><i class="material-icons">grade</i>お気に入り数 : <?php echo $project->favorite;?></p>
                 <p class="truncate"><i class="material-icons">perm_identity</i>
                     <a href="<?php echo base_url().'profile/information/'.$project->ownerUserID;?>">
-                        <?php echo "@".$project->ownerUserID;?>
+                        <?php echo $project->ownerUserID;?>
                     </a></p>
                 <?php
                 $isfavorite = false;
