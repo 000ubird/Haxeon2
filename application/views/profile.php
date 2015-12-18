@@ -248,14 +248,15 @@ if($isown || !$this->session->userdata('userID')){
                 <h4>お気に入りのプロジェクト</h4>
                 <?php
                 $num = 0;
-                    if (count($favorites) > 0) {
+                $count_fav = count($favorites);
+                    if ($count_fav > 0) {
                         //ふぁぼが新しいものほど先にくるように降順ソート
                         krsort($favorites);
                         foreach ($favorites as $favorite) {
                             if ($category == "") if ($num >= MAX_FAVORITE) break;
                             ?>
                             <div class="col s3">
-								<?php 
+								<?php
 									//公開プロジェクトと非公開プロジェクトはそれぞれ色を変える
 									if($favorite[0]->isPublic) echo '<div class="card amber">';
 									else echo '<div class="card grey lighten-1">';
@@ -272,7 +273,7 @@ if($isown || !$this->session->userdata('userID')){
 							echo '<a href="'.base_url().'profile/changePublic/'.$favorite[0]->projectID.'/1">';
 						}
 						echo 'settings_input_antenna';
-						if($this->session->userdata('userID') == $favorite[0]->ownerUserID) echo '</a>'; 
+						if($this->session->userdata('userID') == $favorite[0]->ownerUserID) echo '</a>';
 						echo '</i>';
 					}
 					//非公開アイコンの表示
@@ -283,7 +284,7 @@ if($isown || !$this->session->userdata('userID')){
 							echo '<a href="'.base_url().'profile/changePublic/'.$favorite[0]->projectID.'/0">';
 						}
 						echo 'lock';
-						if($this->session->userdata('userID') == $favorite[0]->ownerUserID) echo '</a>'; 
+						if($this->session->userdata('userID') == $favorite[0]->ownerUserID) echo '</a>';
 						echo '</i>';
 					}
 					?>
@@ -364,7 +365,7 @@ if($isown || !$this->session->userdata('userID')){
         ?>
     </div>
     <?php
-    if(!(current_url() == base_url().''.$info.''.$uid.'/'.FAVORITES)) {
+    if(!(current_url() == base_url().''.$info.''.$uid.'/'.FAVORITES) && $count_fav > 0) {
         echo '<h6 align="right"><a href="' . base_url() . '' . $info . '' . $uid . '/' . FAVORITES . '">さらにお気に入りを表示...</a></h6>';
     }
 
