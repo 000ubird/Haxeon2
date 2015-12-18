@@ -5,10 +5,11 @@ echo form_open("createproject/validation");
 echo validation_errors();
 ?>
 
+<br/><br/>
 <div class="row">
 <div class="input-field col s12">
 <input name="projectName" type="text">
-<label for="projectName">プロジェクト名を入力して下さい</label>
+<label for="projectName">プロジェクト名を入力して下さい。日本語入力も可能です。</label>
 </div>
 </div>
 

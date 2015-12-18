@@ -29,7 +29,7 @@
 			<input type="checkbox" id="tag" value="0" name="chk[0]" checked="checked"/>
 			<label for="tag">タグ</label>
 
-			<input type="checkbox" id="projectName" value="1" name="chk[1]" />
+			<input type="checkbox" id="projectName" value="1" name="chk[1]" checked="checked"/>
 			<label for="projectName">プロジェクト名</label>
 			
 			<input type="checkbox" id="accountID" value="2" name="chk[2]" checked="checked"/>
