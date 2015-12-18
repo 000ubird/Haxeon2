@@ -21,5 +21,11 @@ class model_follow extends CI_Model {
     public function release($userID){
         $this->db->delete('follow', array('userID'=>$this->session->userdata('userID'), 'userFollowingID'=>$userID));
     }
+	
+	public function deleteFollow($userID) {
+		$this->db->where('userFollowingID',$userID);
+		$this->db->or_where('userID',$userID);
+		$this->db->delete('follow');
+	}
 
 }

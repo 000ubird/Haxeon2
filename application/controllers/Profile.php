@@ -388,13 +388,15 @@ public function validation_tag(){
 
 			$this->load->model("Model_project");
             $this->load->model('Model_users');
+            $this->load->model('Model_follow');
             $projects = $this->Model_users->getProjects($uid);
             print_r($projects);
 
             foreach ($projects as $p) {
                 $this->Model_project->deleteOneProject($p->projectID, $uid);
             }
-
+			
+			$this->Model_follow->deleteFollow($uid);
             //アカウントを削除
             $this->Model_users->deleteAccount($uid);
             //tmpアカウントからも削除
