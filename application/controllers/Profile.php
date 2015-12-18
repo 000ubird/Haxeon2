@@ -148,46 +148,42 @@ class Profile extends CI_Controller
             //自分
             $myID = $this->session->userdata('userID');
             $myfavofite_list = $this->Model_favorite->getFavorite($myID);
-            if ($myID == $userID) {
-                $favorite_list = $this->Model_favorite->getFavorite($myID);
-            } else {
-                //他人
-                $favorite_list = $this->Model_favorite->getFavorite($userID);
-            }
+            $favorite_list = $this->Model_favorite->getFavorite($userID);
 
             $favorite_projects = array();
             //自分の方
             $my_favorite_projects = array();
 
-            $data['favorites'] = $favorite_projects;
-            $data['my_favorites'] = $my_favorite_projects;
+        $data['favorites'] = $favorite_projects;
+        $data['my_favorites'] = $my_favorite_projects;
 
-            foreach ($favorite_list as $f) {
+        foreach ($favorite_list as $f) {
+            //プロジェクトテーブルから情報を取得
+            $project = $this->Model_project->getOneProject($f->projectID);
+
+            //ログイン中のユーザが自分のお気に入りリストを閲覧する場合
+            if ($this->session->userdata('userID') == $userID) {
+                //すべてのプロジェクトを取得
+                array_push($favorite_projects, $project);
+            } //ログイン中のユーザが他人のお気に入りリストを閲覧する場合
+            else {
+                //公開プロジェクトのみ取得
+                if ($project[0]->isPublic) array_push($favorite_projects, $project);
+            }
+        }
+
+            foreach ($myfavofite_list as $mf) {
                 //プロジェクトテーブルから情報を取得
-                $project = $this->Model_project->getOneProject($f->projectID);
-
+                $project = $this->Model_project->getOneProject($mf->projectID);
                 //ログイン中のユーザが自分のお気に入りリストを閲覧する場合
-                if ($this->session->userdata('userID') == $userID) {
-                    //すべてのプロジェクトを取得
-                    array_push($favorite_projects, $project);
-                } //ログイン中のユーザが他人のお気に入りリストを閲覧する場合
-                else {
-                    //公開プロジェクトのみ取得
-                    if ($project[0]->isPublic) array_push($favorite_projects, $project);
-                }
-
-                foreach ($myfavofite_list as $mf) {
-                    //プロジェクトテーブルから情報を取得
-                    $project = $this->Model_project->getOneProject($mf->projectID);
-                    //ログイン中のユーザが自分のお気に入りリストを閲覧する場合
-                    //すべてのプロジェクトを取得
-                    array_push($my_favorite_projects, $project);
-                }
+                //すべてのプロジェクトを取得
+                array_push($my_favorite_projects, $project);
+            }
 
                 //ふぁぼがあれば更新する
+
                 $data['favorites'] = $favorite_projects;
                 $data['my_favorites'] = $my_favorite_projects;
-            }
             $data['favorite_total'] = count($favorite_projects);
 
         return $data;
@@ -395,7 +391,7 @@ public function validation_tag(){
             foreach ($projects as $p) {
                 $this->Model_project->deleteOneProject($p->projectID, $uid);
             }
-			
+
 			$this->Model_follow->deleteFollow($uid);
             //アカウントを削除
             $this->Model_users->deleteAccount($uid);

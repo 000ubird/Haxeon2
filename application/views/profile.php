@@ -124,8 +124,6 @@ if($isown || !$this->session->userdata('userID')){
 
                                     $pro_id = $project->projectID;
                                     $loginID = $this->session->userdata('userID');
-                                    if($loginID == TRUE && $loginID != $uid) {
-
                                         foreach ($my_favorites as $f) {
                                             $favo_id = $f[0]->projectID;
 
@@ -135,6 +133,7 @@ if($isown || !$this->session->userdata('userID')){
                                             }
                                         }
 
+                                    if($loginID != null) {
                                         if ($isfavorite) {
                                             echo '<p><a href="' . base_url() . 'favorite/release_favorite/' . $project->projectID . '"><span><i class="material-icons">grade</i></span></a></p>';
                                         } else {
