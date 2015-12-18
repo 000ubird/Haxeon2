@@ -41,7 +41,7 @@ class Middle extends CI_Controller{
         $this->load->model('Model_users');
         foreach($comments as $comment){
             $udata = $this->Model_users->getUserData($comment->commentedUserID);
-            $comment->commentedUserName = $udata[0]->userName;
+            $comment->commentedUserName = $udata[0]->userID;
             $comment->icon = $udata[0]->userIcon;
         }
 
