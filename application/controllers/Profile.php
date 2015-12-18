@@ -385,13 +385,20 @@ public function validation_tag(){
 		if ($this->form_validation->run()) {
             //セッション情報の削除
             $this->session->sess_destroy();
-			//アカウントとプロジェクトを削除
-			$this->load->model("Model_users");
-			$this->Model_users->deleteAccount($uid);
+
+			$this->load->model("Model_project");
+            $this->load->model('Model_users');
+            $projects = $this->Model_users->getProjects($uid);
+            print_r($projects);
+
+            foreach ($projects as $p) {
+                $this->Model_project->deleteOneProject($p->projectID, $uid);
+            }
+
+            //アカウントを削除
+            $this->Model_users->deleteAccount($uid);
             //tmpアカウントからも削除
             $this->Model_users->deleteTmpAccount($uid);
-			$this->load->model("Model_project");
-			$this->Model_project->deleteProject($uid);
 
 			//アカウント削除処理完了後に遷移するページ
 			redirect('');
