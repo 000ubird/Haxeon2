@@ -201,7 +201,7 @@ class Profile extends CI_Controller
     public function projectsettings($projectID)
     {
 		if ($this->session->userdata('userID') == null) header('Location: '.base_url().'login');
-		
+
         $this->session->set_userdata(array('pid' => $projectID));
 
         $this->load->model('Model_project');
@@ -225,7 +225,7 @@ class Profile extends CI_Controller
     //タグ設定画面
     public function tagsettings($projectID) {
 		if ($this->session->userdata('userID') == null) header('Location: '.base_url().'login');
-        
+
 		$this->session->set_userdata(array('pid' => $projectID));
 
         $this->load->model('Model_project');
@@ -366,7 +366,7 @@ public function validation_tag(){
 	//アカウント削除
 	public function delete() {
 		if ($this->session->userdata('userID') == null) header('Location: '.base_url().'login');
-		
+
 		$this->load->view('header');
 		$this->load->view('delete_account');
 		$this->load->view('footer');
@@ -510,12 +510,12 @@ public function validation_tag(){
             return true;
         }
     }
-	
+
 	//プロジェクトの公開非公開を入れ替える
 	public function changePublic($projectID, $isPublic) {
 		$this->load->model("Model_project");
 		$this->Model_project->switchPublic($projectID, $isPublic);
-		
+
 		//ひとつ前のページに自動的に遷移
 		header('Location:'.$_SERVER['HTTP_REFERER']);
 	}
@@ -523,7 +523,7 @@ public function validation_tag(){
     //プロフィール編集ページを表示
     public function profilesettings($userID) {
 		if ($this->session->userdata('userID') == null) header('Location: '.base_url().'login');
-		
+
         $this->load->model("Model_users");
         $userData = $this->Model_users->getUserData($userID);
 
@@ -609,11 +609,8 @@ public function validation_tag(){
 
         //アップロードを実行した結果
         if(!$this->upload->do_upload()){
-//            $error = array('userID' => $userID, 'error' => $this->upload->display_errors());
-            echo $this->upload->display_errors();
             $this->profilesettings($userID);
         }else{
-//            $data = array('upload_data' => $this->upload->data());
             //データベースに反映
             $this->load->model('Model_users');
             $this->load->model('Model_users');
@@ -650,7 +647,7 @@ public function validation_tag(){
     //パスワード変更ページを表示
     public function change_pass($userID) {
 		if ($this->session->userdata('userID') == null) header('Location: '.base_url().'login');
-		
+
         $data['userID'] = $userID;
         $this->load->view('header');
         $this->load->view('passwordsettings',$data);
@@ -735,7 +732,7 @@ public function validation_tag(){
     //メールアドレス設定ページを表示する
     public function change_email($userID){
 		if ($this->session->userdata('userID') == null) header('Location: '.base_url().'login');
-		
+
         $data['userID'] = $userID;
         $this->load->view('header');
         $this->load->view('emailsettings',$data);
@@ -814,7 +811,7 @@ public function validation_tag(){
     //プロジェクトを削除する
     public function delete_project($projectID){
 		if ($this->session->userdata('userID') == null) header('Location: '.base_url().'login');
-	
+
         $this->load->model("Model_project");
         $userID = $this->session->userdata('userID');
         $this->Model_project->deleteOneProject($projectID, $userID);

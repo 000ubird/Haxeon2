@@ -67,6 +67,9 @@ echo '<div id="common" class="col s12">';
 					</div>
 				</div>
 
+                <div>
+                    jpg,jpeg,png形式のみ有効です
+                </div>
 				<div class="row" align="right">
 					<button class="btn waves-effect" type="submit" value="upload">アップロード
 				</div>
