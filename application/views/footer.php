@@ -1,4 +1,5 @@
 </div>
+</main>
 
 <footer class="page-footer orange" id="footer">
     <div class="footer-copyright">
