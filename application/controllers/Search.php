@@ -65,6 +65,9 @@ class Search extends CI_Controller {
 		//検索文字列の取得
 		$str = set_value('search', 'search');
 		
+		//記号の削除
+		$str = preg_replace('/[][}{)(!"#$%&\'~|\*+,\/@.\^<>`;:?_=\\\\-]/i', '', $str);
+			
 		$searchArray = ['0','0','0'];
 		for ($i = 0; $i < 3; $i++) {
 			if(set_checkbox('chk['.$i.']', $i)) $searchArray[$i] = '1';
