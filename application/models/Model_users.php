@@ -38,6 +38,7 @@ class Model_users extends CI_Model{
     //プロジェクト取得
     public function getProjects($userID){
         $this->db->where(array('ownerUserID' => $userID));
+        $this->db->order_by("modified", "asc"); //変更日の新しい順にソート
         $query = $this->db->get('project');
 
         return $query->result();
@@ -46,6 +47,7 @@ class Model_users extends CI_Model{
     //フォロー情報取得
     public function getFollowInfo($userID){
         $this->db->where(array('userID' => $userID));
+        $this->db->order_by("userFollowingID", "desc"); //アルファベット順にソート
         $query = $this->db->get('follow');
 
         return $query->result();
@@ -54,6 +56,7 @@ class Model_users extends CI_Model{
     //フォロワー情報取得
     public function getFollowedInfo($userID){
         $this->db->where(array('userFollowingID' => $userID));
+        $this->db->order_by("userID", "desc"); //アルファベット順にソート
         $query = $this->db->get('follow');
 
         return $query->result();

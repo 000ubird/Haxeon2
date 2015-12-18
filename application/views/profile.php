@@ -69,7 +69,6 @@ if($isown || !$this->session->userdata('userID')){
             //複数項目ある場合の書き方例
             $count_project = count($projects);
             if ($count_project > 0) {
-                //プロジェクトを降順ソート
                 $num = 0;
                 foreach ($projects as $project) {
                     if ($category == "" && $num >= MAX_PROJECTS) break;
@@ -189,7 +188,6 @@ if($isown || !$this->session->userdata('userID')){
         <h4>フォロー</h4>
         <?php
         if($follow_total > 0){
-        //フォローが新しい人ほど先にくるように降順ソート
         $num = 0;
         $this->load->model('Model_users');
         foreach($follow as $f){
@@ -223,7 +221,6 @@ if($isown || !$this->session->userdata('userID')){
             <h2>Follower</h2>
             <?php
             if($follower_total > 0){
-            //フォローが新しい人ほど先にくるように降順ソート
                 foreach($follower as $f){
                     $id = $f->userID;
                     $icon = $this->Model_users->get_icon_url($id);
