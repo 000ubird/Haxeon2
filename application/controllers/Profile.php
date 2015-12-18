@@ -148,19 +148,11 @@ class Profile extends CI_Controller
             //自分
             $myID = $this->session->userdata('userID');
             $myfavofite_list = $this->Model_favorite->getFavorite($myID);
-            if ($myID == $userID) {
-                $favorite_list = $this->Model_favorite->getFavorite($myID);
-            } else {
-                //他人
-                $favorite_list = $this->Model_favorite->getFavorite($userID);
-            }
+            $favorite_list = $this->Model_favorite->getFavorite($userID);
 
             $favorite_projects = array();
             //自分の方
             $my_favorite_projects = array();
-
-            $data['favorites'] = $favorite_projects;
-            $data['my_favorites'] = $my_favorite_projects;
 
             foreach ($favorite_list as $f) {
                 //プロジェクトテーブルから情報を取得
@@ -185,6 +177,7 @@ class Profile extends CI_Controller
                 }
 
                 //ふぁぼがあれば更新する
+
                 $data['favorites'] = $favorite_projects;
                 $data['my_favorites'] = $my_favorite_projects;
             }
@@ -395,7 +388,7 @@ public function validation_tag(){
             foreach ($projects as $p) {
                 $this->Model_project->deleteOneProject($p->projectID, $uid);
             }
-			
+
 			$this->Model_follow->deleteFollow($uid);
             //アカウントを削除
             $this->Model_users->deleteAccount($uid);
