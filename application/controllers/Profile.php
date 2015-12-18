@@ -178,7 +178,7 @@ class Profile extends CI_Controller
                 //ログイン中のユーザが自分のお気に入りリストを閲覧する場合
                 if ($this->session->userdata('userID') == $userID) {
                     //すべてのプロジェクトを取得
-                    array_push($favorite_projects, $project);
+                    array_push($my_favorite_projects, $project);
                 } //ログイン中のユーザが他人のお気に入りリストを閲覧する場合
                 else {
                     //公開のプロジェクトを取得
