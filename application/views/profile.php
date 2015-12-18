@@ -123,7 +123,9 @@ if($isown || !$this->session->userdata('userID')){
                                     $i = 0;
 
                                     $pro_id = $project->projectID;
-                                    if($this->session->userdata('userID') != FALSE) {
+                                    $loginID = $this->session->userdata('userID');
+                                    if($loginID == TRUE && $loginID != $uid) {
+
                                         foreach ($my_favorites as $f) {
                                             $favo_id = $f[0]->projectID;
 
