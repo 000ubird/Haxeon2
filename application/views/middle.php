@@ -12,26 +12,26 @@
 </div>
 <div>
     <a href=<?php echo '"'.base_url().'profile/tagsettings/'.$projectID.'"';?> >タグを編集</a>
-	<?php 
+	<?php
 		//説明文の編集リンクは所有者のみ
 		if ($owner == $this->session->userdata('userID')) {
 			echo '<a href= "'.base_url().'profile/projectsettings/'.$projectID.'">説明文を編集</a>';
 		}
 	?>
-    
+
 </div>
 
 <div class="row description">
     <div class="col s12">
         <div class="card-panel white">
             <span>
-                <?php 
+                <?php
 					//説明文が未登録の場合
 					if ($description == "") {
 						echo "このプロジェクトの説明はありません。";
 					}
 					else {
-						echo nl2br($description); 
+						echo nl2br($description);
 					}
 				?>
             </span>
@@ -54,15 +54,15 @@
 
 <div class="row">
     <div class="col s12">
-        <?php 
+        <?php
 			if ($owner == $this->session->userdata('userID')) {
-				echo '<a class="waves-effect waves-light btn col s4 offset-s4" href="' . base_url() . 'try-haxe/index.html#' . $projectID . '">編集</a>'; 
+				echo '<a class="waves-effect waves-light btn col s4 offset-s4" href="' . base_url() . 'try-haxe/index.html#' . $projectID . '">編集</a>';
 			}
 			elseif ($this->session->userdata('userID') == null) {
-				echo '<a class="waves-effect waves-light btn col s4 offset-s4" href="' . base_url() . 'try-haxe/index.html#' . $projectID . '">フォーク (未ログイン状態のため保存できません)</a>'; 
+				echo '<a class="waves-effect waves-light btn col s4 offset-s4" href="' . base_url() . 'try-haxe/index.html#' . $projectID . '">フォーク (未ログイン状態のため保存できません)</a>';
 			}
 			else {
-				echo '<a class="waves-effect waves-light btn col s4 offset-s4" href="' . base_url() . 'try-haxe/index.html#' . $projectID . '">フォーク</a>'; 
+				echo '<a class="waves-effect waves-light btn col s4 offset-s4" href="' . base_url() . 'try-haxe/index.html#' . $projectID . '">フォーク</a>';
 			}
 		?>
     </div>
@@ -103,19 +103,17 @@ echo form_open('middle/validation_comment/'.$projectID);
     </button>
 </div>
 
-<?php 
+<?php
 }
 echo form_close(); ?>
 
-<?php 
+<?php
 //プロジェクト削除ボタンの表示
 if ($owner == $this->session->userdata('userID')) { ?>
 <br><br><br>
 <div id="important" class="col s12">
     <div class="row">
-        <?php
-        echo '<button class="btn waves-effect waves-light red darken-4 col s4 offset-s4" value="プロジェクトを削除する" onClick="location.href=\''. base_url() .'profile/delete_project/'. $projectID .'\'">プロジェクトを削除';
-        ?>
+        <button class="btn waves-effect waves-light red darken-4 col s4 offset-s4" value="プロジェクトを削除する" onclick="Materialize.toast('', 0, '', function(){var f=window.confirm('本当に削除しますか？'); if(f)location.href='<?php echo base_url();?>profile/delete_project/<?php echo $projectID; ?>'})">プロジェクトを削除
         <i class="material-icons left">delete</i>
         </button>
     </div>
