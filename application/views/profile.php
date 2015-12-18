@@ -77,7 +77,7 @@ if($isown || !$this->session->userdata('userID')){
                     if ($category == "" && $num >= MAX_PROJECTS) break;
 ?>
                     <div class="col s3">
-						<?php 
+						<?php
 							//公開プロジェクトと非公開プロジェクトはそれぞれ色を変える
 							if($project->isPublic) echo '<div class="card amber">';
 							else echo '<div class="card grey lighten-1">';
@@ -94,7 +94,7 @@ if($isown || !$this->session->userdata('userID')){
 							echo '<a href="'.base_url().'profile/changePublic/'.$project->projectID.'/1">';
 						}
 						echo 'settings_input_antenna';
-						if($this->session->userdata('userID') == $project->ownerUserID) echo '</a>'; 
+						if($this->session->userdata('userID') == $project->ownerUserID) echo '</a>';
 						echo '</i>';
 					}
 					//非公開アイコンの表示
@@ -105,7 +105,7 @@ if($isown || !$this->session->userdata('userID')){
 							echo '<a href="'.base_url().'profile/changePublic/'.$project->projectID.'/0">';
 						}
 						echo 'lock';
-						if($this->session->userdata('userID') == $project->ownerUserID) echo '</a>'; 
+						if($this->session->userdata('userID') == $project->ownerUserID) echo '</a>';
 						echo '</i>';
 					}
 					?>
@@ -209,7 +209,7 @@ if($isown || !$this->session->userdata('userID')){
     </div>
 
     <?php
-    if(!(current_url() == base_url().''.$info.''.$uid.'/'.FOLLOW)) {
+    if(!(current_url() == base_url().''.$info.''.$uid.'/'.FOLLOW) && $follow_total > 0) {
         echo '<h6 align="right"><a href="' . base_url() . '' . $info . '' . $uid . '/' . FOLLOW . '">さらにフォローアカウントを表示...</a></h6>';
     }
     ?>
