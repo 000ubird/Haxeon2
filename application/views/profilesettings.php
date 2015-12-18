@@ -21,7 +21,7 @@ $message = $row->userProfile;
 }
 echo '<div id="common" class="col s12">';
 	echo form_open('profile/validation_profile/'.$userID);
-	
+
 	echo '<div class="row">';
 	echo 	'<div class="input-field col s12">';
 	echo 		'<input name="userName" type="text" value="'.$uname.'">';
@@ -62,7 +62,7 @@ echo '<div id="common" class="col s12">';
 		<div class="col s3">
 			<?php foreach ($user as $row) echo '<img src="'.$row->userIcon.'" width="100" height="100">'; ?>
 		</div>
-		
+
 		<div class="col s9">
 			<form action="#">
 				<div class="file-field input-field">
@@ -70,12 +70,12 @@ echo '<div id="common" class="col s12">';
 						<span>アイコン</span>
 						<input type="file" name="userfile"/>
 					</div>
-					
+
 					<div class="file-path-wrapper">
 						<input class="file-path validate" type="text" />
 					</div>
 				</div>
-				
+
 				<div class="row" align="right">
 					<button class="btn waves-effect" type="submit" value="upload">アップロード
 				</div>
