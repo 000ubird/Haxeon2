@@ -70,14 +70,15 @@ if($isown || !$this->session->userdata('userID')){
             <?php
             //トップページのとき
             //複数項目ある場合の書き方例
-            if (count($projects) > 0) {
+            $count_project = count($projects);
+            if ($count_project > 0) {
                 //プロジェクトを降順ソート
                 $num = 0;
                 foreach ($projects as $project) {
                     if ($category == "" && $num >= MAX_PROJECTS) break;
 ?>
                     <div class="col s3">
-						<?php 
+						<?php
 							//公開プロジェクトと非公開プロジェクトはそれぞれ色を変える
 							if($project->isPublic) echo '<div class="card amber">';
 							else echo '<div class="card grey lighten-1">';
@@ -94,7 +95,7 @@ if($isown || !$this->session->userdata('userID')){
 							echo '<a href="'.base_url().'profile/changePublic/'.$project->projectID.'/1">';
 						}
 						echo 'settings_input_antenna';
-						if($this->session->userdata('userID') == $project->ownerUserID) echo '</a>'; 
+						if($this->session->userdata('userID') == $project->ownerUserID) echo '</a>';
 						echo '</i>';
 					}
 					//非公開アイコンの表示
@@ -105,7 +106,7 @@ if($isown || !$this->session->userdata('userID')){
 							echo '<a href="'.base_url().'profile/changePublic/'.$project->projectID.'/0">';
 						}
 						echo 'lock';
-						if($this->session->userdata('userID') == $project->ownerUserID) echo '</a>'; 
+						if($this->session->userdata('userID') == $project->ownerUserID) echo '</a>';
 						echo '</i>';
 					}
 					?>
@@ -169,7 +170,7 @@ if($isown || !$this->session->userdata('userID')){
             ?>
 
             </div>
-            <?php if (!(current_url() == base_url() . '' . $info . '' . $uid . '/' . PROJECTS)) {
+            <?php if (!(current_url() == base_url() . '' . $info . '' . $uid . '/' . PROJECTS) && $count_project > MAX_PROJECTS) {
                 echo '<h6 align="right"><a href="' . base_url() . '' . $info . '' . $uid . '/' . PROJECTS . '">さらにプロジェクトを表示...</a></h6>';
             }
             //ページネーション
@@ -209,7 +210,7 @@ if($isown || !$this->session->userdata('userID')){
     </div>
 
     <?php
-    if(!(current_url() == base_url().''.$info.''.$uid.'/'.FOLLOW)) {
+    if(!(current_url() == base_url().''.$info.''.$uid.'/'.FOLLOW) && $follow_total > MAX_FOLLOW) {
         echo '<h6 align="right"><a href="' . base_url() . '' . $info . '' . $uid . '/' . FOLLOW . '">さらにフォローアカウントを表示...</a></h6>';
     }
     ?>
@@ -248,14 +249,15 @@ if($isown || !$this->session->userdata('userID')){
                 <h4>お気に入りのプロジェクト</h4>
                 <?php
                 $num = 0;
-                    if (count($favorites) > 0) {
+                $count_fav = count($favorites);
+                    if ($count_fav > 0) {
                         //ふぁぼが新しいものほど先にくるように降順ソート
                         krsort($favorites);
                         foreach ($favorites as $favorite) {
                             if ($category == "") if ($num >= MAX_FAVORITE) break;
                             ?>
                             <div class="col s3">
-								<?php 
+								<?php
 									//公開プロジェクトと非公開プロジェクトはそれぞれ色を変える
 									if($favorite[0]->isPublic) echo '<div class="card amber">';
 									else echo '<div class="card grey lighten-1">';
@@ -272,7 +274,7 @@ if($isown || !$this->session->userdata('userID')){
 							echo '<a href="'.base_url().'profile/changePublic/'.$favorite[0]->projectID.'/1">';
 						}
 						echo 'settings_input_antenna';
-						if($this->session->userdata('userID') == $favorite[0]->ownerUserID) echo '</a>'; 
+						if($this->session->userdata('userID') == $favorite[0]->ownerUserID) echo '</a>';
 						echo '</i>';
 					}
 					//非公開アイコンの表示
@@ -283,7 +285,7 @@ if($isown || !$this->session->userdata('userID')){
 							echo '<a href="'.base_url().'profile/changePublic/'.$favorite[0]->projectID.'/0">';
 						}
 						echo 'lock';
-						if($this->session->userdata('userID') == $favorite[0]->ownerUserID) echo '</a>'; 
+						if($this->session->userdata('userID') == $favorite[0]->ownerUserID) echo '</a>';
 						echo '</i>';
 					}
 					?>
@@ -364,7 +366,7 @@ if($isown || !$this->session->userdata('userID')){
         ?>
     </div>
     <?php
-    if(!(current_url() == base_url().''.$info.''.$uid.'/'.FAVORITES)) {
+    if(!(current_url() == base_url().''.$info.''.$uid.'/'.FAVORITES) && $count_fav > MAX_FAVORITE) {
         echo '<h6 align="right"><a href="' . base_url() . '' . $info . '' . $uid . '/' . FAVORITES . '">さらにお気に入りを表示...</a></h6>';
     }
 
