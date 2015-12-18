@@ -541,7 +541,6 @@ public function validation_tag(){
         $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
 
         //検証ルールの設定
-        $this->form_validation->set_rules("userName", "ユーザー名", "min_length[0]|callback_space_check");
         $this->form_validation->set_rules("password", "パスワード", "alpha_numeric|min_length[4]");
         $this->form_validation->set_rules("email", "メールアドレス", "valid_email|callback_mail_check");
         $this->form_validation->set_rules("profile", "メッセージ", "max_length[140]");
@@ -556,17 +555,6 @@ public function validation_tag(){
 
         if ($this->form_validation->run()){
             $this->load->model('Model_users');
-
-            //userNameが入力されていた場合、userIDの使用されているすべてのテーブルを書き換える
-            //更新
-
-            //ユーザー名は入力がなければidと同じにするように
-            $username = $_POST['userName'];
-            if(strlen($username) == 0){
-                $this->Model_users->updateUserName($userID, $userID);
-            }else {
-                $this->Model_users->updateUserName($username, $userID);
-            }
 
             //入力されていたら更新
             if($_POST['url']){
