@@ -10,18 +10,16 @@ define("MAX_FAVORITE", 4);
 
 foreach($user as $row){
     $uid = $row->userID;
-    $uname = $row->userName;
     $icon = $row->userIcon;
     $comment = $row->userProfile;
     $url = $row->userURL;
     $email = $row->userMail;
 }
-echo '<h3>'.$uname.' さんのプロフィール</h3>';
 echo '<div class="profile row">';
-
+echo '<h3>@'.$uid.' さんのプロフィール</h3>';
 echo '    <div class="icons col s3" style="text-align: center">';
 echo '      <img class="responsive-img" src="'. $icon .'" width="100" height="100">';
-echo '      <h4 class="truncate">'. $uname. '<br><small><a href="'.base_url().'profile/information/'.$uid.'">@'.$uid.'</a></small></h4>';
+echo '      <h4 class="truncate"><a href="'.base_url().'profile/information/'.$uid.'">@'.$uid.'</a></h4>';
 
 //プロフィール設定ページへのリンク
 if($this->session->userdata('userID') == $uid && $this->session->userdata('userID') !=null ) {
@@ -34,7 +32,6 @@ echo '    </div>';
 
 $info = 'profile/information/';
 echo '    <ul class="info col s8 offset-s1">';
-echo '      <li class="name">公開ネーム : '. $uname .'</li>';
 echo '      <li class="name">アカウントID : '. $uid .'</li>';
 echo '      <li class="codes">所持プロジェクト数 : <a href="'.base_url().''.$info.''.$uid.'/'.PROJECTS.'">'. $project_total .'</a></li>';
 if($this->session->userdata('userID')) {

@@ -105,7 +105,6 @@ class Model_users extends CI_Model{
 			$info = array(
 				'userID' => $row->userID,
 				'userPass' => $row->password,
-				'userName' => $row->userID,
 				'userMail' => $row->userMail,
                 'userIcon' => base_url().'img/icon/default.png'
 			);

@@ -15,20 +15,11 @@ $url = "";
 $message = "";
 
 foreach($user as $row){
-$uname = $row->userName;
 $url = $row->userURL;
 $message = $row->userProfile;
 }
 echo '<div id="common" class="col s12">';
 	echo form_open('profile/validation_profile/'.$userID);
-
-	echo '<div class="row">';
-	echo 	'<div class="input-field col s12">';
-	echo 		'<input name="userName" type="text" value="'.$uname.'">';
-	echo 		'<label for="userName">公開ネーム</label>';
-	echo 	'</div>';
-	echo 	form_error('userName');
-	echo '</div>';
 
 	echo '<div class="row">';
 	echo 	'<div class="input-field col s12">';
