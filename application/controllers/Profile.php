@@ -154,33 +154,36 @@ class Profile extends CI_Controller
             //自分の方
             $my_favorite_projects = array();
 
-            foreach ($favorite_list as $f) {
+        $data['favorites'] = $favorite_projects;
+        $data['my_favorites'] = $my_favorite_projects;
+
+        foreach ($favorite_list as $f) {
+            //プロジェクトテーブルから情報を取得
+            $project = $this->Model_project->getOneProject($f->projectID);
+
+            //ログイン中のユーザが自分のお気に入りリストを閲覧する場合
+            if ($this->session->userdata('userID') == $userID) {
+                //すべてのプロジェクトを取得
+                array_push($favorite_projects, $project);
+            } //ログイン中のユーザが他人のお気に入りリストを閲覧する場合
+            else {
+                //公開プロジェクトのみ取得
+                if ($project[0]->isPublic) array_push($favorite_projects, $project);
+            }
+        }
+
+            foreach ($myfavofite_list as $mf) {
                 //プロジェクトテーブルから情報を取得
-                $project = $this->Model_project->getOneProject($f->projectID);
-
+                $project = $this->Model_project->getOneProject($mf->projectID);
                 //ログイン中のユーザが自分のお気に入りリストを閲覧する場合
-                if ($this->session->userdata('userID') == $userID) {
-                    //すべてのプロジェクトを取得
-                    array_push($favorite_projects, $project);
-                } //ログイン中のユーザが他人のお気に入りリストを閲覧する場合
-                else {
-                    //公開プロジェクトのみ取得
-                    if ($project[0]->isPublic) array_push($favorite_projects, $project);
-                }
-
-                foreach ($myfavofite_list as $mf) {
-                    //プロジェクトテーブルから情報を取得
-                    $project = $this->Model_project->getOneProject($mf->projectID);
-                    //ログイン中のユーザが自分のお気に入りリストを閲覧する場合
-                    //すべてのプロジェクトを取得
-                    array_push($my_favorite_projects, $project);
-                }
+                //すべてのプロジェクトを取得
+                array_push($my_favorite_projects, $project);
+            }
 
                 //ふぁぼがあれば更新する
 
                 $data['favorites'] = $favorite_projects;
                 $data['my_favorites'] = $my_favorite_projects;
-            }
             $data['favorite_total'] = count($favorite_projects);
 
         return $data;

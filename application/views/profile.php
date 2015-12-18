@@ -124,22 +124,22 @@ if($isown || !$this->session->userdata('userID')){
 
                                     $pro_id = $project->projectID;
                                     $loginID = $this->session->userdata('userID');
+                                    if($loginID != null) {
+                                        foreach ($my_favorites as $f) {
+                                            $favo_id = $f[0]->projectID;
 
-                                    foreach ($my_favorites as $f) {
-                                        $favo_id = $f[0]->projectID;
+                                            if ($favo_id == $pro_id) {
+                                                $isfavorite = true;
+                                                break;
+                                            }
+                                        }
 
-                                        if ($favo_id == $pro_id) {
-                                            $isfavorite = true;
-                                            break;
+                                        if ($isfavorite) {
+                                            echo '<p><a href="' . base_url() . 'favorite/release_favorite/' . $project->projectID . '"><span><i class="material-icons">grade</i></span></a></p>';
+                                        } else {
+                                            echo '<p><a href="' . base_url() . 'favorite/regist_favorite/' . $project->projectID . '"><span><i class="material-icons">stars</i></span></a></p>';
                                         }
                                     }
-
-                                    if ($isfavorite) {
-                                        echo '<p><a href="' . base_url() . 'favorite/release_favorite/' . $project->projectID . '"><span><i class="material-icons">grade</i></span></a></p>';
-                                    } else {
-                                        echo '<p><a href="' . base_url() . 'favorite/regist_favorite/' . $project->projectID . '"><span><i class="material-icons">stars</i></span></a></p>';
-                                    }
-
                                     ?>
                                 </div>
 
