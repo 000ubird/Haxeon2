@@ -669,6 +669,7 @@ class Editor {
 
 		//HTMLファイルにプロジェクト名を出力する
 		new JQuery("p.proName").text(program.projectName);
+		cnx.Compiler.compile.call( [program] , onCompile );
 	}
 
 	//既存のプロジェクトを読み込んだ際に呼ばれる
@@ -699,6 +700,7 @@ class Editor {
 
 		//HTMLファイルにプロジェクト名を出力する
 		new JQuery("p.proName").text(program.projectName);
+		cnx.Compiler.compile.call( [program] , onCompile );
 	}
 
     private function onDescription(data: String):Void{
