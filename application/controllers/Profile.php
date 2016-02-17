@@ -7,31 +7,28 @@ define("PROJECT_PER_PAGE", 20);
 //フォロー、フォロワーの表示数
 define("FOLLOW_PER_PAGE", 28);
 
-class Profile extends CI_Controller
-{
-
-    public function index()
-    {
+class Profile extends CI_Controller {
+	//トップページの表示
+    public function index() {
         $this->load->view('header');
         $this->load->view('haxeon');
         $this->load->view('footer');
     }
-
-    public function signup()
-    {
+	
+	//サインアップページの表示
+    public function signup() {
         $this->load->view('header');
         $this->load->view('signup');
         $this->load->view('footer');
     }
-
-    public function information($userID, $category = "")
-    {
+	
+	//ユーザIDとプロフィールカテゴリを指定してプロフィール情報を表示
+    public function information($userID, $category = "") {
         $this->view($this->getUserData($userID, $category));
     }
 
     //プロフィールページを表示する本体
-    public function view($data)
-    {
+    public function view($data) {
         //新しい順にソートしておく
         krsort($data['projects']);
         krsort($data['follow']);
@@ -39,7 +36,8 @@ class Profile extends CI_Controller
         if($data['favorites'] != null) {
             krsort($data['favorites']);
         }
-
+		
+		//プロフィールページのカテゴリを取得
         $category = $data['category'];
 
         if (!$category == "") {
@@ -75,7 +73,9 @@ class Profile extends CI_Controller
 
             $this->pagination->initialize($config);
 
-            if ($category == 'projects' || $category == 'favorites') $data['projects'] = array_slice($data['projects'], $this->uri->segment(5), PROJECT_PER_PAGE);
+            if ($category == 'projects' || $category == 'favorites') {
+				$data['projects'] = array_slice($data['projects'], $this->uri->segment(5), PROJECT_PER_PAGE);
+			}
 
             //Viewに関する指定
             $config['full_tag_open'] = '<ul class="pagination">';
@@ -109,9 +109,9 @@ class Profile extends CI_Controller
         $this->load->view('profile', $data);
         $this->load->view('footer');
     }
-
-    private function getUserData($userID, $category)
-    {
+	
+	//
+    private function getUserData($userID, $category) {
         $this->load->model('Model_users');
         $this->load->model('Model_project');
         $this->load->model('Model_favorite');
@@ -144,15 +144,14 @@ class Profile extends CI_Controller
         $data['isfollow'] = $this->Model_users->getIsFollow($userID);
         $data['isfollowed'] = $this->Model_users->getIsFollowed($userID);
 
-            //お気に入りプロジェクトの取得
-            //自分
-            $myID = $this->session->userdata('userID');
-            $myfavofite_list = $this->Model_favorite->getFavorite($myID);
-            $favorite_list = $this->Model_favorite->getFavorite($userID);
+		//お気に入りプロジェクトの取得
+		$myID = $this->session->userdata('userID');
+		$myfavofite_list = $this->Model_favorite->getFavorite($myID);
+		$favorite_list = $this->Model_favorite->getFavorite($userID);
 
-            $favorite_projects = array();
-            //自分の方
-            $my_favorite_projects = array();
+		$favorite_projects = array();
+		//自分の方
+		$my_favorite_projects = array();
 
         $data['favorites'] = $favorite_projects;
         $data['my_favorites'] = $my_favorite_projects;
@@ -172,26 +171,30 @@ class Profile extends CI_Controller
             }
         }
 
-            foreach ($myfavofite_list as $mf) {
-                //プロジェクトテーブルから情報を取得
-                $project = $this->Model_project->getOneProject($mf->projectID);
-                //ログイン中のユーザが自分のお気に入りリストを閲覧する場合
-                $ownUserID = $this->session->userdata('userID');
-                if ($ownUserID == $userID) {
-                    //公開かつ自分のプロジェクトを取得
-                    if ($project[0]->isPublic || $project[0]->ownerUserID == $ownUserID) array_push($my_favorite_projects, $project);
-                } //ログイン中のユーザが他人のお気に入りリストを閲覧する場合
-                else {
-                    //公開のプロジェクトを取得
-                    if ($project[0]->isPublic) array_push($my_favorite_projects, $project);
-                }
-            }
+		foreach ($myfavofite_list as $mf) {
+			//プロジェクトテーブルから情報を取得
+			$project = $this->Model_project->getOneProject($mf->projectID);
+			//ログイン中のユーザが自分のお気に入りリストを閲覧する場合
+			$ownUserID = $this->session->userdata('userID');
+			if ($ownUserID == $userID) {
+				//公開かつ自分のプロジェクトを取得
+				if ($project[0]->isPublic || $project[0]->ownerUserID == $ownUserID) {
+					array_push($my_favorite_projects, $project);
+				}
+			} 
+			//ログイン中のユーザが他人のお気に入りリストを閲覧する場合
+			else {
+				//公開のプロジェクトを取得
+				if ($project[0]->isPublic) {
+					array_push($my_favorite_projects, $project);
+				}
+			}
+		}
 
-                //ふぁぼがあれば更新する
-
-                $data['favorites'] = $favorite_projects;
-                $data['my_favorites'] = $my_favorite_projects;
-                $data['favorite_total'] = count($favorite_projects);
+		//お気に入りがあれば更新する
+		$data['favorites'] = $favorite_projects;
+		$data['my_favorites'] = $my_favorite_projects;
+		$data['favorite_total'] = count($favorite_projects);
 
         return $data;
     }
@@ -242,8 +245,7 @@ class Profile extends CI_Controller
         $this->load->view('footer');
     }
 
-public function validation_project()
-{
+public function validation_project() {
     $this->load->library("form_validation");
     $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
 
