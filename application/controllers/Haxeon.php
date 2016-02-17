@@ -24,7 +24,8 @@ class Haxeon extends CI_Controller {
 		}
 
 		$data['ranking'] = array('projects'=>$table_project);
-
+		
+		//ログイン中のみお気に入り登録ボタンを表示
         if($this->session->userdata('userID') != FALSE) {
             $favorite_list = $this->Model_favorite->getFavorite($this->session->userdata['userID']);
             $favorite_projects = array();

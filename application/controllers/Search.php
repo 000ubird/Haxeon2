@@ -12,18 +12,23 @@ class Search extends CI_Controller {
 
     //検索結果の表示
     public function searchResult($str="", $chk0, $chk1, $chk2, $sort0, $sort1, $sort2) {
-		$str = urldecode($str);	//URLデコード
+		//検索文字列の取得
+		$str = urldecode($str);
 		
+		//検索対象のチェックボックスの状態を取得
 		$searchArray = [0, 0, 0, 0];
-		if ($chk0 == '1') $searchArray[0] = true;
-		if ($chk1 == '1') $searchArray[1] = true;
-		if ($chk2 == '1') $searchArray[3] = true;
-
+		if ($chk0 == '1') $searchArray[0] = true;	//タグ
+		if ($chk1 == '1') $searchArray[1] = true;	//プロジェクト名
+		//if ($chk1 == '1') $searchArray[2] = true;	//プロジェクトID
+		if ($chk2 == '1') $searchArray[3] = true;	//アカウントID
+		
+		//ソート順のチェックボックス状態を取得
 		$sortBy = [0, 0, 0];
-		if ($sort0 == '1') $sortBy[0] = true;
-		if ($sort1 == '1') $sortBy[1] = true;
-		if ($sort2 == '1') $sortBy[2] = true;
-
+		if ($sort0 == '1') $sortBy[0] = true;	//新着順
+		if ($sort1 == '1') $sortBy[1] = true;	//閲覧数順
+		if ($sort2 == '1') $sortBy[2] = true;	//名前順
+		
+		//プロジェクトをデータベースから検索
 		$this->load->model("Model_project");
 		$result['result'] = $this->Model_project->searchProject($str,$searchArray,$sortBy);
 		$result['str'] = $str;
@@ -32,6 +37,7 @@ class Search extends CI_Controller {
 
         $this->load->model("Model_favorite");
 		
+		//ログイン時はお気に入り情報を取得
 		if ($this->session->userdata('userID') != null) {
 			$favorite_list = $this->Model_favorite->getFavorite($this->session->userdata['userID']);
 		} else {
@@ -67,15 +73,16 @@ class Search extends CI_Controller {
 		
 		//記号の削除
 		$str = preg_replace('/[][}{)(!"#$%&\'~|\*+,\/@.\^<>`;:?_=\\\\-]/i', '', $str);
-			
+		
+		//検索対象チェックボックス情報の取得
 		$searchArray = ['0','0','0'];
 		for ($i = 0; $i < 3; $i++) {
 			if(set_checkbox('chk['.$i.']', $i)) $searchArray[$i] = '1';
 		}
-
+		//並べ替えチェックボックス情報の取得	
 		$sortBy = ['0','0','0'];
-		if (set_radio('sort', 'New')) $sortBy[0] = '1';
-		else if (set_radio('sort', 'PV')) $sortBy[1] = '1';
+		if (set_radio('sort', 'New')) 		$sortBy[0] = '1';
+		else if (set_radio('sort', 'PV')) 	$sortBy[1] = '1';
 		else if (set_radio('sort', 'Name')) $sortBy[2] = '1';
 
 		//バリデーション
