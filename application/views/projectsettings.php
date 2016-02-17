@@ -1,7 +1,7 @@
 <h3>説明文を更新</h3>
 
 <?php
-echo form_open('profile/validation_project');
+echo form_open('projectsettings/validation_project');
 echo validation_errors();
 ?>
 

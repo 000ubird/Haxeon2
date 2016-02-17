@@ -11,11 +11,11 @@
     </div>
 </div>
 <div>
-    <a href=<?php echo '"'.base_url().'profile/tagsettings/'.$projectID.'"';?> >タグを編集</a>
+    <a href=<?php echo '"'.base_url().'tagsettings/index/'.$projectID.'"';?> >タグを編集</a>
 	<?php
 		//説明文の編集リンクは所有者のみ
 		if ($owner == $this->session->userdata('userID')) {
-			echo '<a href= "'.base_url().'profile/projectsettings/'.$projectID.'">説明文を編集</a>';
+			echo '<a href= "'.base_url().'projectsettings/index/'.$projectID.'">説明文を編集</a>';
 		}
 	?>
 
@@ -113,7 +113,7 @@ if ($owner == $this->session->userdata('userID')) { ?>
 <br><br><br>
 <div id="important" class="col s12">
     <div class="row">
-        <button class="btn waves-effect waves-light red darken-4 col s4 offset-s4" value="プロジェクトを削除する" onclick="Materialize.toast('', 0, '', function(){var f=window.confirm('本当に削除しますか？'); if(f)location.href='<?php echo base_url();?>profile/delete_project/<?php echo $projectID; ?>'})">プロジェクトを削除
+        <button class="btn waves-effect waves-light red darken-4 col s4 offset-s4" value="プロジェクトを削除する" onclick="Materialize.toast('', 0, '', function(){var f=window.confirm('本当に削除しますか？'); if(f)location.href='<?php echo base_url();?>projectsettings/delete_project/<?php echo $projectID; ?>'})">プロジェクトを削除
         <i class="material-icons left">delete</i>
         </button>
     </div>

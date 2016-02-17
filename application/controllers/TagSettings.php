@@ -1,10 +1,13 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+//タグの登録上限数
+define("TAG_LIMIT", 10);
+
 class TagSettings extends CI_Controller {
 
     //タグ情報を更新
-    public function tagsettings($projectID) {
+    public function index($projectID) {
 		if ($this->session->userdata('userID') == null) header('Location: '.base_url().'login');
 
 		$this->session->set_userdata(array('pid' => $projectID));
@@ -29,9 +32,9 @@ class TagSettings extends CI_Controller {
 
 		$pid = $this->session->userdata('pid');
 		$tag = $_POST['tag'];
-
+		
 		//タグに関する登録
-		if (strlen($tag) != 0) {
+		if (strlen($tag) > 0) {
 			$this->load->model("Model_project");
 			//正しい場合は登録処理
 			if ($this->form_validation->run()) {
@@ -59,7 +62,7 @@ class TagSettings extends CI_Controller {
 			}
 		}
 		//処理が終わったらとりあえず同じ画面を表示する
-		header('Location:'.base_url().'profile/tagsettings/'.$pid);
+		$this->index($pid);
 	}
 
 	//タグ情報に関するデータベースを確認
@@ -83,7 +86,7 @@ class TagSettings extends CI_Controller {
         return true;
     }
 	
-	    //タグテーブルの重複チェック
+	//タグテーブルの重複チェック
     public function tag_check($tagname) {
         $this->load->model("Model_project");
 		//重複していたら真
@@ -93,3 +96,17 @@ class TagSettings extends CI_Controller {
             return false;
         }
     }
+	
+	public function delete_tagmap($tagname){		
+		$this->load->model("Model_project");		
+
+		$tagname = urldecode($tagname);		
+		file_put_contents("out.txt", $tagname);		
+		$tagID = $this->Model_project->getTagID($tagname);		
+
+		$pid = $this->session->userdata('pid');		
+		$this->Model_project->deleteTagMap($pid, $tagID);		
+
+		$this->index($pid);
+	}
+}

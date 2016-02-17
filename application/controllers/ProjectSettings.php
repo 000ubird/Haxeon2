@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class ProjectSettings extends CI_Controller {
     //プロジェクトの説明文を更新
-    public function projectsettings($projectID) {
+    public function index($projectID) {
 		if ($this->session->userdata('userID') == null) header('Location: '.base_url().'login');
 
         $this->session->set_userdata(array('pid' => $projectID));
@@ -22,7 +22,7 @@ class ProjectSettings extends CI_Controller {
             $this->load->view('projectsettings', $data);
             $this->load->view('footer');
         } else {
-            $this->index();
+            $this->index($projectID);
         }
     }
 	
@@ -77,3 +77,4 @@ class ProjectSettings extends CI_Controller {
 
         header('Location: '.base_url().'profile/information/'.$userID);
     }
+}
