@@ -48,7 +48,7 @@ class ProjectSettings extends CI_Controller {
 		}
 
 		//元のプロジェクト設定ページに移動する
-		header("Location: ".$_SERVER['HTTP_REFERER']);
+		header("Location: ".base_url()."/middle/detail/".$pid);
 	}
 	
 	//プロジェクト説明のバリデーション
