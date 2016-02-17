@@ -199,13 +199,8 @@ class Profile extends CI_Controller {
         return $data;
     }
 
-    /**
-     * projectsettings
-     * プロジェクトの所有者のみが変更できる設定を行う
-     * タグ設定やプロジェクトの削除など
-     */
-    public function projectsettings($projectID)
-    {
+    //プロジェクトの説明文を更新
+    public function projectsettings($projectID) {
 		if ($this->session->userdata('userID') == null) header('Location: '.base_url().'login');
 
         $this->session->set_userdata(array('pid' => $projectID));
@@ -227,8 +222,33 @@ class Profile extends CI_Controller {
             $this->index();
         }
     }
+	
+	//プロジェクト説明の入力バリデーション
+	public function validation_project() {
+		$this->load->library("form_validation");
+		$this->form_validation->set_error_delimiters('<div class="error">', '</div>');
 
-    //タグ設定画面
+		//検証ルールの設定
+		//ひとまず500文字程度にしておく
+		$this->form_validation->set_rules("description", "プロジェクト説明", 'max_length[500]|callback_description_check');
+		$this->form_validation->set_message("max_length", "%sは500文字以内でお願いします");
+
+		$pid = $this->session->userdata('pid');
+		$this->load->model("Model_project");
+
+		//プロジェクトの説明
+		$des = $_POST['description'];
+		//登録処理
+		if ($this->form_validation->run()) {
+			$this->Model_project->updateDescription($pid, $des);
+		} else {
+		}
+
+		//元のプロジェクト設定ページに移動する
+		header("Location: ".$_SERVER['HTTP_REFERER']);
+	}
+	
+    //タグ情報を更新
     public function tagsettings($projectID) {
 		if ($this->session->userdata('userID') == null) header('Location: '.base_url().'login');
 
@@ -244,78 +264,50 @@ class Profile extends CI_Controller {
         $this->load->view('tagsettings', $data);
         $this->load->view('footer');
     }
+	
+	//タグ入力のバリデーション
+	public function validation_tag(){
+		$this->load->library("form_validation");
+		$this->form_validation->set_error_delimiters('<div class="error">', '</div>');
 
-public function validation_project() {
-    $this->load->library("form_validation");
-    $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
+		$this->form_validation->set_rules("tag", "タグ", "callback_tag_table_check");
 
-    //検証ルールの設定
-    //ひとまず500文字程度にしておく
-    $this->form_validation->set_rules("description", "プロジェクト説明", 'max_length[500]|callback_description_check');
-    $this->form_validation->set_message("max_length", "%sは500文字以内でお願いします");
+		$pid = $this->session->userdata('pid');
+		$tag = $_POST['tag'];
 
-    $pid = $this->session->userdata('pid');
-    $this->load->model("Model_project");
+		//タグに関する登録
+		if (strlen($tag) != 0) {
+			$this->load->model("Model_project");
+			//正しい場合は登録処理
+			if ($this->form_validation->run()) {
+				//タグマップテーブルの登録数についての確認
+				//入力を保持
+				$tag = $this->input->post('tag');
 
-    //プロジェクトの説明
-    $des = $_POST['description'];
-    //登録処理
-    if ($this->form_validation->run()) {
-        $this->Model_project->updateDescription($pid, $des);
-    } else {
-    }
+				if (!$this->tag_check($tag)) {
+					//タグテーブルに存在しないタグのとき
+					$this->Model_project->registTag($tag);
+				}
 
-    //元のプロジェクト設定ページに移動する
-    header("Location: ".$_SERVER['HTTP_REFERER']);
+				//idを取得
+				$tagid = $this->Model_project->getTagID($tag);
 
-}
+				//プロジェクトテーブルからtmpIDの情報を取得
+				$this->load->model('Model_project');
+				$result = $this->Model_project->getOneProject($pid);
+				foreach ($result as $row) {
+					$tmpPro = $row->tmpPro;
+				}
 
-public function validation_tag(){
-    $this->load->library("form_validation");
-    $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
+				//マップに登録
+				$this->Model_project->registTagMap($pid, $tagid, $tmpPro);
+			}
+		}
+		//処理が終わったらとりあえず同じ画面を表示する
+		header('Location:'.base_url().'profile/tagsettings/'.$pid);
+	}
 
-    $this->form_validation->set_rules("tag", "タグ", "callback_tag_table_check");
-
-    $pid = $this->session->userdata('pid');
-    $tag = $_POST['tag'];
-
-    //タグに関する登録
-    //長さが0なら実行しない
-    if (strlen($tag) == 0) {
-    } else {
-        $this->load->model("Model_project");
-        //正しい場合は登録処理
-        if ($this->form_validation->run()) {
-            //タグマップテーブルの登録数についての確認
-            //入力を保持
-            $tag = $this->input->post('tag');
-
-            if (!$this->tag_check($tag)) {
-                //タグテーブルに存在しないタグのとき
-                $this->Model_project->registTag($tag);
-            }
-
-            //idを取得
-            $tagid = $this->Model_project->getTagID($tag);
-
-            //プロジェクトテーブルからtmpIDの情報を取得
-            $this->load->model('Model_project');
-            $result = $this->Model_project->getOneProject($pid);
-            foreach ($result as $row) {
-                $tmpPro = $row->tmpPro;
-            }
-
-            //マップに登録
-            $this->Model_project->registTagMap($pid, $tagid, $tmpPro);
-
-        } else {
-        }
-    }
-
-    //処理が終わったらとりあえず同じ画面を表示する
-    header('Location:'.base_url().'profile/tagsettings/'.$pid);
-}
-
+	//タグ情報に関するデータベースを確認
     public function tag_table_check($str){
         $this->load->model("Model_project");
         $pid = $this->session->userdata('pid');
@@ -344,28 +336,14 @@ public function validation_tag(){
     }
 
     //タグテーブルの重複チェック
-    //あればtrue
     public function tag_check($tagname) {
         $this->load->model("Model_project");
-
+		//重複していたら真
         if($this->Model_project->isTag($tagname)){
             return true;
         }else{
             return false;
         }
-    }
-
-    public function delete_tagmap($tagname){
-        $this->load->model("Model_project");
-
-        $tagname = urldecode($tagname);
-        file_put_contents("out.txt", $tagname);
-        $tagID = $this->Model_project->getTagID($tagname);
-
-        $pid = $this->session->userdata('pid');
-        $this->Model_project->deleteTagMap($pid, $tagID);
-
-        $this->tagsettings($pid);
     }
 
 	//アカウント削除
@@ -407,7 +385,7 @@ public function validation_tag(){
             //tmpアカウントからも削除
             $this->Model_users->deleteTmpAccount($uid);
 
-			//アカウント削除処理完了後に遷移するページ
+			//アカウント削除処理完了後はトップページに遷移
 			redirect('');
 		}else {
 			$this->delete();
