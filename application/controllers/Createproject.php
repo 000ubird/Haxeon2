@@ -3,6 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Createproject extends CI_Controller {
 
+	//プロジェクトを作成する
     public function index() {
 		if ($this->session->userdata('userID') == null) header('Location: '.base_url().'login');
 		

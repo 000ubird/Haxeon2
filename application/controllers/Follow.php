@@ -5,10 +5,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Follow extends CI_Controller {
 
     public function index(){
-
     }
 
-    //引数に入るフォロー相手のuserIDと、セッションにある自分のIDを使う
     public function accountFollow($uid){
         //DBにinsertする
         $this->load->model('Model_follow');
@@ -23,5 +21,4 @@ class Follow extends CI_Controller {
 
         redirect(base_url().'profile/information/'. $uid .'');
     }
-
 }
