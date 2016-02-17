@@ -22,7 +22,7 @@ class HaxeonHandler extends CI_Controller {
 			echo '{"userID":"'.$userID.'","projectName":""}';
 			exit;
 		}
-		
+
 		//ログイン中のユーザーIDと編集中のプロジェクト名を出力
 		echo '{"userID":"'.$userID.'","projectName":"'.$projectName.'"}';
 	}
@@ -38,6 +38,7 @@ class HaxeonHandler extends CI_Controller {
         $this->load->model('Model_project');
         $description = $this->Model_project->getDescription($projectID);
 
+        //文字列と改行文字をhtmlに対応した形に
         if($description) echo nl2br(htmlspecialchars($description[0]->description));
     }
 }
