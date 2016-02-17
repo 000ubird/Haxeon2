@@ -1,16 +1,17 @@
 <?php
 
-class Model_users extends CI_Model{
+class Model_users extends CI_Model {
 
     //DBにユーザーデータがあったらtrueを返す
-    public function can_log_in(){
+    //ログイン時の正誤判定
+    public function can_log_in() {
         $this->db->where(array('userID' => $this->input->post('userID'), 'userPass' => $this->input->post('password')));
         $query = $this->db->get('account');
 
         return ($query->num_rows() == 1);
     }
 
-	//ユーザIDからアイコンのあるURLを取得
+	//ユーザIDからアイコンのURLを取得
 	public function get_icon_url($userID) {
 		$icon = '';
 
@@ -23,20 +24,20 @@ class Model_users extends CI_Model{
 	}
 
     //プロフィール取得
-    public function getUserData($userID){
+    public function getUserData($userID) {
         $this->db->where(array('userID' => $userID));
         $query = $this->db->get('account');
 
         if($query->num_rows() > 0){
             return $query->result();
         }else{
-            //とりあえず
+            //エラー
             return 0;
         }
     }
 
     //プロジェクト取得
-    public function getProjects($userID){
+    public function getProjects($userID) {
         $this->db->where(array('ownerUserID' => $userID));
         $this->db->order_by("modified", "asc"); //変更日の新しい順にソート
         $query = $this->db->get('project');
@@ -45,7 +46,7 @@ class Model_users extends CI_Model{
     }
 
     //フォロー情報取得
-    public function getFollowInfo($userID){
+    public function getFollowInfo($userID) {
         $this->db->where(array('userID' => $userID));
         $this->db->order_by("userFollowingID", "desc"); //アルファベット順にソート
         $query = $this->db->get('follow');
@@ -54,7 +55,7 @@ class Model_users extends CI_Model{
     }
 
     //フォロワー情報取得
-    public function getFollowedInfo($userID){
+    public function getFollowedInfo($userID) {
         $this->db->where(array('userFollowingID' => $userID));
         $this->db->order_by("userID", "desc"); //アルファベット順にソート
         $query = $this->db->get('follow');
@@ -63,8 +64,9 @@ class Model_users extends CI_Model{
     }
 
     //$userIDをフォローしているかいないか
+    //$userIDは相手のIDで、自分のIDはセッションで取得している
     //フォローしていたらtrueを返す
-    public function getIsFollow($userID){
+    public function getIsFollow($userID) {
         $this->db->where(array('userID' => $this->session->userdata('userID'), 'userFollowingID' => $userID));
         $query = $this->db->get('follow');
 
@@ -73,13 +75,14 @@ class Model_users extends CI_Model{
 
     //$userIDにフォローされているかいないか
     //フォローされていたらtrueを返す
-    public function getIsFollowed($userID){
+    public function getIsFollowed($userID) {
         $this->db->where(array('userID' => $userID, 'userFollowingID' => $this->session->userdata('userID')));
         $query = $this->db->get('follow');
 
         return ($query->num_rows() == 1);
     }
 
+    //アカウント仮登録時に使用
 	//一時登録用テーブルにユーザー情報を追加する
 	public function add_tmp_user($key) {
 		$data = array(
@@ -117,8 +120,9 @@ class Model_users extends CI_Model{
 		}
 	}
 
-    //メールアドレス変更時にadd_tmp_userを使うためのメソッド
-    public function add_tmp_email_user($userID, $key, $mail){
+    //メールアドレス変更時は変更確認ができるまで仮登録にする
+    //仮登録のadd_tmp_userメソッドのメールアドレス変更版
+    public function add_tmp_email_user($userID, $key, $mail) {
         $data = array(
             'userID' => $userID,
             'password' => $this->getPassword($userID),
@@ -129,7 +133,8 @@ class Model_users extends CI_Model{
         return $this->db->insert('tmp_account',$data);
     }
 
-    private function getPassword($userID){
+    //$userIDのパスワードを取得する
+    private function getPassword($userID) {
         $this->db->where('userID', $userID);
         $query = $this->db->get('account');
 
@@ -141,8 +146,8 @@ class Model_users extends CI_Model{
         return $pass;
     }
 
-    //アカウントテーブルのメールアドレス情報を更新する
-    public function updateMail($key){
+    //メールアドレス変更が認証された際、アカウントテーブルを更新する
+    public function updateMail($key) {
         $this->db->where('registKey', $key);	//キーからユーザー情報を取得
         $data = $this->db->get('tmp_account');
 
@@ -158,7 +163,7 @@ class Model_users extends CI_Model{
     }
 
     //アカウントテーブルのカギを更新する
-    public function updateKey($key, $userID){
+    public function updateKey($key, $userID) {
         $this->db->where('userID', $userID);
         $this->db->update('account', array('MD5' => $key));
     }
@@ -172,7 +177,7 @@ class Model_users extends CI_Model{
 		return ($query->num_rows() > 0);
 	}
 
-	//本登録テーブルのユーザIDの重複チェック
+	//accountテーブルのユーザIDの重複チェック
 	public function is_overlap_uid($userID) {
 		$this->db->where('userID',$userID);
 		$query = $this->db->get('account');
@@ -199,12 +204,12 @@ class Model_users extends CI_Model{
 		$this->db->delete('account', array('userID'=>$userID));
 	}
 
-    //tmp_accountテーブルの指定したユーザーを削除
+    //仮登録tmp_accountテーブルの指定したユーザーを削除
     public function deleteTmpAccount($userID){
         $this->db->delete('tmp_account', array('userID'=>$userID));
     }
 
-    //tmp_accountからキーで指定したユーザーを削除
+    //仮登録tmp_accountからキーで指定したユーザーを削除
     public function deleteTmpAccountFromKey($key){
         $this->db->delete('tmp_account', array('registKey'=>$key));
     }
@@ -232,7 +237,7 @@ class Model_users extends CI_Model{
         $this->db->update('account', array('userURL' => $url));
     }
 
-    //ユーザーのアイコンurlを更新する
+    //ユーザーのアイコンurl更新
     public function updateIconURL($url, $userID){
         $this->db->where('userID', $userID);
         $this->db->update('account', array('userIcon' => $url));
