@@ -19,7 +19,7 @@ $url = $row->userURL;
 $message = $row->userProfile;
 }
 echo '<div id="common" class="col s12">';
-	echo form_open('profile/validation_profile/'.$userID);
+	echo form_open('profilesettings/validation_profile/'.$userID);
 
 	echo '<div class="row">';
 	echo 	'<div class="input-field col s12">';
@@ -46,7 +46,7 @@ echo '<div id="common" class="col s12">';
 	echo form_close();
 
 	echo '<br/><br/>';
-	echo form_open_multipart('profile/icon_upload/'.$userID);
+	echo form_open_multipart('profilesettings/icon_upload/'.$userID);
 ?>
 	<!-- アイコン-->
 	<div class="row">
@@ -82,7 +82,7 @@ echo '<div id="common" class="col s12">';
 <div id="important" class="col s12">
 	<div class="row">
 		<?php
-		echo '<button class="btn waves-effect waves-light orange darken-4 col s4 offset-s4" value="パスワードを変更する" onClick="location.href=\''. base_url() .'profile/change_pass/'. $userID .'\'">パスワードを変更する';
+		echo '<button class="btn waves-effect waves-light orange darken-4 col s4 offset-s4" value="パスワードを変更する" onClick="location.href=\''. base_url() .'passwordsettings/index/'. $userID .'\'">パスワードを変更する';
 		?>
 		<i class="material-icons left">lock_open</i>
 		</button>
@@ -90,7 +90,7 @@ echo '<div id="common" class="col s12">';
 
 	<div class="row">
 		<?php
-		echo '<button class="btn waves-effect waves-light orange darken-4 col s4 offset-s4" value="メールアドレスを変更する" onClick="location.href=\''. base_url() .'profile/change_email/'. $userID .'\'">メールアドレスを変更する';
+		echo '<button class="btn waves-effect waves-light orange darken-4 col s4 offset-s4" value="メールアドレスを変更する" onClick="location.href=\''. base_url() .'emailsettings/index/'. $userID .'\'">メールアドレスを変更する';
 		?>
 		<i class="material-icons left">email</i>
 		</button>
@@ -98,7 +98,7 @@ echo '<div id="common" class="col s12">';
 
 	<div class="row">
 		<?php
-		echo '<button class="btn waves-effect waves-light red col s4 offset-s4" value="アカウントを削除する" onClick="location.href=\''. base_url() .'profile/delete\'">アカウントを削除する';
+		echo '<button class="btn waves-effect waves-light red col s4 offset-s4" value="アカウントを削除する" onClick="location.href=\''. base_url() .'deleteaccount/\'">アカウントを削除する';
 		?>
 		<i class="material-icons left">error_outline</i>
 		</button>

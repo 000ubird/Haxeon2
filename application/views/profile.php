@@ -23,7 +23,7 @@ echo '      <h4 class="truncate"><a href="'.base_url().'profile/information/'.$u
 
 //プロフィール設定ページへのリンク
 if($this->session->userdata('userID') == $uid && $this->session->userdata('userID') !=null ) {
-    echo '<a href="' . base_url() . 'profile/profilesettings/' . $uid . '"><i class="material-icons">settings</i>アカウント設定</a>';
+    echo '<a href="' . base_url() . 'profilesettings/index/' . $uid . '"><i class="material-icons">settings</i>アカウント設定</a>';
 }else{
     //自分以外のユーザーのときはプロフィール設定をしないため何も表示しない
 }
@@ -88,7 +88,7 @@ if($isown || !$this->session->userdata('userID')){
 						echo '<i class="material-icons">';
 						//所持プロジェクトのみ公開・非公開設定の変更可能
 						if($this->session->userdata('userID') == $project->ownerUserID){
-							echo '<a href="'.base_url().'profile/changePublic/'.$project->projectID.'/1">';
+							echo '<a href="'.base_url().'projectsettings/changePublic/'.$project->projectID.'/1">';
 						}
 						echo 'settings_input_antenna';
 						if($this->session->userdata('userID') == $project->ownerUserID) echo '</a>';
@@ -99,7 +99,7 @@ if($isown || !$this->session->userdata('userID')){
 						echo '<i class="material-icons">';
 						//所持プロジェクトのみ公開・非公開設定の変更可能
 						if($this->session->userdata('userID') == $project->ownerUserID){
-							echo '<a href="'.base_url().'profile/changePublic/'.$project->projectID.'/0">';
+							echo '<a href="'.base_url().'projectsettings/changePublic/'.$project->projectID.'/0">';
 						}
 						echo 'lock';
 						if($this->session->userdata('userID') == $project->ownerUserID) echo '</a>';
@@ -272,7 +272,7 @@ if($isown || !$this->session->userdata('userID')){
 						echo '<i class="material-icons">';
 						//所持プロジェクトのみ公開・非公開設定の変更可能
 						if($this->session->userdata('userID') == $favorite[0]->ownerUserID){
-							echo '<a href="'.base_url().'profile/changePublic/'.$favorite[0]->projectID.'/1">';
+							echo '<a href="'.base_url().'projectsettings/changePublic/'.$favorite[0]->projectID.'/1">';
 						}
 						echo 'settings_input_antenna';
 						if($this->session->userdata('userID') == $favorite[0]->ownerUserID) echo '</a>';
@@ -283,7 +283,7 @@ if($isown || !$this->session->userdata('userID')){
 						echo '<i class="material-icons">';
 						//所持プロジェクトのみ公開・非公開設定の変更可能
 						if($this->session->userdata('userID') == $favorite[0]->ownerUserID){
-							echo '<a href="'.base_url().'profile/changePublic/'.$favorite[0]->projectID.'/0">';
+							echo '<a href="'.base_url().'projectsettings/changePublic/'.$favorite[0]->projectID.'/0">';
 						}
 						echo 'lock';
 						if($this->session->userdata('userID') == $favorite[0]->ownerUserID) echo '</a>';

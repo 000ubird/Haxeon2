@@ -1,7 +1,7 @@
 <h3>アカウント削除</h3>
 
 <?php
-	echo form_open("profile/password_validation");
+	echo form_open("deleteaccount/password_validation");
 	echo validation_errors();
 ?>
 
