@@ -23,7 +23,7 @@ echo '      <h4 class="truncate"><a href="'.base_url().'profile/information/'.$u
 
 //プロフィール設定ページへのリンク
 if($this->session->userdata('userID') == $uid && $this->session->userdata('userID') !=null ) {
-    echo '<a href="' . base_url() . 'profile/profilesettings/' . $uid . '"><i class="material-icons">settings</i>アカウント設定</a>';
+    echo '<a href="' . base_url() . 'profilesettings/index/' . $uid . '"><i class="material-icons">settings</i>アカウント設定</a>';
 }else{
     //自分以外のユーザーのときはプロフィール設定をしないため何も表示しない
 }

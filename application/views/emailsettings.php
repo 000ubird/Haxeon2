@@ -1,6 +1,6 @@
 <h3>メールアドレス変更</h3>
 
-<?php echo form_open('profile/validation_email/'.$userID); ?>
+<?php echo form_open('emailsettings/validation_email/'.$userID); ?>
 
 <div class="row">
 	<div class="input-field col s12">

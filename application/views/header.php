@@ -40,7 +40,7 @@
 				</li>
 			<?php }else{ ?>
 				<li>
-					<a href="<?php echo base_url();?>profile/signup">アカウント作成</a>
+					<a href="<?php echo base_url();?>signup">アカウント作成</a>
 				</li>
 				<li>
 					<a href="<?php echo base_url();?>login">ログイン</a>
@@ -68,7 +68,7 @@
 				</li>
                 <?php }else{ ?>
 				<li>
-					<a href="<?php echo base_url();?>profile/signup">アカウント作成</a>
+					<a href="<?php echo base_url();?>signup">アカウント作成</a>
 				</li>
 				<li>
 					<a href="<?php echo base_url();?>login">ログイン</a>

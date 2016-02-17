@@ -2,7 +2,7 @@
 
 <?php
 
-echo form_open('profile/validation_signup/');
+echo form_open('signup/validation_signup/');
 
 echo '<div class="row">';
 echo '<div class="input-field col s12">';
