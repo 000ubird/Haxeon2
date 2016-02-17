@@ -3,6 +3,7 @@
 class Model_project extends CI_Model{
 
     //データベースにプロジェクト名があったらtrueを返す
+    //プロジェクト作成時の重複判定に使用
     public function isProjectName() {
         $this->db->where(array('projectName' => $this->input->post('projectName'), 'ownerUserID' => $this->session->userdata('userID')));
         $query = $this->db->get('project');
@@ -11,6 +12,7 @@ class Model_project extends CI_Model{
     }
 
 	//指定したプロジェクトのPV数を増やす
+    //デイリーランキングテーブルを別で作成しているためこちらも更新している
 	public function pvCountUp($projectID) {
 		//プロジェクトのPV数の取得と更新
 		$array = array('projectID' => $projectID);
@@ -26,6 +28,7 @@ class Model_project extends CI_Model{
 	}
 
     //プロジェクト所有者とログインユーザが同一ならtrueを返す
+    //プロジェクト設定ページの本人判定で使用
     public function isOwner($projectID) {
         $array = array('projectID' => $projectID, 'ownerUserID' => $this->session->userdata('userID'));
         $query = $this->db->get_where('project', $array);
@@ -33,7 +36,7 @@ class Model_project extends CI_Model{
         return ($query->num_rows() > 0);
     }
 
-    //タグ情報を返す
+    //$projectIDの全てのタグ情報を返す
     public function getTagIDs($projectID) {
         $ids = array();
 
@@ -47,8 +50,9 @@ class Model_project extends CI_Model{
         return $ids;
     }
 
-    //タグを取得する
-    public function getTag($id){
+    //タグ名を取得する
+    //タグテーブルはidを指定することでタグ名を取得する
+    public function getTag($id) {
         $array = array('id' => $id);
         $query = $this->db->get_where('tag', $array);
 
@@ -60,43 +64,39 @@ class Model_project extends CI_Model{
         return $tagname;
     }
 
-    //タグの有無を取得する。あればtrueになる
-    public function isTag($tagname){
-        $array = array('tag' => $tagname);
-        $query = $this->db->get_where('tag', $array);
-
-        return ($query->num_rows() > 0);
-    }
-
     //tagテーブルのタグ名からidを取得する
-    public function getTagID($tagname){
-//        $this->db->select('id');
+    public function getTagID($tagname) {
         $array = array('tag' => $tagname);
         $query = $this->db->get_where('tag', $array);
 
         $id = 0;
 
         //ひとまずこれ。idのみなら綺麗にできないのかな
-        foreach($query->result() as $i){
+        foreach($query->result() as $i) {
             $id = $i->id;
         }
         return $id;
     }
 
-    //タグをtagテーブルに登録する
-    //返り値 登録したタグのid
-    public function registTag($tagname){
+    //タグの有無を取得する。あればtrueになる
+    public function isTag($tagname) {
+        $array = array('tag' => $tagname);
+        $query = $this->db->get_where('tag', $array);
+
+        return ($query->num_rows() > 0);
+    }
+
+    //新しいタグ名をtagテーブルに登録する
+    public function registTag($tagname) {
         $array = array(
             'tag' => $tagname
         );
 
         $this->db->insert('tag', $array);
-
-        //return $this->db->insert_id();
     }
 
     //tagmapテーブルに登録する
-    public function registTagMap($projectID, $tagID, $tmpPro){
+    public function registTagMap($projectID, $tagID, $tmpPro) {
         $array = array(
             'projectID' => $projectID,
             'tagID' => $tagID,
@@ -107,7 +107,7 @@ class Model_project extends CI_Model{
     }
 
     //tagmapテーブルから削除する
-    public function deleteTagMap($projectID, $tagID){
+    public function deleteTagMap($projectID, $tagID) {
         $array = array(
             'projectID' => $projectID,
             'tagID' => $tagID
@@ -116,8 +116,9 @@ class Model_project extends CI_Model{
         $this->db->delete('tagmap', $array);
     }
 
-    //tagmapテーブルに登録されている個数を返す
-    public function countTagMap($projectID){
+    //tagmapテーブルに$projectIDが登録されている数を返す
+    //タグの登録数上限の判定で使用している
+    public function countTagMap($projectID) {
         $array = array(
             'projectID' => $projectID
         );
@@ -128,7 +129,7 @@ class Model_project extends CI_Model{
 
     //tagmapテーブルの重複チェック
     //重複していたらtrue
-    public function checkOverlap($projectID, $tagID){
+    public function checkOverlap($projectID, $tagID) {
         $array = array(
             'projectID' => $projectID,
             'tagID' => $tagID
@@ -148,7 +149,8 @@ class Model_project extends CI_Model{
 		return $query->result_array();
 	}
 
-	//タグマップテーブルから引数のタグIDを持つプロジェクトIDを返す
+	//$tagIDを持つ全てのプロジェクトIDを返す
+    //タグ検索など
 	public function getProIDfromTagmap($tagID) {
 		$this->db->select('projectID')->from('tagmap')->where('tagID', $tagID);
 		$query = $this->db->get();
@@ -156,7 +158,7 @@ class Model_project extends CI_Model{
 		return $query->result_array();
 	}
 
-	//検索単語と検索対象からプロジェクトを検索
+	//検索単語($searchStr)と検索対象($searchFor)からプロジェクトを検索
 	//$searchFor => 0:tag, 1:projectName, 2:projectID, 3:accountID
 	public function searchProject($searchStr, $searchFor, $sortBy) {
 		//プロジェクトテーブルからプロジェクトIDを検索
@@ -226,25 +228,28 @@ class Model_project extends CI_Model{
 		return $query->result_array();
 	}
 
-	//プロジェクトIDを指定してプロジェクトを取得する
-	public function getOneProject($id) {
-		$query = $this->db->get_where('project', array('projectID' => $id));
+	//指定したプロジェクトIDを取得する
+	public function getOneProject($projectID) {
+		$query = $this->db->get_where('project', array('projectID' => $projectID));
 		return $query->result();
 	}
 
 	//範囲を指定してプロジェクトを取得
-	public function getProject($beginDate,$endDate,$top,$end,$order) {
+    //$beginDate, $endDate: 最終更新日時の範囲
+    //$top: 取得件数 LIMIT句
+    //$end: 開始位置 OFFSET句
+	public function getProject($beginDate, $endDate, $top, $end, $order) {
 		$this->db->where("modified BETWEEN '$beginDate' AND '$endDate'");
 
 		//公開プロジェクトのみ取得
 		$this->db->where('isPublic', true);
 
 		$this->db->order_by($order, "desc");
-		$result = $this->db->get('project',$top,$end);
+		$result = $this->db->get('project', $top, $end);
 		return $result->result();
 	}
 
-	//デイリーランキングページからプロジェクトを9個取得
+	//デイリーランキングページからプロジェクトをlimit個取得
 	public function getRankingProject() {
 		$this->db->order_by("pv","desc");
 		$this->db->limit(12);
@@ -252,21 +257,22 @@ class Model_project extends CI_Model{
 		return $result->result();
 	}
 
-	//登録されているプロジェクトの総数を取得
-	public function getProjectNum($beginDate,$endDate){
+	//$beginDateから$endDate期間中に登録されたプロジェクトの総数を取得
+	public function getProjectNum($beginDate, $endDate) {
 		$query = $this->db->query("SELECT * FROM project WHERE modified BETWEEN '$beginDate' AND '$endDate'");
 		return $query->num_rows();
 	}
 
 	//指定したユーザーが所持するプロジェクトを全て削除(アカウント削除時)
-	public function deleteProject($userID){
+	public function deleteProject($userID) {
 		$this->db->delete('project', array('ownerUserID'=>$userID));
         $this->deleteDayRanking($userID);
 	}
-	
-	//公開プロジェクトは非公開に、非公開プロジェクトは公開にする。
-	public function switchPublic($projectID,$isPublic){
+
+	//公開/非公開の変更
+	public function switchPublic($projectID,$isPublic) {
 		$this->db->where('projectID', $projectID);
+
 		//公開プロジェクトの場合は非公開にする
 		if($isPublic=='1') {
 			$this->db->update('project', array('isPublic' => 0));
@@ -276,7 +282,7 @@ class Model_project extends CI_Model{
 	}
 
     //プロジェクトをひとつ削除する
-    public function deleteOneProject($projectID, $userID){
+    public function deleteOneProject($projectID, $userID) {
         $this->db->delete('project', array('ownerUserID'=>$userID, 'projectID'=>$projectID));
         $this->db->delete('day_ranking', array('usrID'=>$userID, 'proID'=>$projectID));
         $this->db->delete('comment', array('projectID'=>$projectID));
@@ -284,19 +290,19 @@ class Model_project extends CI_Model{
         $this->db->delete('favorite', array('projectID'=>$projectID));
     }
 
-    //day_rankingから削除
-    public function deleteDayRanking($userID){
+    //day_rankingテーブルから削除
+    public function deleteDayRanking($userID) {
         $this->db->delete('day_ranking', array('usrID'=>$userID));
     }
 
     //プロジェクトの説明文を取得する
-    public function getDescription($projectID){
+    public function getDescription($projectID) {
         $this->db->select('description');
         $query = $this->db->get_where('project', array('projectID' => $projectID));
         return $query->result();
     }
 
-    //プロジェクトの説明文をアップデート
+    //プロジェクトの説明文を更新
     public function updateDescription($projectID, $description){
         $this->db->where('projectID', $projectID);
         $this->db->update('project', array('description' => $description));
