@@ -149,7 +149,8 @@ class Model_project extends CI_Model{
 		return $query->result_array();
 	}
 
-	//タグマップテーブルから引数のタグIDを持つプロジェクトIDを返す
+	//$tagIDを持つ全てのプロジェクトIDを返す
+    //タグ検索など
 	public function getProIDfromTagmap($tagID) {
 		$this->db->select('projectID')->from('tagmap')->where('tagID', $tagID);
 		$query = $this->db->get();
@@ -157,7 +158,7 @@ class Model_project extends CI_Model{
 		return $query->result_array();
 	}
 
-	//検索単語と検索対象からプロジェクトを検索
+	//検索単語($searchStr)と検索対象($searchFor)からプロジェクトを検索
 	//$searchFor => 0:tag, 1:projectName, 2:projectID, 3:accountID
 	public function searchProject($searchStr, $searchFor, $sortBy) {
 		//プロジェクトテーブルからプロジェクトIDを検索
@@ -227,25 +228,28 @@ class Model_project extends CI_Model{
 		return $query->result_array();
 	}
 
-	//プロジェクトIDを指定してプロジェクトを取得する
-	public function getOneProject($id) {
-		$query = $this->db->get_where('project', array('projectID' => $id));
+	//指定したプロジェクトIDを取得する
+	public function getOneProject($projectID) {
+		$query = $this->db->get_where('project', array('projectID' => $projectID));
 		return $query->result();
 	}
 
 	//範囲を指定してプロジェクトを取得
-	public function getProject($beginDate,$endDate,$top,$end,$order) {
+    //$beginDate, $endDate: 最終更新日時の範囲
+    //$top: 取得件数 LIMIT句
+    //$end: 開始位置 OFFSET句
+	public function getProject($beginDate, $endDate, $top, $end, $order) {
 		$this->db->where("modified BETWEEN '$beginDate' AND '$endDate'");
 
 		//公開プロジェクトのみ取得
 		$this->db->where('isPublic', true);
 
 		$this->db->order_by($order, "desc");
-		$result = $this->db->get('project',$top,$end);
+		$result = $this->db->get('project', $top, $end);
 		return $result->result();
 	}
 
-	//デイリーランキングページからプロジェクトを9個取得
+	//デイリーランキングページからプロジェクトをlimit個取得
 	public function getRankingProject() {
 		$this->db->order_by("pv","desc");
 		$this->db->limit(12);
@@ -253,21 +257,22 @@ class Model_project extends CI_Model{
 		return $result->result();
 	}
 
-	//登録されているプロジェクトの総数を取得
-	public function getProjectNum($beginDate,$endDate){
+	//$beginDateから$endDate期間中に登録されたプロジェクトの総数を取得
+	public function getProjectNum($beginDate, $endDate) {
 		$query = $this->db->query("SELECT * FROM project WHERE modified BETWEEN '$beginDate' AND '$endDate'");
 		return $query->num_rows();
 	}
 
 	//指定したユーザーが所持するプロジェクトを全て削除(アカウント削除時)
-	public function deleteProject($userID){
+	public function deleteProject($userID) {
 		$this->db->delete('project', array('ownerUserID'=>$userID));
         $this->deleteDayRanking($userID);
 	}
 
-	//公開プロジェクトは非公開に、非公開プロジェクトは公開にする。
-	public function switchPublic($projectID,$isPublic){
+	//公開/非公開の変更
+	public function switchPublic($projectID,$isPublic) {
 		$this->db->where('projectID', $projectID);
+
 		//公開プロジェクトの場合は非公開にする
 		if($isPublic=='1') {
 			$this->db->update('project', array('isPublic' => 0));
@@ -277,7 +282,7 @@ class Model_project extends CI_Model{
 	}
 
     //プロジェクトをひとつ削除する
-    public function deleteOneProject($projectID, $userID){
+    public function deleteOneProject($projectID, $userID) {
         $this->db->delete('project', array('ownerUserID'=>$userID, 'projectID'=>$projectID));
         $this->db->delete('day_ranking', array('usrID'=>$userID, 'proID'=>$projectID));
         $this->db->delete('comment', array('projectID'=>$projectID));
@@ -285,19 +290,19 @@ class Model_project extends CI_Model{
         $this->db->delete('favorite', array('projectID'=>$projectID));
     }
 
-    //day_rankingから削除
-    public function deleteDayRanking($userID){
+    //day_rankingテーブルから削除
+    public function deleteDayRanking($userID) {
         $this->db->delete('day_ranking', array('usrID'=>$userID));
     }
 
     //プロジェクトの説明文を取得する
-    public function getDescription($projectID){
+    public function getDescription($projectID) {
         $this->db->select('description');
         $query = $this->db->get_where('project', array('projectID' => $projectID));
         return $query->result();
     }
 
-    //プロジェクトの説明文をアップデート
+    //プロジェクトの説明文を更新
     public function updateDescription($projectID, $description){
         $this->db->where('projectID', $projectID);
         $this->db->update('project', array('description' => $description));
