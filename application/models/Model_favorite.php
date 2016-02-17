@@ -20,15 +20,17 @@ class Model_favorite extends CI_Model {
 
     //favoriteテーブルのprojectIDをアップデートする
     public function update_favorite($userID, $beforeID, $afterID){
+        //変更する行を特定する部分
         $data = array(
             'userID' => $userID,
             'projectID' => $beforeID
         );
         $this->db->where($data);
+
         $this->db->update('favorite', array('projectID' => $afterID));
     }
 
-    //userIDがふぁぼしたリストを返す
+    //userIDのファボの全てを返す
     public function getFavorite($userID){
         $query = $this->db->get_where('favorite', array('userID' => $userID));
 
@@ -37,12 +39,13 @@ class Model_favorite extends CI_Model {
 
 	//指定したプロジェクトのお気に入り数を更新
 	public function updateFavoriteNum($projectID) {
+        //$projectIDがファボされている全てのレコードを取得
 		$query = $this->db->get_where('favorite', array('projectID' => $projectID));
 
 		//プロジェクトテーブル内のお気に入り数更新
 		$this->db->where('projectID', $projectID);
-		$this->db->update('project', array('favorite'=>$query->num_rows() ));
+        //お気に入り数=取得した行数=$query->num_rows()
+		$this->db->update('project', array('favorite'=>$query->num_rows()));
 
-		//return $query->num_rows();	//デバッグ
 	}
 }
