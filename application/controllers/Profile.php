@@ -107,7 +107,7 @@ class Profile extends CI_Controller {
     private function getUserData($userID, $category) {
         $this->load->model('ModelUsers');
         $this->load->model('ModelProject');
-        $this->load->model('Model_favorite');
+        $this->load->model('ModelFavorite');
 
 		$array = [];
 		//ログイン中のユーザが自分のプロフィールを閲覧する場合
@@ -139,8 +139,8 @@ class Profile extends CI_Controller {
 
 		//お気に入りプロジェクトの取得
 		$myID = $this->session->userdata('userID');
-		$myfavofite_list = $this->Model_favorite->getFavorite($myID);
-		$favorite_list = $this->Model_favorite->getFavorite($userID);
+		$myfavofite_list = $this->ModelFavorite->getFavorite($myID);
+		$favorite_list = $this->ModelFavorite->getFavorite($userID);
 
 		$favorite_projects = array();
 		//自分の方

@@ -35,11 +35,11 @@ class Search extends CI_Controller {
 		$result['search'] = $searchArray;
 		$result['sort'] = $sortBy;
 
-        $this->load->model("Model_favorite");
+        $this->load->model("ModelFavorite");
 
 		//ログイン時はお気に入り情報を取得
 		if ($this->session->userdata('userID') != null) {
-			$favorite_list = $this->Model_favorite->getFavorite($this->session->userdata['userID']);
+			$favorite_list = $this->ModelFavorite->getFavorite($this->session->userdata['userID']);
 		} else {
 			$favorite_list = [];
 		}

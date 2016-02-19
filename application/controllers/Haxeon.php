@@ -5,7 +5,7 @@ class Haxeon extends CI_Controller {
 
 	public function index() {
 		$this->load->model('ModelProject');
-        $this->load->model('Model_favorite');
+        $this->load->model('ModelFavorite');
 
 		$ranking_projects = $this->ModelProject->getRankingProject();
 		$table_project = array();
@@ -27,7 +27,7 @@ class Haxeon extends CI_Controller {
 
 		//ログイン中のみお気に入り登録ボタンを表示
         if($this->session->userdata('userID') != FALSE) {
-            $favorite_list = $this->Model_favorite->getFavorite($this->session->userdata['userID']);
+            $favorite_list = $this->ModelFavorite->getFavorite($this->session->userdata['userID']);
             $favorite_projects = array();
             foreach ($favorite_list as $f) {
                 //プロジェクトテーブルから情報を取得

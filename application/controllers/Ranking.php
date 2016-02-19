@@ -10,7 +10,7 @@ class Ranking extends CI_Controller {
 	//ランキングページ
 	public function index($days = "day", $order = "pv ", $num = 0 ,$offset = 0) {
 		$this->load->model('ModelProject');
-        $this->load->model('Model_favorite');
+        $this->load->model('ModelFavorite');
 		$this->load->library('pagination');
 
 		$config['base_url'] = base_url().'ranking/index/'.$days.'/'.$order.'/'.$num.'/';
@@ -61,7 +61,7 @@ class Ranking extends CI_Controller {
 		//条件に一致するプロジェクトを取得
 		$projects = $this->ModelProject->getProject($beginDate, $endDate, $config['per_page'], $offset, $order);
         //お気に入り登録情報の取得
-		$favorites = $this->Model_favorite-> getFavorite($this->session->userdata('userID'));
+		$favorites = $this->ModelFavorite-> getFavorite($this->session->userdata('userID'));
 		//それぞれのパラメータを保持
 		$data['ranking'] = array('days'=>$days,'order'=>$order,'num'=>$num,'cur_page'=>$offset,'projects'=>$projects,'favorites'=>$favorites);
 
