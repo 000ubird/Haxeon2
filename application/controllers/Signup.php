@@ -9,14 +9,14 @@ class Signup extends CI_Controller {
         $this->load->view('footer');
     }
 
-	public function validation_signup() {
+	public function validationSignup() {
         $this->load->library("form_validation");
         $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
 
         //検証ルールの設定
-        $this->form_validation->set_rules("userID", "ユーザID", "required|alpha_numeric|min_length[4]|callback_username_check");
+        $this->form_validation->set_rules("userID", "ユーザID", "required|alpha_numeric|min_length[4]|callback_checkUsername");
         $this->form_validation->set_rules("password", "パスワード", "required|alpha_numeric|min_length[4]");
-        $this->form_validation->set_rules("email", "メールアドレス", "valid_email|required|callback_mail_check");
+        $this->form_validation->set_rules("email", "メールアドレス", "valid_email|required|callback_checkEmail");
 
         //エラーメッセージの設定
         $this->form_validation->set_message("alpha_numeric", "%s は半角英数字で入力してください。");
@@ -64,11 +64,11 @@ class Signup extends CI_Controller {
     }
 
 	//既存のユーザIDとの重複チェック
-    public function username_check($str) {
+    public function checkUsername($str) {
         $this->load->model("ModelUsers");
 
         if($this->ModelUsers->isDuplicateTempUserID($str) || $this->ModelUsers->isDuplicateAccountUserID($str) ){
-            $this->form_validation->set_message('username_check','入力された %s '.$str.' は既に使われております。');
+            $this->form_validation->set_message('checkUsername','入力された %s '.$str.' は既に使われております。');
             return false;
         }
         else {
@@ -77,11 +77,11 @@ class Signup extends CI_Controller {
     }
 
 	//既存のメールアドレスの重複チェック
-    public function mail_check($str) {
+    public function checkEmail($str) {
         $this->load->model("ModelUsers");
 
         if($this->ModelUsers->isDuplicateEmail($str)){
-            $this->form_validation->set_message('mail_check','入力された %s '.$str.' は既に使われております。');
+            $this->form_validation->set_message('checkEmail','入力された %s '.$str.' は既に使われております。');
             return false;
         }
         else {
