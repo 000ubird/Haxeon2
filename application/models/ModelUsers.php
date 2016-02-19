@@ -66,7 +66,7 @@ class ModelUsers extends CI_Model {
     //$userIDをフォローしているかいないか
     //$userIDは相手のIDで、自分のIDはセッションで取得している
     //フォローしていたらtrueを返す
-    public function getIsFollow($userID) {
+    public function getisFollow($userID) {
         $this->db->where(array('userID' => $this->session->userdata('userID'), 'userFollowingID' => $userID));
         $query = $this->db->get('follow');
 
@@ -75,7 +75,7 @@ class ModelUsers extends CI_Model {
 
     //$userIDにフォローされているかいないか
     //フォローされていたらtrueを返す
-    public function getIsFollowed($userID) {
+    public function getisFollowed($userID) {
         $this->db->where(array('userID' => $userID, 'userFollowingID' => $this->session->userdata('userID')));
         $query = $this->db->get('follow');
 
