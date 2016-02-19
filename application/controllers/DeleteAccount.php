@@ -12,10 +12,10 @@ class DeleteAccount extends CI_Controller {
 	}
 
 	//アカウント削除処理に使用するパスワードのバリデーション
-	public function password_validation() {
+	public function validationPassword() {
 		$this->load->library("form_validation");
 		$this->form_validation->set_error_delimiters('<div class="error">', '</div>');
-		$this->form_validation->set_rules("password", "パスワード", "required|callback_pass_check");
+		$this->form_validation->set_rules("password", "パスワード", "required|callback_passwordCheck");
 		$this->form_validation->set_message("required", "%s は必須入力項目です。");
 
         $uid = $this->session->userdata('userID');
@@ -49,8 +49,8 @@ class DeleteAccount extends CI_Controller {
 	}
 
 	//パスワードのチェック
-	public function pass_check($str) {
-		$this->form_validation->set_message('pass_check', 'パスワードが間違っています。');
+	public function passwordCheck($str) {
+		$this->form_validation->set_message('passwordCheck', 'パスワードが間違っています。');
 
 		//DBからパスワードを取得
 		$this->load->model("ModelUsers");
