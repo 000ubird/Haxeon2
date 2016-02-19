@@ -1,6 +1,6 @@
 <h3>パスワード変更確認</h3>
 
-<?php echo form_open('passwordsettings/validation_password/'.$userID); ?>
+<?php echo form_open('passwordsettings/validationPasswordSettings/'.$userID); ?>
 
 <div class="row">
 	<div class="input-field col s12">

@@ -13,14 +13,14 @@ class PasswordSettings extends CI_Controller {
     }
 
     //パスワード変更ページ用のバリデーション
-    public function validation_password($userID){
+    public function validationPasswordSettings($userID){
         $this->load->library("form_validation");
         $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
 
         //検証ルールの設定
-        $this->form_validation->set_rules("current", "現在のパスワード", "required|alpha_numeric|callback_current_check");
-        $this->form_validation->set_rules("new", "新しいパスワード", "required|alpha_numeric|min_length[4]|callback_setnewPass");
-        $this->form_validation->set_rules("again", "新しいパスワード(再入力)", "required|alpha_numeric|min_length[4]|callback_again_check");
+        $this->form_validation->set_rules("current", "現在のパスワード", "required|alpha_numeric|callback_isCurrentPassword");
+        $this->form_validation->set_rules("new", "新しいパスワード", "required|alpha_numeric|min_length[4]|callback_setNewPass");
+        $this->form_validation->set_rules("again", "新しいパスワード(再入力)", "required|alpha_numeric|min_length[4]|callback_checkAgain");
 
         //エラーメッセージの設定
         $this->form_validation->set_message("required", "%s を入力してください。");
@@ -46,26 +46,23 @@ class PasswordSettings extends CI_Controller {
     }
 
 	//新しいパスワードの確認のためにセッション登録をするだけのメソッド
-    function setnewPass($str){
+    function setNewPass($str){
         $this->session->set_userdata(array('newPass' => $str));
         return true;
     }
 
-    function again_check($str){
+    function checkAgain($str){
         $new = $this->session->userdata('newPass');
 
         if($new == $str) return true;
         else{
-            $this->form_validation->set_message('again_check','新しいパスワードと一致しません');
+            $this->form_validation->set_message('checkAgain','新しいパスワードと一致しません');
             return false;
         }
     }
 
 	//個別にバリデーションルールを作成する
-    //current: データベースのパスワードと照合
-    //new: とくにはないかも
-    //again: newで入力された内容と一致しているかどうか
-    function current_check($str){
+    function isCurrentPassword($str){
         $userID = $this->session->userdata('userID');
         $this->load->model('ModelUsers');
 
@@ -80,10 +77,10 @@ class PasswordSettings extends CI_Controller {
             if($pass == $str){
                 return true;
             }
-            $this->form_validation->set_message('current_check','パスワードが間違っています');
+            $this->form_validation->set_message('isCurrentPassword','パスワードが間違っています');
             return false;
         }else{
-            $this->form_validation->set_message('current_check','パスワードが間違っています2');
+            $this->form_validation->set_message('isCurrentPassword','パスワードが間違っています2');
             return false;
         }
     }
