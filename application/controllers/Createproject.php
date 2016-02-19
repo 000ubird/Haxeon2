@@ -6,7 +6,7 @@ class Createproject extends CI_Controller {
 	//プロジェクトを作成する
     public function index() {
 		if ($this->session->userdata('userID') == null) header('Location: '.base_url().'login');
-		
+
         //セッションにuserIDがあったら遷移するようにする
         if(isset($_SESSION['userID'])){
             $this->load->view('header');
@@ -44,9 +44,9 @@ class Createproject extends CI_Controller {
     }
 
     public function validate_credentials(){
-        $this->load->model("Model_project");
+        $this->load->model("ModelProject");
 
-        if(!($this->Model_project->isProjectName())){
+        if(!($this->ModelProject->isProjectName())){
             //DBに登録されていなかったとき
             return true;
         }else{

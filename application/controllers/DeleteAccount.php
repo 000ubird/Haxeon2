@@ -25,14 +25,14 @@ class DeleteAccount extends CI_Controller {
             //セッション情報の削除
             $this->session->sess_destroy();
 
-			$this->load->model("Model_project");
+			$this->load->model("ModelProject");
             $this->load->model('ModelUsers');
             $this->load->model('Model_follow');
             $projects = $this->ModelUsers->getProjects($uid);
             print_r($projects);
 
             foreach ($projects as $p) {
-                $this->Model_project->deleteOneProject($p->projectID, $uid);
+                $this->ModelProject->deleteOneProject($p->projectID, $uid);
             }
 
 			$this->Model_follow->deleteFollow($uid);

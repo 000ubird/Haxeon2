@@ -10,8 +10,8 @@ class Favorite extends CI_Controller {
 	//プロジェクトをお気に入りに登録
     public function regist_favorite($projectID) {
 		//プロジェクトテーブルからtmpIDの情報を取得
-		$this->load->model('Model_project');
-		$result = $this->Model_project->getOneProject($projectID);
+		$this->load->model('ModelProject');
+		$result = $this->ModelProject->getOneProject($projectID);
 		foreach ($result as $row) {
 			$tmpPro = $row->tmpPro;
 		}

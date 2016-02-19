@@ -29,14 +29,14 @@ class HaxeonHandler extends CI_Controller {
 
 	//指定したプロジェクトのPV数を増やす
 	public function update_pv($projectID) {
-		$this->load->model('Model_project');
-		$this->Model_project->pvCountUp($projectID);
+		$this->load->model('ModelProject');
+		$this->ModelProject->pvCountUp($projectID);
 	}
 
 	//プロジェクトの説明文を取得する
     public function get_description($projectID = ""){
-        $this->load->model('Model_project');
-        $description = $this->Model_project->getDescription($projectID);
+        $this->load->model('ModelProject');
+        $description = $this->ModelProject->getDescription($projectID);
 
         //文字列と改行文字をhtmlに対応した形に
         if($description) echo nl2br(htmlspecialchars($description[0]->description));

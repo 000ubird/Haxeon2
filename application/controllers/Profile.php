@@ -106,7 +106,7 @@ class Profile extends CI_Controller {
 	//
     private function getUserData($userID, $category) {
         $this->load->model('ModelUsers');
-        $this->load->model('Model_project');
+        $this->load->model('ModelProject');
         $this->load->model('Model_favorite');
 
 		$array = [];
@@ -151,7 +151,7 @@ class Profile extends CI_Controller {
 
         foreach ($favorite_list as $f) {
             //プロジェクトテーブルから情報を取得
-            $project = $this->Model_project->getOneProject($f->projectID);
+            $project = $this->ModelProject->getOneProject($f->projectID);
 
             //ログイン中のユーザが自分のお気に入りリストを閲覧する場合
             if ($this->session->userdata('userID') == $userID) {
@@ -166,7 +166,7 @@ class Profile extends CI_Controller {
 
 		foreach ($myfavofite_list as $mf) {
 			//プロジェクトテーブルから情報を取得
-			$project = $this->Model_project->getOneProject($mf->projectID);
+			$project = $this->ModelProject->getOneProject($mf->projectID);
 			//ログイン中のユーザが自分のお気に入りリストを閲覧する場合
 			$ownUserID = $this->session->userdata('userID');
 			if ($ownUserID == $userID) {

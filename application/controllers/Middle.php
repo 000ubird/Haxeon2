@@ -14,8 +14,8 @@ class Middle extends CI_Controller{
         $data = array(); //引き渡すデータ
         $data['program'] = $this->getProgramData($projectID); //プログラム文字列
 
-        $this->load->model('Model_project');
-        $information = $this->Model_project->getOneProject($projectID);
+        $this->load->model('ModelProject');
+        $information = $this->ModelProject->getOneProject($projectID);
         $i = $information[0]; //この後でたくさん使うので変数化
 
         //プロジェクト自体のデータ
@@ -29,7 +29,7 @@ class Middle extends CI_Controller{
         $data['description'] = $i->description;
 
         //タグ取得
-        $this->load->model('Model_project');
+        $this->load->model('ModelProject');
         $this->load->library('tag');
         $data['tags'] = $this->tag->getTag($projectID);
 
@@ -100,8 +100,8 @@ class Middle extends CI_Controller{
 	//タグの検索を行い結果を表示する
 	public function tagSearch($tag) {
 		//Viewを表示
-		$this->load->model("Model_project");
-		$result['result'] = $this->Model_project->searchProject($tag,[1,0,0,0],[0,1,0]);
+		$this->load->model("ModelProject");
+		$result['result'] = $this->ModelProject->searchProject($tag,[1,0,0,0],[0,1,0]);
 		$result['str'] = $tag;
 
 		$this->load->view('header');
