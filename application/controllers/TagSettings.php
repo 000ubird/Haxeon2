@@ -24,11 +24,11 @@ class TagSettings extends CI_Controller {
     }
 
 	//タグ入力のバリデーション
-	public function validation_tag(){
+	public function validationTag(){
 		$this->load->library("form_validation");
 		$this->form_validation->set_error_delimiters('<div class="error">', '</div>');
 
-		$this->form_validation->set_rules("tag", "タグ", "callback_tag_table_check");
+		$this->form_validation->set_rules("tag", "タグ", "callback_checkTagTable");
 
 		$pid = $this->session->userdata('pid');
 		$tag = $_POST['tag'];
@@ -42,7 +42,7 @@ class TagSettings extends CI_Controller {
 				//入力を保持
 				$tag = $this->input->post('tag');
 
-				if (!$this->tag_check($tag)) {
+				if (!$this->checkTag($tag)) {
 					//タグテーブルに存在しないタグのとき
 					$this->ModelProject->registTag($tag);
 				}
@@ -66,20 +66,20 @@ class TagSettings extends CI_Controller {
 	}
 
 	//タグ情報に関するデータベースを確認
-    public function tag_table_check($str){
+    public function checkTagTable($str){
         $this->load->model("ModelProject");
         $pid = $this->session->userdata('pid');
 
         //タグマップテーブルの登録数についての確認
         if($this->ModelProject->countTagMap($pid) == TAG_LIMIT){
-            $this->form_validation->set_message("tag_table_check", 'タグ登録数の上限は'. TAG_LIMIT .'個です');
+            $this->form_validation->set_message("checkTagTable", 'タグ登録数の上限は'. TAG_LIMIT .'個です');
             return false;
         }
 
         $tagid = $this->ModelProject->getTagID($str);
 
         if($this->ModelProject->checkOverlap($pid, $tagid)){
-            $this->form_validation->set_message("tag_table_check", '入力した%sはすでに登録されています');
+            $this->form_validation->set_message("checkTagTable", '入力した%sはすでに登録されています');
             return false;
         }
 
@@ -87,7 +87,7 @@ class TagSettings extends CI_Controller {
     }
 
 	//タグテーブルの重複チェック
-    public function tag_check($tagname) {
+    public function checkTag($tagname) {
         $this->load->model("ModelProject");
 		//重複していたら真
         if($this->ModelProject->isTag($tagname)){
@@ -97,7 +97,7 @@ class TagSettings extends CI_Controller {
         }
     }
 
-	public function delete_tagmap($tagname){
+	public function deleteTagmap($tagname){
 		$this->load->model("ModelProject");
 
 		$tagname = urldecode($tagname);
