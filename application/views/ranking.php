@@ -31,9 +31,10 @@ $base_url = base_url();
 
 	<div class="input-field col s3">表示数
 		<select onChange="location.href=this.options[this.selectedIndex].value" class="browser-default">
-			<option VALUE=<?php echo '"'.$base_url.'ranking/index/'.$days.'/'.$order.'/15/'.$cur_page.'/"'; 	if($num == 15) echo "selected";?>  >15個</option>
-			<option VALUE=<?php echo '"'.$base_url.'ranking/index/'.$days.'/'.$order.'/30/'.$cur_page.'/"';		if($num == 30) echo "selected";?>  >30個</option>
-			<option VALUE=<?php echo '"'.$base_url.'ranking/index/'.$days.'/'.$order.'/60/'.$cur_page.'/"'; 	if($num == 60) echo "selected";?>  >60個</option>
+			<option VALUE=<?php echo '"'.$base_url.'ranking/index/'.$days.'/'.$order.'/20/'.$cur_page.'/"'; 	if($num == 20) echo "selected";?>  >20個</option>
+			<option VALUE=<?php echo '"'.$base_url.'ranking/index/'.$days.'/'.$order.'/40/'.$cur_page.'/"';		if($num == 40) echo "selected";?>  >40個</option>
+            <option VALUE=<?php echo '"'.$base_url.'ranking/index/'.$days.'/'.$order.'/60/'.$cur_page.'/"'; 	if($num == 60) echo "selected";?>  >60個</option>
+			<option VALUE=<?php echo '"'.$base_url.'ranking/index/'.$days.'/'.$order.'/80/'.$cur_page.'/"'; 	if($num == 80) echo "selected";?>  >80個</option>
 			<option VALUE=<?php echo '"'.$base_url.'ranking/index/'.$days.'/'.$order.'/100/'.$cur_page.'/"'; 	if($num == 100) echo "selected";?> >100個</option>
 		</select>
 	</div>

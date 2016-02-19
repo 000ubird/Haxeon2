@@ -8,7 +8,7 @@
 	<link type="text/css" rel="stylesheet" href="<?php echo base_url()?>css/materialize.css"  media="screen,projection"></link>
 	<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>
 	<link rel="stylesheet" href="<?php echo base_url()?>css/monokai-sublime.css"></link>
-	
+
 	<title>Haxeon</title>
 </head>
 
@@ -18,7 +18,7 @@
         <div class="nav-wrapper orange">
             <a href="<?php echo base_url() ?>" class="brand-logo">Haxeon</a>
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-			
+
 			<ul class="right hide-on-med-and-down">
 			<?php
 				//ログイン中の場合
@@ -30,7 +30,7 @@
 					<a href="<?php echo base_url();?>createproject">プロジェクト作成</a>
 				</li>
 				<li>
-					<a href="<?php echo base_url();?>ranking/index/day/pv/30/0">ランキング</a>
+					<a href="<?php echo base_url();?>ranking/index/day/pv/20/0">ランキング</a>
 				</li>
 				<li>
 					<a href="<?php echo base_url();?>profile/information/<?php echo $this->session->userdata('userID');?>"><?php echo $this->session->userdata('userID')?></a>
@@ -47,7 +47,7 @@
 				</li>
 		   <?php } ?>
 			</ul>
-			
+
             <!--      バーに隠れてる表示      -->
             <ul class="side-nav" id="mobile-demo">
                 <?php if($this->session->userdata('userID')) { ?>
@@ -58,7 +58,7 @@
 					<a href="<?php echo base_url();?>createproject">プロジェクト作成</a>
 				</li>
 				<li>
-					<a href="<?php echo base_url();?>ranking/index/day/pv/30/0">ランキング</a>
+					<a href="<?php echo base_url();?>ranking/index/day/pv/20/0">ランキング</a>
 				</li>
 				<li>
 					<a href="<?php echo base_url();?>profile/information/<?php echo $this->session->userdata('userID');?>"><?php echo $this->session->userdata('userID')?></a>
