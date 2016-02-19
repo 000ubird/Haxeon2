@@ -12,7 +12,7 @@ class EmailSettings extends CI_Controller {
         $this->load->view('emailsettings',$data);
         $this->load->view('footer');
     }
-	
+
     //メールアドレス設定ページ用のバリデーション
     public function validation_email($userID){
         $this->load->library('form_validation');
@@ -42,12 +42,12 @@ class EmailSettings extends CI_Controller {
             $message .= "<h1><a href=' ".base_url(). "emailsettings/email_register/$key'>こちら</h1>をクリックして、メールアドレスの変更を完了してください。</a>";
             $this->email->message($message);
 
-            $this->load->model("Model_users");
+            $this->load->model("ModelUsers");
 
             //仮登録用データベースへの登録が完了した場合
-            if ($this->Model_users->add_tmp_email_user($userID, $key, $send)) {
+            if ($this->ModelUsers->insertTemporaryEmail($userID, $key, $send)) {
                 //アカウントテーブルの鍵を上書き
-                $this->Model_users->updateKey($key, $userID);
+                $this->ModelUsers->updateKey($key, $userID);
 
                 //メール送信
                 if ($this->email->send()) {
@@ -71,16 +71,16 @@ class EmailSettings extends CI_Controller {
             $this->index($userID);
         }
     }
-	
+
 	//個別にバリデーションルールを作成する
     //current: データベースのパスワードと照合
     //new: とくにはないかも
     //again: newで入力された内容と一致しているかどうか
     function current_check($str){
         $userID = $this->session->userdata('userID');
-        $this->load->model('Model_users');
+        $this->load->model('ModelUsers');
 
-        $array = $this->Model_users->getUserData($userID);
+        $array = $this->ModelUsers->getUserData($userID);
         $pass = "";
 
         foreach($array as $row){
@@ -98,29 +98,27 @@ class EmailSettings extends CI_Controller {
             return false;
         }
     }
-	
+
     //メールアドレス変更メールのURLを認証
     public function email_register($key) {
-		$redirectTime = 3;
-		
-        $this->load->model("Model_users");
-        //add_userメソッドを変更する
-        if ($this->Model_users->updateMail($key)) {
+        $redirectTime = 3;
+        $this->load->model("ModelUsers");
+
+        if ($this->ModelUsers->updateMail($key)) {
 			$data['msg'] = "メールアドレスが変更されました。<br/>".$redirectTime."後にトップページに戻ります。";
 			$this->load->view('header');
 			$this->load->view('signup_msg',$data);
 			$this->load->view('footer');
-			
+
             //仮テーブルから削除
-            $this->Model_users->deleteTmpAccountFromKey($key);
+            $this->ModelUsers->deleteTmpAccountFromKey($key);
         } else {
-			$data['msg'] = "メールアドレスの変更に失敗しました。<br/>".$redirectTime."後にトップページに戻ります。";
-			$this->load->view('header');
-			$this->load->view('signup_msg',$data);
-			$this->load->view('footer');
-			
+            $data['msg'] = "メールアドレスの変更に失敗しました。<br/>" . $redirectTime . "後にトップページに戻ります。";
+            $this->load->view('header');
+            $this->load->view('signup_msg', $data);
+            $this->load->view('footer');
+        }
 		//3秒後にリダイレクト
 		echo '<meta http-equiv="refresh" content="'.$redirectTime.';URL=/haxeon/">';
-        }
     }
 }

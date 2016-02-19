@@ -9,15 +9,15 @@ class Follow extends CI_Controller {
 
     public function accountFollow($uid){
         //DBにinsertする
-        $this->load->model('Model_follow');
-        $this->Model_follow->apply($uid);
+        $this->load->model('ModelFollow');
+        $this->ModelFollow->setFollow($uid);
 
         redirect(base_url().'profile/information/'. $uid .'');
     }
 
     public function accountUnFollow($uid){
-        $this->load->model('Model_follow');
-        $this->Model_follow->release($uid);
+        $this->load->model('ModelFollow');
+        $this->ModelFollow->unsetFollow($uid);
 
         redirect(base_url().'profile/information/'. $uid .'');
     }

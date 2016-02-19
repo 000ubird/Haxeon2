@@ -4,15 +4,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Haxeon extends CI_Controller {
 
 	public function index() {
-		$this->load->model('Model_project');
-        $this->load->model('Model_favorite');
+		$this->load->model('ModelProject');
+        $this->load->model('ModelFavorite');
 
-		$ranking_projects = $this->Model_project->getRankingProject();
+		$ranking_projects = $this->ModelProject->getRankingProject();
 		$table_project = array();
 
 		//デイリーランキングテーブルから取得したプロジェクトIDで、プロジェクトテーブルを検索
 		foreach($ranking_projects as $project) {
-			$pro = $this->Model_project->getOneProject($project->proID);
+			$pro = $this->ModelProject->getOneProject($project->proID);
 
             if($pro) {
                 //公開プロジェクトのみを配列に追加する
@@ -24,14 +24,14 @@ class Haxeon extends CI_Controller {
 		}
 
 		$data['ranking'] = array('projects'=>$table_project);
-		
+
 		//ログイン中のみお気に入り登録ボタンを表示
         if($this->session->userdata('userID') != FALSE) {
-            $favorite_list = $this->Model_favorite->getFavorite($this->session->userdata['userID']);
+            $favorite_list = $this->ModelFavorite->getFavorite($this->session->userdata['userID']);
             $favorite_projects = array();
             foreach ($favorite_list as $f) {
                 //プロジェクトテーブルから情報を取得
-                $project = $this->Model_project->getOneProject($f->projectID);
+                $project = $this->ModelProject->getOneProject($f->projectID);
 
                 //ログイン中のユーザが自分のお気に入りリストを閲覧する場合
                 if ($this->session->userdata('userID')) {

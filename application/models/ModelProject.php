@@ -1,6 +1,6 @@
 <?php
 
-class Model_project extends CI_Model{
+class ModelProject extends CI_Model{
 
     //データベースにプロジェクト名があったらtrueを返す
     //プロジェクト作成時の重複判定に使用
@@ -167,8 +167,8 @@ class Model_project extends CI_Model{
 		//検索文字列と完全一致するタグを検索し、プロジェクトIDで検索
 		if ($searchFor[0]) {
 			//タグテーブルから条件に一致するプロジェクトIDを取得する
-			$tagID = $this->Model_project->getTagID($searchStr);
-			$result = $this->Model_project->getProIDfromTagmap($tagID);
+			$tagID = $this->ModelProject->getTagID($searchStr);
+			$result = $this->ModelProject->getProIDfromTagmap($tagID);
 
 			//取得したプロジェクトIDからクエリ文を生成
 			//取得してきたIDがなかった場合はダミープロジェクトIDで検索を行う

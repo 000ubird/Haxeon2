@@ -190,11 +190,11 @@ if($isown || !$this->session->userdata('userID')){
         <?php
         if($follow_total > 0){
         $num = 0;
-        $this->load->model('Model_users');
+        $this->load->model('ModelUsers');
         foreach($follow as $f){
             if($category == "") if($num >= MAX_FOLLOW) break;
             $id = $f->userFollowingID;
-            $icon = $this->Model_users->get_icon_url($id);
+            $icon = $this->ModelUsers->getIconURL($id);
             echo '<a href="'.base_url().'/profile/information/'.$id.'"><div class="userchip chip col s2"><img src="'.$icon.'"><span class="truncate">'.$id.'</span></div></a>';
             $num += 1;
         }
@@ -224,7 +224,7 @@ if($isown || !$this->session->userdata('userID')){
             if($follower_total > 0){
                 foreach($follower as $f){
                     $id = $f->userID;
-                    $icon = $this->Model_users->get_icon_url($id);
+                    $icon = $this->ModelUsers->getIconURL($id);
                     echo '<a href="'.base_url().'/profile/information/'.$id.'"><div class="userchip chip col s2"><img src="'.$icon.'"><span class="truncate">'.$id.'</span></div></a>';
                 }
             }else{

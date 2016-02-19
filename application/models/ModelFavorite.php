@@ -1,9 +1,9 @@
 <?php
 
-class Model_favorite extends CI_Model {
+class ModelFavorite extends CI_Model {
 
     //favoriteテーブルにuserIDとprojectIDを登録する
-    public function favorite($userID, $projectID, $tmpPro){
+    public function setFavorite($userID, $projectID, $tmpPro){
         $data = array(
             'userID' => $userID,
             'projectID' => $projectID,
@@ -14,12 +14,12 @@ class Model_favorite extends CI_Model {
     }
 
     //favoriteテーブルからuserIDとprojectIDで検索したものを削除する
-    public function release_favorite($userID, $projectID){
+    public function unsetFavorite($userID, $projectID){
         $this->db->delete('favorite', array('userID' => $userID, 'projectID' => $projectID));
     }
 
     //favoriteテーブルのprojectIDをアップデートする
-    public function update_favorite($userID, $beforeID, $afterID){
+    public function updateProjectIDonFavorite($userID, $beforeID, $afterID){
         //変更する行を特定する部分
         $data = array(
             'userID' => $userID,
@@ -38,7 +38,7 @@ class Model_favorite extends CI_Model {
     }
 
 	//指定したプロジェクトのお気に入り数を更新
-	public function updateFavoriteNum($projectID) {
+	public function updateFavoriteCount($projectID) {
         //$projectIDがファボされている全てのレコードを取得
 		$query = $this->db->get_where('favorite', array('projectID' => $projectID));
 

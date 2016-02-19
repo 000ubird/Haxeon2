@@ -6,13 +6,13 @@ class Tag {
     {
         $CI =& get_instance();
 
-        $CI->load->model('model_project');
+        $CI->load->model('ModelProject');
 
-        $ids = $CI->model_project->getTagIDs($projectID);
+        $ids = $CI->ModelProject->getTagIDs($projectID);
         $tags = array();
 
         foreach($ids as $id){
-            array_push($tags, $CI->model_project->getTag($id));
+            array_push($tags, $CI->ModelProject->getTag($id));
         }
 
         return $tags;

@@ -1,6 +1,6 @@
 <?php
 
-class Model_comment extends CI_Model{
+class ModelComment extends CI_Model{
 
     //コメントを登録する
     public function registComment($projectID, $comment, $commentedUserID){

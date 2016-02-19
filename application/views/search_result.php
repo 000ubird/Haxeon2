@@ -75,15 +75,15 @@
                             break;
                         }
                     }
-					
+
 					if($this->session->userdata('userID') !=null) {
 						if($isfavorite){
-							$this->load->model('Model_favorite');
-							$this->Model_favorite->updateFavoriteNum($row['projectID']);
+							$this->load->model('ModelFavorite');
+							$this->ModelFavorite->updateFavoriteCount($row['projectID']);
 							echo '<p><a href="' . base_url() . 'favorite/release_favorite/' . $favorite[0]->projectID . '"><span><i class="material-icons">grade</i></span></a></p>';
 						}else {
-							$this->load->model('Model_favorite');
-							$this->Model_favorite->updateFavoriteNum($row['projectID']);
+							$this->load->model('ModelFavorite');
+							$this->ModelFavorite->updateFavoriteCount($row['projectID']);
 							echo '<p><a href="'.base_url().'favorite/regist_favorite/' .$row['projectID']. '"><span><i class="material-icons">stars</i></span></a></p>';
 						}
 					}
