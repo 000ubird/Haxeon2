@@ -1,10 +1,10 @@
 <?php
 
-class Model_users extends CI_Model {
+class ModelUsers extends CI_Model {
 
     //DBにユーザーデータがあったらtrueを返す
     //ログイン時の正誤判定
-    public function can_log_in() {
+    public function isLogin() {
         $this->db->where(array('userID' => $this->input->post('userID'), 'userPass' => $this->input->post('password')));
         $query = $this->db->get('account');
 
@@ -12,7 +12,7 @@ class Model_users extends CI_Model {
     }
 
 	//ユーザIDからアイコンのURLを取得
-	public function get_icon_url($userID) {
+	public function getIconURL($userID) {
 		$icon = '';
 
 		$query = $this->db->get_where('account', array('userID' => $userID));
@@ -84,7 +84,7 @@ class Model_users extends CI_Model {
 
     //アカウント仮登録時に使用
 	//一時登録用テーブルにユーザー情報を追加する
-	public function add_tmp_user($key) {
+	public function insertTemporaryUser($key) {
 		$data = array(
 			'userID' => $this->input->post('userID'),
 			'password' => $this->input->post('password'),	//暗号化必要?
@@ -96,7 +96,7 @@ class Model_users extends CI_Model {
 	}
 
 	//アカウントテーブルにユーザー情報を本登録する
-	public function add_user($key) {
+	public function insertUser($key) {
 		$this->db->where('registKey', $key);	//キーからユーザー情報を取得
 		$data = $this->db->get('tmp_account');
 
@@ -104,7 +104,7 @@ class Model_users extends CI_Model {
                 $row = $data->row();
 
                 //アカウントが既に有効になっている場合は登録しない
-                if ($this->is_overlap_uid($row->userID)) {
+                if ($this->isDuplicateAccountUserID($row->userID)) {
 				return false;
 			}
 
@@ -121,8 +121,8 @@ class Model_users extends CI_Model {
 	}
 
     //メールアドレス変更時は変更確認ができるまで仮登録にする
-    //仮登録のadd_tmp_userメソッドのメールアドレス変更版
-    public function add_tmp_email_user($userID, $key, $mail) {
+    //仮登録のinsertTemporaryUserメソッドのメールアドレス変更版
+    public function insertTemporaryEmail($userID, $key, $mail) {
         $data = array(
             'userID' => $userID,
             'password' => $this->getPassword($userID),
@@ -169,7 +169,7 @@ class Model_users extends CI_Model {
     }
 
 	//仮登録テーブルのユーザIDの重複チェック
-	public function is_overlap_tmp_uid($userID) {
+	public function isDuplicateTempUserID($userID) {
 		$this->db->where('userID',$userID);
 		$query = $this->db->get('tmp_account');
 
@@ -178,7 +178,7 @@ class Model_users extends CI_Model {
 	}
 
 	//accountテーブルのユーザIDの重複チェック
-	public function is_overlap_uid($userID) {
+	public function isDuplicateAccountUserID($userID) {
 		$this->db->where('userID',$userID);
 		$query = $this->db->get('account');
 
@@ -187,7 +187,7 @@ class Model_users extends CI_Model {
 	}
 
 	//メールアドレスの重複チェック
-	public function is_overlap_mail($mail) {
+	public function isDuplicateEmail($mail) {
 		$this->db->where('userMail',$mail);
 		$query1 = $this->db->get('account');
 

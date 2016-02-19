@@ -10,7 +10,7 @@ class DeleteAccount extends CI_Controller {
 		$this->load->view('delete_account');
 		$this->load->view('footer');
 	}
-	
+
 	//アカウント削除処理に使用するパスワードのバリデーション
 	public function password_validation() {
 		$this->load->library("form_validation");
@@ -26,9 +26,9 @@ class DeleteAccount extends CI_Controller {
             $this->session->sess_destroy();
 
 			$this->load->model("Model_project");
-            $this->load->model('Model_users');
+            $this->load->model('ModelUsers');
             $this->load->model('Model_follow');
-            $projects = $this->Model_users->getProjects($uid);
+            $projects = $this->ModelUsers->getProjects($uid);
             print_r($projects);
 
             foreach ($projects as $p) {
@@ -37,9 +37,9 @@ class DeleteAccount extends CI_Controller {
 
 			$this->Model_follow->deleteFollow($uid);
             //アカウントを削除
-            $this->Model_users->deleteAccount($uid);
+            $this->ModelUsers->deleteAccount($uid);
             //tmpアカウントからも削除
-            $this->Model_users->deleteTmpAccount($uid);
+            $this->ModelUsers->deleteTmpAccount($uid);
 
 			//アカウント削除処理完了後はトップページに遷移
 			redirect('');
@@ -47,14 +47,14 @@ class DeleteAccount extends CI_Controller {
 			$this->index();
 		}
 	}
-	
+
 	//パスワードのチェック
 	public function pass_check($str) {
 		$this->form_validation->set_message('pass_check', 'パスワードが間違っています。');
 
 		//DBからパスワードを取得
-		$this->load->model("Model_users");
-		$result = $this->Model_users->getUserData($this->session->userdata('userID'));
+		$this->load->model("ModelUsers");
+		$result = $this->ModelUsers->getUserData($this->session->userdata('userID'));
 		foreach($result as $row) $pass = $row->userPass;
 
 		return ($pass == $str);

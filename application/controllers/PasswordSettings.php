@@ -30,8 +30,8 @@ class PasswordSettings extends CI_Controller {
         if($this->form_validation->run()){
             if($_POST['current'] && $_POST['new'] && $_POST['again']){
                 //新しいパスワードでアップデートする
-                $this->load->model('Model_users');
-                $this->Model_users->updatePassword($_POST['new'], $userID);
+                $this->load->model('ModelUsers');
+                $this->ModelUsers->updatePassword($_POST['new'], $userID);
                 //unsetする理由は不要なデータになるのでセッションから削除している
                 $this->session->unset_userdata('newPass');
                 //$this->information($userID);
@@ -44,13 +44,13 @@ class PasswordSettings extends CI_Controller {
             $this->index($userID);
         }
     }
-	
+
 	//新しいパスワードの確認のためにセッション登録をするだけのメソッド
     function setnewPass($str){
         $this->session->set_userdata(array('newPass' => $str));
         return true;
     }
-	
+
     function again_check($str){
         $new = $this->session->userdata('newPass');
 
@@ -60,16 +60,16 @@ class PasswordSettings extends CI_Controller {
             return false;
         }
     }
-	
+
 	//個別にバリデーションルールを作成する
     //current: データベースのパスワードと照合
     //new: とくにはないかも
     //again: newで入力された内容と一致しているかどうか
     function current_check($str){
         $userID = $this->session->userdata('userID');
-        $this->load->model('Model_users');
+        $this->load->model('ModelUsers');
 
-        $array = $this->Model_users->getUserData($userID);
+        $array = $this->ModelUsers->getUserData($userID);
         $pass = "";
 
         foreach($array as $row){

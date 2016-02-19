@@ -38,9 +38,9 @@ class Middle extends CI_Controller{
         $comments = $this->Model_comment->getComment($projectID);
 
         //アイコンURLを追加
-        $this->load->model('Model_users');
+        $this->load->model('ModelUsers');
         foreach($comments as $comment){
-            $udata = $this->Model_users->getUserData($comment->commentedUserID);
+            $udata = $this->ModelUsers->getUserData($comment->commentedUserID);
             $comment->commentedUserName = $udata[0]->userID;
             $comment->icon = $udata[0]->userIcon;
         }
@@ -88,7 +88,7 @@ class Middle extends CI_Controller{
             header('Location:'.base_url().'/middle/detail/'.$projectID);
         }
     }
-	
+
 	//指定したコメントを削除する
 	public function delete_comment($commentID) {
 		$this->load->model("Model_comment");
@@ -96,14 +96,14 @@ class Middle extends CI_Controller{
 		//ひとつ前のページに自動的に遷移
 		header('Location:'.$_SERVER['HTTP_REFERER']);
 	}
-	
+
 	//タグの検索を行い結果を表示する
 	public function tagSearch($tag) {
 		//Viewを表示
 		$this->load->model("Model_project");
 		$result['result'] = $this->Model_project->searchProject($tag,[1,0,0,0],[0,1,0]);
 		$result['str'] = $tag;
-			
+
 		$this->load->view('header');
 		$this->load->view('search_result',$result);
 		$this->load->view('footer');

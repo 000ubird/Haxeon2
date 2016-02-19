@@ -6,8 +6,8 @@ class ProfileSettings extends CI_Controller {
     public function index($userID) {
 		if ($this->session->userdata('userID') == null) header('Location: '.base_url().'login');
 
-        $this->load->model("Model_users");
-        $userData = $this->Model_users->getUserData($userID);
+        $this->load->model("ModelUsers");
+        $userData = $this->ModelUsers->getUserData($userID);
 
         $data['userID'] = $userID;
         $data['user'] = $userData;
@@ -16,7 +16,7 @@ class ProfileSettings extends CI_Controller {
         $this->load->view('profilesettings',$data);
         $this->load->view('footer');
     }
-	
+
 	//プロフィール編集時のバリデーション
     public function validation_profile($userID){
         $this->load->library("form_validation");
@@ -36,15 +36,15 @@ class ProfileSettings extends CI_Controller {
         $this->form_validation->set_message("url_check", "有効なURLを入力してください。");
 
         if ($this->form_validation->run()){
-            $this->load->model('Model_users');
+            $this->load->model('ModelUsers');
 
             //入力されていたら更新
             if($_POST['url']){
-                $this->Model_users->updateUserURL($_POST['url'], $userID);
+                $this->ModelUsers->updateUserURL($_POST['url'], $userID);
             }
 
             //プロフィール文の更新
-            $this->Model_users->updateUserProfile($_POST['profile'], $userID);
+            $this->ModelUsers->updateUserProfile($_POST['profile'], $userID);
 
             header("Location: ".base_url()."profile/information/". $userID);
 
@@ -52,12 +52,12 @@ class ProfileSettings extends CI_Controller {
             header("Location: ".base_url()."profilesettings/index/".$userID);
         }
     }
-	
+
 	//既存のメールアドレスの重複チェック
     public function mail_check($str) {
-        $this->load->model("Model_users");
+        $this->load->model("ModelUsers");
 
-        if($this->Model_users->is_overlap_mail($str)){
+        if($this->ModelUsers->isDuplicateEmail($str)){
             $this->form_validation->set_message('mail_check','入力された %s '.$str.' は既に使われております。');
             return false;
         }
@@ -65,7 +65,7 @@ class ProfileSettings extends CI_Controller {
             return true;
         }
     }
-	
+
     public function url_check($url){
         if (preg_match('/^(https?|ftp)(:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)$/', $url)) {
             //            echo "正しいURLです";
@@ -77,7 +77,7 @@ class ProfileSettings extends CI_Controller {
         if($url == "") return true;
         return false;
     }
-	
+
 	//画像アップロードメソッド
     public function icon_upload($userID){
         $config['upload_path'] = './img/icon/';
@@ -95,12 +95,12 @@ class ProfileSettings extends CI_Controller {
             $this->index($userID);
         }else{
             //データベースに反映
-            $this->load->model('Model_users');
-            $this->load->model('Model_users');
+            $this->load->model('ModelUsers');
+            $this->load->model('ModelUsers');
             $data = $this->upload->data();
 
             $iconURL = base_url().'img/icon/'.$data['file_name'];
-            $this->Model_users->updateIconURL($iconURL, $this->session->userdata('userID'));
+            $this->ModelUsers->updateIconURL($iconURL, $this->session->userdata('userID'));
 
             //画像のリサイズ
             $config = array(

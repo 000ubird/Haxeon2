@@ -8,7 +8,7 @@ class Signup extends CI_Controller {
         $this->load->view('signup');
         $this->load->view('footer');
     }
-	
+
 	public function validation_signup() {
         $this->load->library("form_validation");
         $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
@@ -40,10 +40,10 @@ class Signup extends CI_Controller {
             $message .= "<h1><a href=' ".base_url(). "signup/register/$key'>こちら</h1>をクリックして、会員登録を完了してください。</a>";
             $this->email->message($message);
 
-            $this->load->model("Model_users");
+            $this->load->model("ModelUsers");
 
             //仮登録用データベースへの登録が完了した場合
-            if ($this->Model_users->add_tmp_user($key)) {
+            if ($this->ModelUsers->insertTemporaryUser($key)) {
                 //メール送信
                 if ($this->email->send()) {
 					$data['msg'] = "登録用メールが送信されました。";
@@ -65,9 +65,9 @@ class Signup extends CI_Controller {
 
 	//既存のユーザIDとの重複チェック
     public function username_check($str) {
-        $this->load->model("Model_users");
+        $this->load->model("ModelUsers");
 
-        if($this->Model_users->is_overlap_tmp_uid($str) || $this->Model_users->is_overlap_uid($str) ){
+        if($this->ModelUsers->isDuplicateTempUserID($str) || $this->ModelUsers->isDuplicateAccountUserID($str) ){
             $this->form_validation->set_message('username_check','入力された %s '.$str.' は既に使われております。');
             return false;
         }
@@ -75,12 +75,12 @@ class Signup extends CI_Controller {
             return true;
         }
     }
-	
+
 	//既存のメールアドレスの重複チェック
     public function mail_check($str) {
-        $this->load->model("Model_users");
+        $this->load->model("ModelUsers");
 
-        if($this->Model_users->is_overlap_mail($str)){
+        if($this->ModelUsers->isDuplicateEmail($str)){
             $this->form_validation->set_message('mail_check','入力された %s '.$str.' は既に使われております。');
             return false;
         }
@@ -88,18 +88,18 @@ class Signup extends CI_Controller {
             return true;
         }
     }
-	
+
 	//仮登録メールのURLを認証
     public function register($key) {
-        $this->load->model("Model_users");
-        if ($this->Model_users->add_user($key)) {
+        $this->load->model("ModelUsers");
+        if ($this->ModelUsers->insertUser($key)) {
 			$data['msg'] = "アカウントが有効になりました。";
             $this->load->view('header');
 			$this->load->view('signup_msg', $data);
 			$this->load->view('footer');
 
             //仮テーブルから削除
-            $this->Model_users->deleteTmpAccountFromKey($key);
+            $this->ModelUsers->deleteTmpAccountFromKey($key);
         } else {
 			$data['msg'] = "アカウントの認証に失敗しました。";
             $this->load->view('header');
@@ -107,5 +107,5 @@ class Signup extends CI_Controller {
 			$this->load->view('footer');
         }
     }
-	
+
 }
