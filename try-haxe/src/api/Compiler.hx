@@ -398,7 +398,7 @@ class Compiler {
 				+program.uid + "\", \"" +program.uid+ "\", \"" + projectName+"\",\"" + userID + "\"," + 0 + "," + 0 + ", \"" + originUserID + "\","+isPublic+");");
 				
 				//ランキングテーブルに追加
-				cnx.request("INSERT INTO `day_ranking` (`proID`, `tmpPro`, `usrID`, `pv`) VALUES (\""+program.uid+"\",\""+program.uid+"\",\""+userID+"\", 0)");
+				cnx.request("INSERT INTO `day_ranking` (`proID`, `tmpPro`, `userID`, `pv`) VALUES (\""+program.uid+"\",\""+program.uid+"\",\""+userID+"\", 0)");
 				
 				//html.body.push("<br><H3>データベースにIDを登録しました。</H3>");
 			//コードが保存されない場合の処理

@@ -284,7 +284,7 @@ class ModelProject extends CI_Model{
     //プロジェクトをひとつ削除する
     public function deleteOneProject($projectID, $userID) {
         $this->db->delete('project', array('ownerUserID'=>$userID, 'projectID'=>$projectID));
-        $this->db->delete('day_ranking', array('usrID'=>$userID, 'proID'=>$projectID));
+        $this->db->delete('day_ranking', array('userID'=>$userID, 'proID'=>$projectID));
         $this->db->delete('comment', array('projectID'=>$projectID));
         $this->db->delete('tagmap', array('projectID'=>$projectID));
         $this->db->delete('favorite', array('projectID'=>$projectID));
@@ -292,7 +292,7 @@ class ModelProject extends CI_Model{
 
     //day_rankingテーブルから削除
     public function deleteDayRanking($userID) {
-        $this->db->delete('day_ranking', array('usrID'=>$userID));
+        $this->db->delete('day_ranking', array('userID'=>$userID));
     }
 
     //プロジェクトの説明文を取得する
