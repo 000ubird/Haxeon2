@@ -9,7 +9,7 @@ class HaxeonHandler extends CI_Controller {
 	}
 
 	//ログイン状態をechoする
-	public function get_is_login() {
+	public function echoStateLogin() {
         $userID = $this->session->userdata('userID');
         $projectName = $this->session->userdata('projectName');
 
@@ -28,13 +28,13 @@ class HaxeonHandler extends CI_Controller {
 	}
 
 	//指定したプロジェクトのPV数を増やす
-	public function update_pv($projectID) {
+	public function updatePV($projectID) {
 		$this->load->model('ModelProject');
 		$this->ModelProject->pvCountUp($projectID);
 	}
 
 	//プロジェクトの説明文を取得する
-    public function get_description($projectID = ""){
+    public function getDescription($projectID = ""){
         $this->load->model('ModelProject');
         $description = $this->ModelProject->getDescription($projectID);
 

@@ -71,7 +71,7 @@ class Middle extends CI_Controller{
     }
 
     //コメントのバリデーション
-    public function validation_comment($projectID){
+    public function validationComment($projectID){
         $this->load->library("form_validation");
         $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
         $this->form_validation->set_rules("comment", "コメント", "min_length[5]");
@@ -90,7 +90,7 @@ class Middle extends CI_Controller{
     }
 
 	//指定したコメントを削除する
-	public function delete_comment($commentID) {
+	public function deleteComment($commentID) {
 		$this->load->model("ModelComment");
 		$this->ModelComment->deleteComment($commentID);
 		//ひとつ前のページに自動的に遷移

@@ -14,13 +14,13 @@ class EmailSettings extends CI_Controller {
     }
 
     //メールアドレス設定ページ用のバリデーション
-    public function validation_email($userID){
+    public function validationEmail($userID){
         $this->load->library('form_validation');
         $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
 
         //検証ルールの設定
         $this->form_validation->set_rules("new", "メールアドレス", "required|valid_email");
-        $this->form_validation->set_rules("current", "現在のパスワード", "required|alpha_numeric|callback_current_check");
+        $this->form_validation->set_rules("current", "現在のパスワード", "required|alpha_numeric|callback_checkPassword");
 
         //エラーメッセージの設定
         $this->form_validation->set_message("required", "%s を入力してください。");
@@ -39,7 +39,7 @@ class EmailSettings extends CI_Controller {
 
             //メッセージの本文
             $message = "メールアドレスの変更が行われました。";
-            $message .= "<h1><a href=' ".base_url(). "emailsettings/email_register/$key'>こちら</h1>をクリックして、メールアドレスの変更を完了してください。</a>";
+            $message .= "<h1><a href=' ".base_url(). "emailsettings/registerEmail/$key'>こちら</h1>をクリックして、メールアドレスの変更を完了してください。</a>";
             $this->email->message($message);
 
             $this->load->model("ModelUsers");
@@ -72,11 +72,8 @@ class EmailSettings extends CI_Controller {
         }
     }
 
-	//個別にバリデーションルールを作成する
-    //current: データベースのパスワードと照合
-    //new: とくにはないかも
-    //again: newで入力された内容と一致しているかどうか
-    function current_check($str){
+    //パスワードチェック
+    function checkPassword($str){
         $userID = $this->session->userdata('userID');
         $this->load->model('ModelUsers');
 
@@ -91,16 +88,16 @@ class EmailSettings extends CI_Controller {
             if($pass == $str){
                 return true;
             }
-            $this->form_validation->set_message('current_check','パスワードが間違っています');
+            $this->form_validation->set_message('checkPassword','パスワードが間違っています');
             return false;
         }else{
-            $this->form_validation->set_message('current_check','パスワードが間違っています2');
+            $this->form_validation->set_message('checkPassword','パスワードが間違っています2');
             return false;
         }
     }
 
     //メールアドレス変更メールのURLを認証
-    public function email_register($key) {
+    public function registerEmail($key) {
         $redirectTime = 3;
         $this->load->model("ModelUsers");
 

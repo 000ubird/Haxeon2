@@ -45,11 +45,11 @@
 		if ($isfavorite) {
 			$this->load->model('ModelFavorite');
 			$this->ModelFavorite->updateFavoriteCount($project[0]->projectID);
-			echo '<p><a href="' . base_url() . 'favorite/release_favorite/' . $project[0]->projectID . '"><span><i class="material-icons">grade</i></span></a></p>';
+			echo '<p><a href="' . base_url() . 'favorite/releaseFavorite/' . $project[0]->projectID . '"><span><i class="material-icons">grade</i></span></a></p>';
 		} else {
 			$this->load->model('ModelFavorite');
 			$this->ModelFavorite->updateFavoriteCount($project[0]->projectID);
-			echo '<p><a href="' . base_url() . 'favorite/regist_favorite/' . $project[0]->projectID . '"><span><i class="material-icons">stars</i></span></a></p>';
+			echo '<p><a href="' . base_url() . 'favorite/registerFavorite/' . $project[0]->projectID . '"><span><i class="material-icons">stars</i></span></a></p>';
 		}
 	}
 ?>

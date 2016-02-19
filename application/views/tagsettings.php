@@ -3,10 +3,10 @@
 <p>タグ一覧</p>
 <?php
 foreach ($tags as $tag) {
-    echo '<div class="chip">' .$tag. '<a href="'.base_url().'tagsettings/delete_tagmap/'. $tag .'"><i class="material-icons">delete</i></a></div>';
+    echo '<div class="chip">' .$tag. '<a href="'.base_url().'tagsettings/deleteTagmap/'. $tag .'"><i class="material-icons">delete</i></a></div>';
 }
 
-echo form_open('tagsettings/validation_tag');
+echo form_open('tagsettings/validationTag');
 echo validation_errors();
 ?>
 

@@ -128,43 +128,43 @@ class Profile extends CI_Controller {
         $data['category'] = $category;
         $data['user'] = $this->ModelUsers->getUserData($userID);
         $data['userID'] = $userID;
-        $data['project_total'] = count($data['projects']);
+        $data['totalProject'] = count($data['projects']);
         $data['follow'] = $this->ModelUsers->getFollowInfo($userID);
-        $data['follow_total'] = count($data['follow']);
+        $data['totalFollow'] = count($data['follow']);
         $data['follower'] = $this->ModelUsers->getFollowedInfo($userID);
-        $data['follower_total'] = count($data['follower']);
-        $data['isown'] = ($this->session->userdata('userID') == $userID);
-        $data['isfollow'] = $this->ModelUsers->getIsFollow($userID);
-        $data['isfollowed'] = $this->ModelUsers->getIsFollowed($userID);
+        $data['totalFollower'] = count($data['follower']);
+        $data['isOwn'] = ($this->session->userdata('userID') == $userID);
+        $data['isFollow'] = $this->ModelUsers->getisFollow($userID);
+        $data['isFollowed'] = $this->ModelUsers->getisFollowed($userID);
 
 		//お気に入りプロジェクトの取得
 		$myID = $this->session->userdata('userID');
-		$myfavofite_list = $this->ModelFavorite->getFavorite($myID);
-		$favorite_list = $this->ModelFavorite->getFavorite($userID);
+		$myFavoriteList = $this->ModelFavorite->getFavorite($myID);
+		$otherFavoriteList = $this->ModelFavorite->getFavorite($userID);
 
-		$favorite_projects = array();
+		$otherFavoriteProjects = array();
 		//自分の方
-		$my_favorite_projects = array();
+		$myFavoriteProjects = array();
 
-        $data['favorites'] = $favorite_projects;
-        $data['my_favorites'] = $my_favorite_projects;
+        $data['favorites'] = $otherFavoriteProjects;
+        $data['myFavorites'] = $myFavoriteProjects;
 
-        foreach ($favorite_list as $f) {
+        foreach ($otherFavoriteList as $f) {
             //プロジェクトテーブルから情報を取得
             $project = $this->ModelProject->getOneProject($f->projectID);
 
             //ログイン中のユーザが自分のお気に入りリストを閲覧する場合
             if ($this->session->userdata('userID') == $userID) {
                 //すべてのプロジェクトを取得
-                array_push($favorite_projects, $project);
+                array_push($otherFavoriteProjects, $project);
             } //ログイン中のユーザが他人のお気に入りリストを閲覧する場合
             else {
                 //公開プロジェクトのみ取得
-                if ($project[0]->isPublic) array_push($favorite_projects, $project);
+                if ($project[0]->isPublic) array_push($otherFavoriteProjects, $project);
             }
         }
 
-		foreach ($myfavofite_list as $mf) {
+		foreach ($myFavoriteList as $mf) {
 			//プロジェクトテーブルから情報を取得
 			$project = $this->ModelProject->getOneProject($mf->projectID);
 			//ログイン中のユーザが自分のお気に入りリストを閲覧する場合
@@ -172,22 +172,22 @@ class Profile extends CI_Controller {
 			if ($ownUserID == $userID) {
 				//公開かつ自分のプロジェクトを取得
 				if ($project[0]->isPublic || $project[0]->ownerUserID == $ownUserID) {
-					array_push($my_favorite_projects, $project);
+					array_push($myFavoriteProjects, $project);
 				}
 			}
 			//ログイン中のユーザが他人のお気に入りリストを閲覧する場合
 			else {
 				//公開のプロジェクトを取得
 				if ($project[0]->isPublic) {
-					array_push($my_favorite_projects, $project);
+					array_push($myFavoriteProjects, $project);
 				}
 			}
 		}
 
 		//お気に入りがあれば更新する
-		$data['favorites'] = $favorite_projects;
-		$data['my_favorites'] = $my_favorite_projects;
-		$data['favorite_total'] = count($favorite_projects);
+		$data['favorites'] = $otherFavoriteProjects;
+		$data['myFavorites'] = $myFavoriteProjects;
+		$data['totalFavorite'] = count($otherFavoriteProjects);
 
         return $data;
     }

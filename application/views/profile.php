@@ -33,20 +33,20 @@ echo '    </div>';
 $info = 'profile/information/';
 echo '    <ul class="info col s8 offset-s1">';
 echo '      <li class="name">アカウントID : '. $uid .'</li>';
-echo '      <li class="codes">所持プロジェクト数 : <a href="'.base_url().''.$info.''.$uid.'/'.PROJECTS.'">'. $project_total .'</a></li>';
+echo '      <li class="codes">所持プロジェクト数 : <a href="'.base_url().''.$info.''.$uid.'/'.PROJECTS.'">'. $totalProject .'</a></li>';
 if($this->session->userdata('userID')) {
-    echo '      <li class="favorites">お気に入りプロジェクト数 : <a href="' . base_url() . '' . $info . '' . $uid . '/' . FAVORITES . '">' . $favorite_total . '</a></li>';
+    echo '      <li class="favorites">お気に入りプロジェクト数 : <a href="' . base_url() . '' . $info . '' . $uid . '/' . FAVORITES . '">' . $totalFavorite . '</a></li>';
 }
-echo '      <li class="following">フォロー : <a href="'.base_url().''.$info.''.$uid.'/'.FOLLOW.'">'. $follow_total .'</a></li>';
-echo '      <li class="followers">フォロワー : <a href="'.base_url().''.$info.''.$uid.'/'.FOLLOWER.'">'. $follower_total .'</a></li>';
+echo '      <li class="following">フォロー : <a href="'.base_url().''.$info.''.$uid.'/'.FOLLOW.'">'. $totalFollow .'</a></li>';
+echo '      <li class="followers">フォロワー : <a href="'.base_url().''.$info.''.$uid.'/'.FOLLOWER.'">'. $totalFollower .'</a></li>';
 echo '      <li class="url">URL: <a href='. $url .'>'. $url .'</a></li>';
 echo '      <li class="comment">'. nl2br($comment) .'</li>';
 echo '    </ul>';
 
-if($isown || !$this->session->userdata('userID')){
+if($isOwn || !$this->session->userdata('userID')){
     //自分自身なので何も表示させない
 }else{
-    if ($isfollow) {
+    if ($isFollow) {
         echo '<a href="' . base_url() . 'follow/accountunfollow/' . $uid . '"><button class="follow btn btn-large waves-effect waves-light cyan darken-4 z-depth-2 col s2 offset-s10">フォロー解除</button></a>';
     } else {
         echo '<a href="' . base_url() . 'follow/accountfollow/' . $uid . '"><button class="follow btn btn-large waves-effect waves-light orange darken-4 z-depth-2 col s2 offset-s10">フォロー</button></a>';
@@ -124,7 +124,7 @@ if($isown || !$this->session->userdata('userID')){
 
                                     $pro_id = $project->projectID;
                                     $loginID = $this->session->userdata('userID');
-                                        foreach ($my_favorites as $f) {
+                                        foreach ($myFavorites as $f) {
                                             $favo_id = $f[0]->projectID;
 
                                             if ($favo_id == $pro_id) {
@@ -135,9 +135,9 @@ if($isown || !$this->session->userdata('userID')){
 
                                     if($loginID != null) {
                                         if ($isfavorite) {
-                                            echo '<p><a href="' . base_url() . 'favorite/release_favorite/' . $project->projectID . '"><span><i class="material-icons">grade</i></span></a></p>';
+                                            echo '<p><a href="' . base_url() . 'favorite/releaseFavorite/' . $project->projectID . '"><span><i class="material-icons">grade</i></span></a></p>';
                                         } else {
-                                            echo '<p><a href="' . base_url() . 'favorite/regist_favorite/' . $project->projectID . '"><span><i class="material-icons">stars</i></span></a></p>';
+                                            echo '<p><a href="' . base_url() . 'favorite/registerFavorite/' . $project->projectID . '"><span><i class="material-icons">stars</i></span></a></p>';
                                         }
                                     }
                                     ?>
@@ -188,7 +188,7 @@ if($isown || !$this->session->userdata('userID')){
     <div class="row">
         <h4>フォロー</h4>
         <?php
-        if($follow_total > 0){
+        if($totalFollow > 0){
         $num = 0;
         $this->load->model('ModelUsers');
         foreach($follow as $f){
@@ -206,7 +206,7 @@ if($isown || !$this->session->userdata('userID')){
     </div>
 
     <?php
-    if(!(current_url() == base_url().''.$info.''.$uid.'/'.FOLLOW) && $follow_total > MAX_FOLLOW) {
+    if(!(current_url() == base_url().''.$info.''.$uid.'/'.FOLLOW) && $totalFollow > MAX_FOLLOW) {
         echo '<h6 align="right"><a href="' . base_url() . '' . $info . '' . $uid . '/' . FOLLOW . '">さらにフォローアカウントを表示...</a></h6>';
     }
     ?>
@@ -221,7 +221,7 @@ if($isown || !$this->session->userdata('userID')){
         <div class="row">
             <h2>Follower</h2>
             <?php
-            if($follower_total > 0){
+            if($totalFollower > 0){
                 foreach($follower as $f){
                     $id = $f->userID;
                     $icon = $this->ModelUsers->getIconURL($id);
@@ -248,10 +248,10 @@ if($isown || !$this->session->userdata('userID')){
                     if ($count_fav > 0) {
                         //ふぁぼが新しいものほど先にくるように降順ソート
                         krsort($favorites);
-                        krsort($my_favorites);
+                        krsort($myFavorites);
 
                 //どのリストを使うかを決める
-                    if($this->session->userdata('userID') == $uid) $favorite_list = $my_favorites;
+                    if($this->session->userdata('userID') == $uid) $favorite_list = $myFavorites;
                     else $favorite_list = $favorites;
 
                     foreach ($favorite_list as $favorite) {
@@ -317,7 +317,7 @@ if($isown || !$this->session->userdata('userID')){
                                                 $i = 0;
 
                                                 $pro_id = $favorite[0]->projectID;
-                                                foreach ($my_favorites as $f) {
+                                                foreach ($myFavorites as $f) {
                                                     $favo_id = $f[0]->projectID;
 
                                                     if ($favo_id == $pro_id) {
@@ -327,9 +327,9 @@ if($isown || !$this->session->userdata('userID')){
                                                 }
 
                                                 if ($isfavorite) {
-                                                    echo '<p><a href="' . base_url() . 'favorite/release_favorite/' . $favorite[0]->projectID . '"><span><i class="material-icons">grade</i></span></a></p>';
+                                                    echo '<p><a href="' . base_url() . 'favorite/releaseFavorite/' . $favorite[0]->projectID . '"><span><i class="material-icons">grade</i></span></a></p>';
                                                 } else {
-                                                    echo '<p><a href="' . base_url() . 'favorite/regist_favorite/' . $favorite[0]->projectID . '"><span><i class="material-icons">stars</i></span></a></p>';
+                                                    echo '<p><a href="' . base_url() . 'favorite/registerFavorite/' . $favorite[0]->projectID . '"><span><i class="material-icons">stars</i></span></a></p>';
                                                 }
                                             }
                                             ?>

@@ -1,13 +1,13 @@
 <h3>メールアドレス変更</h3>
 
-<?php echo form_open('emailsettings/validation_email/'.$userID); ?>
+<?php echo form_open('emailsettings/validationEmail/'.$userID); ?>
 
 <div class="row">
 	<div class="input-field col s12">
 		<input name="new" type="email">
 		<label for="new">新しいメールアドレス</label>
 	</div>
-	<?php form_error('new'); ?>	
+	<?php form_error('new'); ?>
 </div>
 
 <div class="row">

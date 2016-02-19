@@ -80,11 +80,11 @@
 						if($isfavorite){
 							$this->load->model('ModelFavorite');
 							$this->ModelFavorite->updateFavoriteCount($row['projectID']);
-							echo '<p><a href="' . base_url() . 'favorite/release_favorite/' . $favorite[0]->projectID . '"><span><i class="material-icons">grade</i></span></a></p>';
+							echo '<p><a href="' . base_url() . 'favorite/releaseFavorite/' . $favorite[0]->projectID . '"><span><i class="material-icons">grade</i></span></a></p>';
 						}else {
 							$this->load->model('ModelFavorite');
 							$this->ModelFavorite->updateFavoriteCount($row['projectID']);
-							echo '<p><a href="'.base_url().'favorite/regist_favorite/' .$row['projectID']. '"><span><i class="material-icons">stars</i></span></a></p>';
+							echo '<p><a href="'.base_url().'favorite/registerFavorite/' .$row['projectID']. '"><span><i class="material-icons">stars</i></span></a></p>';
 						}
 					}
                     ?>

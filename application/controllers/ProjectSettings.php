@@ -27,13 +27,13 @@ class ProjectSettings extends CI_Controller {
     }
 
 	//プロジェクト説明の入力バリデーション
-	public function validation_project() {
+	public function validationProject() {
 		$this->load->library("form_validation");
 		$this->form_validation->set_error_delimiters('<div class="error">', '</div>');
 
 		//検証ルールの設定
 		//ひとまず500文字程度にしておく
-		$this->form_validation->set_rules("description", "プロジェクト説明", 'max_length[500]|callback_description_check');
+		$this->form_validation->set_rules("description", "プロジェクト説明", 'max_length[500]|callback_checkDescription');
 		$this->form_validation->set_message("max_length", "%sは500文字以内でお願いします");
 
 		$pid = $this->session->userdata('pid');
@@ -54,7 +54,7 @@ class ProjectSettings extends CI_Controller {
 	//プロジェクト説明のバリデーション
     //バリデーションの必要がでたらここに書く
     //2015/11/19 特に制限するものが浮かばないので、trueにしている
-    public function description_check($str){
+    public function checkDescription($str){
         return true;
     }
 
@@ -68,7 +68,7 @@ class ProjectSettings extends CI_Controller {
 	}
 
 	//プロジェクトを削除する
-    public function delete_project($projectID){
+    public function deleteProject($projectID){
 		if ($this->session->userdata('userID') == null) header('Location: '.base_url().'login');
 
         $this->load->model("ModelProject");

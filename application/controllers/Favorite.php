@@ -8,7 +8,7 @@ class Favorite extends CI_Controller {
     }
 
 	//プロジェクトをお気に入りに登録
-    public function regist_favorite($projectID) {
+    public function registerFavorite($projectID) {
 		//プロジェクトテーブルからtmpIDの情報を取得
 		$this->load->model('ModelProject');
 		$result = $this->ModelProject->getOneProject($projectID);
@@ -25,7 +25,7 @@ class Favorite extends CI_Controller {
     }
 
 	//お気に入り情報を削除
-    public function release_favorite($projectID){
+    public function releaseFavorite($projectID){
         $this->load->model('ModelFavorite');
         $this->ModelFavorite->unsetFavorite($this->session->userdata('userID'), $projectID);
         $this->ModelFavorite->updateFavoriteCount($projectID);

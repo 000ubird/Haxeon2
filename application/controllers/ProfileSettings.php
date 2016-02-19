@@ -21,22 +21,22 @@ class ProfileSettings extends CI_Controller {
     }
 
 	//プロフィール編集時のバリデーション
-    public function validation_profile($userID){
+    public function validationProfile($userID){
         $this->load->library("form_validation");
         $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
 
         //検証ルールの設定
         $this->form_validation->set_rules("password", "パスワード", "alpha_numeric|min_length[4]");
-        $this->form_validation->set_rules("email", "メールアドレス", "valid_email|callback_mail_check");
+        $this->form_validation->set_rules("email", "メールアドレス", "valid_email|callback_isDuplicateEmail");
         $this->form_validation->set_rules("profile", "メッセージ", "max_length[140]");
-        $this->form_validation->set_rules("url", "url", "min_length[1]|callback_url_check");
+        $this->form_validation->set_rules("url", "url", "min_length[1]|callback_checkURL");
 
         //エラーメッセージの設定
         $this->form_validation->set_message("alpha_numeric", "%s は半角英数字で入力してください。");
         $this->form_validation->set_message("min_length", "%s は4文字以上で入力してください。");
         $this->form_validation->set_message("valid_email", "有効なメールアドレスを入力してください。");
         $this->form_validation->set_message("max_length", "%s は140文字以内で入力してください。");
-        $this->form_validation->set_message("url_check", "有効なURLを入力してください。");
+        $this->form_validation->set_message("checkURL", "有効なURLを入力してください。");
 
         if ($this->form_validation->run()){
             $this->load->model('ModelUsers');
@@ -57,11 +57,11 @@ class ProfileSettings extends CI_Controller {
     }
 
 	//既存のメールアドレスの重複チェック
-    public function mail_check($str) {
+    public function isDuplicateEmail($str) {
         $this->load->model("ModelUsers");
 
         if($this->ModelUsers->isDuplicateEmail($str)){
-            $this->form_validation->set_message('mail_check','入力された %s '.$str.' は既に使われております。');
+            $this->form_validation->set_message('isDuplicateEmail','入力された %s '.$str.' は既に使われております。');
             return false;
         }
         else {
@@ -69,7 +69,7 @@ class ProfileSettings extends CI_Controller {
         }
     }
 
-    public function url_check($url){
+    public function checkURL($url){
         if (preg_match('/^(https?|ftp)(:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)$/', $url)) {
             //            echo "正しいURLです";
             $header = get_headers($url);
@@ -82,7 +82,7 @@ class ProfileSettings extends CI_Controller {
     }
 
 	//画像アップロードメソッド
-    public function icon_upload($userID){
+    public function uploadIcon($userID){
         $config['upload_path'] = './img/icon/';
         $config['allowed_types'] = 'jpg|jpeg|png';
         //ファイル名の指定

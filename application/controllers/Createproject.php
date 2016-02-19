@@ -43,14 +43,14 @@ class Createproject extends CI_Controller {
         }
     }
 
-    public function validate_credentials(){
+    public function validateCredentials(){
         $this->load->model("ModelProject");
 
         if(!($this->ModelProject->isProjectName())){
             //DBに登録されていなかったとき
             return true;
         }else{
-            $this->form_validation->set_message("validate_credentials", "すでに登録されているプロジェクト名です");
+            $this->form_validation->set_message("validateCredentials", "すでに登録されているプロジェクト名です");
             return false;
         }
     }
