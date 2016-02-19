@@ -1,12 +1,12 @@
 <h3>人気のプロジェクト</h3>
 
+<div class="row">
+	
 <?php
 	$projects = $ranking['projects'];
 	if(count($projects)==0) echo "<p>現在、ランキングに関する情報がありません。</p>";
 	foreach($projects as $project) {
 ?>
-
-<div class="row">
 	<div class="col s3">
 		<div class="card amber">
 			<div class="card-content">
