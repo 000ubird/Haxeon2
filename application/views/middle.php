@@ -79,7 +79,7 @@ foreach($comments as $comment){
     echo '<div class="timestamp"><small>'.$comment->modified;
 	//自身が登録したコメントのみ削除可能
 	if ($comment->commentedUserID == $this->session->userdata('userID')) {
-		echo '<a href="'.base_url().'middle/delete_comment/'.$comment->commentID.'"><i class="material-icons">delete</i></a>';
+		echo '<a href="'.base_url().'middle/deleteComment/'.$comment->commentID.'"><i class="material-icons">delete</i></a>';
 	}
 	echo '</small></div>';
     echo '</div>';
@@ -88,7 +88,7 @@ foreach($comments as $comment){
 //ログイン状態の時のみコメントフォームを表示する。
 if($this->session->userdata('userID') != null) {
 
-echo form_open('middle/validation_comment/'.$projectID);
+echo form_open('middle/validationComment/'.$projectID);
       echo form_error('comment');?>
 <div class="row">
     <div class="input-field col s10 offset-s1">

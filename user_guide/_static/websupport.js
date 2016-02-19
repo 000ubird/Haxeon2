@@ -666,7 +666,7 @@
     addCommentURL: '/_add_comment',
     getCommentsURL: '/_get_comments',
     acceptCommentURL: '/_accept_comment',
-    deleteCommentURL: '/_delete_comment',
+    deleteCommentURL: '/_deleteComment',
     commentImage: '/static/_static/comment.png',
     closeCommentImage: '/static/_static/comment-close.png',
     loadingImage: '/static/_static/ajax-loader.gif',
