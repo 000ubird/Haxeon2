@@ -1,12 +1,12 @@
 <?php
 
-class Model_follow extends CI_Model {
+class ModelFollow extends CI_Model {
 
     //フォローをする
     //データベースに登録する
     //自分のIDはログインしているため、セッションを使用
     //引数$userIDは相手のID
-    public function apply($userID) {
+    public function setFollow($userID) {
         //データの作成
         $data = array(
             'userID' => $this->session->userdata('userID'),
@@ -19,7 +19,7 @@ class Model_follow extends CI_Model {
 
     //アンフォローをする
     //データベースから削除する
-    public function release($userID) {
+    public function unsetFollow($userID) {
         $this->db->delete('follow', array('userID'=>$this->session->userdata('userID'), 'userFollowingID'=>$userID));
     }
 

@@ -27,7 +27,7 @@ class DeleteAccount extends CI_Controller {
 
 			$this->load->model("ModelProject");
             $this->load->model('ModelUsers');
-            $this->load->model('Model_follow');
+            $this->load->model('ModelFollow');
             $projects = $this->ModelUsers->getProjects($uid);
             print_r($projects);
 
@@ -35,7 +35,7 @@ class DeleteAccount extends CI_Controller {
                 $this->ModelProject->deleteOneProject($p->projectID, $uid);
             }
 
-			$this->Model_follow->deleteFollow($uid);
+			$this->ModelFollow->deleteFollow($uid);
             //アカウントを削除
             $this->ModelUsers->deleteAccount($uid);
             //tmpアカウントからも削除
