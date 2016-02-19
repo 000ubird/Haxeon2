@@ -19,7 +19,7 @@ $url = $row->userURL;
 $message = $row->userProfile;
 }
 echo '<div id="common" class="col s12">';
-	echo form_open('profilesettings/validation_profile/'.$userID);
+	echo form_open('profilesettings/validationProfile/'.$userID);
 
 	echo '<div class="row">';
 	echo 	'<div class="input-field col s12">';
@@ -46,7 +46,7 @@ echo '<div id="common" class="col s12">';
 	echo form_close();
 
 	echo '<br/><br/>';
-	echo form_open_multipart('profilesettings/icon_upload/'.$userID);
+	echo form_open_multipart('profilesettings/uploadIcon/'.$userID);
 ?>
 	<!-- アイコン-->
 	<div class="row">
