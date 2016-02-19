@@ -51,17 +51,23 @@ class EmailSettings extends CI_Controller {
 
                 //メール送信
                 if ($this->email->send()) {
-                    echo "登録用メールが送信されました。";
-					$this->index($userID);
+					$data['msg'] = "登録用メールが送信されました。";
+                    $this->load->view('header');
+                    $this->load->view('signup_msg',$data);
+                    $this->load->view('footer');
                 }else {
-                    echo "登録用メールの送信に失敗しました。お手数ですがやり直して下さい。";
-                    $this->index($userID);
+					$data['msg'] = "登録用メールの送信に失敗しました。お手数ですがやり直して下さい。";
+                    $this->load->view('header');
+                    $this->load->view('signup_msg',$data);
+                    $this->load->view('footer');
                 }
             } else {
-                $this->index($userID);
+					$data['msg'] = "内部エラーです。再度お試し下さい。";
+					$this->load->view('header');
+					$this->load->view('signup_msg',$data);
+					$this->load->view('footer');
             }
         }else{
-            echo '正しいメールアドレスを入力してください';
             $this->index($userID);
         }
     }
@@ -95,16 +101,24 @@ class EmailSettings extends CI_Controller {
 
     //メールアドレス変更メールのURLを認証
     public function email_register($key) {
+        $redirectTime = 3;
         $this->load->model("ModelUsers");
-        //insertUserメソッドを変更する
+
         if ($this->ModelUsers->updateMail($key)) {
-            $this->load->view('header');
-            echo "メールアドレスが変更されました。";
+			$data['msg'] = "メールアドレスが変更されました。<br/>".$redirectTime."後にトップページに戻ります。";
+			$this->load->view('header');
+			$this->load->view('signup_msg',$data);
+			$this->load->view('footer');
+
             //仮テーブルから削除
             $this->ModelUsers->deleteTmpAccountFromKey($key);
         } else {
+            $data['msg'] = "メールアドレスの変更に失敗しました。<br/>" . $redirectTime . "後にトップページに戻ります。";
             $this->load->view('header');
-            echo "メールアドレスの変更に失敗しました。";
+            $this->load->view('signup_msg', $data);
+            $this->load->view('footer');
         }
+		//3秒後にリダイレクト
+		echo '<meta http-equiv="refresh" content="'.$redirectTime.';URL=/haxeon/">';
     }
 }

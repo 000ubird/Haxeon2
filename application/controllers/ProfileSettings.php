@@ -4,7 +4,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class ProfileSettings extends CI_Controller {
     //プロフィール編集ページを表示
     public function index($userID) {
-		if ($this->session->userdata('userID') == null) header('Location: '.base_url().'login');
+		if ($this->session->userdata('userID') == null || $this->session->userdata('userID') != $userID ) {
+			//他人のアカウント情報は設定不可
+			header('Location: '.base_url().'profilesettings/index/'.$this->session->userdata('userID'));
+		}
 
         $this->load->model("ModelUsers");
         $userData = $this->ModelUsers->getUserData($userID);
