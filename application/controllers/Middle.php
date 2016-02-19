@@ -34,8 +34,8 @@ class Middle extends CI_Controller{
         $data['tags'] = $this->tag->getTag($projectID);
 
         //コメント取得
-        $this->load->model('Model_comment');
-        $comments = $this->Model_comment->getComment($projectID);
+        $this->load->model('ModelComment');
+        $comments = $this->ModelComment->getComment($projectID);
 
         //アイコンURLを追加
         $this->load->model('ModelUsers');
@@ -79,10 +79,10 @@ class Middle extends CI_Controller{
 
         if ($this->form_validation->run()){
             //コメントを登録
-            $this->load->Model('Model_comment');
+            $this->load->Model('ModelComment');
             if($_POST['comment']) {
                 //id:引数, comment:submitされポストされたデータ, userID:現在ログインしているuserID
-                $this->Model_comment->registComment($projectID, $_POST['comment'], $this->session->userdata('userID'));
+                $this->ModelComment->registComment($projectID, $_POST['comment'], $this->session->userdata('userID'));
             }
             //ビューを呼び出す(リダイレクトで二重投稿対策)
             header('Location:'.base_url().'/middle/detail/'.$projectID);
@@ -91,8 +91,8 @@ class Middle extends CI_Controller{
 
 	//指定したコメントを削除する
 	public function delete_comment($commentID) {
-		$this->load->model("Model_comment");
-		$this->Model_comment->deleteComment($commentID);
+		$this->load->model("ModelComment");
+		$this->ModelComment->deleteComment($commentID);
 		//ひとつ前のページに自動的に遷移
 		header('Location:'.$_SERVER['HTTP_REFERER']);
 	}
