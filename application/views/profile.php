@@ -135,9 +135,9 @@ if($isown || !$this->session->userdata('userID')){
 
                                     if($loginID != null) {
                                         if ($isfavorite) {
-                                            echo '<p><a href="' . base_url() . 'favorite/release_favorite/' . $project->projectID . '"><span><i class="material-icons">grade</i></span></a></p>';
+                                            echo '<p><a href="' . base_url() . 'favorite/releaseFavorite/' . $project->projectID . '"><span><i class="material-icons">grade</i></span></a></p>';
                                         } else {
-                                            echo '<p><a href="' . base_url() . 'favorite/regist_favorite/' . $project->projectID . '"><span><i class="material-icons">stars</i></span></a></p>';
+                                            echo '<p><a href="' . base_url() . 'favorite/registerFavorite/' . $project->projectID . '"><span><i class="material-icons">stars</i></span></a></p>';
                                         }
                                     }
                                     ?>
@@ -327,9 +327,9 @@ if($isown || !$this->session->userdata('userID')){
                                                 }
 
                                                 if ($isfavorite) {
-                                                    echo '<p><a href="' . base_url() . 'favorite/release_favorite/' . $favorite[0]->projectID . '"><span><i class="material-icons">grade</i></span></a></p>';
+                                                    echo '<p><a href="' . base_url() . 'favorite/releaseFavorite/' . $favorite[0]->projectID . '"><span><i class="material-icons">grade</i></span></a></p>';
                                                 } else {
-                                                    echo '<p><a href="' . base_url() . 'favorite/regist_favorite/' . $favorite[0]->projectID . '"><span><i class="material-icons">stars</i></span></a></p>';
+                                                    echo '<p><a href="' . base_url() . 'favorite/registerFavorite/' . $favorite[0]->projectID . '"><span><i class="material-icons">stars</i></span></a></p>';
                                                 }
                                             }
                                             ?>
