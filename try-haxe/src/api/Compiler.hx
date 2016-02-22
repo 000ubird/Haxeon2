@@ -26,21 +26,21 @@ typedef HTMLConf =
 
 class Compiler {
 	public static var isFirstClick = false;
-	
+
 	var tmpID : String;
 	var tmpDir : String;
 	var mainFile : String;
 	public static var haxePath = "";
-	
+
 	public function new() {
 		//サーバーのOSを取得し、コンパイラのパスを指定
 		var os = Sys.systemName();
 		switch (os) {
-			case "Windows" : 
+			case "Windows" :
 				haxePath = "C:/HaxeToolkit/haxe/haxe.exe";
-			case "Linux" : 
+			case "Linux" :
 				haxePath = "/usr/bin/haxe";
-			default : 
+			default :
 				throw "Error";
 		}
 	}
@@ -358,7 +358,7 @@ class Compiler {
 		var projectName = program.projectName;
 		var originProjectID = program.originProjectID;
 		var originUserID = program.originUserID;
-		
+
 		//公開非公開情報の取得
 		if (program.isPublic != null) {
 			isPublic = true;
@@ -367,12 +367,12 @@ class Compiler {
 			isPublic = false;
 			//html.body.push("<br><br>公開されません。");	//デバッグ
 		}
-		
+
 		//2回目以降のクリック時は更新されたプロジェクトIDを保存
 		if (!isFirstClick) {
 			originProjectID = program.uid;
 		}
-		
+
 		var cnx = Mysql.connect( {
 			host : "localhost",
 			port : 3306,
@@ -381,32 +381,35 @@ class Compiler {
 			database : "haxeon",
 			socket : null
 		} );
+
+        //状態によってコンパイル後の表示を変える
+        //うまい出力方法がわからなかったので、<br>タグ直打ちになりました。要修正
 		//警告文出力の位置を調整
 		html.body.push("<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>");
 		html.body.push("<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>");
-		
+
 		//プロジェクトが登録されているかを確認
 		var rset = cnx.request("SELECT * FROM project where (tmpPro = '" + tmpID + "' AND ownerUserID = '" + userID + "') OR (ownerUserID = '" + userID + "' AND projectID = '"+tmpID+"');");
-		
+
 		//プロジェクトが登録されていない場合
 		if (rset.length == 0) {
 			//html.body.push("<br><H3>プロジェクトIDなし</H3>");
-			
+
 			if (program.save == "SAVE" && userID != null) {
 				//プロジェクトテーブルに追加
 				cnx.request("INSERT INTO `project`(`projectID`, `tmpPro`, `projectName` ,`ownerUserID`, `pv`, `fork`, `originUserID`, `isPublic`) VALUES (\""
 				+program.uid + "\", \"" +program.uid+ "\", \"" + projectName+"\",\"" + userID + "\"," + 0 + "," + 0 + ", \"" + originUserID + "\","+isPublic+");");
-				
+
 				//ランキングテーブルに追加
 				cnx.request("INSERT INTO `day_ranking` (`proID`, `tmpPro`, `userID`, `pv`) VALUES (\""+program.uid+"\",\""+program.uid+"\",\""+userID+"\", 0)");
-				
+
 				//html.body.push("<br><H3>データベースにIDを登録しました。</H3>");
 			//コードが保存されない場合の処理
 			} else {
 				//未ログイン状態の場合
 				if (userID == null) {
 					html.body.push("<font size=\"5\" color=\"#FF6600\">警告:未ログイン状態では現在のコードは保存されません。</font>");
-				} 
+				}
 				//未保存のチェックボックスが選択されている場合
 				else {
 					html.body.push("<font size=\"5\" color=\"#FF6600\">確認:現在、未保存が選択されています。</font>");
@@ -464,11 +467,11 @@ class Compiler {
 					cnx.request("UPDATE favorite SET tmpPro = \"" + program.uid + "\" WHERE tmpPro = '" + tmpID + "';");
 					cnx.request("UPDATE comment SET tmpPro = \"" + program.uid + "\" WHERE tmpPro = '" + tmpID + "';");
 				}
-				
+
 				//未ログイン状態の場合
 				if (userID == null) {
 					html.body.push("<font size=\"5\" color=\"#FF6600\">警告:未ログイン状態では現在のコードは保存されません。</font>");
-				} 
+				}
 				//未保存のチェックボックスが選択されている場合
 				else {
 					html.body.push("<font size=\"5\" color=\"#FF6600\">確認:現在、未保存が選択されています。</font>");

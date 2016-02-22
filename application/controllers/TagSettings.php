@@ -61,8 +61,8 @@ class TagSettings extends CI_Controller {
 				$this->ModelProject->registTagMap($pid, $tagid, $tmpPro);
 			}
 		}
-		//処理が終わったらとりあえず同じ画面を表示する
-		$this->index($pid);
+        //元のプロジェクト設定ページに移動する
+        header("Location: ".base_url()."/middle/detail/".$pid);
 	}
 
 	//タグ情報に関するデータベースを確認
@@ -101,7 +101,6 @@ class TagSettings extends CI_Controller {
 		$this->load->model("ModelProject");
 
 		$tagname = urldecode($tagname);
-		file_put_contents("out.txt", $tagname);
 		$tagID = $this->ModelProject->getTagID($tagname);
 
 		$pid = $this->session->userdata('pid');

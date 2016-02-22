@@ -37,6 +37,7 @@ class Editor {
   var isSave : JQuery;
   var isPublic:JQuery;
   var base_url : String;
+  //
 
   var mainName : JQuery;
   var dceName : JQuery;
@@ -62,6 +63,7 @@ class Editor {
 	con.onError = onError;
 	con.onData = onResult;
 	con.request(false);
+    //
 
     markers = [];
     lineHandles = [];
