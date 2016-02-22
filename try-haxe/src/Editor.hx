@@ -58,7 +58,7 @@ class Editor {
 	//URLを動的に取得
 	base_url = Browser.window.location.origin;
 	//APIからユーザID情報とプロジェクト名情報を持ってくる
-	var con = new Http(base_url+"/haxeon/HaxeonHandler/echoStateLogin/");
+	var con = new Http(base_url+"/haxeon/Haxeonhandler/echoStateLogin/");
 
 	con.onError = onError;
 	con.onData = onResult;
@@ -362,7 +362,7 @@ class Editor {
 
     // auto-fork
 	//program.uid = null;
-	var con = new Http(base_url+"/haxeon/HaxeonHandler/echoStateLogin/");
+	var con = new Http(base_url+"/haxeon/Haxeonhandler/echoStateLogin/");
 	con.onError = onError;
 	con.onData = onResult2;
 	con.request(false);
@@ -664,7 +664,7 @@ class Editor {
 		program.projectName = userDatas.projectName;
 
         //説明文を取得する
-        var con2 = new Http(base_url+"/haxeon/HaxeonHandler/getDescription/"+program.uid);
+        var con2 = new Http(base_url+"/haxeon/Haxeonhandler/getDescription/"+program.uid);
         con2.onData = onDescription;
         con2.onError = onError;
         con2.request(false);
@@ -680,11 +680,11 @@ class Editor {
 		var userDatas = Json.parse(data);
 
 		//PV数をカウントアップする
-		var con = new Http(base_url+"/haxeon/HaxeonHandler/updatePV/"+program.uid);
+		var con = new Http(base_url+"/haxeon/Haxeonhandler/updatePV/"+program.uid);
 		con.request(false);
 
         //説明文を取得する
-        var con2 = new Http(base_url+"/haxeon/HaxeonHandler/getDescription/"+program.uid);
+        var con2 = new Http(base_url+"/haxeon/Haxeonhandler/getDescription/"+program.uid);
         con2.onData = onDescription;
         con2.onError = onError;
         con2.request(false);
