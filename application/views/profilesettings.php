@@ -13,10 +13,12 @@
 $uname = "";
 $url = "";
 $message = "";
+$icon = "";
 
 foreach($user as $row){
 $url = $row->userURL;
 $message = $row->userProfile;
+$icon = $row->userIcon;
 }
 echo '<div id="common" class="col s12">';
 	echo form_open('profilesettings/validationProfile/'.$userID);
@@ -51,7 +53,7 @@ echo '<div id="common" class="col s12">';
 	<!-- アイコン-->
 	<div class="row">
 		<div class="col s3">
-			<?php foreach ($user as $row) echo '<img src="'.$row->userIcon.'" width="100" height="100">'; ?>
+			<?php echo '<img src="'.$icon.'" width="100" height="100">'; ?>
 		</div>
 
 		<div class="col s9">

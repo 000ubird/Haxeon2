@@ -88,7 +88,6 @@ class ProfileSettings extends CI_Controller {
         //ファイル名の指定
         $config['file_name'] = $userID;
         $config['overwrite'] = TRUE;
-        $config['max_size'] = 2048;
 
         //アップロードライブラリ
         $this->load->library('upload',$config);
