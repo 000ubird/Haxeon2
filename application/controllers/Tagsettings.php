@@ -28,8 +28,10 @@ class TagSettings extends CI_Controller {
 		$this->load->library("form_validation");
 		$this->form_validation->set_error_delimiters('<div class="error">', '</div>');
 
-		$this->form_validation->set_rules("tag", "タグ", "callback_checkTagTable");
-
+		$this->form_validation->set_rules("tag", "タグ", "required|alpha_numeric|callback_checkTagTable");
+		$this->form_validation->set_message("required", "%sが入力されていません");
+		$this->form_validation->set_message("alpha_numeric", "%sは半角英数字でお願いします。");
+		
 		$pid = $this->session->userdata('pid');
 		$tag = $_POST['tag'];
 
@@ -62,7 +64,8 @@ class TagSettings extends CI_Controller {
 			}
 		}
         //元のプロジェクト設定ページに移動する
-        header("Location: ".base_url()."/middle/detail/".$pid);
+        //header("Location: ".base_url()."middle/detail/".$pid);
+		$this->index($pid);
 	}
 
 	//タグ情報に関するデータベースを確認
