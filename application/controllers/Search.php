@@ -90,8 +90,9 @@ class Search extends CI_Controller {
 		$this->form_validation->set_error_delimiters('<div class="error">', '</div>');
 
 		//エラーメッセージの設定
-		$this->form_validation->set_rules("search", "検索", "required");
-        $this->form_validation->set_message("required", "%s項目を入力して下さい。");
+		$this->form_validation->set_rules("search", "検索", "required|alpha_numeric");
+		$this->form_validation->set_message("required", "%sフォームが入力されていません。");
+        $this->form_validation->set_message("alpha_numeric", "%sフォームに無効な文字列が入力されています。");
 
 		//正しい場合は検索を実行
         if ($this->form_validation->run()) {
