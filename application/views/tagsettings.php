@@ -18,7 +18,7 @@ echo validation_errors();
 </div>
 
 <div class="row">
-    <button class="btn waves-effect waves-light orange darken-4 col s3 offset-s9" type="submit" name="action">更新
+    <button class="btn waves-effect waves-light orange darken-4 col s4 offset-s8" type="submit" name="action">更新
         <i class="material-icons">input</i>
     </button>
 </div>
@@ -26,3 +26,12 @@ echo validation_errors();
 <?php
 echo form_close();
 ?>
+
+
+<div class="row">
+    <a href=<?php echo base_url();?>middle/detail/<?php echo $projectID ?>
+        <button class="btn waves-effect waves-light col s3 offset-s4" type="submit" name="action">プロジェクトページに戻る
+           <i class="material-icons">done</i>
+        </button>
+    </a>
+</div>
