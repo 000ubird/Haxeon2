@@ -24,8 +24,9 @@ class Createproject extends CI_Controller {
         $this->form_validation->set_error_delimiters('<div class="error">','</div>');
 
         //入力の有無確認
-        $this->form_validation->set_rules("projectName", "プロジェクト名", "required");
+        $this->form_validation->set_rules("projectName", "プロジェクト名", "required|alpha_numeric");
         $this->form_validation->set_message("required", "%sが入力されていません");
+        $this->form_validation->set_message("alpha_numeric", "%sは半角英数字でお願いします。");
 
         if($this->form_validation->run()){
             //セッションにuserNameを登録
@@ -42,17 +43,4 @@ class Createproject extends CI_Controller {
             $this->index();
         }
     }
-
-    public function validateCredentials(){
-        $this->load->model("ModelProject");
-
-        if(!($this->ModelProject->isProjectName())){
-            //DBに登録されていなかったとき
-            return true;
-        }else{
-            $this->form_validation->set_message("validateCredentials", "すでに登録されているプロジェクト名です");
-            return false;
-        }
-    }
-
 }
